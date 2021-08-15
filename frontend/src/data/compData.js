@@ -16,6 +16,7 @@ export const compData = [
           ports: [{ x: 0.5, y: 0 }],
         },
       },
+      /*
       {
         name: 'Node',
         data: {
@@ -29,6 +30,7 @@ export const compData = [
           end: null,
         },
       },
+      */
     ],
   },
   {
@@ -81,23 +83,53 @@ export const compData = [
     items: [
       {
         name: 'Resistor',
-        data: {},
+        data: {
+          type: 'Resistor',
+          ports: [
+            { x: 0, y: 0.5 },
+            { x: 1, y: 0.5 },
+          ],
+        },
       },
       {
         name: 'Capacitor',
-        data: {},
+        data: {
+          type: 'Capacitor',
+          ports: [
+            { x: 0, y: 0.5 },
+            { x: 1, y: 0.5 },
+          ],
+        },
       },
       {
         name: 'Polarized Capacitor',
-        data: {},
+        data: {
+          type: 'Polarized Capacitor',
+          ports: [
+            { x: 0, y: 0.5 },
+            { x: 1, y: 0.5 },
+          ],
+        },
       },
       {
         name: 'Inductor',
-        data: {},
+        data: {
+          type: 'Inductor',
+          ports: [
+            { x: 0, y: 0.5 },
+            { x: 1, y: 0.5 },
+          ],
+        },
       },
       {
         name: 'Reactance',
-        data: {},
+        data: {
+          type: 'Reactance',
+          ports: [
+            { x: 0, y: 0.5 },
+            { x: 1, y: 0.5 },
+          ],
+        },
       },
     ],
   },
@@ -106,11 +138,23 @@ export const compData = [
     items: [
       {
         name: 'Voltmeter',
-        data: {},
+        data: {
+          type: 'Voltmeter',
+          ports: [
+            { x: 0, y: 0.5 },
+            { x: 1, y: 0.5 },
+          ],
+        },
       },
       {
         name: 'Ammeter',
-        data: {},
+        data: {
+          type: 'Ammeter',
+          ports: [
+            { x: 0, y: 0.5 },
+            { x: 1, y: 0.5 },
+          ],
+        },
       },
     ],
   },
