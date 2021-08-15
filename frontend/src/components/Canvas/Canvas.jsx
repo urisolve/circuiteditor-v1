@@ -2,8 +2,8 @@ import React from 'react';
 import { Schematic } from 'react-circuit-schematics';
 
 // Material-UI
-import { useStyles } from './Canvas.styles';
 import Paper from '@material-ui/core/Paper';
+import { useStyles } from './Canvas.styles';
 
 export const Canvas = ({ schematic, selection, ...rest }) => {
   const classes = useStyles();

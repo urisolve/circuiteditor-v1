@@ -6,8 +6,8 @@ import { CircuitCard } from '../../components/CircuitCard';
 import { NewCircuitCard } from '../../components/NewCircuitCard';
 
 // Material-UI
-import { useStyles } from './Circuits.styles';
 import { Typography, Grid, Paper } from '@material-ui/core';
+import { useStyles } from './Circuits.styles';
 
 export const Circuits = () => {
   const classes = useStyles();

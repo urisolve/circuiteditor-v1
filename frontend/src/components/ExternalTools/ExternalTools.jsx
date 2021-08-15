@@ -6,8 +6,7 @@ import Import from '../ImportZone/ImportZone';
 import Settings from '../SettingsPanel/SettingsPanel';
 
 // Material-UI
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
+import { IconButton, Tooltip } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PublishIcon from '@material-ui/icons/Publish';
 import GetAppIcon from '@material-ui/icons/GetApp';

@@ -5,8 +5,8 @@ import { PersonalInfo } from '../../components/PersonalInfo';
 import { SettingsPanel } from '../../components/SettingsPanel';
 
 // Material-UI
-import { useStyles } from './Account.styles';
 import { Grid } from '@material-ui/core';
+import { useStyles } from './Account.styles';
 
 export const Account = () => {
   const classes = useStyles();

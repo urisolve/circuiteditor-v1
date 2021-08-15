@@ -4,8 +4,7 @@ import { Tool } from '../Tool';
 import { useStyles } from './ToolsMenu.styles';
 
 // Material-UI
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
+import { Grid, Divider } from '@material-ui/core';
 
 // Material-UI Icons
 import UndoIcon from '@material-ui/icons/Undo';

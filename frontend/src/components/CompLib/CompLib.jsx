@@ -5,18 +5,20 @@ import { ElectricalCore, Node, Connection } from 'react-circuit-schematics';
 import { compData } from '../../data/compData.js';
 
 // Material-UI
-import { useStyles } from './CompLib.styles';
-import Typography from '@material-ui/core/Typography';
-import Drawer from '@material-ui/core/Drawer';
-import Toolbar from '@material-ui/core/Toolbar';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import {
+  Typography,
+  Drawer,
+  Toolbar,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  TextField,
+  InputAdornment,
+  Tooltip,
+} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import Tooltip from '@material-ui/core/Tooltip';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { useStyles } from './CompLib.styles';
 
 export const CompLib = () => {
   const classes = useStyles();

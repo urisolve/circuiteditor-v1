@@ -1,9 +1,9 @@
 import React from 'react';
 
 // Material-UI
-import { useStyles } from './NewCircuitCard.styles';
 import { Card, CardActionArea, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import { useStyles } from './NewCircuitCard.styles';
 
 export const NewCircuitCard = ({ onClick }) => {
   const classes = useStyles();
