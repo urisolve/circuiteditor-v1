@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import lodash from 'lodash';
 
-import { ElectricalCore, Node, Connection } from 'react-circuit-schematics';
-import { compData } from '../../data/compData.js';
+import { compData } from './compData.js';
 
 // Material-UI
 import {
@@ -92,15 +91,7 @@ export const CompLib = () => {
                 <AccordionDetails className={classes.compGroup}>
                   {menu.items?.map?.((item) => (
                     <Tooltip title={item.name} key={item.name} arrow>
-                      <div className={classes.comp}>
-                        {item.name === 'Node' ? (
-                          <Node key={item.name} {...item.data} />
-                        ) : item.name === 'Connection' ? (
-                          <Connection key={item.name} {...item.data} />
-                        ) : (
-                          <ElectricalCore key={item.name} {...item.data} />
-                        )}
-                      </div>
+                      <div className={classes.comp}>{item.element}</div>
                     </Tooltip>
                   ))}
                 </AccordionDetails>
