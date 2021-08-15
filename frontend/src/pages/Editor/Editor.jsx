@@ -17,7 +17,11 @@ export const Editor = ({ ...rest }) => {
     <div className={classes.sidebar}>
       <CompLib />
       <div className={classes.canvas}>
-        <ToolsMenu history={history} selection={selection} />
+        <ToolsMenu
+          schematic={schematic}
+          history={history}
+          selection={selection}
+        />
         <Canvas schematic={schematic} selection={selection} {...rest} />
       </div>
     </div>

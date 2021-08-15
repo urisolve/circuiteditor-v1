@@ -1,17 +1,15 @@
 import React, { useCallback } from 'react';
 
 import { Tool } from '../Tool';
-import { useStyles } from './ToolsMenu.styles';
 
 // Material-UI
 import { Grid, Divider } from '@material-ui/core';
-
-// Material-UI Icons
 import UndoIcon from '@material-ui/icons/Undo';
 import RedoIcon from '@material-ui/icons/Redo';
 import DeleteIcon from '@material-ui/icons/Delete';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import RotateRightIcon from '@material-ui/icons/RotateRight';
+import { useStyles } from './ToolsMenu.styles';
 
 export const ToolsMenu = ({ schematic, selection, history }) => {
   const classes = useStyles();
