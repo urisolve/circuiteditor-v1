@@ -7,13 +7,15 @@ import { UserProvider } from './contexts/UserContext';
 import { SettingsCallbacksProvider } from './contexts/SettingsCallbackContext';
 
 // Custom components
-import { NotFound } from './pages/NotFound';
-import { Home } from './pages/Home';
-import { Auth } from './pages/Auth';
-import { Account } from './pages/Account';
-import { Circuits } from './pages/Circuits';
-import { Editor } from './pages/Editor';
-import { Navbar } from './components/Navbar';
+import {
+  NotFound,
+  Home,
+  Auth,
+  Account,
+  Circuits,
+  Editor,
+  Navbar,
+} from './pages';
 
 // Material-UI
 import {
