@@ -89,9 +89,9 @@ export const CompLib = () => {
                   <Typography>{menu.title}</Typography>
                 </AccordionSummary>
                 <AccordionDetails className={classes.compGroup}>
-                  {menu.items?.map?.((item) => (
+                  {menu.items.map((item) => (
                     <Tooltip title={item.name} key={item.name} arrow>
-                      <div className={classes.comp}>{item.element}</div>
+                      <div className={classes.comp}>{item.Element}</div>
                     </Tooltip>
                   ))}
                 </AccordionDetails>
