@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ReactComponent as Logo } from '../assets/electrical/resistor-us.svg';
+import { ReactComponent as Logo } from '../assets/logo.svg';
 
 // Material-UI components
 import { makeStyles } from '@material-ui/core/styles';
