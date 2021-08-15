@@ -1,4 +1,5 @@
 import React from "react";
+import { useSchematic } from "react-circuit-schematics";
 
 // Custom components
 import CompLib from "../components/CompLib";
@@ -21,15 +22,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Editor({ canvas }) {
+function Editor({ ...rest }) {
   const classes = useStyles();
+  const { schematic, history, selection } = useSchematic();
 
   return (
     <div className={classes.sidebar}>
       <CompLib />
       <div className={classes.canvas}>
-        <ToolsMenu canvas={canvas} />
-        <Canvas canvas={canvas} />
+        <ToolsMenu history={history} selection={selection} />
+        <Canvas schematic={schematic} selection={selection} {...rest} />
       </div>
     </div>
   );

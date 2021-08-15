@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const connectionSchema = require("./connection.schema");
+const mongoose = require('mongoose');
+const connectionSchema = require('./connection.schema');
 
 const nodeSchema = new mongoose.Schema({
   id: { type: String, required: true },

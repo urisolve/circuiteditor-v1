@@ -1,6 +1,6 @@
-const router = require("express").Router();
-const passport = require("passport");
-const isAuth = require("./authMiddleware").isAuth;
+const router = require('express').Router();
+const passport = require('passport');
+const isAuth = require('./authMiddleware').isAuth;
 
 /**
  * Simplifies the user object.
@@ -30,22 +30,22 @@ function simplifyUser(req) {
 /**
  * Grab user from cookie
  */
-router.get("/", isAuth, (req, res) => {
+router.get('/', isAuth, (req, res) => {
   res.status(200).send(simplifyUser(req));
 });
 
 /**
  * LogIn
  */
-router.post("/login", passport.authenticate("local-login"), (req, res) => {
+router.post('/login', passport.authenticate('local-login'), (req, res) => {
   res.status(200).send(simplifyUser(req));
 });
 
 /**
  * SignUp
  */
-router.post("/signup", passport.authenticate("local-signup"), (req, res) => {
-  res.status(201).send("User created successfully");
+router.post('/signup', passport.authenticate('local-signup'), (req, res) => {
+  res.status(201).send('User created successfully');
 });
 
 module.exports = router;

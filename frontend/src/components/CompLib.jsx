@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import compLib from "../data/components.js";
+import lodash from "lodash";
+import { compData } from "../data/compData.js";
 
 // Material-UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -49,19 +50,18 @@ const useStyles = makeStyles((theme) => ({
 
 function CompLib() {
   const classes = useStyles();
-  const [compData, setCompData] = useState(compLib);
+  const [comps, setComps] = useState(compData);
 
   /**
    * Component filtering
    */
   function handleFiltering(event) {
-    // Do a deep copy of the original array of components
-    const _ = require("lodash");
-    let filtered = _.cloneDeep(compLib);
+    setComps((comps) => {
+      // Do a deep copy of the original array of components
+      let filtered = lodash.cloneDeep(comps);
 
-    // Filter the array and re-render it
-    const searchBar = event.target.value;
-    setCompData(
+      // Filter the array and re-render it
+      const searchBar = event.target.value;
       filtered.filter((menu) => {
         // Remove the components that don't match the filter
         menu.items = menu.items.filter((item) =>
@@ -70,8 +70,8 @@ function CompLib() {
 
         // Remove the menus that get emptied
         return menu.items.length;
-      })
-    );
+      });
+    });
   }
 
   return (
@@ -107,7 +107,7 @@ function CompLib() {
           </div>
 
           <div className={classes.drawerContent}>
-            {compData?.map((menu) => (
+            {comps?.map((menu) => (
               <Accordion key={menu.title}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography>{menu.title}</Typography>

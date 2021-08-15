@@ -1,7 +1,7 @@
-const LocalStrategy = require("passport-local");
-const passport = require("passport");
-const bcrypt = require("bcrypt");
-const User = require("../models/user.model");
+const LocalStrategy = require('passport-local');
+const passport = require('passport');
+const bcrypt = require('bcrypt');
+const User = require('../models/user.model');
 
 /**
  * Serialize and Deserialize the user from the session store
@@ -19,11 +19,11 @@ passport.deserializeUser(async (id, done) => {
  * LogIn
  */
 passport.use(
-  "local-login",
+  'local-login',
   new LocalStrategy(
     {
-      usernameField: "email",
-      passwordField: "password",
+      usernameField: 'email',
+      passwordField: 'password',
     },
     async (email, password, done) => {
       await User.findOne({ email: email })
@@ -32,7 +32,7 @@ passport.use(
           if (!user)
             return done(null, {
               status: false,
-              message: "Incorrect credentials",
+              message: 'Incorrect credentials',
             });
 
           // Validate the password
@@ -40,26 +40,26 @@ passport.use(
           if (!validPassword)
             return done(null, {
               status: false,
-              message: "Incorrect credentials",
+              message: 'Incorrect credentials',
             });
 
           // Return the user
           return done(null, user);
         })
         .catch((error) => done(error));
-    }
-  )
+    },
+  ),
 );
 
 /**
  * SignUp
  */
 passport.use(
-  "local-signup",
+  'local-signup',
   new LocalStrategy(
     {
-      usernameField: "email",
-      passwordField: "password",
+      usernameField: 'email',
+      passwordField: 'password',
       passReqToCallback: true,
     },
     async (req, email, password, done) => {
@@ -69,7 +69,7 @@ passport.use(
           if (user) {
             return done(null, {
               status: false,
-              message: "E-mail already registered",
+              message: 'E-mail already registered',
             });
           }
 
@@ -87,6 +87,6 @@ passport.use(
             .catch((error) => done(error));
         })
         .catch((error) => done(error));
-    }
-  )
+    },
+  ),
 );

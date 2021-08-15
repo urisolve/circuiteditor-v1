@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 // Material-UI
-import { makeStyles } from "@material-ui/core/styles";
-import grey from "@material-ui/core/colors/grey";
+import { makeStyles } from '@material-ui/core/styles';
+import grey from '@material-ui/core/colors/grey';
 import {
   Card,
   CardActionArea,
@@ -11,9 +11,9 @@ import {
   CardMedia,
   IconButton,
   Tooltip,
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import GetAppIcon from "@material-ui/icons/GetApp";
+} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,12 +37,12 @@ function CircuitCard({ circuit, onDelete, onExport }) {
         />
       </CardActionArea>
       <CardActions>
-        <Tooltip title="Export" arrow>
+        <Tooltip title='Export' arrow>
           <IconButton onClick={onExport}>
             <GetAppIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Delete" arrow>
+        <Tooltip title='Delete' arrow>
           <IconButton onClick={onDelete}>
             <DeleteIcon />
           </IconButton>

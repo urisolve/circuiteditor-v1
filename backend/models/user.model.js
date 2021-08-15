@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const circuitSchema = require("./circuit.model");
-const settingsSchema = require("./settings.schema");
+const mongoose = require('mongoose');
+const circuitSchema = require('./circuit.model');
+const settingsSchema = require('./settings.schema');
 
 const userSchema = new mongoose.Schema(
   {
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
     settings: { type: settingsSchema, default: () => ({}) },
     circuits: [circuitSchema],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 /**
@@ -32,4 +32,4 @@ userSchema.methods.fullName = function () {
   return `${this.fullName} ${this.lastName}`;
 };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);

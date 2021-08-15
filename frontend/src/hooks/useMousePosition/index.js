@@ -1,5 +1,5 @@
-import { useMemo, useEffect, useRef, useState } from "react";
-import lodash from "lodash";
+import { useMemo, useEffect, useRef, useState } from 'react';
+import lodash from 'lodash';
 
 export const useMousePosition = (ref, fps = 30) => {
   const [mousePosition, setMousePosition] = useState(null);
@@ -18,17 +18,17 @@ export const useMousePosition = (ref, fps = 30) => {
           y: Math.floor(event.pageY - area.current.top),
         });
       }, 1000 / fps),
-    [setMousePosition, fps, area]
+    [setMousePosition, fps, area],
   );
 
   useEffect(() => {
     if (!ref.current) return;
-    ref.current.addEventListener("mousemove", calcMousePosition);
+    ref.current.addEventListener('mousemove', calcMousePosition);
     const cleanup = ref;
 
     return () => {
       if (!cleanup.current) return;
-      cleanup.current.removeEventListener("mousemove", calcMousePosition);
+      cleanup.current.removeEventListener('mousemove', calcMousePosition);
       calcMousePosition.cancel();
     };
   }, [ref, calcMousePosition]);

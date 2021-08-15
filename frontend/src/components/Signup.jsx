@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
 // Material-UI
 import {
@@ -15,9 +15,9 @@ import {
   Button,
   IconButton,
   Tooltip,
-} from "@material-ui/core";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+} from '@material-ui/core';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 function Signup() {
   // Password visibility
@@ -26,7 +26,7 @@ function Signup() {
 
   // Form validation hook
   const { register, handleSubmit, errors, watch, reset } = useForm({
-    mode: "onBlur",
+    mode: 'onBlur',
   });
 
   // Route history
@@ -35,8 +35,8 @@ function Signup() {
   // Send the new user info to the server and reset the form
   const onSubmit = async (data) => {
     await axios
-      .post("/api/auth/signup", data)
-      .then((res) => history.push("/circuits"))
+      .post('/api/auth/signup', data)
+      .then((res) => history.push('/circuits'))
       .catch((error) => console.log(error.response));
 
     reset();
@@ -46,25 +46,25 @@ function Signup() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Card>
         <CardHeader
-          title="Signup"
-          subheader="Create an account to be able to save the circuits you create. We promise to never share your personal information with any third party services."
+          title='Signup'
+          subheader='Create an account to be able to save the circuits you create. We promise to never share your personal information with any third party services.'
         />
 
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                name="email"
-                label="E-mail"
-                placeholder="1210000@isep.ipp.pt"
-                autoComplete="email"
-                variant="outlined"
+                name='email'
+                label='E-mail'
+                placeholder='1210000@isep.ipp.pt'
+                autoComplete='email'
+                variant='outlined'
                 error={errors.email}
                 inputRef={register({
-                  required: "This field is required.",
+                  required: 'This field is required.',
                   pattern: {
                     value: /^\S+@\S+$/i,
-                    message: "Please enter a valid e-mail address.",
+                    message: 'Please enter a valid e-mail address.',
                   },
                 })}
                 fullWidth
@@ -75,17 +75,17 @@ function Signup() {
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
-                name="firstName"
-                label="First Name"
-                placeholder="John"
-                autoComplete="given-name"
-                variant="outlined"
+                name='firstName'
+                label='First Name'
+                placeholder='John'
+                autoComplete='given-name'
+                variant='outlined'
                 error={errors.firstName}
                 inputRef={register({
-                  required: "This field is required.",
+                  required: 'This field is required.',
                   maxLength: {
                     value: 20,
-                    message: "Cannot exceed 20 characters.",
+                    message: 'Cannot exceed 20 characters.',
                   },
                 })}
                 fullWidth
@@ -96,17 +96,17 @@ function Signup() {
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
-                name="lastName"
-                label="Last Name"
-                placeholder="Smith"
-                autoComplete="family-name"
-                variant="outlined"
+                name='lastName'
+                label='Last Name'
+                placeholder='Smith'
+                autoComplete='family-name'
+                variant='outlined'
                 error={errors.lastName}
                 inputRef={register({
-                  required: "This field is required.",
+                  required: 'This field is required.',
                   maxLength: {
                     value: 20,
-                    message: "Cannot exceed 20 characters.",
+                    message: 'Cannot exceed 20 characters.',
                   },
                 })}
                 fullWidth
@@ -117,14 +117,14 @@ function Signup() {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                name="number"
-                label="Mechanographic Nr."
-                placeholder="1210000"
-                autoComplete="nickname"
-                variant="outlined"
+                name='number'
+                label='Mechanographic Nr.'
+                placeholder='1210000'
+                autoComplete='nickname'
+                variant='outlined'
                 error={errors.number}
                 inputRef={register({
-                  required: "This field is required.",
+                  required: 'This field is required.',
                   validate: (value) => Number.isInteger(parseInt(value)),
                 })}
                 fullWidth
@@ -135,14 +135,14 @@ function Signup() {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                name="institution"
-                label="Institution"
-                placeholder="Instituto Superior de Engenharia do Porto"
-                autoComplete="organization"
-                variant="outlined"
+                name='institution'
+                label='Institution'
+                placeholder='Instituto Superior de Engenharia do Porto'
+                autoComplete='organization'
+                variant='outlined'
                 error={errors.institution}
                 inputRef={register({
-                  required: "This field is required.",
+                  required: 'This field is required.',
                 })}
                 fullWidth
               />
@@ -152,17 +152,17 @@ function Signup() {
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
-                name="password"
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                autoComplete="new-password"
-                variant="outlined"
+                name='password'
+                label='Password'
+                type={showPassword ? 'text' : 'password'}
+                autoComplete='new-password'
+                variant='outlined'
                 error={errors.password}
                 inputRef={register({
-                  required: "This field is required.",
+                  required: 'This field is required.',
                   minLength: {
                     value: 8,
-                    message: "Password must have at least 8 characters.",
+                    message: 'Password must have at least 8 characters.',
                   },
                 })}
                 fullWidth
@@ -173,15 +173,15 @@ function Signup() {
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
-                name="confirmPassword"
-                label="Confirm password"
-                type={showPassword ? "text" : "password"}
-                autoComplete="new-password"
-                variant="outlined"
+                name='confirmPassword'
+                label='Confirm password'
+                type={showPassword ? 'text' : 'password'}
+                autoComplete='new-password'
+                variant='outlined'
                 error={errors.confirmPassword}
                 inputRef={register({
-                  required: "This field is required.",
-                  validate: (value) => value === watch("password"),
+                  required: 'This field is required.',
+                  validate: (value) => value === watch('password'),
                 })}
                 fullWidth
               />
@@ -193,12 +193,12 @@ function Signup() {
         </CardContent>
 
         <CardActions>
-          <Button type="submit" variant="contained" color="primary">
+          <Button type='submit' variant='contained' color='primary'>
             Signup
           </Button>
 
           <Tooltip
-            title={showPassword ? "Hide password" : "Show password"}
+            title={showPassword ? 'Hide password' : 'Show password'}
             arrow
           >
             <IconButton onClick={toggleShowPassword}>

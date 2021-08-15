@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
-import SettingsCallbacksContext from "../contexts/SettingsCallbackContext";
-import UserContext from "../contexts/UserContext";
-import axios from "axios";
+import React, { useState, useContext } from 'react';
+import SettingsCallbacksContext from '../contexts/SettingsCallbackContext';
+import UserContext from '../contexts/UserContext';
+import axios from 'axios';
 
 // Material-UI
 import {
@@ -14,8 +14,8 @@ import {
   Grid,
   Switch,
   Typography,
-} from "@material-ui/core";
-import Brightness3Icon from "@material-ui/icons/Brightness3";
+} from '@material-ui/core';
+import Brightness3Icon from '@material-ui/icons/Brightness3';
 
 function Settings() {
   // Load data from providers
@@ -32,7 +32,7 @@ function Settings() {
   // Send new account information to database
   const onSubmit = async () => {
     await axios
-      .patch("http://localhost:5000/account/settings", settings)
+      .patch('http://localhost:5000/account/settings', settings)
       .catch((error) => console.log(error.response));
   };
 
@@ -50,23 +50,23 @@ function Settings() {
 
   const DarkMode = () => (
     <Grid item xs={12}>
-      <Grid container alignItems="center">
+      <Grid container alignItems='center'>
         <Grid item xs={1}>
           <Brightness3Icon />
         </Grid>
         <Grid item xs={4}>
-          <Typography variant="body1" noWrap>
+          <Typography variant='body1' noWrap>
             Dark Mode
           </Typography>
         </Grid>
         <Grid item xs={1}>
           <Switch
-            edge="end"
+            edge='end'
             checked={settings.darkMode}
             onChange={() =>
               updateSettings(
                 { darkMode: !settings.darkMode },
-                callbacks.toggleTheme
+                callbacks.toggleTheme,
               )
             }
           />
@@ -77,7 +77,7 @@ function Settings() {
 
   return (
     <Card>
-      <CardHeader title="Settings" subheader="Change the way this app looks." />
+      <CardHeader title='Settings' subheader='Change the way this app looks.' />
 
       <CardContent>
         <Form>
@@ -87,7 +87,7 @@ function Settings() {
       </CardContent>
 
       <CardActions>
-        <Button onClick={onSubmit} color="primary" variant="contained">
+        <Button onClick={onSubmit} color='primary' variant='contained'>
           Save Changes
         </Button>
       </CardActions>

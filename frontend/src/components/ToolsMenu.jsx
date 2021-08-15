@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react';
 
 // Material-UI
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import UndoIcon from "@material-ui/icons/Undo";
-import RedoIcon from "@material-ui/icons/Redo";
-import DeleteIcon from "@material-ui/icons/Delete";
-import RotateLeftIcon from "@material-ui/icons/RotateLeft";
-import RotateRightIcon from "@material-ui/icons/RotateRight";
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import UndoIcon from '@material-ui/icons/Undo';
+import RedoIcon from '@material-ui/icons/Redo';
+import DeleteIcon from '@material-ui/icons/Delete';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import RotateRightIcon from '@material-ui/icons/RotateRight';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
     height: 35,
     margin: `auto ${theme.spacing(1)}px`,
-    backgroundColor: "#ddd",
+    backgroundColor: '#ddd',
   },
 }));
 
@@ -39,7 +39,7 @@ function ToolsMenu({ canvas }) {
       .find((figure) => figure.isSelected());
 
     selectedFigure?.attr({
-      angle: selectedFigure.attr("angle") + Math.sign(direction) * 45,
+      angle: selectedFigure.attr('angle') + Math.sign(direction) * 45,
     });
   }
 
@@ -47,19 +47,19 @@ function ToolsMenu({ canvas }) {
   const tools = [
     [
       {
-        name: "Undo",
+        name: 'Undo',
         icon: <UndoIcon />,
         onClick: () => canvas.current?.getCommandStack().undo(),
       },
       {
-        name: "Redo",
+        name: 'Redo',
         icon: <RedoIcon />,
         onClick: () => canvas.current?.getCommandStack().redo(),
       },
     ],
     [
       {
-        name: "Delete",
+        name: 'Delete',
         icon: <DeleteIcon />,
         onClick: () => {
           const selectedFigure = canvas.current
@@ -73,12 +73,12 @@ function ToolsMenu({ canvas }) {
     ],
     [
       {
-        name: "Rotate Left",
+        name: 'Rotate Left',
         icon: <RotateLeftIcon />,
         onClick: () => rotateFig(-1),
       },
       {
-        name: "Rotate Right",
+        name: 'Rotate Right',
         icon: <RotateRightIcon />,
         onClick: () => rotateFig(+1),
       },
@@ -86,7 +86,7 @@ function ToolsMenu({ canvas }) {
   ];
 
   return (
-    <Grid container direction="row" justify="center" alignItems="center">
+    <Grid container direction='row' justify='center' alignItems='center'>
       {tools.map((toolGroup, index) => (
         <React.Fragment key={index}>
           {toolGroup.map((tool) => (
@@ -103,7 +103,7 @@ function ToolsMenu({ canvas }) {
 
           {/* Add a vertical divider between the toolGroups */}
           {index === tools.length - 1 || (
-            <Divider className={classes.divider} orientation="vertical" />
+            <Divider className={classes.divider} orientation='vertical' />
           )}
         </React.Fragment>
       ))}

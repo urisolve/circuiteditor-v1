@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import axios from "axios";
+
+// Contexts
 import { UserProvider } from "./contexts/UserContext";
 import { SettingsCallbacksProvider } from "./contexts/SettingsCallbackContext";
-import axios from "axios";
 
 // Custom components
 import NotFound from "./pages/NotFound";
@@ -16,7 +18,7 @@ import Navbar from "./components/Navbar";
 // Material-UI
 import {
   makeStyles,
-  createMuiTheme,
+  createTheme,
   responsiveFontSizes,
   ThemeProvider,
 } from "@material-ui/core/styles";
@@ -52,12 +54,14 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const canvas = useRef();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function grabUser() {
-      axios.get("/api/auth").then((res) => setUser(res.data)).catch();
+      axios
+        .get("/api/auth")
+        .then((res) => setUser(res.data))
+        .catch();
     }
 
     grabUser();
@@ -69,7 +73,7 @@ function App() {
   const theme = useMemo(
     () =>
       responsiveFontSizes(
-        createMuiTheme({
+        createTheme({
           palette: {
             type: darkMode ? "dark" : "light",
           },
@@ -92,7 +96,11 @@ function App() {
                   <Route exact path="/" component={Home} />
 
                   <Route exact path="/auth">
-                    {user ? <Redirect to="/circuits" /> : <Auth setUser={setUser} />}
+                    {user ? (
+                      <Redirect to="/circuits" />
+                    ) : (
+                      <Auth setUser={setUser} />
+                    )}
                   </Route>
                   <Route exact path="/account">
                     {user ? <Account /> : <Redirect to="/auth" />}
@@ -101,7 +109,7 @@ function App() {
                     {user ? <Circuits /> : <Redirect to="/auth" />}
                   </Route>
                   <Route exact path="/editor">
-                    <Editor canvas={canvas} />
+                    <Editor />
                   </Route>
 
                   <Route component={NotFound} />

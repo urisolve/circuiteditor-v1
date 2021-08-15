@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // Custom components
-import BugReport from "./BugReport";
-import Import from "./Import";
-import Settings from "./Settings";
+import BugReport from './BugReport';
+import Import from './Import';
+import Settings from './Settings';
 
 // Material-UI
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import SettingsIcon from "@material-ui/icons/Settings";
-import PublishIcon from "@material-ui/icons/Publish";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import BugReportIcon from "@material-ui/icons/BugReport";
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import SettingsIcon from '@material-ui/icons/Settings';
+import PublishIcon from '@material-ui/icons/Publish';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import BugReportIcon from '@material-ui/icons/BugReport';
 
 // Include Draw2D
-import "import-jquery";
-import "jquery-ui-bundle";
-import "jquery-ui-bundle/jquery-ui.css";
-import jquery from "jquery";
-import draw2d from "draw2d";
+import 'import-jquery';
+import 'jquery-ui-bundle';
+import 'jquery-ui-bundle/jquery-ui.css';
+import jquery from 'jquery';
+import draw2d from 'draw2d';
 window.$ = window.jQuery = jquery;
 
 function ExternalTools({ canvas, toggleTheme }) {
@@ -28,17 +28,17 @@ function ExternalTools({ canvas, toggleTheme }) {
 
   const tools = [
     {
-      name: "Report a Bug",
+      name: 'Report a Bug',
       icon: <BugReportIcon />,
       onClick: () => setBugReportOpen(true),
     },
     {
-      name: "Import",
+      name: 'Import',
       icon: <PublishIcon />,
       onClick: () => setImportOpen(true),
     },
     {
-      name: "Export",
+      name: 'Export',
       icon: <GetAppIcon />,
       onClick: () => {
         let writer = new draw2d.io.json.Writer();
@@ -48,7 +48,7 @@ function ExternalTools({ canvas, toggleTheme }) {
       },
     },
     {
-      name: "Settings",
+      name: 'Settings',
       icon: <SettingsIcon />,
       onClick: () => setSettingsOpen(true),
     },
@@ -63,7 +63,7 @@ function ExternalTools({ canvas, toggleTheme }) {
             aria-label={tool.name}
             disabled={tool.disabled || false}
           >
-            {React.cloneElement(tool.icon, { style: { color: "white" } })}
+            {React.cloneElement(tool.icon, { style: { color: 'white' } })}
           </IconButton>
         </Tooltip>
       ))}

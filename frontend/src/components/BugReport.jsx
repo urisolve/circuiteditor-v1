@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // Material-UI
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogActions from "@material-ui/core/DialogActions";
-import FormControl from "@material-ui/core/FormControl";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 function BugReport({ open, onClose }) {
   const [reported, setReported] = useState(false);
 
   return (
     <>
-      <Dialog open={open} onClose={onClose} aria-labelledby="Bug Report Dialog">
+      <Dialog open={open} onClose={onClose} aria-labelledby='Bug Report Dialog'>
         <DialogTitle>Bug Report</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -26,35 +26,35 @@ function BugReport({ open, onClose }) {
           </DialogContentText>
 
           <FormControl>
-            <div id="name-fields">
+            <div id='name-fields'>
               <TextField
-                variant="outlined"
-                label="First Name"
-                placeholder="John"
-                margin="normal"
+                variant='outlined'
+                label='First Name'
+                placeholder='John'
+                margin='normal'
                 required
               />
               <TextField
-                variant="outlined"
-                label="Last Name"
-                placeholder="Smith"
-                margin="normal"
+                variant='outlined'
+                label='Last Name'
+                placeholder='Smith'
+                margin='normal'
                 required
               />
             </div>
             <TextField
-              variant="outlined"
-              label="E-mail"
-              placeholder="1210000@isep.ipp.pt"
-              margin="normal"
+              variant='outlined'
+              label='E-mail'
+              placeholder='1210000@isep.ipp.pt'
+              margin='normal'
               fullWidth
               required
             />
             <TextField
-              variant="outlined"
-              label="Description"
-              helperText="Describe the bug as well as you can..."
-              margin="normal"
+              variant='outlined'
+              label='Description'
+              helperText='Describe the bug as well as you can...'
+              margin='normal'
               rows={6}
               fullWidth
               multiline
@@ -63,11 +63,11 @@ function BugReport({ open, onClose }) {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button color="primary" onClick={onClose}>
+          <Button color='primary' onClick={onClose}>
             Cancel
           </Button>
           <Button
-            color="primary"
+            color='primary'
             onClick={() => {
               onClose();
               setReported(true);
@@ -80,21 +80,21 @@ function BugReport({ open, onClose }) {
 
       <Snackbar
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
         open={reported}
         autoHideDuration={3000}
         onClose={() => setReported(false)}
-        message="Thank you for the feedback"
+        message='Thank you for the feedback'
         action={
           <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
+            size='small'
+            aria-label='close'
+            color='inherit'
             onClick={() => setReported(false)}
           >
-            <CloseIcon fontSize="small" />
+            <CloseIcon fontSize='small' />
           </IconButton>
         }
       />
