@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ElectricalCore, Node, Connection } from 'react-circuit-schematics';
 
 export const compData = [
@@ -7,31 +7,31 @@ export const compData = [
     items: [
       {
         name: 'Chassis Ground',
-        element: <ElectricalCore type='Chassis Ground' />,
+        Element: <ElectricalCore type='Chassis Ground' />,
       },
       {
         name: 'Earth Ground',
-        element: <ElectricalCore type='Earth Ground' />,
+        Element: <ElectricalCore type='Earth Ground' />,
       },
-      /*
       {
         name: 'Node',
-        element: <Node />,
+        Element: <Node />,
       },
       {
         name: 'Connection',
-        element: () => {
-          const nodeRef1 = useRef()
-          const nodeRef2 = useRef()
-        
+        Element: () => {
+          const nodeRef1 = useRef();
+          const nodeRef2 = useRef();
+
           return (
-            <Node ref={nodeRef1} />
-            <Node ref={nodeRef2} />
-            <Connection type='Earth Ground' />
+            <>
+              <Node ref={nodeRef1} />
+              <Node ref={nodeRef2} />
+              <Connection type='Earth Ground' />
+            </>
           );
         },
       },
-      */
     ],
   },
   {
@@ -39,19 +39,19 @@ export const compData = [
     items: [
       {
         name: 'DC Voltage Source',
-        element: <ElectricalCore type='DC Voltage Source' />,
+        Element: <ElectricalCore type='DC Voltage Source' />,
       },
       {
         name: 'AC Voltage Source',
-        element: <ElectricalCore type='AC Voltage Source' />,
+        Element: <ElectricalCore type='AC Voltage Source' />,
       },
       {
         name: 'DC Current Source',
-        element: <ElectricalCore type='DC Current Source' />,
+        Element: <ElectricalCore type='DC Current Source' />,
       },
       {
         name: 'AC Current Source',
-        element: <ElectricalCore type='AC Current Source' />,
+        Element: <ElectricalCore type='AC Current Source' />,
       },
     ],
   },
@@ -60,23 +60,23 @@ export const compData = [
     items: [
       {
         name: 'Resistor',
-        element: <ElectricalCore type='Resistor' />,
+        Element: <ElectricalCore type='Resistor' />,
       },
       {
         name: 'Capacitor',
-        element: <ElectricalCore type='Capacitor' />,
+        Element: <ElectricalCore type='Capacitor' />,
       },
       {
         name: 'Polarized Capacitor',
-        element: <ElectricalCore type='Polarized Capacitor' />,
+        Element: <ElectricalCore type='Polarized Capacitor' />,
       },
       {
         name: 'Inductor',
-        element: <ElectricalCore type='Inductor' />,
+        Element: <ElectricalCore type='Inductor' />,
       },
       {
         name: 'Reactance',
-        element: <ElectricalCore type='Reactance' />,
+        Element: <ElectricalCore type='Reactance' />,
       },
     ],
   },
@@ -85,11 +85,11 @@ export const compData = [
     items: [
       {
         name: 'Voltmeter',
-        element: <ElectricalCore type='Voltmeter' />,
+        Element: <ElectricalCore type='Voltmeter' />,
       },
       {
         name: 'Ammeter',
-        element: <ElectricalCore type='Ammeter' />,
+        Element: <ElectricalCore type='Ammeter' />,
       },
     ],
   },
