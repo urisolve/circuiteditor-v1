@@ -33,7 +33,7 @@ export const ToolsMenu = ({ schematic, selection, history }) => {
   );
 
   return (
-    <Grid container direction='row' justify='center' alignItems='center'>
+    <Grid container direction='row' justifyContent='center' alignItems='center'>
       <Tool
         name='Undo'
         icon={<UndoIcon />}

@@ -15,7 +15,7 @@ export const Auth = ({ setUser }) => {
     <Grid
       container
       direction='row'
-      justify='center'
+      justifyContent='center'
       alignItems='flex-start'
       spacing={1}
     >

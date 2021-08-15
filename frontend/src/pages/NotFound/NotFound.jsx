@@ -11,7 +11,7 @@ export const NotFound = () => {
 
   return (
     <div className={classes.root}>
-      <Grid container alignItems='center' justify='center' spacing={10}>
+      <Grid container alignItems='center' justifyContent='center' spacing={10}>
         <Grid item xs={12} lg={5}>
           <NotFoundSVG />
         </Grid>

@@ -106,7 +106,7 @@ const Instructions = () => {
           </div>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Grid container spacing={10} justify='center'>
+          <Grid container spacing={10} justifyContent='center'>
             <Grid item>
               <Typography variant='h2'>Instructions</Typography>
             </Grid>
@@ -151,7 +151,7 @@ const TeamMember = ({ member }) => {
         spacing={2}
         direction='column'
         alignItems='center'
-        justify='center'
+        justifyContent='center'
       >
         <Grid item>
           <Avatar

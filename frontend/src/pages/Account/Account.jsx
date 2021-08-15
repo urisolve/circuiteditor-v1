@@ -12,7 +12,12 @@ export const Account = () => {
   const classes = useStyles();
 
   return (
-    <Grid container direction='row' justify='center' alignItems='flex-start'>
+    <Grid
+      container
+      direction='row'
+      justifyContent='center'
+      alignItems='flex-start'
+    >
       <Grid className={classes.item} item xs={12} md={6}>
         <PersonalInfo />
       </Grid>
