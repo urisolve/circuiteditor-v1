@@ -19,40 +19,12 @@ import {
 
 // Material-UI
 import {
-  makeStyles,
   createTheme,
   responsiveFontSizes,
   ThemeProvider,
 } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
-const useStyles = makeStyles((theme) => ({
-  '@global': {
-    '*::-webkit-scrollbar': {
-      width: 10,
-      height: 10,
-    },
-    '*::-webkit-scrollbar-track': {
-      background: 'white',
-    },
-    '*::-webkit-scrollbar-thumb': {
-      background: 'grey',
-    },
-  },
-  app: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100vh',
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  content: {
-    display: 'flex',
-    flexGrow: 1,
-  },
-}));
+import { useStyles } from './App.styles';
 
 export const App = () => {
   const classes = useStyles();
