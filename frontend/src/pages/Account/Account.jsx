@@ -5,15 +5,8 @@ import { PersonalInfo } from '../../components/PersonalInfo';
 import { SettingsPanel } from '../../components/SettingsPanel';
 
 // Material-UI
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from './Account.styles';
 import { Grid } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  item: {
-    maxWidth: theme.spacing(75),
-    margin: theme.spacing(5),
-  },
-}));
 
 export const Account = () => {
   const classes = useStyles();

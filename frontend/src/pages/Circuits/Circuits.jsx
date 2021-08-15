@@ -6,21 +6,8 @@ import { CircuitCard } from '../../components/CircuitCard';
 import { NewCircuitCard } from '../../components/NewCircuitCard';
 
 // Material-UI
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from './Circuits.styles';
 import { Typography, Grid, Paper } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    padding: theme.spacing(2),
-  },
-  container: {
-    padding: theme.spacing(2),
-  },
-  header: {
-    marginBottom: theme.spacing(4),
-  },
-}));
 
 export const Circuits = () => {
   const classes = useStyles();

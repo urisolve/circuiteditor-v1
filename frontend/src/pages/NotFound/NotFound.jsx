@@ -3,14 +3,8 @@ import React from 'react';
 import { ReactComponent as NotFoundSVG } from '../../assets/undraw/not-found.svg';
 
 // Material-UI
-import { makeStyles, Grid, Typography } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    padding: theme.spacing(10),
-  },
-}));
+import { useStyles } from './NotFound.styles';
+import { Grid, Typography } from '@material-ui/core';
 
 export const NotFound = () => {
   const classes = useStyles();

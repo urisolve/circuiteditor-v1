@@ -1,8 +1,6 @@
 import React from 'react';
 
 // Material-UI
-import { makeStyles } from '@material-ui/core/styles';
-import grey from '@material-ui/core/colors/grey';
 import {
   Card,
   CardActionArea,
@@ -14,14 +12,7 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import GetAppIcon from '@material-ui/icons/GetApp';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: 300,
-    height: 300,
-    backgroundColor: grey[50],
-  },
-}));
+import { useStyles } from './CircuitCard.styles';
 
 export const CircuitCard = ({ circuit, onDelete, onExport }) => {
   const classes = useStyles();

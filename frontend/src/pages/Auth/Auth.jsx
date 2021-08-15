@@ -5,15 +5,8 @@ import { Login } from '../../components/Login';
 import { Signup } from '../../components/Signup';
 
 // Material-UI
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from './Auth.styles';
 import Grid from '@material-ui/core/Grid';
-
-const useStyles = makeStyles((theme) => ({
-  item: {
-    maxWidth: theme.spacing(75),
-    margin: theme.spacing(5),
-  },
-}));
 
 export const Auth = ({ setUser }) => {
   const classes = useStyles();

@@ -7,20 +7,7 @@ import { ToolsMenu } from '../../components/ToolsMenu';
 import { Canvas } from '../../components/Canvas';
 
 // Material-UI
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-  sidebar: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexGrow: 1,
-  },
-  canvas: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-  },
-}));
+import { useStyles } from './Editor.styles';
 
 export const Editor = ({ ...rest }) => {
   const classes = useStyles();
