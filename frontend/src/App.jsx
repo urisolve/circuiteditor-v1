@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect, useMemo } from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 // Contexts
-import { UserProvider } from "./contexts/UserContext";
-import { SettingsCallbacksProvider } from "./contexts/SettingsCallbackContext";
+import { UserProvider } from './contexts/UserContext';
+import { SettingsCallbacksProvider } from './contexts/SettingsCallbackContext';
 
 // Custom components
-import NotFound from "./pages/NotFound";
-import Home from "./pages/Home";
-import Auth from "./pages/Auth";
-import Account from "./pages/Account";
-import Circuits from "./pages/Circuits";
-import Editor from "./pages/Editor";
-import Navbar from "./components/Navbar";
+import { NotFound } from './pages/NotFound';
+import { Home } from './pages/Home';
+import { Auth } from './pages/Auth';
+import { Account } from './pages/Account';
+import { Circuits } from './pages/Circuits';
+import { Editor } from './pages/Editor';
+import { Navbar } from './components/Navbar';
 
 // Material-UI
 import {
@@ -21,45 +21,45 @@ import {
   createTheme,
   responsiveFontSizes,
   ThemeProvider,
-} from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
+} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const useStyles = makeStyles((theme) => ({
-  "@global": {
-    "*::-webkit-scrollbar": {
+  '@global': {
+    '*::-webkit-scrollbar': {
       width: 10,
       height: 10,
     },
-    "*::-webkit-scrollbar-track": {
-      background: "white",
+    '*::-webkit-scrollbar-track': {
+      background: 'white',
     },
-    "*::-webkit-scrollbar-thumb": {
-      background: "grey",
+    '*::-webkit-scrollbar-thumb': {
+      background: 'grey',
     },
   },
   app: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100vh",
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
   },
   header: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
   },
   content: {
-    display: "flex",
+    display: 'flex',
     flexGrow: 1,
   },
 }));
 
-function App() {
+export const App = () => {
   const classes = useStyles();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function grabUser() {
       axios
-        .get("/api/auth")
+        .get('/api/auth')
         .then((res) => setUser(res.data))
         .catch();
     }
@@ -75,11 +75,11 @@ function App() {
       responsiveFontSizes(
         createTheme({
           palette: {
-            type: darkMode ? "dark" : "light",
+            type: darkMode ? 'dark' : 'light',
           },
-        })
+        }),
       ),
-    [darkMode]
+    [darkMode],
   );
 
   return (
@@ -93,22 +93,22 @@ function App() {
 
               <main className={classes.content}>
                 <Switch>
-                  <Route exact path="/" component={Home} />
+                  <Route exact path='/' component={Home} />
 
-                  <Route exact path="/auth">
+                  <Route exact path='/auth'>
                     {user ? (
-                      <Redirect to="/circuits" />
+                      <Redirect to='/circuits' />
                     ) : (
                       <Auth setUser={setUser} />
                     )}
                   </Route>
-                  <Route exact path="/account">
-                    {user ? <Account /> : <Redirect to="/auth" />}
+                  <Route exact path='/account'>
+                    {user ? <Account /> : <Redirect to='/auth' />}
                   </Route>
-                  <Route exact path="/circuits">
-                    {user ? <Circuits /> : <Redirect to="/auth" />}
+                  <Route exact path='/circuits'>
+                    {user ? <Circuits /> : <Redirect to='/auth' />}
                   </Route>
-                  <Route exact path="/editor">
+                  <Route exact path='/editor'>
                     <Editor />
                   </Route>
 
@@ -121,6 +121,4 @@ function App() {
       </UserProvider>
     </BrowserRouter>
   );
-}
-
-export default App;
+};
