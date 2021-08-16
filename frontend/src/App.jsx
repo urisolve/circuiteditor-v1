@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 // Contexts
@@ -16,7 +16,6 @@ import {
   responsiveFontSizes,
   ThemeProvider,
 } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { useStyles } from './App.styles';
 
 export const App = () => {
@@ -50,44 +49,41 @@ export const App = () => {
   );
 
   return (
-    <BrowserRouter>
-      <UserProvider value={user}>
-        <SettingsCallbacksProvider value={{ toggleTheme }}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <div className={classes.app}>
-              <Navbar user={user} />
+    <UserProvider value={user}>
+      <SettingsCallbacksProvider value={{ toggleTheme }}>
+        <ThemeProvider theme={theme}>
+          <div className={classes.app}>
+            <Navbar user={user} />
 
-              <main className={classes.content}>
-                <Switch>
-                  <Route exact path='/'>
-                    <Home />
-                  </Route>
-                  <Route exact path='/auth'>
-                    {user ? (
-                      <Redirect to='/circuits' />
-                    ) : (
-                      <Auth setUser={setUser} />
-                    )}
-                  </Route>
-                  <Route exact path='/account'>
-                    {user ? <Account /> : <Redirect to='/auth' />}
-                  </Route>
-                  <Route exact path='/circuits'>
-                    {user ? <Circuits /> : <Redirect to='/auth' />}
-                  </Route>
-                  <Route exact path='/editor'>
-                    <Editor />
-                  </Route>
-                  <Route path='*'>
-                    <NotFound />
-                  </Route>
-                </Switch>
-              </main>
-            </div>
-          </ThemeProvider>
-        </SettingsCallbacksProvider>
-      </UserProvider>
-    </BrowserRouter>
+            <main className={classes.content}>
+              <Switch>
+                <Route exact path='/'>
+                  <Home />
+                </Route>
+                <Route exact path='/auth'>
+                  {user ? (
+                    <Redirect to='/circuits' />
+                  ) : (
+                    <Auth setUser={setUser} />
+                  )}
+                </Route>
+                <Route exact path='/account'>
+                  {user ? <Account /> : <Redirect to='/auth' />}
+                </Route>
+                <Route exact path='/circuits'>
+                  {user ? <Circuits /> : <Redirect to='/auth' />}
+                </Route>
+                <Route exact path='/editor'>
+                  <Editor />
+                </Route>
+                <Route path='*'>
+                  <NotFound />
+                </Route>
+              </Switch>
+            </main>
+          </div>
+        </ThemeProvider>
+      </SettingsCallbacksProvider>
+    </UserProvider>
   );
 };
