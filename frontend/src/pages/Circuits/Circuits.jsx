@@ -38,8 +38,8 @@ export const Circuits = () => {
   return (
     <Container className={classes.root}>
       <div className={classes.header}>
-        <Typography variant='h3'>Your Circuits</Typography>
-        <Typography variant='h5'>
+        <Typography variant='h4'>Your Circuits</Typography>
+        <Typography>
           Here you can find the circuits that you have saved.
         </Typography>
       </div>
