@@ -22,9 +22,8 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   link: {
-    marginLeft: theme.spacing(2),
-    color: 'white',
     fontSize: theme.spacing(2),
+    color: 'white',
     textDecoration: 'none',
   },
   action: {

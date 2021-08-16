@@ -22,7 +22,7 @@ export const Navbar = ({ user }) => {
   return (
     <AppBar position='relative' className={classes.appBar}>
       <Container>
-        <Toolbar className={classes.bar}>
+        <Toolbar>
           <Link to='/' className={classes.link}>
             <div className={classes.brand}>
               <Logo className={classes.logo} />
@@ -35,9 +35,6 @@ export const Navbar = ({ user }) => {
           <div className={classes.nav}>
             <Link to='/circuits' className={classes.link}>
               Circuits
-            </Link>
-            <Link to='/editor' className={classes.link}>
-              Editor
             </Link>
           </div>
 
