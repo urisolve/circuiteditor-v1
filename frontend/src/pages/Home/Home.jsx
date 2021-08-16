@@ -66,12 +66,15 @@ const Intro = () => {
   const history = useHistory();
 
   return (
-    <section className={classes.intro}>
+    <section className={`${classes.section} ${classes.intro}`}>
       <Container>
         <Grid container spacing={10} alignItems='center'>
           <Grid item xs={12} md className={classes.slogan}>
             <Typography variant='h2' className={classes.title} align='left'>
-              Convert circuit schematics into their analytical model
+              create circuit schematics
+            </Typography>
+            <Typography variant='h3' className={classes.subTitle} align='left'>
+              and get their analytical model
             </Typography>
             <Button
               size='large'
@@ -80,7 +83,7 @@ const Intro = () => {
               classes={{ containedSizeLarge: classes.action }}
               onClick={() => history.push('/auth')}
             >
-              Start
+              Get Started
             </Button>
           </Grid>
           <Grid item xs={12} md>
@@ -103,7 +106,7 @@ const Instructions = () => {
   const classes = useStyles();
 
   return (
-    <section className={classes.instructions}>
+    <section className={`${classes.section} ${classes.instructions}`}>
       <Container>
         <Grid container spacing={10} alignItems='center'>
           <Grid item xs={12} md={6}>
@@ -240,7 +243,7 @@ const Contact = () => {
   const classes = useStyles();
 
   return (
-    <section className={classes.contact}>
+    <section className={`${classes.section} ${classes.contact}`}>
       <Container>
         <Grid container direction='column' alignItems='center' spacing={10}>
           <Grid item>

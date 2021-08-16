@@ -1,17 +1,20 @@
 import { makeStyles } from '@material-ui/core/styles';
+import indigo from '@material-ui/core/colors/indigo';
 
 export const useStyles = makeStyles((theme) => ({
   home: {
     flexGrow: 1,
   },
-  intro: {
-    display: 'flex',
+  section: {
     padding: `
-      ${theme.spacing(20)}px 
+      ${theme.spacing(15)}px 
       ${theme.spacing(10)}px 
-      ${theme.spacing(20)}px 
+      ${theme.spacing(15)}px 
       ${theme.spacing(10)}px 
     `,
+  },
+  intro: {
+    display: 'flex',
   },
   slogan: {
     display: 'flex',
@@ -19,8 +22,22 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
+  emphasis: {
+    color: indigo[500],
+  },
   title: {
+    marginBottom: theme.spacing(2),
+    fontSize: theme.spacing(7),
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    color: '#2F2E41',
+  },
+  subTitle: {
     marginBottom: theme.spacing(5),
+    fontSize: theme.spacing(5),
+    textTransform: 'uppercase',
+    fontWeight: 'thin',
+    color: '#2F2E41',
   },
   action: {
     fontSize: theme.spacing(3),
@@ -32,12 +49,6 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     backgroundColor: '#2F2E41',
     color: '#ddd',
-    padding: `
-      ${theme.spacing(20)}px 
-      ${theme.spacing(10)}px 
-      ${theme.spacing(20)}px 
-      ${theme.spacing(10)}px 
-    `,
   },
   step: {
     display: 'flex',
@@ -56,12 +67,6 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: `
-      ${theme.spacing(20)}px 
-      ${theme.spacing(10)}px 
-      ${theme.spacing(20)}px 
-      ${theme.spacing(10)}px 
-    `,
   },
   team: {
     display: 'flex',
