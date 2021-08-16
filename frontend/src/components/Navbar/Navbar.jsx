@@ -44,12 +44,20 @@ export const Navbar = ({ user }) => {
 
           <div>
             {user ? (
-              <Link to='/account'>
-                <Tooltip title='My Account' arrow>
-                  <IconButton color='inherit'>
-                    <Avatar alt={user.fullName?.()} src={user.avatar} />
-                  </IconButton>
-                </Tooltip>
+              <Link to='/account' className={classes.userName}>
+                <div className={classes.user}>
+                  <Tooltip title='My Account' arrow>
+                    <IconButton color='inherit'>
+                      <Avatar
+                        alt={`${user.firstName} ${user.lastName}`}
+                        src={user.avatar}
+                      />
+                    </IconButton>
+                  </Tooltip>
+                  <Typography>
+                    {`${user.firstName} ${user.lastName}`}
+                  </Typography>
+                </div>
               </Link>
             ) : (
               <Link to='/auth' className={classes.action}>
