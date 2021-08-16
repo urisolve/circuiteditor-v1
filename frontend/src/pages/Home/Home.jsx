@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { Footer } from '../../components/Footer';
+
 // SVGs from unDraw
 import { ReactComponent as IntroSVG } from '../../assets/undraw/intro.svg';
 import { ReactComponent as StepsSVG } from '../../assets/undraw/steps.svg';
@@ -248,23 +250,6 @@ const Contact = () => {
         </Grid>
       </Grid>
     </section>
-  );
-};
-
-/**
- * Footer Component
- *
- * A simple footer to display the team name and the license of the app.
- */
-const Footer = () => {
-  const classes = useStyles();
-
-  return (
-    <footer className={classes.footer}>
-      <Typography variant='body2'>
-        Copyright © 2021 Equipa URIsolve. All rights reserved.
-      </Typography>
-    </footer>
   );
 };
 

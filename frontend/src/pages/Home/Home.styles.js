@@ -81,12 +81,4 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
-  footer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2F2E41',
-    color: '#ddd',
-    padding: theme.spacing(2),
-  },
 }));
