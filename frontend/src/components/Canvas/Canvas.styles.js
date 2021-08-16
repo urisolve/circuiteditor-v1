@@ -8,7 +8,6 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   canvas: {
-    position: 'relative',
     width: '80%',
     height: '80%',
   },

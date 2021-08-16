@@ -97,7 +97,7 @@ export const ToolsMenu = ({ schematic, selection, history }) => {
     <Grid container direction='row' justifyContent='center' alignItems='center'>
       {tools.map((menu, menuId) => (
         <React.Fragment key={menuId}>
-          {menuId > 0 && (
+          {menuId !== 0 && (
             <Divider className={classes.divider} orientation='vertical' />
           )}
           {menu.map((tool, toolId) => (
