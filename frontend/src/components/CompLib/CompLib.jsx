@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import lodash from 'lodash';
 
 import { compData } from './compData.js';
+import { Comp } from '../Comp/Comp.jsx';
 
 // Material-UI
 import {
@@ -13,42 +14,42 @@ import {
   AccordionDetails,
   TextField,
   InputAdornment,
-  Tooltip,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CloseIcon from '@material-ui/icons/Close';
 import { useStyles } from './CompLib.styles';
 
-export const CompLib = () => {
+export const CompLib = ({ ...rest }) => {
   const classes = useStyles();
-  const [comps, setComps] = useState(compData);
+  const [searchBar, setSearchBar] = useState('');
 
-  /**
-   * Component filtering
-   */
-  const handleFiltering = useCallback(
+  const handleSearchBarChange = useCallback(
     (event) => {
-      setComps((comps) => {
-        // Do a deep copy of the original array of components
-        let filtered = lodash.cloneDeep(comps);
-
-        // Filter the array and re-render it
-        const searchBar = event.target.value;
-        filtered.filter((menu) => {
-          // Remove the components that don't match the filter
-          menu.items = menu.items.filter((item) =>
-            item.name.toLowerCase().includes(searchBar.toLowerCase()),
-          );
-
-          // Remove the menus that get emptied
-          return menu.items.length;
-        });
-
-        return filtered;
-      });
+      setSearchBar(event.target.value);
     },
-    [setComps],
+    [setSearchBar],
   );
+
+  const clearSearchBar = useCallback(() => {
+    setSearchBar('');
+  }, [setSearchBar]);
+
+  const filteredComps = useMemo(() => {
+    // Do a deep copy of the original array of components
+    const filtered = lodash.cloneDeep(compData);
+
+    // Filter the array and re-render it
+    return filtered.filter((menu) => {
+      // Remove the components that don't match the filter
+      menu.items = menu.items.filter((item) =>
+        item.name.toLowerCase().includes(searchBar.toLowerCase()),
+      );
+
+      // Remove the menus that get emptied
+      return menu.items.length;
+    });
+  }, [searchBar]);
 
   return (
     <>
@@ -59,6 +60,7 @@ export const CompLib = () => {
           paper: classes.drawerPaper,
         }}
         open={false}
+        {...rest}
       >
         <Toolbar /> {/* Push the content down by the size of a Toolbar */}
         <div className={classes.drawerContainer}>
@@ -71,28 +73,32 @@ export const CompLib = () => {
               margin='dense'
               label='Search'
               placeholder='Resistor'
+              value={searchBar}
+              onChange={handleSearchBarChange}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
                     <SearchIcon />
                   </InputAdornment>
                 ),
+                endAdornment: (
+                  <InputAdornment position='end' onClick={clearSearchBar}>
+                    {searchBar.length ? <CloseIcon /> : ''}
+                  </InputAdornment>
+                ),
               }}
-              onChange={handleFiltering}
             />
           </div>
 
           <div className={classes.drawerContent}>
-            {comps?.map((menu) => (
+            {filteredComps.map((menu) => (
               <Accordion key={menu.title}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography>{menu.title}</Typography>
                 </AccordionSummary>
                 <AccordionDetails className={classes.compGroup}>
                   {menu.items.map((item) => (
-                    <Tooltip title={item.name} key={item.name} arrow>
-                      <div className={classes.comp}>{item.Element}</div>
-                    </Tooltip>
+                    <Comp key={item.name} {...item} className={classes.comp} />
                   ))}
                 </AccordionDetails>
               </Accordion>
