@@ -47,7 +47,7 @@ export const App = () => {
               {user ? <Circuits /> : <Redirect to='/auth' />}
             </Route>
             <Route path='/circuits/:id'>
-              <Editor />
+              {user ? <Editor /> : <Redirect to='/auth' />}
             </Route>
             <Route path='*'>
               <NotFound />
