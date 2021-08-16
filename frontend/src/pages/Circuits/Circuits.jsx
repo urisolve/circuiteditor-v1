@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 // Custom components
@@ -65,11 +66,13 @@ export const Circuits = () => {
       <Grid container spacing={2}>
         {circuits?.map((circuit) => (
           <Grid key={circuit._id} item>
-            <CircuitCard
-              circuit={circuit}
-              onDelete={() => deleteCircuit(circuit._id)}
-              onExport={exportCircuit}
-            />
+            <Link to={`/circuits/${circuit._id}`} className={classes.link}>
+              <CircuitCard
+                circuit={circuit}
+                onDelete={() => deleteCircuit(circuit._id)}
+                onExport={exportCircuit}
+              />
+            </Link>
           </Grid>
         ))}
 
