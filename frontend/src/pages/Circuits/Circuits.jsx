@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 // Custom components
@@ -14,26 +14,44 @@ export const Circuits = () => {
   const [circuits, setCircuits] = useState([]);
 
   // Fetch all the circuits
-  async function fetchCircuits() {
-    await axios.get('/api/circuits/').then((res) => setCircuits(res.data));
-  }
+  const fetchCircuits = useCallback(async () => {
+    try {
+      const { data } = await axios.get('/api/circuits');
+      setCircuits(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [setCircuits]);
 
   // Adds a new circuit ot the database
-  async function createCircuit() {
-    await axios.post('/api/circuits').then(fetchCircuits);
-  }
+  const createCircuit = useCallback(async () => {
+    try {
+      await axios.post('/api/circuits');
+      fetchCircuits();
+    } catch (err) {
+      console.error(err);
+    }
+  }, [fetchCircuits]);
 
   // Deletes a circuit from the database
-  async function deleteCircuit(id) {
-    await axios.delete(`/api/circuits?id=${id}`).then(fetchCircuits);
-  }
+  const deleteCircuit = useCallback(
+    async (id) => {
+      try {
+        await axios.delete(`/api/circuits?id=${id}`);
+        fetchCircuits();
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [fetchCircuits],
+  );
 
-  function exportCircuit() {}
+  const exportCircuit = useCallback(() => {}, []);
 
   // Fetch all circuits when the page loads
   useEffect(() => {
     fetchCircuits();
-  }, []);
+  }, [fetchCircuits]);
 
   return (
     <Container className={classes.root}>
