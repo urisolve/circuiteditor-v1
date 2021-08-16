@@ -23,13 +23,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   link: {
     marginLeft: theme.spacing(2),
-    color: '#ddd',
+    color: 'white',
     fontSize: theme.spacing(2),
     textDecoration: 'none',
-
-    '&:hover': {
-      color: 'white',
-    },
   },
   action: {
     textDecoration: 'none',

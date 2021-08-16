@@ -23,17 +23,16 @@ export const Navbar = ({ user }) => {
     <AppBar position='relative' className={classes.appBar}>
       <Container>
         <Toolbar className={classes.bar}>
-          <div className={classes.brand}>
-            <Logo className={classes.logo} />
-            <Typography className={classes.title} variant='h5' noWrap>
-              Circuit Editor
-            </Typography>
-          </div>
+          <Link to='/' className={classes.link}>
+            <div className={classes.brand}>
+              <Logo className={classes.logo} />
+              <Typography className={classes.title} variant='h5' noWrap>
+                Circuit Editor
+              </Typography>
+            </div>
+          </Link>
 
           <div className={classes.nav}>
-            <Link to='/' className={classes.link}>
-              Home
-            </Link>
             <Link to='/circuits' className={classes.link}>
               Circuits
             </Link>
