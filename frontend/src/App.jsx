@@ -28,7 +28,7 @@ export const App = () => {
       axios
         .get('/api/auth')
         .then((res) => setUser(res.data))
-        .catch();
+        .catch(console.err);
     }
 
     grabUser();
@@ -60,8 +60,9 @@ export const App = () => {
 
               <main className={classes.content}>
                 <Switch>
-                  <Route exact path='/' component={Home} />
-
+                  <Route exact path='/'>
+                    <Home />
+                  </Route>
                   <Route exact path='/auth'>
                     {user ? (
                       <Redirect to='/circuits' />
@@ -78,8 +79,9 @@ export const App = () => {
                   <Route exact path='/editor'>
                     <Editor />
                   </Route>
-
-                  <Route component={NotFound} />
+                  <Route path='*'>
+                    <NotFound />
+                  </Route>
                 </Switch>
               </main>
             </div>

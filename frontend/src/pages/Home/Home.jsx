@@ -17,6 +17,7 @@ import sss from '../../assets/team/sss.png';
 import {
   Avatar,
   Button,
+  Container,
   FormHelperText,
   Grid,
   TextField,
@@ -66,27 +67,29 @@ const Intro = () => {
 
   return (
     <section className={classes.intro}>
-      <Grid container spacing={10} alignItems='center'>
-        <Grid item xs={12} md className={classes.slogan}>
-          <Typography variant='h2' className={classes.title}>
-            Convert circuit schematics into their analytical model
-          </Typography>
-          <Button
-            size='large'
-            variant='contained'
-            color='primary'
-            classes={{ containedSizeLarge: classes.action }}
-            onClick={() => history.push('/auth')}
-          >
-            Start
-          </Button>
+      <Container>
+        <Grid container spacing={10} alignItems='center'>
+          <Grid item xs={12} md className={classes.slogan}>
+            <Typography variant='h2' className={classes.title} align='left'>
+              Convert circuit schematics into their analytical model
+            </Typography>
+            <Button
+              size='large'
+              variant='contained'
+              color='primary'
+              classes={{ containedSizeLarge: classes.action }}
+              onClick={() => history.push('/auth')}
+            >
+              Start
+            </Button>
+          </Grid>
+          <Grid item xs={12} md>
+            <div>
+              <IntroSVG />
+            </div>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md>
-          <div>
-            <IntroSVG />
-          </div>
-        </Grid>
-      </Grid>
+      </Container>
     </section>
   );
 };
@@ -101,34 +104,36 @@ const Instructions = () => {
 
   return (
     <section className={classes.instructions}>
-      <Grid container spacing={10} alignItems='center'>
-        <Grid item xs={12} md={6}>
-          <div>
-            <StepsSVG />
-          </div>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Grid container spacing={10} justifyContent='center'>
-            <Grid item>
-              <Typography variant='h2'>Instructions</Typography>
-            </Grid>
-            <Grid item>
-              {steps.map((step, id) => (
-                <div className={classes.step} key={id}>
-                  <Typography
-                    variant='h2'
-                    color='primary'
-                    className={classes.liSymbol}
-                  >
-                    {`${id + 1}`}
-                  </Typography>
-                  <Typography variant='h4'>{step}</Typography>
-                </div>
-              ))}
+      <Container>
+        <Grid container spacing={10} alignItems='center'>
+          <Grid item xs={12} md={6}>
+            <div>
+              <StepsSVG />
+            </div>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Grid container spacing={10} justifyContent='center'>
+              <Grid item>
+                <Typography variant='h2'>Instructions</Typography>
+              </Grid>
+              <Grid item>
+                {steps.map((step, id) => (
+                  <div className={classes.step} key={id}>
+                    <Typography
+                      variant='h2'
+                      color='primary'
+                      className={classes.liSymbol}
+                    >
+                      {`${id + 1}`}
+                    </Typography>
+                    <Typography variant='h4'>{step}</Typography>
+                  </div>
+                ))}
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </section>
   );
 };
@@ -236,19 +241,21 @@ const Contact = () => {
 
   return (
     <section className={classes.contact}>
-      <Grid container direction='column' alignItems='center' spacing={10}>
-        <Grid item>
-          <Typography variant='h2'>Contact</Typography>
+      <Container>
+        <Grid container direction='column' alignItems='center' spacing={10}>
+          <Grid item>
+            <Typography variant='h2'>Contact</Typography>
+          </Grid>
+          <Grid item className={classes.team}>
+            {members.map((member) => (
+              <TeamMember member={member} key={member.name} />
+            ))}
+          </Grid>
+          <Grid item xs={12}>
+            <ContactForm />
+          </Grid>
         </Grid>
-        <Grid item className={classes.team}>
-          {members.map((member) => (
-            <TeamMember member={member} key={member.name} />
-          ))}
-        </Grid>
-        <Grid item xs={12}>
-          <ContactForm />
-        </Grid>
-      </Grid>
+      </Container>
     </section>
   );
 };

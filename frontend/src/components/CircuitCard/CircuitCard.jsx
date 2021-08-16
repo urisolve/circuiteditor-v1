@@ -19,8 +19,12 @@ export const CircuitCard = ({ circuit, onDelete, onExport }) => {
 
   return (
     <Card classes={{ root: classes.root }} elevation={3}>
-      <CardActionArea>
-        <CardMedia image={circuit?.thumbnail} src={circuit?.name} />
+      <CardActionArea className={classes.actionArea}>
+        {circuit?.thumbnail ? (
+          <CardMedia image={circuit?.thumbnail} src={circuit?.name} />
+        ) : (
+          <div className={classes.placeHolderImage} />
+        )}
         <CardHeader
           title={circuit?.name}
           titleTypographyProps={{ noWrap: true }}

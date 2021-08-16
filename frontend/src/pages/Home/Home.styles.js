@@ -16,11 +16,10 @@ export const useStyles = makeStyles((theme) => ({
   slogan: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   title: {
-    textAlign: 'center',
     marginBottom: theme.spacing(5),
   },
   action: {

@@ -6,7 +6,7 @@ import { CircuitCard } from '../../components/CircuitCard';
 import { NewCircuitCard } from '../../components/NewCircuitCard';
 
 // Material-UI
-import { Typography, Grid, Paper } from '@material-ui/core';
+import { Typography, Grid, Container } from '@material-ui/core';
 import { useStyles } from './Circuits.styles';
 
 export const Circuits = () => {
@@ -36,31 +36,29 @@ export const Circuits = () => {
   }, []);
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.container} elevation={3}>
-        <div className={classes.header}>
-          <Typography variant='h5'>My Circuits</Typography>
-          <Typography variant='body1'>
-            Here you can find the circuits that you have saved.
-          </Typography>
-        </div>
+    <Container className={classes.root}>
+      <div className={classes.header}>
+        <Typography variant='h3'>Your Circuits</Typography>
+        <Typography variant='h5'>
+          Here you can find the circuits that you have saved.
+        </Typography>
+      </div>
 
-        <Grid container spacing={2}>
-          {circuits?.map((circuit) => (
-            <Grid key={circuit._id} item>
-              <CircuitCard
-                circuit={circuit}
-                onDelete={() => deleteCircuit(circuit._id)}
-                onExport={exportCircuit}
-              />
-            </Grid>
-          ))}
-
-          <Grid item>
-            <NewCircuitCard onClick={createCircuit} />
+      <Grid container spacing={2}>
+        {circuits?.map((circuit) => (
+          <Grid key={circuit._id} item>
+            <CircuitCard
+              circuit={circuit}
+              onDelete={() => deleteCircuit(circuit._id)}
+              onExport={exportCircuit}
+            />
           </Grid>
+        ))}
+
+        <Grid item>
+          <NewCircuitCard onClick={createCircuit} />
         </Grid>
-      </Paper>
-    </div>
+      </Grid>
+    </Container>
   );
 };

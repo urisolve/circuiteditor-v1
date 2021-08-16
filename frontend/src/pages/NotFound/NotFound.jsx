@@ -4,13 +4,13 @@ import { ReactComponent as NotFoundSVG } from '../../assets/undraw/not-found.svg
 
 // Material-UI
 import { useStyles } from './NotFound.styles';
-import { Grid, Typography } from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
 
 export const NotFound = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <Container className={classes.root}>
       <Grid container alignItems='center' justifyContent='center' spacing={10}>
         <Grid item xs={12} lg={5}>
           <NotFoundSVG />
@@ -22,6 +22,6 @@ export const NotFound = () => {
           </Typography>
         </Grid>
       </Grid>
-    </div>
+    </Container>
   );
 };
