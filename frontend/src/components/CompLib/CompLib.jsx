@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import lodash from 'lodash';
 
-import { compData } from './compData.js';
-import { Comp } from '../Comp/Comp.jsx';
+import { compData } from './compData';
+import { Comp } from '../Comp';
 
 // Material-UI
 import {
@@ -24,16 +24,11 @@ export const CompLib = ({ ...rest }) => {
   const classes = useStyles();
   const [searchBar, setSearchBar] = useState('');
 
+  const clearSearchBar = useCallback(() => setSearchBar(''), [setSearchBar]);
   const handleSearchBarChange = useCallback(
-    (event) => {
-      setSearchBar(event.target.value);
-    },
+    (event) => setSearchBar(event.target.value),
     [setSearchBar],
   );
-
-  const clearSearchBar = useCallback(() => {
-    setSearchBar('');
-  }, [setSearchBar]);
 
   const filteredComps = useMemo(() => {
     // Do a deep copy of the original array of components
