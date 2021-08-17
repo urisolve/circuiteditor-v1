@@ -75,6 +75,17 @@ export const CompLib = ({ addToSchematic, ...rest }) => {
                 </AccordionDetails>
               </Accordion>
             ))}
+
+            {filteredComps.length === 0 && (
+              <>
+                <Typography variant='h6' align='center'>
+                  Nothing found
+                </Typography>
+                <Typography variant='body1' align='center'>
+                  There are no components that match that name
+                </Typography>
+              </>
+            )}
           </div>
         </div>
       </Drawer>
