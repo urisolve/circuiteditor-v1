@@ -30,7 +30,7 @@ export const SearchBar = ({ value, setter }) => {
         ),
         endAdornment: (
           <InputAdornment position='end' onClick={clearValue}>
-            {value.length ? <CloseIcon /> : ''}
+            {value.length ? <CloseIcon fontSize='small' /> : ''}
           </InputAdornment>
         ),
       }}
