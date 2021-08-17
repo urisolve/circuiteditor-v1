@@ -3,6 +3,7 @@ import lodash from 'lodash';
 
 import { compData } from './compData';
 import { Comp } from '../Comp';
+import { SearchBar } from '../SearchBar';
 
 // Material-UI
 import {
@@ -23,12 +24,6 @@ import { useStyles } from './CompLib.styles';
 export const CompLib = ({ ...rest }) => {
   const classes = useStyles();
   const [searchBar, setSearchBar] = useState('');
-
-  const clearSearchBar = useCallback(() => setSearchBar(''), [setSearchBar]);
-  const handleSearchBarChange = useCallback(
-    (event) => setSearchBar(event.target.value),
-    [setSearchBar],
-  );
 
   const filteredComps = useMemo(() => {
     // Do a deep copy of the original array of components
@@ -63,26 +58,7 @@ export const CompLib = ({ ...rest }) => {
             <Typography className={classes.drawerTitle} variant='h5' noWrap>
               Components
             </Typography>
-            <TextField
-              variant='outlined'
-              margin='dense'
-              label='Search'
-              placeholder='Resistor'
-              value={searchBar}
-              onChange={handleSearchBarChange}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position='end' onClick={clearSearchBar}>
-                    {searchBar.length ? <CloseIcon /> : ''}
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <SearchBar value={searchBar} setter={setSearchBar} />
           </div>
 
           <div className={classes.drawerContent}>
