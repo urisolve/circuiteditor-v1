@@ -13,7 +13,4 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     marginLeft: theme.spacing(4),
   },
-  link: {
-    textDecoration: 'none',
-  },
 }));

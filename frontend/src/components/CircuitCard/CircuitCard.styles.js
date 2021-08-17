@@ -18,4 +18,8 @@ export const useStyles = makeStyles((theme) => ({
     height: '100%',
     backgroundColor: 'grey',
   },
+  link: {
+    textDecoration: 'none',
+    color: grey[900],
+  },
 }));

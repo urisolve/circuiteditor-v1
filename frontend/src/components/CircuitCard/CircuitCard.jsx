@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Material-UI
 import {
@@ -20,16 +21,18 @@ export const CircuitCard = ({ circuit, onDelete, onExport }) => {
   return (
     <Card classes={{ root: classes.root }} elevation={3}>
       <CardActionArea className={classes.actionArea}>
-        {circuit?.thumbnail ? (
-          <CardMedia image={circuit?.thumbnail} src={circuit?.name} />
-        ) : (
-          <div className={classes.placeHolderImage} />
-        )}
-        <CardHeader
-          title={circuit?.name}
-          titleTypographyProps={{ noWrap: true }}
-          subheader={Date(circuit?.createdAt).toString().slice(0, 24)}
-        />
+        <Link to={`/circuits/${circuit._id}`} className={classes.link}>
+          {circuit?.thumbnail ? (
+            <CardMedia image={circuit?.thumbnail} src={circuit?.name} />
+          ) : (
+            <div className={classes.placeHolderImage} />
+          )}
+          <CardHeader
+            title={circuit?.name}
+            titleTypographyProps={{ noWrap: true }}
+            subheader={Date(circuit?.createdAt).toString().slice(0, 24)}
+          />
+        </Link>
       </CardActionArea>
       <CardActions>
         <Tooltip title='Export' arrow>
