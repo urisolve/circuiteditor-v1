@@ -5,17 +5,18 @@ import { useSchematic } from 'react-circuit-schematics';
 import { CompLib } from '../../components/CompLib';
 import { ToolsMenu } from '../../components/ToolsMenu';
 import { Canvas } from '../../components/Canvas';
+import { defaultCircuit } from './defaultCircuit';
 
 // Material-UI
 import { useStyles } from './Editor.styles';
 
 export const Editor = ({ ...rest }) => {
   const classes = useStyles();
-  const { schematic, history, selection } = useSchematic();
+  const { schematic, history, selection } = useSchematic(defaultCircuit);
 
   return (
     <div className={classes.sidebar}>
-      <CompLib />
+      <CompLib addToSchematic={schematic.add} />
       <div className={classes.canvas}>
         <ToolsMenu
           schematic={schematic}

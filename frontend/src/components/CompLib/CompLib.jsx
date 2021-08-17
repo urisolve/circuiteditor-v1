@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import lodash from 'lodash';
 
 import { compData } from './compData';
@@ -13,15 +13,11 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  TextField,
-  InputAdornment,
 } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import CloseIcon from '@material-ui/icons/Close';
 import { useStyles } from './CompLib.styles';
 
-export const CompLib = ({ ...rest }) => {
+export const CompLib = ({ addToSchematic, ...rest }) => {
   const classes = useStyles();
   const [searchBar, setSearchBar] = useState('');
 
@@ -69,7 +65,12 @@ export const CompLib = ({ ...rest }) => {
                 </AccordionSummary>
                 <AccordionDetails className={classes.compGroup}>
                   {menu.items.map((item) => (
-                    <Comp key={item.name} {...item} className={classes.comp} />
+                    <Comp
+                      key={item.name}
+                      className={classes.comp}
+                      onDoubleClick={() => addToSchematic?.(item.struct)}
+                      {...item}
+                    />
                   ))}
                 </AccordionDetails>
               </Accordion>
