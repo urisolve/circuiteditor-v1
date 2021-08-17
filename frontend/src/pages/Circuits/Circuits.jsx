@@ -63,7 +63,12 @@ export const Circuits = () => {
         </Typography>
       </div>
 
-      <Grid container spacing={2}>
+      <Grid
+        container
+        spacing={2}
+        justifyContent='center'
+        alignItems='flex-start'
+      >
         {circuits?.map((circuit) => (
           <Grid key={circuit._id} item>
             <Link to={`/circuits/${circuit._id}`} className={classes.link}>
