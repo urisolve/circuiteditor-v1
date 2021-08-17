@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import lodash from 'lodash';
 import axios from 'axios';
 
 // Custom components
@@ -24,9 +25,9 @@ export const Circuits = () => {
   }, [setCircuits]);
 
   // Adds a new circuit ot the database
-  const createCircuit = useCallback(async () => {
+  const createCircuit = useCallback(() => {
     try {
-      await axios.post('/api/circuits');
+      axios.post('/api/circuits');
       fetchCircuits();
     } catch (err) {
       console.error(err);
@@ -35,15 +36,15 @@ export const Circuits = () => {
 
   // Deletes a circuit from the database
   const deleteCircuit = useCallback(
-    async (id) => {
+    (id) => {
       try {
-        await axios.delete(`/api/circuits?id=${id}`);
-        fetchCircuits();
+        axios.delete(`/api/circuits?id=${id}`);
+        setCircuits((circuits) => lodash.reject(circuits, { _id: id }));
       } catch (err) {
         console.error(err);
       }
     },
-    [fetchCircuits],
+    [setCircuits],
   );
 
   const exportCircuit = useCallback(() => {}, []);
@@ -73,7 +74,7 @@ export const Circuits = () => {
             <CircuitCard
               circuit={circuit}
               onDelete={() => deleteCircuit(circuit._id)}
-              onExport={exportCircuit}
+              onExport={() => exportCircuit(circuit)}
             />
           </Grid>
         ))}
