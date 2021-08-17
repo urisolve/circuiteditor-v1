@@ -4847,7 +4847,7 @@ eslint-webpack-plugin@^2.1.0:
     normalize-path "^3.0.0"
     schema-utils "^3.0.0"
 
-eslint@^7.11.0:
+eslint@^7.11.0, eslint@^7.32.0:
   version "7.32.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.32.0.tgz#c6d328a14be3fb08c8d1d21e12c02fdb7a2a812d"
   integrity sha512-VHZ8gX+EDfz+97jGcgyGCyRia/dPOd6Xh9yPv8Bl1+SoaIwD+a/vlrOmGRUyOYu7MwUhc7CxqeaDZU13S4+EpA==
@@ -9147,6 +9147,11 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
+prettier@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.2.tgz#ef280a05ec253712e486233db5c6f23441e7342d"
+  integrity sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==
+
 pretty-bytes@^5.3.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f643804773c82f64723fe78c92c62beaeb"
@@ -9394,10 +9399,10 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
-react-circuit-schematics@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-circuit-schematics/-/react-circuit-schematics-1.1.1.tgz#1d5d9dca3dbfdcd2e47b9f8d063f0e1b00109e61"
-  integrity sha512-u71JiPLHRge0QKGGL+t+PFPZTx4EoGyBIHGj6+D7OLbZzFw7/Ts0uFcBG1M3ckaaevDGZKKBRPX7DfRT7qZ+Kw==
+react-circuit-schematics@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-circuit-schematics/-/react-circuit-schematics-1.2.0.tgz#37626d9e07e7621d642da2f2ccd0a52f53059c99"
+  integrity sha512-qdz2SeCxUVrxKloIBUtRUX1lkaJXhvnxQT8OU+rj1LKJcJ7mqDVlFDGm/kITpbeI+I94b5Y2ivR5h+09LZoH8w==
 
 react-dev-utils@^11.0.2:
   version "11.0.4"
