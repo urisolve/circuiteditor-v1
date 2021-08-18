@@ -48,6 +48,7 @@ router.patch('/', isAuth, hasCircuitID, async (req, res) => {
       $set: {
         'circuits.$.data': req.body.data,
         'circuits.$.name': req.body.name,
+        'circuits.$.isStared': req.body.isStared,
         'circuits.$.thumbnail': req.body.thumbnail,
       },
     },

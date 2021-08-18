@@ -3,22 +3,30 @@ const mongoose = require('mongoose');
 const componentSchema = new mongoose.Schema({
   id: { type: String, required: true },
   type: String,
-  name: {
+  ports: [
+    {
+      id: { type: String, requited: true },
+      connection: String,
+      type: String,
+      position: {
+        x: Number,
+        y: Number,
+      },
+    },
+  ],
+  position: {
+    x: Number,
+    y: Number,
+    angle: Number,
+  },
+  label: {
+    name: String,
     value: String,
+    unit: String,
     position: {
       x: Number,
       y: Number,
     },
-  },
-  value: {
-    unit: String,
-    value: Number,
-  },
-  position: {
-    x: Number,
-    y: Number,
-    z: Number,
-    angle: Number,
   },
   frequency: {
     unit: String,
@@ -42,17 +50,6 @@ const componentSchema = new mongoose.Schema({
       value: Number,
     },
   },
-  ports: [
-    {
-      id: { type: String, requited: true },
-      type: String,
-      policy: String,
-      position: {
-        x: Number,
-        y: Number,
-      },
-    },
-  ],
 });
 
 module.exports = componentSchema;

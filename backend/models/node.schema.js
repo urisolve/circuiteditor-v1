@@ -3,24 +3,21 @@ const connectionSchema = require('./connection.schema');
 
 const nodeSchema = new mongoose.Schema({
   id: { type: String, required: true },
+  connections: [connectionSchema],
   type: String,
-  name: {
+  position: {
+    x: Number,
+    y: Number,
+  },
+  label: {
+    name: String,
     value: String,
+    unit: String,
     position: {
       x: Number,
       y: Number,
     },
   },
-  connections: [connectionSchema],
-  value: {
-    unit: String,
-    value: Number,
-  },
-  position: {
-    x: Number,
-    y: Number,
-  },
-  policy: String,
   properties: {
     color: String,
     radius: Number,
