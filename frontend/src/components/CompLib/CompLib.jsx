@@ -78,7 +78,7 @@ export const CompLib = ({ addToSchematic, ...rest }) => {
 
             {filteredComps.length === 0 && (
               <>
-                <Typography variant='h6' align='center'>
+                <Typography variant='h6' align='center' gutterBottom>
                   Nothing found
                 </Typography>
                 <Typography variant='body1' align='center'>
