@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import lodash from 'lodash';
 import axios from 'axios';
 
 // Custom components
@@ -49,6 +50,21 @@ export const Circuits = () => {
   // TODO: export circuit data
   const exportCircuit = useCallback((circuit) => {}, []);
 
+  const starCircuit = useCallback(
+    async (id) => {
+      const circuit = lodash.find(circuits, { _id: id });
+      const newCircuit = { ...circuit, isStared: !circuit.isStared };
+
+      try {
+        await axios.patch(`/api/circuits?id=${id}`, newCircuit);
+        fetchCircuits();
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [fetchCircuits, circuits],
+  );
+
   // Fetch all circuits when the page loads
   useEffect(() => {
     fetchCircuits();
@@ -75,6 +91,7 @@ export const Circuits = () => {
               circuit={circuit}
               onDelete={() => deleteCircuit(circuit._id)}
               onExport={() => exportCircuit(circuit)}
+              onStar={() => starCircuit(circuit._id)}
             />
           </Grid>
         ))}

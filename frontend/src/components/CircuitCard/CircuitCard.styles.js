@@ -25,4 +25,7 @@ export const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: grey[900],
   },
+  spacer: {
+    flexGrow: 1,
+  },
 }));

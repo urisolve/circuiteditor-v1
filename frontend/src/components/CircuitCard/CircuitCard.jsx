@@ -14,9 +14,11 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import StarIcon from '@material-ui/icons/Star';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { useStyles } from './CircuitCard.styles';
 
-export const CircuitCard = ({ circuit, onDelete, onExport }) => {
+export const CircuitCard = ({ circuit, onDelete, onExport, onStar }) => {
   const classes = useStyles();
 
   const timeSince = useMemo(
@@ -49,6 +51,17 @@ export const CircuitCard = ({ circuit, onDelete, onExport }) => {
         <Tooltip title='Delete' arrow>
           <IconButton onClick={onDelete}>
             <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+        <div className={classes.spacer} />
+        <Tooltip
+          title={
+            circuit.isStared ? 'Remove from favorites' : 'Add to favorites'
+          }
+          arrow
+        >
+          <IconButton onClick={onStar}>
+            {circuit.isStared ? <StarIcon /> : <StarBorderIcon />}
           </IconButton>
         </Tooltip>
       </CardActions>
