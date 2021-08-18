@@ -10,6 +10,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
     "axios": "^0.21.1",
+    "crypto-js": "^4.1.1",
     "import-jquery": "^1.0.1",
     "jquery": "^3.5.1",
     "jquery-ui-bundle": "^1.12.1-migrate",

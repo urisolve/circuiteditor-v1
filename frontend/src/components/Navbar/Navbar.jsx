@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useGravatar } from '../../hooks/useGravatar';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 
 // Material-UI components
@@ -18,6 +19,7 @@ import { useStyles } from './Navbar.styles';
 
 export const Navbar = ({ user }) => {
   const classes = useStyles();
+  const gravatar = useGravatar(user?.email);
 
   return (
     <AppBar position='relative' className={classes.appBar}>
@@ -46,7 +48,7 @@ export const Navbar = ({ user }) => {
                     <IconButton color='inherit'>
                       <Avatar
                         alt={`${user.firstName} ${user.lastName}`}
-                        src={user.avatar}
+                        src={gravatar}
                       />
                     </IconButton>
                   </Tooltip>
