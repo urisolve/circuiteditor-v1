@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useGravatar } from '../../hooks/useGravatar';
-import { ReactComponent as Logo } from '../../assets/logo.svg';
+import { ReactComponent as Logo } from '../../assets/brand/logo.svg';
 
 // Material-UI components
 import {
