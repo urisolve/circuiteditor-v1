@@ -31,7 +31,7 @@ export const CircuitCard = ({ circuit, onDelete, onExport }) => {
           {circuit?.thumbnail ? (
             <CardMedia image={circuit.thumbnail} src={circuit.name} />
           ) : (
-            <div className={classes.placeHolderImage} />
+            <div id='placeholder' className={classes.placeHolderImage} />
           )}
           <CardHeader
             title={circuit.name}

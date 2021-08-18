@@ -1,10 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
 
+const cardWidth = 300;
+const cardHeight = 300;
+
 export const useStyles = makeStyles((theme) => ({
   root: {
-    width: 300,
-    height: 300,
+    width: cardWidth,
+    height: cardHeight,
     backgroundColor: grey[50],
   },
   actionArea: {
@@ -14,8 +17,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   placeHolderImage: {
     flexGrow: 1,
-    width: '100%',
-    height: '100%',
+    width: cardWidth,
+    height: cardHeight / 2,
     backgroundColor: 'grey',
   },
   link: {
