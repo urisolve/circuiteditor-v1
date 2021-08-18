@@ -36,8 +36,7 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  userName: {
-    textDecoration: 'none',
-    color: 'white',
+  avatar: {
+    marginRight: theme.spacing(2),
   },
 }));

@@ -11,8 +11,6 @@ import {
   Typography,
   Avatar,
   Button,
-  IconButton,
-  Tooltip,
   Container,
 } from '@material-ui/core';
 import { useStyles } from './Navbar.styles';
@@ -42,16 +40,13 @@ export const Navbar = ({ user }) => {
 
           <div>
             {user ? (
-              <Link to='/account' className={classes.userName}>
+              <Link to='/account' className={classes.link}>
                 <div className={classes.user}>
-                  <Tooltip title='My Account' arrow>
-                    <IconButton color='inherit'>
-                      <Avatar
-                        alt={`${user.firstName} ${user.lastName}`}
-                        src={gravatar}
-                      />
-                    </IconButton>
-                  </Tooltip>
+                  <Avatar
+                    className={classes.avatar}
+                    alt={`${user.firstName} ${user.lastName}`}
+                    src={gravatar}
+                  />
                   <Typography>
                     {`${user.firstName} ${user.lastName}`}
                   </Typography>
