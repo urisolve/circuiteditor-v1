@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 // Material-UI
@@ -18,19 +19,24 @@ import { useStyles } from './CircuitCard.styles';
 export const CircuitCard = ({ circuit, onDelete, onExport }) => {
   const classes = useStyles();
 
+  const timeSince = useMemo(
+    () => moment(circuit.updatedAt).fromNow(),
+    [circuit.updatedAt],
+  );
+
   return (
     <Card classes={{ root: classes.root }} elevation={3}>
       <CardActionArea className={classes.actionArea}>
         <Link to={`/circuits/${circuit._id}`} className={classes.link}>
           {circuit?.thumbnail ? (
-            <CardMedia image={circuit?.thumbnail} src={circuit?.name} />
+            <CardMedia image={circuit.thumbnail} src={circuit.name} />
           ) : (
             <div className={classes.placeHolderImage} />
           )}
           <CardHeader
-            title={circuit?.name}
+            title={circuit.name}
             titleTypographyProps={{ noWrap: true }}
-            subheader={Date(circuit?.createdAt).toString().slice(0, 24)}
+            subheader={timeSince}
           />
         </Link>
       </CardActionArea>
