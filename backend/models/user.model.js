@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const circuitSchema = require('./circuit.model');
+const circuitSchema = require('./circuit.schema');
 const settingsSchema = require('./settings.schema');
 
 const userSchema = new mongoose.Schema(

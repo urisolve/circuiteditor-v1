@@ -18,7 +18,7 @@ function hasCircuitID(req, res, next) {
 router.get('/', isAuth, async (req, res) => {
   res.status(200).json(
     req.user._doc.circuits.map((circuit) => {
-      delete circuit.data;
+      // delete circuit.data;
       return circuit;
     }),
   );
@@ -48,11 +48,16 @@ router.patch('/', isAuth, hasCircuitID, async (req, res) => {
       $set: {
         'circuits.$.data': req.body.data,
         'circuits.$.name': req.body.name,
+        'circuits.$.description': req.body.description,
         'circuits.$.isStared': req.body.isStared,
         'circuits.$.thumbnail': req.body.thumbnail,
       },
     },
-    { omitUndefined: true },
+    {
+      omitUndefined: true,
+      timestamps:
+        req.body.timestamps !== undefined ? req.body.timestamps : true,
+    },
   )
     .then(() => res.status(200).send('Circuit updated'))
     .catch(() => res.status(400).send('Circuit failed to update'));
