@@ -22,8 +22,8 @@ export const CircuitCard = ({ circuit, onDelete, onExport, onStar }) => {
   const classes = useStyles();
 
   const timeSince = useMemo(
-    () => moment(circuit.updatedAt).fromNow(),
-    [circuit.updatedAt],
+    () => moment(circuit.data.updatedAt).fromNow(),
+    [circuit.data.updatedAt],
   );
 
   return (

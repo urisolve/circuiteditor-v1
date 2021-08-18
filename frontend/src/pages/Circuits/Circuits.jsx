@@ -53,7 +53,11 @@ export const Circuits = () => {
   const starCircuit = useCallback(
     async (id) => {
       const circuit = lodash.find(circuits, { _id: id });
-      const newCircuit = { ...circuit, isStared: !circuit.isStared };
+      const newCircuit = {
+        ...circuit,
+        isStared: !circuit.isStared,
+        timestamps: false,
+      };
 
       try {
         await axios.patch(`/api/circuits?id=${id}`, newCircuit);
