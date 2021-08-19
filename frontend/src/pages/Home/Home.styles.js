@@ -90,4 +90,12 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'block',
   },
+  footer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#3F51B5',
+    color: 'white',
+    padding: theme.spacing(2),
+  },
 }));
