@@ -58,10 +58,6 @@ export const useStyles = makeStyles((theme) => ({
   liSymbol: {
     marginRight: theme.spacing(5),
   },
-  teamMember: {
-    width: 200,
-    paddingBottom: theme.spacing(5),
-  },
   contact: {
     display: 'flex',
     flexDirection: 'column',
@@ -73,10 +69,6 @@ export const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  avatar: {
-    width: theme.spacing(15),
-    height: theme.spacing(20),
   },
   contactForm: {
     maxWidth: 800,
