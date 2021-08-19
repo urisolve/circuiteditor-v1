@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import lodash from 'lodash';
 import axios from 'axios';
 
@@ -13,6 +13,15 @@ import { useStyles } from './Circuits.styles';
 export const Circuits = () => {
   const classes = useStyles();
   const [circuits, setCircuits] = useState([]);
+
+  const sortedCircuits = useMemo(
+    () =>
+      circuits.sort(
+        (a, b) =>
+          (a.updatedAt < b.updatedAt) * 1 + (a.updatedAt > b.updatedAt) * -1,
+      ),
+    [circuits],
+  );
 
   // Fetch all the circuits
   const fetchCircuits = useCallback(async () => {
@@ -74,9 +83,9 @@ export const Circuits = () => {
   return (
     <Container className={classes.root}>
       <div className={classes.header}>
-        <Typography variant='h4'>Your Circuits</Typography>
+        <Typography variant='h4'>All Circuits</Typography>
         <Typography>
-          Here you can find the circuits that you have saved.
+          Here you can find all of the circuits that you have saved.
         </Typography>
       </div>
 
@@ -86,7 +95,7 @@ export const Circuits = () => {
         justifyContent='center'
         alignItems='flex-start'
       >
-        {circuits?.map((circuit) => (
+        {sortedCircuits?.map((circuit) => (
           <Grid key={circuit._id} item>
             <CircuitCard
               circuit={circuit}
