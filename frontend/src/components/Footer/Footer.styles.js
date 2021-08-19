@@ -5,8 +5,8 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#2F2E41',
-    color: '#ddd',
+    backgroundColor: '#3F51B5',
+    color: 'white',
     padding: theme.spacing(2),
   },
 }));

@@ -3,6 +3,10 @@ import { useHistory } from 'react-router-dom';
 
 import { Footer } from '../../components/Footer';
 
+// Waves SVGs
+import { ReactComponent as TopWaveSVG } from '../../assets/waves/wave-top.svg';
+import { ReactComponent as BottomWaveSVG } from '../../assets/waves/wave-bottom.svg';
+
 // SVGs from unDraw
 import { ReactComponent as IntroSVG } from '../../assets/undraw/intro.svg';
 import { ReactComponent as StepsSVG } from '../../assets/undraw/steps.svg';
@@ -275,8 +279,11 @@ export const Home = () => {
   return (
     <div className={classes.home}>
       <Intro />
+      <TopWaveSVG className={classes.wave} />
       <Instructions />
+      <BottomWaveSVG className={classes.wave} />
       <Contact />
+      <TopWaveSVG className={classes.wave} />
       <Footer />
     </div>
   );

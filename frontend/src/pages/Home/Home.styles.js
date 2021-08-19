@@ -7,9 +7,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   section: {
     padding: `
-      ${theme.spacing(15)}px 
       ${theme.spacing(10)}px 
-      ${theme.spacing(15)}px 
+      ${theme.spacing(10)}px 
+      ${theme.spacing(10)}px 
       ${theme.spacing(10)}px 
     `,
   },
@@ -47,8 +47,8 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#2F2E41',
-    color: '#ddd',
+    backgroundColor: indigo[500],
+    color: 'white',
   },
   step: {
     display: 'flex',
@@ -84,5 +84,10 @@ export const useStyles = makeStyles((theme) => ({
   formButton: {
     display: 'flex',
     justifyContent: 'center',
+  },
+  wave: {
+    height: 200,
+    width: '100%',
+    display: 'block',
   },
 }));
