@@ -7,9 +7,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   section: {
     padding: `
+      ${theme.spacing(15)}px 
       ${theme.spacing(10)}px 
-      ${theme.spacing(10)}px 
-      ${theme.spacing(10)}px 
+      ${theme.spacing(15)}px 
       ${theme.spacing(10)}px 
     `,
   },
