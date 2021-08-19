@@ -32,6 +32,10 @@ export const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     marginLeft: theme.spacing(5),
   },
+  menuLink: {
+    color: 'black',
+    textDecoration: 'none',
+  },
   action: {
     textDecoration: 'none',
     color: 'white',
@@ -41,8 +45,5 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  avatar: {
-    marginRight: theme.spacing(2),
   },
 }));

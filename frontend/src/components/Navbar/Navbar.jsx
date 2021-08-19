@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useGravatar } from '../../hooks/useGravatar';
@@ -13,12 +13,23 @@ import {
   Button,
   Container,
   Hidden,
+  Menu,
+  MenuItem,
+  IconButton,
 } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useStyles } from './Navbar.styles';
 
 export const Navbar = ({ user }) => {
   const classes = useStyles();
   const gravatar = useGravatar(user?.email);
+
+  const anchorEl = useRef();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const openMenu = () => setIsMenuOpen(true);
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const sm = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
   return (
     <AppBar position='relative' className={classes.appBar}>
@@ -44,30 +55,73 @@ export const Navbar = ({ user }) => {
             </Hidden>
           </div>
 
-          <div>
-            {user ? (
-              <Link to='/account' className={classes.link}>
-                <div className={classes.user}>
+          {user ? (
+            sm ? (
+              <Button
+                ref={anchorEl}
+                onClick={openMenu}
+                startIcon={
                   <Avatar
                     className={classes.avatar}
                     alt={`${user.firstName} ${user.lastName}`}
                     src={gravatar}
                   />
-                  <Hidden xsDown>
-                    <Typography>
-                      {`${user.firstName} ${user.lastName}`}
-                    </Typography>
-                  </Hidden>
-                </div>
-              </Link>
+                }
+                variant='contained'
+                color='primary'
+                disableElevation
+                disableFocusRipple
+                style={{ backgroundColor: 'transparent' }}
+              >
+                {`${user.firstName} ${user.lastName}`}
+              </Button>
             ) : (
-              <Link to='/auth' className={classes.action}>
-                <Button color='inherit'>Login</Button>
-              </Link>
-            )}
-          </div>
+              <IconButton ref={anchorEl} onClick={openMenu}>
+                <Avatar
+                  alt={`${user.firstName} ${user.lastName}`}
+                  src={gravatar}
+                />
+              </IconButton>
+            )
+          ) : (
+            <Link to='/auth' className={classes.action}>
+              <Button color='inherit'>Login</Button>
+            </Link>
+          )}
         </Toolbar>
       </Container>
+
+      <Menu
+        getContentAnchorEl={null}
+        anchorEl={anchorEl.current}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={isMenuOpen}
+        onClose={closeMenu}
+        keepMounted
+      >
+        <MenuItem onClick={closeMenu}>
+          <Link to='/circuits' className={classes.menuLink}>
+            My Circuits
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={closeMenu}>
+          <Link to='/account' className={classes.menuLink}>
+            Account
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={closeMenu}>
+          <Link to='/settings' className={classes.menuLink}>
+            Settings
+          </Link>
+        </MenuItem>
+      </Menu>
     </AppBar>
   );
 };
