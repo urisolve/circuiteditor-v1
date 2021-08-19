@@ -12,6 +12,7 @@ import {
   Avatar,
   Button,
   Container,
+  Hidden,
 } from '@material-ui/core';
 import { useStyles } from './Navbar.styles';
 
@@ -33,12 +34,14 @@ export const Navbar = ({ user }) => {
           </Link>
 
           <div className={classes.nav}>
-            <a href='#instructions' className={classes.navLink}>
-              Instructions
-            </a>
-            <a href='#contact' className={classes.navLink}>
-              Contact
-            </a>
+            <Hidden smDown>
+              <a href='#instructions' className={classes.navLink}>
+                Instructions
+              </a>
+              <a href='#contact' className={classes.navLink}>
+                Contact
+              </a>
+            </Hidden>
           </div>
 
           <div>
@@ -50,9 +53,11 @@ export const Navbar = ({ user }) => {
                     alt={`${user.firstName} ${user.lastName}`}
                     src={gravatar}
                   />
-                  <Typography>
-                    {`${user.firstName} ${user.lastName}`}
-                  </Typography>
+                  <Hidden xsDown>
+                    <Typography>
+                      {`${user.firstName} ${user.lastName}`}
+                    </Typography>
+                  </Hidden>
                 </div>
               </Link>
             ) : (
