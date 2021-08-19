@@ -47,9 +47,6 @@ export const Circuits = () => {
     [fetchCircuits],
   );
 
-  // TODO: export circuit data
-  const exportCircuit = useCallback((circuit) => {}, []);
-
   const starCircuit = useCallback(
     async (id) => {
       const circuit = lodash.find(circuits, { _id: id });
@@ -94,7 +91,6 @@ export const Circuits = () => {
             <CircuitCard
               circuit={circuit}
               onDelete={() => deleteCircuit(circuit._id)}
-              onExport={() => exportCircuit(circuit)}
               onStar={() => starCircuit(circuit._id)}
             />
           </Grid>

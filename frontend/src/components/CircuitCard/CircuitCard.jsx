@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 // Material-UI
 import {
@@ -24,7 +24,7 @@ import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { useStyles } from './CircuitCard.styles';
 
-export const CircuitCard = ({ circuit, onDelete, onExport, onStar }) => {
+export const CircuitCard = ({ circuit, onDelete, onStar }) => {
   const classes = useStyles();
 
   const [dialog, setDialog] = useState(false);
@@ -34,6 +34,14 @@ export const CircuitCard = ({ circuit, onDelete, onExport, onStar }) => {
   const timeSince = useMemo(
     () => moment(circuit.data.updatedAt).fromNow(),
     [circuit.data.updatedAt],
+  );
+
+  const circuitExport = useMemo(
+    () =>
+      `data:text/json;charset=utf-8,${encodeURIComponent(
+        JSON.stringify(circuit.data.schematic, null, 2),
+      )}`,
+    [circuit],
   );
 
   return (
@@ -55,7 +63,7 @@ export const CircuitCard = ({ circuit, onDelete, onExport, onStar }) => {
         </CardActionArea>
         <CardActions>
           <Tooltip title='Export' arrow>
-            <IconButton onClick={onExport}>
+            <IconButton href={circuitExport} download={`${circuit.name}.json`}>
               <GetAppIcon />
             </IconButton>
           </Tooltip>

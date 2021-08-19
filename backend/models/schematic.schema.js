@@ -5,9 +5,11 @@ const connectionSchema = require('./connection.schema');
 
 const schematicSchema = new mongoose.Schema(
   {
-    components: [componentSchema],
-    nodes: [nodeSchema],
-    connections: [connectionSchema],
+    schematic: {
+      components: [componentSchema],
+      nodes: [nodeSchema],
+      connections: [connectionSchema],
+    },
   },
   { timestamps: true },
 );
