@@ -18,8 +18,8 @@ export const SearchBar = ({ value, setter }) => {
     <TextField
       variant='outlined'
       margin='dense'
-      label='Search'
-      placeholder='Resistor'
+      placeholder='Search...'
+      fullWidth
       value={value}
       onChange={updateValue}
       InputProps={{
