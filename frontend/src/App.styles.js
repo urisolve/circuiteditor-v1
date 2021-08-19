@@ -12,6 +12,9 @@ export const useStyles = makeStyles((theme) => ({
     '*::-webkit-scrollbar-thumb': {
       background: 'grey',
     },
+    html: {
+      scrollBehavior: 'smooth',
+    },
   },
   app: {
     display: 'flex',

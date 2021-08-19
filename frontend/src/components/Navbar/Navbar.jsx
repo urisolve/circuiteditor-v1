@@ -33,9 +33,12 @@ export const Navbar = ({ user }) => {
           </Link>
 
           <div className={classes.nav}>
-            <Link to='/circuits' className={classes.link}>
-              Circuits
-            </Link>
+            <a href='#instructions' className={classes.navLink}>
+              Instructions
+            </a>
+            <a href='#contact' className={classes.navLink}>
+              Contact
+            </a>
           </div>
 
           <div>

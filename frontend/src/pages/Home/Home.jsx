@@ -110,7 +110,10 @@ const Instructions = () => {
   const classes = useStyles();
 
   return (
-    <section className={`${classes.section} ${classes.instructions}`}>
+    <section
+      id='instructions'
+      className={`${classes.section} ${classes.instructions}`}
+    >
       <Container>
         <Grid container spacing={10} alignItems='center'>
           <Grid item xs={12} md={6}>
@@ -247,7 +250,7 @@ const Contact = () => {
   const classes = useStyles();
 
   return (
-    <section className={`${classes.section} ${classes.contact}`}>
+    <section id='contact' className={`${classes.section} ${classes.contact}`}>
       <Container>
         <Grid container direction='column' alignItems='center' spacing={10}>
           <Grid item>

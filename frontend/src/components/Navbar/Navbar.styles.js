@@ -26,6 +26,12 @@ export const useStyles = makeStyles((theme) => ({
     color: 'white',
     textDecoration: 'none',
   },
+  navLink: {
+    fontSize: theme.spacing(2),
+    color: 'white',
+    textDecoration: 'none',
+    marginLeft: theme.spacing(5),
+  },
   action: {
     textDecoration: 'none',
     color: 'white',
