@@ -38,7 +38,7 @@ export const CircuitCard = ({ circuit, onDelete, onExport, onStar }) => {
           <CardHeader
             title={circuit.name}
             titleTypographyProps={{ noWrap: true }}
-            subheader={timeSince}
+            subheader={'Edited ' + timeSince}
           />
         </Link>
       </CardActionArea>
