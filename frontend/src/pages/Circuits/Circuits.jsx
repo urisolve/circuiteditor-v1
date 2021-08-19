@@ -4,16 +4,31 @@ import axios from 'axios';
 
 // Custom components
 import { CircuitCard } from '../../components/CircuitCard';
-import { NewCircuitCard } from '../../components/NewCircuitCard';
 
 // Material-UI
-import { Typography, Grid, Container } from '@material-ui/core';
+import {
+  Grid,
+  Container,
+  Card,
+  CardHeader,
+  CardContent,
+  IconButton,
+  Tooltip,
+  Collapse,
+} from '@material-ui/core';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import AddIcon from '@material-ui/icons/Add';
 import { useStyles } from './Circuits.styles';
 
 export const Circuits = () => {
   const classes = useStyles();
   const [circuits, setCircuits] = useState([]);
 
+  const [showStared, setShowStared] = useState(true);
+  const toggleShowStared = () => setShowStared((showStared) => !showStared);
+
+  // Builds the sorted circuits
   const sortedCircuits = useMemo(
     () =>
       circuits.sort(
@@ -21,6 +36,12 @@ export const Circuits = () => {
           (a.updatedAt < b.updatedAt) * 1 + (a.updatedAt > b.updatedAt) * -1,
       ),
     [circuits],
+  );
+
+  // Filters the stared circuits
+  const staredCircuits = useMemo(
+    () => sortedCircuits.filter((circuit) => circuit.isStared),
+    [sortedCircuits],
   );
 
   // Fetch all the circuits
@@ -56,6 +77,7 @@ export const Circuits = () => {
     [fetchCircuits],
   );
 
+  // Adds a circuit to the favorites
   const starCircuit = useCallback(
     async (id) => {
       const circuit = lodash.find(circuits, { _id: id });
@@ -80,35 +102,71 @@ export const Circuits = () => {
     fetchCircuits();
   }, [fetchCircuits]);
 
+  // Data to build the menus
+  const menus = [
+    {
+      title: 'Favorite Circuits',
+      subheader: 'Star a circuit for it to appear here',
+      circuits: staredCircuits,
+      action: (
+        <Tooltip title={showStared ? 'Hide favorites' : 'Show favorites'} arrow>
+          <IconButton onClick={toggleShowStared}>
+            {showStared ? (
+              <ChevronDownIcon fontSize='large' />
+            ) : (
+              <ChevronRightIcon fontSize='large' />
+            )}
+          </IconButton>
+        </Tooltip>
+      ),
+      collapse: showStared,
+    },
+    {
+      title: 'All Circuits',
+      subheader: 'Here are all of the circuits that you have saved',
+      circuits: sortedCircuits,
+      action: (
+        <Tooltip title='Create new circuit' arrow>
+          <IconButton onClick={createCircuit}>
+            <AddIcon fontSize='large' />
+          </IconButton>
+        </Tooltip>
+      ),
+    },
+  ];
+
   return (
     <Container className={classes.root}>
-      <div className={classes.header}>
-        <Typography variant='h4'>All Circuits</Typography>
-        <Typography>
-          Here you can find all of the circuits that you have saved.
-        </Typography>
-      </div>
+      {menus.map((menu) => (
+        <Card key={menu.title} variant='outlined' className={classes.menu}>
+          <CardHeader
+            title={menu.title}
+            subheader={menu.subheader}
+            action={menu.action}
+          />
 
-      <Grid
-        container
-        spacing={2}
-        justifyContent='center'
-        alignItems='flex-start'
-      >
-        {sortedCircuits?.map((circuit) => (
-          <Grid key={circuit._id} item>
-            <CircuitCard
-              circuit={circuit}
-              onDelete={() => deleteCircuit(circuit._id)}
-              onStar={() => starCircuit(circuit._id)}
-            />
-          </Grid>
-        ))}
-
-        <Grid item>
-          <NewCircuitCard onClick={createCircuit} />
-        </Grid>
-      </Grid>
+          <Collapse in={menu?.collapse ?? true} timeout='auto' unmountOnExit>
+            <CardContent>
+              <Grid
+                container
+                spacing={2}
+                justifyContent='flex-start'
+                alignItems='flex-start'
+              >
+                {menu.circuits.map((circuit) => (
+                  <Grid key={circuit._id} item>
+                    <CircuitCard
+                      circuit={circuit}
+                      onDelete={() => deleteCircuit(circuit._id)}
+                      onStar={() => starCircuit(circuit._id)}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </CardContent>
+          </Collapse>
+        </Card>
+      ))}
     </Container>
   );
 };

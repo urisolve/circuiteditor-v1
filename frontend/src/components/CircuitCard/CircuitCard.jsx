@@ -46,7 +46,7 @@ export const CircuitCard = ({ circuit, onDelete, onStar }) => {
 
   return (
     <>
-      <Card classes={{ root: classes.root }} elevation={3}>
+      <Card classes={{ root: classes.root }} variant='outlined'>
         <CardActionArea className={classes.actionArea}>
           <Link to={`/circuits/${circuit._id}`} className={classes.link}>
             {circuit?.thumbnail ? (

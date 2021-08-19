@@ -14,6 +14,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     html: {
       scrollBehavior: 'smooth',
+      overflowY: 'overlay',
     },
   },
   app: {
