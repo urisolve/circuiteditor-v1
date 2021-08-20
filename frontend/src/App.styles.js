@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import grey from '@material-ui/core/colors/grey';
 
 export const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -7,10 +8,14 @@ export const useStyles = makeStyles((theme) => ({
       height: 10,
     },
     '*::-webkit-scrollbar-track': {
-      background: 'white',
+      display: 'none',
     },
     '*::-webkit-scrollbar-thumb': {
-      background: 'grey',
+      borderRadius: theme.spacing(2),
+      background: grey[500],
+      '&:hover': {
+        background: grey[400],
+      },
     },
     html: {
       scrollBehavior: 'smooth',
