@@ -19,6 +19,7 @@ import {
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import AddIcon from '@material-ui/icons/Add';
+import UploadIcon from '@material-ui/icons/Publish';
 import { useStyles } from './Circuits.styles';
 
 export const Circuits = () => {
@@ -53,6 +54,19 @@ export const Circuits = () => {
       console.error(err);
     }
   }, [setCircuits]);
+
+  // Let the user upload a new circuit schematic
+  const uploadCircuit = useCallback(
+    async (circuit) => {
+      try {
+        await axios.post('/api/circuits', circuit);
+        fetchCircuits();
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [fetchCircuits],
+  );
 
   // Adds a new circuit ot the database
   const createCircuit = useCallback(async () => {
@@ -126,11 +140,18 @@ export const Circuits = () => {
       subheader: 'Here are all of the circuits that you have saved',
       circuits: sortedCircuits,
       action: (
-        <Tooltip title='Create new circuit' arrow>
-          <IconButton onClick={createCircuit}>
-            <AddIcon fontSize='large' />
-          </IconButton>
-        </Tooltip>
+        <>
+          <Tooltip title='Upload circuit' arrow>
+            <IconButton onClick={uploadCircuit} disabled>
+              <UploadIcon fontSize='large' />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title='Create new circuit' arrow>
+            <IconButton onClick={createCircuit}>
+              <AddIcon fontSize='large' />
+            </IconButton>
+          </Tooltip>
+        </>
       ),
     },
   ];
