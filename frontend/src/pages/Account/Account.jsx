@@ -23,11 +23,10 @@ import { useStyles } from './Account.styles';
 
 export const Account = () => {
   const classes = useStyles();
-  const user = useContext(UserContext);
-  const gravatar = useGravatar(user.email);
+  const { user } = useContext(UserContext);
+  const gravatar = useGravatar(user?.email);
 
   const { register, handleSubmit, errors, reset } = useForm({ mode: 'onBlur' });
-
   useEffect(() => reset(user), [reset, user]);
 
   // Send new account information to database

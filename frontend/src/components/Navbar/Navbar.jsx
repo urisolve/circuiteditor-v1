@@ -1,6 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useCallback, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
+import { UserContext } from '../../contexts/UserContext';
 import { useGravatar } from '../../hooks/useGravatar';
 import { ReactComponent as Logo } from '../../assets/brand/logo.svg';
 
@@ -25,14 +27,27 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useStyles } from './Navbar.styles';
 
-export const Navbar = ({ user }) => {
+export const Navbar = () => {
   const classes = useStyles();
+  const { user, setUser } = useContext(UserContext);
+
   const gravatar = useGravatar(user?.email);
 
   const anchorEl = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const openMenu = () => setIsMenuOpen(true);
   const closeMenu = () => setIsMenuOpen(false);
+
+  const history = useHistory();
+  const logOut = useCallback(async () => {
+    try {
+      await axios.get('/api/auth/logout');
+      await setUser(null);
+      history.push('/');
+    } catch (err) {
+      console.error(err);
+    }
+  }, [setUser, history]);
 
   const sm = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
@@ -111,7 +126,7 @@ export const Navbar = ({ user }) => {
         onClose={closeMenu}
         keepMounted
       >
-        <Link to='/account' className={classes.menuLink}>
+        <Link to='/circuits' className={classes.menuLink}>
           <MenuItem onClick={closeMenu}>
             <MenuIcon className={classes.menuIcon} />
             My Circuits
@@ -130,7 +145,12 @@ export const Navbar = ({ user }) => {
           </MenuItem>
         </Link>
         <Divider />
-        <MenuItem onClick={closeMenu}>
+        <MenuItem
+          onClick={() => {
+            closeMenu();
+            logOut();
+          }}
+        >
           <ExitToAppIcon className={classes.menuIcon} />
           Logout
         </MenuItem>

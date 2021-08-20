@@ -48,4 +48,14 @@ router.post('/signup', passport.authenticate('local-signup'), (req, res) => {
   res.status(201).send('User created successfully');
 });
 
+/**
+ * Logout
+ */
+router.get('/logout', (req, res) => {
+  req.session.destroy(function (err) {
+    res.clearCookie('connect.sid');
+    res.redirect('/');
+  });
+});
+
 module.exports = router;

@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-// Custom components
+import { UserContext } from '../../contexts/UserContext';
 import { Login } from '../../components/Login';
 import { Signup } from '../../components/Signup';
 
-// Material-UI
 import { Container, Grid } from '@material-ui/core';
 import { useStyles } from './Auth.styles';
 
-export const Auth = ({ setUser }) => {
+export const Auth = () => {
   const classes = useStyles();
+  const { setUser } = useContext(UserContext);
 
   return (
     <Container>

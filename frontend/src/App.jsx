@@ -28,9 +28,9 @@ export const App = () => {
   }, []);
 
   return (
-    <UserProvider value={user}>
+    <UserProvider value={{ user, setUser }}>
       <div className={classes.app}>
-        <Navbar user={user} />
+        <Navbar />
 
         <main className={classes.content}>
           <Switch>
@@ -38,7 +38,7 @@ export const App = () => {
               <Home />
             </Route>
             <Route exact path='/auth'>
-              {user ? <Redirect to='/circuits' /> : <Auth setUser={setUser} />}
+              {user ? <Redirect to='/circuits' /> : <Auth />}
             </Route>
             <Route exact path='/account'>
               {user ? <Account /> : <Redirect to='/auth' />}
