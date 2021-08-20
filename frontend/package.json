@@ -1,29 +1,20 @@
 {
   "name": "circuit-editor",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
+    "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.57",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.7.1",
     "axios": "^0.21.1",
     "crypto-js": "^4.1.1",
-    "import-jquery": "^1.0.1",
-    "jquery": "^3.5.1",
-    "jquery-ui-bundle": "^1.12.1-migrate",
     "lodash": "^4.17.21",
-    "material-ui-dropzone": "^3.5.0",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-circuit-schematics": "1.2.0",
     "react-dom": "^17.0.1",
     "react-hook-form": "^6.15.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.2",
-    "web-vitals": "^1.1.0"
+    "react-scripts": "4.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
