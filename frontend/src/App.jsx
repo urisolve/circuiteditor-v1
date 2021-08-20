@@ -6,7 +6,15 @@ import axios from 'axios';
 import { UserProvider } from './contexts/UserContext';
 
 // Custom components
-import { NotFound, Home, Auth, Account, Circuits, Editor } from './pages';
+import {
+  NotFound,
+  Home,
+  Auth,
+  Account,
+  Circuits,
+  Editor,
+  Settings,
+} from './pages';
 import { Navbar } from './components/Navbar';
 
 // Material-UI
@@ -41,13 +49,16 @@ export const App = () => {
               {user ? <Redirect to='/circuits' /> : <Auth />}
             </Route>
             <Route exact path='/account'>
-              {user ? <Account /> : <Redirect to='/auth' />}
+              {user ? <Account /> : <Redirect to='/' />}
+            </Route>
+            <Route exact path='/settings'>
+              {user ? <Settings /> : <Redirect to='/' />}
             </Route>
             <Route exact path='/circuits'>
-              {user ? <Circuits /> : <Redirect to='/auth' />}
+              {user ? <Circuits /> : <Redirect to='/' />}
             </Route>
             <Route path='/circuits/:id'>
-              {user ? <Editor /> : <Redirect to='/auth' />}
+              {user ? <Editor /> : <Redirect to='/' />}
             </Route>
             <Route path='*'>
               <NotFound />

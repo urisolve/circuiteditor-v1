@@ -23,6 +23,7 @@ import { useStyles } from './Account.styles';
 
 export const Account = () => {
   const classes = useStyles();
+
   const { user } = useContext(UserContext);
   const gravatar = useGravatar(user?.email);
 
