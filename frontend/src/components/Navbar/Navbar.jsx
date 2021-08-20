@@ -16,7 +16,12 @@ import {
   Menu,
   MenuItem,
   IconButton,
+  Divider,
 } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import PersonIcon from '@material-ui/icons/Person';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useStyles } from './Navbar.styles';
 
@@ -106,20 +111,28 @@ export const Navbar = ({ user }) => {
         onClose={closeMenu}
         keepMounted
       >
-        <MenuItem onClick={closeMenu}>
-          <Link to='/circuits' className={classes.menuLink}>
+        <Link to='/account' className={classes.menuLink}>
+          <MenuItem onClick={closeMenu}>
+            <MenuIcon className={classes.menuIcon} />
             My Circuits
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={closeMenu}>
-          <Link to='/account' className={classes.menuLink}>
+          </MenuItem>
+        </Link>
+        <Link to='/account' className={classes.menuLink}>
+          <MenuItem onClick={closeMenu}>
+            <PersonIcon className={classes.menuIcon} />
             Account
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={closeMenu}>
-          <Link to='/settings' className={classes.menuLink}>
+          </MenuItem>
+        </Link>
+        <Link to='/settings' className={classes.menuLink}>
+          <MenuItem onClick={closeMenu}>
+            <SettingsIcon className={classes.menuIcon} />
             Settings
-          </Link>
+          </MenuItem>
+        </Link>
+        <Divider />
+        <MenuItem onClick={closeMenu}>
+          <ExitToAppIcon className={classes.menuIcon} />
+          Logout
         </MenuItem>
       </Menu>
     </AppBar>

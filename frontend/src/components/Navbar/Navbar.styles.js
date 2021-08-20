@@ -36,6 +36,9 @@ export const useStyles = makeStyles((theme) => ({
     color: 'black',
     textDecoration: 'none',
   },
+  menuIcon: {
+    marginRight: theme.spacing(2),
+  },
   action: {
     textDecoration: 'none',
     color: 'white',
