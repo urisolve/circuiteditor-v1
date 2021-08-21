@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { UserContext } from '../../contexts/UserContext';
 import { TeamMember, teamMembers } from '../../components/TeamMember';
 import { instructions } from './instructions';
 
@@ -27,6 +28,8 @@ export const Home = () => {
   const classes = useStyles();
   const history = useHistory();
 
+  const { user } = useContext(UserContext);
+
   return (
     <div className={classes.home}>
       <Container
@@ -47,7 +50,7 @@ export const Home = () => {
               variant='contained'
               color='primary'
               classes={{ containedSizeLarge: classes.action }}
-              onClick={() => history.push('/editor')}
+              onClick={() => history.push(user ? '/circuits' : '/editor')}
             >
               Get Started
             </Button>
