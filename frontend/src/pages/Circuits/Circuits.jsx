@@ -119,7 +119,7 @@ export const Circuits = () => {
     {
       title: 'Favorite Circuits',
       subheader: 'Star a circuit for it to appear here',
-      circuits: staredCircuits,
+      iterable: staredCircuits,
       action: (
         <Tooltip title={showStared ? 'Hide favorites' : 'Show favorites'} arrow>
           <IconButton onClick={toggleShowStared}>
@@ -136,7 +136,7 @@ export const Circuits = () => {
     {
       title: 'All Circuits',
       subheader: 'Here are all of the circuits that you have saved',
-      circuits: sortedCircuits,
+      iterable: sortedCircuits,
       action: (
         <>
           <Tooltip title='Upload circuit' arrow>
@@ -172,7 +172,7 @@ export const Circuits = () => {
                 justifyContent='flex-start'
                 alignItems='flex-start'
               >
-                {menu.circuits.map((circuit) => (
+                {menu.iterable.map((circuit) => (
                   <Grid key={circuit._id} item>
                     <CircuitCard
                       circuit={circuit}
