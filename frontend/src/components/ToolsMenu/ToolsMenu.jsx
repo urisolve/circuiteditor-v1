@@ -55,7 +55,7 @@ export const ToolsMenu = ({ schematic, selection, history }) => {
 
     try {
       await axios.patch(`/api/circuits?id=${id}`, {
-        data: { schematic: schematic.data },
+        schematic: schematic.data,
       });
     } catch (err) {
       console.error(err);

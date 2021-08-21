@@ -46,7 +46,7 @@ router.patch('/', isAuth, hasCircuitID, async (req, res) => {
     { 'circuits._id': mongoose.Types.ObjectId(req.query.id) },
     {
       $set: {
-        'circuits.$.data': req.body.data,
+        'circuits.$.data.schematic': req.body.schematic,
         'circuits.$.name': req.body.name,
         'circuits.$.description': req.body.description,
         'circuits.$.isStared': req.body.isStared,
