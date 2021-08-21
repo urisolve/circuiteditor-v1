@@ -9208,10 +9208,10 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
-react-circuit-schematics@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-circuit-schematics/-/react-circuit-schematics-1.2.0.tgz#37626d9e07e7621d642da2f2ccd0a52f53059c99"
-  integrity sha512-qdz2SeCxUVrxKloIBUtRUX1lkaJXhvnxQT8OU+rj1LKJcJ7mqDVlFDGm/kITpbeI+I94b5Y2ivR5h+09LZoH8w==
+react-circuit-schematics@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-circuit-schematics/-/react-circuit-schematics-1.2.1.tgz#96242a076b60e3655b824b4eb159fc320e4d2cd8"
+  integrity sha512-aq3qQPT942kIR1MSNOBfg/R4U5f/P2CksECvmbgAPbLC2gGtB1G/2mGWvTSENIKf3eB20yDackEAVCpwIouI8Q==
 
 react-dev-utils@^11.0.2:
   version "11.0.4"

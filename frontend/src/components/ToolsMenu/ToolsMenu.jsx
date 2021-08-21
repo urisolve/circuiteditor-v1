@@ -54,12 +54,13 @@ export const ToolsMenu = ({ schematic, selection, history }) => {
     }
 
     try {
-      // await axios.patch('/');
-      console.log('TODO: Save the circuit');
+      await axios.patch(`/api/circuits?id=${id}`, {
+        data: { schematic: schematic.data },
+      });
     } catch (err) {
       console.error(err);
     }
-  }, [id]);
+  }, [id, schematic]);
 
   const tools = [
     [
