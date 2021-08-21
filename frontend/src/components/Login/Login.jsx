@@ -28,11 +28,14 @@ export const Login = ({ setUser }) => {
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
   // Send the new user info to the server and grab the authenticated user
-  const onSubmit = async (data) => {
-    await axios
-      .post('/api/auth/login', data)
-      .then((res) => setUser(res.data))
-      .then(() => history.push('/circuits'));
+  const onSubmit = async (formData) => {
+    try {
+      const { data } = await axios.post('/api/auth/login', formData);
+      await setUser(data);
+      history.push('/circuits');
+    } catch (err) {
+      console.error(err);
+    }
 
     reset();
   };

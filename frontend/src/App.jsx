@@ -26,10 +26,12 @@ export const App = () => {
 
   useEffect(() => {
     async function grabUser() {
-      axios
-        .get('/api/auth')
-        .then((res) => setUser(res.data))
-        .catch(console.err);
+      try {
+        const { data } = await axios.get('/api/auth');
+        setUser(data);
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     grabUser();

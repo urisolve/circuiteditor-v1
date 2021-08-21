@@ -33,11 +33,13 @@ export const Signup = () => {
   const history = useHistory();
 
   // Send the new user info to the server and reset the form
-  const onSubmit = async (data) => {
-    await axios
-      .post('/api/auth/signup', data)
-      .then((res) => history.push('/circuits'))
-      .catch((error) => console.log(error.response));
+  const onSubmit = async (formData) => {
+    try {
+      await axios.post('/api/auth/signup', formData);
+      history.push('/circuits');
+    } catch (err) {
+      console.error(err);
+    }
 
     reset();
   };
