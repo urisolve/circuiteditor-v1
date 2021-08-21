@@ -57,8 +57,11 @@ export const App = () => {
             <Route exact path='/circuits'>
               {user ? <Circuits /> : <Redirect to='/' />}
             </Route>
-            <Route path='/circuits/:id'>
+            <Route path='/editor/:id'>
               {user ? <Editor /> : <Redirect to='/' />}
+            </Route>
+            <Route exact path='/editor'>
+              <Editor />
             </Route>
             <Route path='*'>
               <NotFound />

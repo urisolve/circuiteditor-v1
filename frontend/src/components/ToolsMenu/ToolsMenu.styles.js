@@ -6,4 +6,8 @@ export const useStyles = makeStyles((theme) => ({
     margin: `auto ${theme.spacing(1)}px`,
     backgroundColor: '#ddd',
   },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.common.white,
+  },
 }));

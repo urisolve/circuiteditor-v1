@@ -48,7 +48,7 @@ export const CircuitCard = ({ circuit, onDelete, onStar }) => {
     <>
       <Card classes={{ root: classes.root }} variant='outlined'>
         <CardActionArea className={classes.actionArea}>
-          <Link to={`/circuits/${circuit._id}`} className={classes.link}>
+          <Link to={`/editor/${circuit._id}`} className={classes.link}>
             {circuit?.thumbnail ? (
               <CardMedia image={circuit.thumbnail} src={circuit.name} />
             ) : (

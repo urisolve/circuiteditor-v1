@@ -47,7 +47,7 @@ export const Home = () => {
               variant='contained'
               color='primary'
               classes={{ containedSizeLarge: classes.action }}
-              onClick={() => history.push('/auth')}
+              onClick={() => history.push('/editor')}
             >
               Get Started
             </Button>

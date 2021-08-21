@@ -1,11 +1,20 @@
-import React, { useCallback, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { Tool } from '../Tool';
 
 // Material-UI
-import { Grid, Divider } from '@material-ui/core';
+import {
+  Grid,
+  Divider,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+} from '@material-ui/core';
 import UndoIcon from '@material-ui/icons/Undo';
 import RedoIcon from '@material-ui/icons/Redo';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -17,6 +26,9 @@ import { useStyles } from './ToolsMenu.styles';
 export const ToolsMenu = ({ schematic, selection, history }) => {
   const classes = useStyles();
   const { id } = useParams();
+
+  const [isAccountAlertOpen, setIsAccountAlertOpen] = useState(false);
+  const closeAccountAlert = () => setIsAccountAlertOpen(false);
 
   // Deletes all of the currently selected elements
   const deleteSelection = useCallback(() => {
@@ -36,62 +48,64 @@ export const ToolsMenu = ({ schematic, selection, history }) => {
 
   // Save the current circuit to the database
   const saveCircuit = useCallback(async () => {
+    if (!Boolean(id)) {
+      setIsAccountAlertOpen(true);
+      return;
+    }
+
     try {
       // await axios.patch('/');
       console.log('TODO: Save the circuit');
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [id]);
 
-  const tools = useMemo(
-    () => [
-      [
-        {
-          name: 'Undo',
-          icon: <UndoIcon />,
-          onClick: history.undo,
-          disabled: !history.canUndo,
-        },
-        {
-          name: 'Redo',
-          icon: <RedoIcon />,
-          onClick: history.redo,
-          disabled: !history.canRedo,
-        },
-      ],
-      [
-        {
-          name: 'Delete',
-          icon: <DeleteIcon />,
-          onClick: deleteSelection,
-          disabled: !selection.selectedItems.size,
-        },
-      ],
-      [
-        {
-          name: 'Rotate Left',
-          icon: <RotateLeftIcon />,
-          onClick: () => rotateSelection(-90),
-          disabled: !selection.selectedItems.size,
-        },
-        {
-          name: 'Rotate Right',
-          icon: <RotateRightIcon />,
-          onClick: () => rotateSelection(-90),
-          disabled: !selection.selectedItems.size,
-        },
-      ],
-      [
-        {
-          name: 'Save',
-          icon: <SaveIcon />,
-          onClick: saveCircuit,
-        },
-      ],
+  const tools = [
+    [
+      {
+        name: 'Undo',
+        icon: <UndoIcon />,
+        onClick: history.undo,
+        disabled: !history.canUndo,
+      },
+      {
+        name: 'Redo',
+        icon: <RedoIcon />,
+        onClick: history.redo,
+        disabled: !history.canRedo,
+      },
     ],
-    [selection, history, deleteSelection, rotateSelection, saveCircuit],
-  );
+    [
+      {
+        name: 'Delete',
+        icon: <DeleteIcon />,
+        onClick: deleteSelection,
+        disabled: !selection.selectedItems.size,
+      },
+    ],
+    [
+      {
+        name: 'Rotate Left',
+        icon: <RotateLeftIcon />,
+        onClick: () => rotateSelection(-90),
+        disabled: !selection.selectedItems.size,
+      },
+      {
+        name: 'Rotate Right',
+        icon: <RotateRightIcon />,
+        onClick: () => rotateSelection(-90),
+        disabled: !selection.selectedItems.size,
+      },
+    ],
+    [
+      {
+        name: 'Save',
+        icon: <SaveIcon />,
+        onClick: saveCircuit,
+      },
+    ],
+  ];
 
   return (
     <Grid container direction='row' justifyContent='center' alignItems='center'>
@@ -105,6 +119,32 @@ export const ToolsMenu = ({ schematic, selection, history }) => {
           ))}
         </React.Fragment>
       ))}
+
+      <Dialog open={isAccountAlertOpen} onClose={closeAccountAlert}>
+        <DialogTitle>Log In</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To be able to save the circuit you need to be logged into an
+            account.
+            <br />
+            Otherwise, this circuit will be deleted when you leave the page.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeAccountAlert} color='primary'>
+            Remain like this
+          </Button>
+          <Button
+            onClick={closeAccountAlert}
+            color='primary'
+            variant='contained'
+          >
+            <Link to='/auth' className={classes.link}>
+              Log In
+            </Link>
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   );
 };
