@@ -31,7 +31,12 @@ export const ScrollToTopButton = ({ threshold }) => {
         <Fab
           color='primary'
           aria-label='scroll to top'
-          sx={{ position: 'fixed', bottom: 16, right: 16 }}
+          sx={{
+            position: 'fixed',
+            bottom: 16,
+            right: 16,
+            border: '2px solid white',
+          }}
           onClick={scrollToTop}
         >
           <ArrowUpwardIcon />
