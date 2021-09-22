@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-import { Fab, Tooltip } from '@mui/material';
+import { Fab, Slide, Tooltip } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 export const ScrollToTopButton = ({ threshold }) => {
@@ -26,7 +26,7 @@ export const ScrollToTopButton = ({ threshold }) => {
   };
 
   return (
-    isScrolled && (
+    <Slide direction='up' in={isScrolled} mountOnEnter unmountOnExit>
       <Tooltip title='Scroll back top top' placement='left' arrow>
         <Fab
           color='primary'
@@ -37,6 +37,6 @@ export const ScrollToTopButton = ({ threshold }) => {
           <ArrowUpwardIcon />
         </Fab>
       </Tooltip>
-    )
+    </Slide>
   );
 };
