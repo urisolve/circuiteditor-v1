@@ -27,7 +27,7 @@ export const ScrollToTopButton = ({ threshold }) => {
 
   return (
     <Slide direction='up' in={isScrolled} mountOnEnter unmountOnExit>
-      <Tooltip title='Scroll back top top' placement='left' arrow>
+      <Tooltip title='Scroll back to top' placement='left' arrow>
         <Fab
           color='primary'
           aria-label='scroll to top'
