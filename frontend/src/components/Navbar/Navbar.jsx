@@ -20,6 +20,7 @@ import {
   IconButton,
   Divider,
   Stack,
+  Box,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
@@ -87,21 +88,7 @@ export const Navbar = () => {
             </Typography>
           </Button>
 
-          <Stack
-            direction='row'
-            alignItems='center'
-            spacing={3}
-            sx={{ flexGrow: 1, px: 8 }}
-          >
-            <Hidden smDown>
-              <Button href='#instructions' sx={navLink}>
-                Instructions
-              </Button>
-              <Button href='#contact' sx={navLink}>
-                Contact
-              </Button>
-            </Hidden>
-          </Stack>
+          <Box sx={{ flexGrow: 1 }} />
 
           {user ? (
             sm ? (
