@@ -14,12 +14,10 @@ import {
   Avatar,
   Button,
   Container,
-  Hidden,
   Menu,
   MenuItem,
   IconButton,
   Divider,
-  Stack,
   Box,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -28,10 +26,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-const navLink = {
-  color: 'white',
-  textDecoration: 'none',
-};
 const menuLink = {
   color: 'black',
   textDecoration: 'none',
