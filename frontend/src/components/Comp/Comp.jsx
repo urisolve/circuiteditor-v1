@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react';
-import { Tooltip } from '@material-ui/core';
 import { svgMap } from '../../assets/electrical/index.js';
+
+import { Avatar, Stack, Tooltip, Typography } from '@mui/material';
+
+const compSize = 65;
 
 export const Comp = ({ name, altImgIdx, ...rest }) => {
   const src = useMemo(() => {
@@ -10,8 +13,19 @@ export const Comp = ({ name, altImgIdx, ...rest }) => {
   }, [name, altImgIdx]);
 
   return (
-    <Tooltip title={name} key={name} arrow>
-      <img src={src} alt={name} {...rest} />
+    <Tooltip title={name} arrow>
+      <Stack direction='column' alignItems='center' spacing={1} sx={{ p: 1 }}>
+        <Avatar
+          src={src}
+          alt={name}
+          variant='square'
+          sx={{ width: compSize, height: compSize }}
+          {...rest}
+        />
+        <Typography align='center' noWrap sx={{ width: compSize }}>
+          {name}
+        </Typography>
+      </Stack>
     </Tooltip>
   );
 };

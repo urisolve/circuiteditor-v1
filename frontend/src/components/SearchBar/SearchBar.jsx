@@ -1,23 +1,17 @@
 import React, { useCallback } from 'react';
 
-import { TextField, InputAdornment } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import CloseIcon from '@material-ui/icons/Close';
+import { TextField, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
 
-export const SearchBar = ({ value, setter }) => {
-  // Clear the search bar
-  const clearValue = useCallback(() => setter(''), [setter]);
-
-  // Update the value of the search bar
-  const updateValue = useCallback(
-    (event) => setter(event.target.value),
-    [setter],
-  );
+export const SearchBar = ({ value, setValue }) => {
+  const clearValue = useCallback(() => setValue(''), [setValue]);
+  const updateValue = useCallback((e) => setValue(e.target.value), [setValue]);
 
   return (
     <TextField
       variant='outlined'
-      margin='dense'
+      size='small'
       placeholder='Search...'
       fullWidth
       value={value}

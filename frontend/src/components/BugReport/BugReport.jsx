@@ -12,8 +12,8 @@ import {
   Button,
   Snackbar,
   IconButton,
-} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/CloseIcon';
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/CloseIcon';
 
 export const BugReport = ({ open, onClose }) => {
   const [reported, setReported] = useState(false);

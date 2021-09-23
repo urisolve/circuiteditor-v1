@@ -15,11 +15,11 @@ import {
   Button,
   IconButton,
   Tooltip,
-} from '@material-ui/core';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+} from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-export const Login = ({ setUser }) => {
+export const Login = ({ setUser, ...rest }) => {
   const history = useHistory();
   const { register, handleSubmit, errors, reset } = useForm({ mode: 'onBlur' });
 
@@ -42,7 +42,7 @@ export const Login = ({ setUser }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Card>
+      <Card variant='outlined' {...rest}>
         <CardHeader title='Login' subheader='Welcome back.' />
 
         <CardContent>

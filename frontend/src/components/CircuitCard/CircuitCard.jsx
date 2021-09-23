@@ -4,6 +4,7 @@ import moment from 'moment';
 
 // Material-UI
 import {
+  Box,
   Button,
   Card,
   CardActionArea,
@@ -17,16 +18,16 @@ import {
   DialogTitle,
   IconButton,
   Tooltip,
-} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import StarIcon from '@material-ui/icons/Star';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import { useStyles } from './CircuitCard.styles';
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import GetAppIcon from '@mui/icons-material/GetApp';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+
+const cardWidth = 300;
+const cardHeight = 300;
 
 export const CircuitCard = ({ circuit, onDelete, onStar }) => {
-  const classes = useStyles();
-
   const [dialog, setDialog] = useState(false);
   const openDialog = () => setDialog(true);
   const closeDialog = () => setDialog(false);
@@ -46,20 +47,38 @@ export const CircuitCard = ({ circuit, onDelete, onStar }) => {
 
   return (
     <>
-      <Card classes={{ root: classes.root }} variant='outlined'>
-        <CardActionArea className={classes.actionArea}>
-          <Link to={`/editor/${circuit._id}`} className={classes.link}>
-            {circuit?.thumbnail ? (
-              <CardMedia image={circuit.thumbnail} src={circuit.name} />
-            ) : (
-              <div id='placeholder' className={classes.placeHolderImage} />
-            )}
-            <CardHeader
-              title={circuit.name}
-              titleTypographyProps={{ noWrap: true }}
-              subheader={'Edited ' + timeSince}
-            />
-          </Link>
+      <Card
+        variant='outlined'
+        sx={{
+          width: cardWidth,
+          height: cardHeight,
+          backgroundColor: 'grey.50',
+        }}
+      >
+        <CardActionArea
+          component={Link}
+          to={`/editor/${circuit._id}`}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+          }}
+        >
+          <CardMedia
+            image={circuit.thumbnail}
+            src={circuit.name}
+            sx={{
+              flexGrow: 1,
+              width: cardWidth,
+              height: cardHeight / 2,
+              backgroundColor: 'gray',
+            }}
+          />
+          <CardHeader
+            title={circuit.name}
+            titleTypographyProps={{ noWrap: true }}
+            subheader={'Edited ' + timeSince}
+          />
         </CardActionArea>
         <CardActions>
           <Tooltip title='Export' arrow>
@@ -72,7 +91,9 @@ export const CircuitCard = ({ circuit, onDelete, onStar }) => {
               <DeleteIcon />
             </IconButton>
           </Tooltip>
-          <div className={classes.spacer} />
+
+          <Box sx={{ flexGrow: 1 }} />
+
           <Tooltip
             title={
               circuit.isStared ? 'Remove from favorites' : 'Add to favorites'

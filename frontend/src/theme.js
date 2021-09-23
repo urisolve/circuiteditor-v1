@@ -1,3 +1,10 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
+import { indigo } from '@mui/material/colors';
 
-export const theme = createTheme({});
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main: indigo[500],
+    },
+  },
+});

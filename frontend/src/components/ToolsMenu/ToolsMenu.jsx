@@ -14,17 +14,15 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-} from '@material-ui/core';
-import UndoIcon from '@material-ui/icons/Undo';
-import RedoIcon from '@material-ui/icons/Redo';
-import DeleteIcon from '@material-ui/icons/Delete';
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import RotateRightIcon from '@material-ui/icons/RotateRight';
-import SaveIcon from '@material-ui/icons/Save';
-import { useStyles } from './ToolsMenu.styles';
+} from '@mui/material';
+import UndoIcon from '@mui/icons-material/Undo';
+import RedoIcon from '@mui/icons-material/Redo';
+import DeleteIcon from '@mui/icons-material/Delete';
+import RotateLeftIcon from '@mui/icons-material/RotateLeft';
+import RotateRightIcon from '@mui/icons-material/RotateRight';
+import SaveIcon from '@mui/icons-material/Save';
 
 export const ToolsMenu = ({ schematic, selection, history }) => {
-  const classes = useStyles();
   const { id } = useParams();
 
   const [isAccountAlertOpen, setIsAccountAlertOpen] = useState(false);
@@ -113,7 +111,10 @@ export const ToolsMenu = ({ schematic, selection, history }) => {
       {tools.map((menu, menuId) => (
         <React.Fragment key={menuId}>
           {menuId !== 0 && (
-            <Divider className={classes.divider} orientation='vertical' />
+            <Divider
+              orientation='vertical'
+              sx={{ height: 35, mx: 1, backgroundColor: '#ddd' }}
+            />
           )}
           {menu.map((tool, toolId) => (
             <Tool key={toolId} {...tool} />
@@ -136,13 +137,13 @@ export const ToolsMenu = ({ schematic, selection, history }) => {
             Remain like this
           </Button>
           <Button
+            component={Link}
+            to='/auth'
             onClick={closeAccountAlert}
             color='primary'
             variant='contained'
           >
-            <Link to='/auth' className={classes.link}>
-              Log In
-            </Link>
+            Log In
           </Button>
         </DialogActions>
       </Dialog>

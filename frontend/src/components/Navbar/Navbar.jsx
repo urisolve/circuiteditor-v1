@@ -19,25 +19,34 @@ import {
   MenuItem,
   IconButton,
   Divider,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import PersonIcon from '@material-ui/icons/Person';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useStyles } from './Navbar.styles';
+  Stack,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
+const navLink = {
+  color: 'white',
+  textDecoration: 'none',
+};
+const menuLink = {
+  color: 'black',
+  textDecoration: 'none',
+};
 
 export const Navbar = () => {
-  const classes = useStyles();
   const { user, setUser } = useContext(UserContext);
-
   const gravatar = useGravatar(user?.email);
 
+  // User menu
   const anchorEl = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const openMenu = () => setIsMenuOpen(true);
   const closeMenu = () => setIsMenuOpen(false);
 
+  // Logout
   const history = useHistory();
   const logOut = useCallback(async () => {
     try {
@@ -52,28 +61,47 @@ export const Navbar = () => {
   const sm = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
   return (
-    <AppBar position='relative' className={classes.appBar}>
+    <AppBar
+      position='relative'
+      color='primary'
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
       <Container>
         <Toolbar>
-          <Link to='/' className={classes.link}>
-            <div className={classes.brand}>
-              <Logo className={classes.logo} />
-              <Typography className={classes.title} variant='h5' noWrap>
-                Circuit Editor
-              </Typography>
-            </div>
-          </Link>
+          <Button
+            component={Link}
+            to='/'
+            sx={{
+              p: 0,
+              color: 'white',
+              textDecoration: 'none',
+            }}
+          >
+            <Logo style={{ width: 60 }} />
+            <Typography
+              variant='h1'
+              noWrap
+              sx={{ ml: 2, fontSize: 24, fontWeight: 'regular' }}
+            >
+              Circuit Editor
+            </Typography>
+          </Button>
 
-          <div className={classes.nav}>
+          <Stack
+            direction='row'
+            alignItems='center'
+            spacing={3}
+            sx={{ flexGrow: 1, px: 8 }}
+          >
             <Hidden smDown>
-              <a href='#instructions' className={classes.navLink}>
+              <Button href='#instructions' sx={navLink}>
                 Instructions
-              </a>
-              <a href='#contact' className={classes.navLink}>
+              </Button>
+              <Button href='#contact' sx={navLink}>
                 Contact
-              </a>
+              </Button>
             </Hidden>
-          </div>
+          </Stack>
 
           {user ? (
             sm ? (
@@ -82,7 +110,6 @@ export const Navbar = () => {
                 onClick={openMenu}
                 startIcon={
                   <Avatar
-                    className={classes.avatar}
                     alt={`${user.firstName} ${user.lastName}`}
                     src={gravatar}
                   />
@@ -104,9 +131,15 @@ export const Navbar = () => {
               </IconButton>
             )
           ) : (
-            <Link to='/auth' className={classes.action}>
-              <Button color='inherit'>Login</Button>
-            </Link>
+            <Button
+              component={Link}
+              to='/auth'
+              sx={{ textDecoration: 'none' }}
+              color='inherit'
+              variant='outlined'
+            >
+              Login
+            </Button>
           )}
         </Toolbar>
       </Container>
@@ -126,24 +159,33 @@ export const Navbar = () => {
         onClose={closeMenu}
         keepMounted
       >
-        <Link to='/circuits' className={classes.menuLink}>
-          <MenuItem onClick={closeMenu}>
-            <MenuIcon className={classes.menuIcon} />
-            My Circuits
-          </MenuItem>
-        </Link>
-        <Link to='/account' className={classes.menuLink}>
-          <MenuItem onClick={closeMenu}>
-            <PersonIcon className={classes.menuIcon} />
-            Account
-          </MenuItem>
-        </Link>
-        <Link to='/settings' className={classes.menuLink}>
-          <MenuItem onClick={closeMenu}>
-            <SettingsIcon className={classes.menuIcon} />
-            Settings
-          </MenuItem>
-        </Link>
+        <MenuItem
+          component={Link}
+          to='/circuits'
+          onClick={closeMenu}
+          sx={menuLink}
+        >
+          <MenuIcon sx={{ mr: 2 }} />
+          My Circuits
+        </MenuItem>
+        <MenuItem
+          component={Link}
+          to='/account'
+          onClick={closeMenu}
+          sx={menuLink}
+        >
+          <PersonIcon sx={{ mr: 2 }} />
+          Account
+        </MenuItem>
+        <MenuItem
+          component={Link}
+          to='/settings'
+          onClick={closeMenu}
+          sx={menuLink}
+        >
+          <SettingsIcon sx={{ mr: 2 }} />
+          Settings
+        </MenuItem>
         <Divider />
         <MenuItem
           onClick={() => {
@@ -151,7 +193,7 @@ export const Navbar = () => {
             logOut();
           }}
         >
-          <ExitToAppIcon className={classes.menuIcon} />
+          <ExitToAppIcon sx={{ mr: 2 }} />
           Logout
         </MenuItem>
       </Menu>

@@ -1,12 +1,9 @@
 import React from 'react';
-import { Avatar, Grid, Typography } from '@material-ui/core';
-import { useStyles } from './TeamMember.styles';
+import { Avatar, Box, Grid, Typography } from '@mui/material';
 
 export const TeamMember = ({ member }) => {
-  const classes = useStyles();
-
   return (
-    <div className={classes.teamMember}>
+    <Box sx={{ width: 200, pb: 5 }}>
       <Grid
         container
         spacing={2}
@@ -17,7 +14,7 @@ export const TeamMember = ({ member }) => {
         <Grid item>
           <Avatar
             variant='rounded'
-            className={classes.avatar}
+            sx={{ width: 150, height: 200 }}
             alt={member.name}
             src={member.img}
           />
@@ -28,6 +25,6 @@ export const TeamMember = ({ member }) => {
           </Typography>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };

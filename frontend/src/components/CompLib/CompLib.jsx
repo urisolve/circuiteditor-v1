@@ -13,12 +13,14 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { useStyles } from './CompLib.styles';
+  Box,
+  Stack,
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+const drawerWidth = 310;
 
 export const CompLib = ({ addToSchematic, ...rest }) => {
-  const classes = useStyles();
   const [searchBar, setSearchBar] = useState('');
 
   const filteredComps = useMemo(() => {
@@ -38,57 +40,64 @@ export const CompLib = ({ addToSchematic, ...rest }) => {
   }, [searchBar]);
 
   return (
-    <>
-      <Drawer
-        variant='permanent'
-        className={classes.drawer}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        open={false}
-        {...rest}
-      >
-        <Toolbar /> {/* Push the content down by the size of a Toolbar */}
-        <div className={classes.drawerContainer}>
-          <div className={classes.drawerHeader}>
-            <Typography className={classes.drawerTitle} variant='h5' noWrap>
-              Components
-            </Typography>
-            <SearchBar value={searchBar} setter={setSearchBar} />
-          </div>
+    <Drawer
+      variant='permanent'
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        display: 'flex',
+        '& .MuiBox-root': {
+          width: drawerWidth,
+        },
+      }}
+      {...rest}
+    >
+      <Toolbar /> {/* Push the content down by the size of a Toolbar */}
+      <Box sx={{ overflowY: 'auto', flexGrow: 1 }}>
+        <Box sx={{ p: 2 }}>
+          <Typography variant='h5' component='h2' gutterBottom noWrap>
+            Components library
+          </Typography>
+          <SearchBar value={searchBar} setValue={setSearchBar} />
+        </Box>
 
-          <div className={classes.drawerContent}>
-            {filteredComps.map((menu) => (
-              <Accordion key={menu.title}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>{menu.title}</Typography>
-                </AccordionSummary>
-                <AccordionDetails className={classes.compGroup}>
+        <Box sx={{ p: 2 }}>
+          {filteredComps.map((menu) => (
+            <Accordion variant='outlined'>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>{menu.title}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Stack
+                  direction='row'
+                  justifyContent='flex-start'
+                  align-items='flex-start'
+                  sx={{ flexWrap: 'wrap' }}
+                >
                   {menu.items.map((item) => (
                     <Comp
                       key={item.name}
-                      className={classes.comp}
                       onDoubleClick={() => addToSchematic?.(item.struct)}
                       {...item}
                     />
                   ))}
-                </AccordionDetails>
-              </Accordion>
-            ))}
+                </Stack>
+              </AccordionDetails>
+            </Accordion>
+          ))}
 
-            {filteredComps.length === 0 && (
-              <>
-                <Typography variant='h6' align='center' gutterBottom>
-                  Nothing found
-                </Typography>
-                <Typography variant='body1' align='center'>
-                  There are no components that match that name
-                </Typography>
-              </>
-            )}
-          </div>
-        </div>
-      </Drawer>
-    </>
+          {filteredComps.length === 0 && (
+            <>
+              <Typography variant='h6' align='center' gutterBottom>
+                Nothing found
+              </Typography>
+              <Typography variant='body1' align='center'>
+                There are no components that match that name
+              </Typography>
+            </>
+          )}
+        </Box>
+      </Box>
+    </Drawer>
   );
 };

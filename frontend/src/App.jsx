@@ -17,11 +17,7 @@ import {
 } from './pages';
 import { Navbar } from './components/Navbar';
 
-// Material-UI
-import { useStyles } from './App.styles';
-
 export const App = () => {
-  const classes = useStyles();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -39,10 +35,21 @@ export const App = () => {
 
   return (
     <UserProvider value={{ user, setUser }}>
-      <div className={classes.app}>
+      <div
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100vh',
+        }}
+      >
         <Navbar />
 
-        <main className={classes.content}>
+        <main
+          sx={{
+            display: 'flex',
+            flexGrow: 1,
+          }}
+        >
           <Switch>
             <Route exact path='/'>
               <Home />

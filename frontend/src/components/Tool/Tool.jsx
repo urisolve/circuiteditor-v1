@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip, IconButton } from '@material-ui/core';
+import { Tooltip, IconButton } from '@mui/material';
 
 export const Tool = ({ name, icon, onClick, disabled, ...rest }) => (
   <Tooltip title={name} arrow>

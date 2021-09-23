@@ -3,14 +3,11 @@ import React from 'react';
 import { ReactComponent as NotFoundSVG } from '../../assets/undraw/not-found.svg';
 
 // Material-UI
-import { useStyles } from './NotFound.styles';
-import { Container, Grid, Typography } from '@material-ui/core';
+import { Container, Grid, Typography } from '@mui/material';
 
 export const NotFound = () => {
-  const classes = useStyles();
-
   return (
-    <Container className={classes.root}>
+    <Container sx={{ mt: 10 }}>
       <Grid container alignItems='center' justifyContent='center' spacing={10}>
         <Grid item xs={12} lg={5}>
           <NotFoundSVG />

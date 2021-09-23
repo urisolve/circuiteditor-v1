@@ -8,23 +8,22 @@ import { Canvas } from '../../components/Canvas';
 import { defaultCircuit } from './defaultCircuit';
 
 // Material-UI
-import { useStyles } from './Editor.styles';
+import { Stack } from '@mui/material';
 
 export const Editor = ({ ...rest }) => {
-  const classes = useStyles();
   const { schematic, history, selection } = useSchematic(defaultCircuit);
 
   return (
-    <div className={classes.sidebar}>
+    <Stack direction='row' sx={{ flexGrow: 1 }}>
       <CompLib addToSchematic={schematic.add} />
-      <div className={classes.canvas}>
+      <Stack direction='column' sx={{ flexGrow: 1 }}>
         <ToolsMenu
           schematic={schematic}
           history={history}
           selection={selection}
         />
         <Canvas schematic={schematic} selection={selection} {...rest} />
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   );
 };

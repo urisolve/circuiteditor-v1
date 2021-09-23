@@ -8,18 +8,15 @@ import {
   Grid,
   IconButton,
   Tooltip,
-} from '@material-ui/core';
-import RestoreIcon from '@material-ui/icons/SettingsBackupRestore';
-import { useStyles } from './Settings.styles';
+} from '@mui/material';
+import RestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 
 export const Settings = () => {
-  const classes = useStyles();
-
   const restoreSettings = useCallback(() => {}, []);
 
   return (
     <Container>
-      <Card variant='outlined' className={classes.root}>
+      <Card variant='outlined' sx={{ mt: 2 }}>
         <CardHeader
           title='Settings'
           subheader='Here you can manage the settings of your account'

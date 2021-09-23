@@ -15,8 +15,8 @@ import {
   Grid,
   Switch,
   Typography,
-} from '@material-ui/core';
-import Brightness3Icon from '@material-ui/icons/Brightness3';
+} from '@mui/material';
+import Brightness3Icon from '@mui/icons-material/Brightness3';
 
 export const SettingsPanel = () => {
   // Load data from providers

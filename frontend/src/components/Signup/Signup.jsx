@@ -15,11 +15,11 @@ import {
   Button,
   IconButton,
   Tooltip,
-} from '@material-ui/core';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+} from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-export const Signup = () => {
+export const Signup = ({ ...rest }) => {
   // Password visibility
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => setShowPassword(!showPassword);
@@ -46,7 +46,7 @@ export const Signup = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Card>
+      <Card variant='outlined' {...rest}>
         <CardHeader
           title='Signup'
           subheader='Create an account to be able to save the circuits you create. We promise to never share your personal information with any third party services.'

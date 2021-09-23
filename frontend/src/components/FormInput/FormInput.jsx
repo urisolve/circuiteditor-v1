@@ -1,6 +1,6 @@
 import React from 'react';
 import lodash from 'lodash';
-import { FormHelperText, TextField } from '@material-ui/core';
+import { FormHelperText, TextField } from '@mui/material';
 
 import { formMap } from './formData';
 

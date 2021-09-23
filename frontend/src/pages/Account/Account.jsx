@@ -18,12 +18,9 @@ import {
   Grid,
   Avatar,
   Typography,
-} from '@material-ui/core';
-import { useStyles } from './Account.styles';
+} from '@mui/material';
 
 export const Account = () => {
-  const classes = useStyles();
-
   const { user } = useContext(UserContext);
   const gravatar = useGravatar(user?.email);
 
@@ -46,7 +43,7 @@ export const Account = () => {
 
   return (
     <Container>
-      <Card variant='outlined' className={classes.root}>
+      <Card variant='outlined' sx={{ mt: 2 }}>
         <Container>
           <CardHeader
             title='Account'
@@ -61,7 +58,10 @@ export const Account = () => {
                     <Avatar
                       alt={`${user.firstName} ${user.lastName}`}
                       src={gravatar}
-                      className={classes.avatar}
+                      sx={{
+                        width: 1,
+                        height: 1,
+                      }}
                     />
                   </Grid>
 

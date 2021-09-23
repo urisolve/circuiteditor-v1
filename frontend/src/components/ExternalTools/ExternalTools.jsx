@@ -6,11 +6,11 @@ import Import from '../ImportZone/ImportZone';
 import Settings from '../SettingsPanel/SettingsPanel';
 
 // Material-UI
-import { IconButton, Tooltip } from '@material-ui/core';
-import SettingsIcon from '@material-ui/icons/Settings';
-import PublishIcon from '@material-ui/icons/Publish';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import BugReportIcon from '@material-ui/icons/BugReport';
+import { IconButton, Tooltip } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
+import PublishIcon from '@mui/icons-material/Publish';
+import GetAppIcon from '@mui/icons-material/GetApp';
+import BugReportIcon from '@mui/icons-material/BugReport';
 
 export const ExternalTools = ({ toggleTheme }) => {
   const [bugReportOpen, setBugReportOpen] = useState(false);

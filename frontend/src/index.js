@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { Global } from '@emotion/react';
+import { grey } from '@mui/material/colors';
+
+import { CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme';
 
 import { App } from './App.jsx';
@@ -14,6 +17,28 @@ ReactDOM.render(
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Global
+          styles={{
+            '*::-webkit-scrollbar': {
+              width: 10,
+              height: 10,
+            },
+            '*::-webkit-scrollbar-track': {
+              display: 'none',
+            },
+            '*::-webkit-scrollbar-thumb': {
+              borderRadius: theme.spacing(2),
+              background: grey[500],
+              '&:hover': {
+                background: grey[400],
+              },
+            },
+            html: {
+              scrollBehavior: 'smooth',
+              overflowY: 'overlay',
+            },
+          }}
+        />
         <App />
       </ThemeProvider>
     </BrowserRouter>

@@ -15,15 +15,14 @@ import {
   IconButton,
   Tooltip,
   Collapse,
-} from '@material-ui/core';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ChevronDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import AddIcon from '@material-ui/icons/Add';
-import UploadIcon from '@material-ui/icons/Publish';
-import { useStyles } from './Circuits.styles';
+} from '@mui/material';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import AddIcon from '@mui/icons-material/Add';
+import UploadIcon from '@mui/icons-material/Publish';
+import SortIcon from '@mui/icons-material/Sort';
 
 export const Circuits = () => {
-  const classes = useStyles();
   const [circuits, setCircuits] = useState([]);
 
   const [showStared, setShowStared] = useState(true);
@@ -139,6 +138,11 @@ export const Circuits = () => {
       iterable: sortedCircuits,
       action: (
         <>
+          <Tooltip title='Sort'>
+            <IconButton>
+              <SortIcon fontSize='large' />
+            </IconButton>
+          </Tooltip>
           <Tooltip title='Upload circuit' arrow>
             <IconButton onClick={uploadCircuit} disabled>
               <UploadIcon fontSize='large' />
@@ -155,9 +159,9 @@ export const Circuits = () => {
   ];
 
   return (
-    <Container className={classes.root}>
+    <Container sx={{ p: 2, flexGrow: 1 }}>
       {menus.map((menu) => (
-        <Card key={menu.title} variant='outlined' className={classes.menu}>
+        <Card key={menu.title} variant='outlined' sx={{ mb: 2 }}>
           <CardHeader
             title={menu.title}
             subheader={menu.subheader}
