@@ -1,9 +1,17 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from 'react';
 import lodash from 'lodash';
 import axios from 'axios';
 
-// Custom components
+// Custom components/hooks
 import { CircuitCard } from '../../components/CircuitCard';
+import { SortingMenu } from '../../components/SortingMenu';
+import { useSortAndOrder } from '../../hooks/useSortAndOrder';
 
 // Material-UI
 import {
@@ -28,15 +36,9 @@ export const Circuits = () => {
   const [showStared, setShowStared] = useState(false);
   const toggleShowStared = () => setShowStared((showStared) => !showStared);
 
-  // Builds the sorted circuits
-  const sortedCircuits = useMemo(
-    () =>
-      circuits.sort(
-        (a, b) =>
-          (a.updatedAt < b.updatedAt) * 1 + (a.updatedAt > b.updatedAt) * -1,
-      ),
-    [circuits],
-  );
+  const sortButton = useRef();
+  const [sortMenuOpen, setSortMenuOpen] = useState(false);
+  const [sortedCircuits, params, setters, options] = useSortAndOrder(circuits);
 
   // Filters the stared circuits
   const staredCircuits = useMemo(
@@ -138,8 +140,8 @@ export const Circuits = () => {
       iterable: sortedCircuits,
       action: (
         <>
-          <Tooltip title='Sort'>
-            <IconButton>
+          <Tooltip title='Sort' arrow>
+            <IconButton onClick={() => setSortMenuOpen(true)} ref={sortButton}>
               <SortIcon fontSize='large' />
             </IconButton>
           </Tooltip>
@@ -190,6 +192,15 @@ export const Circuits = () => {
           </Collapse>
         </Card>
       ))}
+
+      <SortingMenu
+        open={sortMenuOpen}
+        onClose={() => setSortMenuOpen(false)}
+        anchorEl={sortButton.current}
+        params={params}
+        setters={setters}
+        options={options}
+      />
     </Container>
   );
 };
