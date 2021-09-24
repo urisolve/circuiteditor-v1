@@ -25,7 +25,7 @@ import SortIcon from '@mui/icons-material/Sort';
 export const Circuits = () => {
   const [circuits, setCircuits] = useState([]);
 
-  const [showStared, setShowStared] = useState(true);
+  const [showStared, setShowStared] = useState(false);
   const toggleShowStared = () => setShowStared((showStared) => !showStared);
 
   // Builds the sorted circuits
