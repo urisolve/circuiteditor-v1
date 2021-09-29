@@ -14,7 +14,7 @@ export const TeamMember = ({ member }) => {
         <Grid item>
           <Avatar
             variant='rounded'
-            sx={{ width: 150, height: 200 }}
+            sx={{ width: 112, height: 144 }}
             alt={member.name}
             src={member.img}
           />
