@@ -1,8 +1,8 @@
-import mjf from '../../assets/team/mjf.png';
-import fdp from '../../assets/team/fdp.png';
-import txr from '../../assets/team/txr.png';
-import sss from '../../assets/team/sss.png';
-import pmorim from '../../assets/team/pmorim.png';
+import mjf from '../../assets/team/mjf.webp';
+import fdp from '../../assets/team/fdp.webp';
+import txr from '../../assets/team/txr.webp';
+import sss from '../../assets/team/sss.webp';
+import phm from '../../assets/team/phm.webp';
 
 export const teamMembers = [
   {
@@ -23,6 +23,6 @@ export const teamMembers = [
   },
   {
     name: 'Pedro Morim',
-    img: pmorim,
+    img: phm,
   },
 ];
