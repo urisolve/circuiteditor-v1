@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-// Contexts
-import { UserProvider } from './contexts/UserContext';
+// Material-UI
+import { Stack } from '@mui/material';
 
-// Custom components
+// Custom components, contexts, and hooks
 import {
   NotFound,
   Home,
@@ -16,9 +16,13 @@ import {
   Settings,
 } from './pages';
 import { Navbar } from './components/Navbar';
+import { useOnline } from './hooks/useOnline';
+import { UserProvider } from './contexts/UserContext';
+import { OfflineBanner } from './components/OfflineBanner';
 
 export const App = () => {
   const [user, setUser] = useState(null);
+  const isOnline = useOnline();
 
   useEffect(() => {
     async function grabUser() {
@@ -35,21 +39,11 @@ export const App = () => {
 
   return (
     <UserProvider value={{ user, setUser }}>
-      <div
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100vh',
-        }}
-      >
+      <Stack sx={{ height: '100vh' }}>
         <Navbar />
+        <OfflineBanner isOffline={!isOnline} />
 
-        <main
-          sx={{
-            display: 'flex',
-            flexGrow: 1,
-          }}
-        >
+        <Stack component='main' sx={{ flexGrow: 1 }}>
           <Switch>
             <Route exact path='/'>
               <Home />
@@ -76,8 +70,8 @@ export const App = () => {
               <NotFound />
             </Route>
           </Switch>
-        </main>
-      </div>
+        </Stack>
+      </Stack>
     </UserProvider>
   );
 };
