@@ -21,19 +21,16 @@ import {
   Container,
   FormHelperText,
   Grid,
+  Link,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const sectionPadding = {
-  px: 10,
-  py: 15,
-};
-const wave = {
-  height: 200,
-  width: '100%',
-  display: 'block',
+  py: { xs: 5, sm: 10, md: 15 },
+  px: 2,
 };
 
 export const Home = () => {
@@ -41,51 +38,27 @@ export const Home = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <main>
-      <ScrollToTopButton />
-
+    <Stack>
       <Container id='intro' component='section' sx={sectionPadding}>
-        <Grid container spacing={10} alignItems='center'>
-          <Grid
-            item
-            xs={12}
-            md
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-            }}
+        <Stack direction={{ xs: 'column', md: 'row' }} alignItems='center'>
+          <Stack
+            alignItems={{ xs: 'center', md: 'flex-start' }}
+            justifyContent='center'
+            sx={{ maxWidth: { xs: 1, md: 1 / 2 } }}
           >
             <Typography
-              variant='h2'
-              sx={{
-                marginBottom: 2,
-                fontSize: 56,
-                textTransform: 'uppercase',
-                fontWeight: 'bold',
-                color: '#2F2E41',
-              }}
-              align='left'
-            >
-              create circuit schematics
-            </Typography>
-            <Typography
+              component='h2'
               variant='h3'
               sx={{
-                marginBottom: 5,
-                fontSize: 40,
                 textTransform: 'uppercase',
-                fontWeight: 'thin',
-                color: '#2F2E41',
+                textAlign: { xs: 'center', md: 'left' },
               }}
-              align='left'
             >
-              and get their analytical model
+              Create <b>circuits</b> and get their analytical <b>models</b>
             </Typography>
             <Button
               size='large'
-              sx={{ fontSize: 20 }}
+              sx={{ fontSize: 20, mt: 5 }}
               variant='contained'
               color='primary'
               endIcon={<ChevronRightIcon />}
@@ -93,14 +66,20 @@ export const Home = () => {
             >
               Get Started
             </Button>
-          </Grid>
-          <Grid item xs={12} md>
+          </Stack>
+
+          <Box
+            sx={{
+              width: { xs: 1, md: 1 / 2 },
+              pt: { xs: 10, md: 0 },
+            }}
+          >
             <IntroSVG />
-          </Grid>
-        </Grid>
+          </Box>
+        </Stack>
       </Container>
 
-      <TopWaveSVG style={wave} />
+      <TopWaveSVG />
 
       <Box
         sx={{
@@ -145,7 +124,7 @@ export const Home = () => {
         </Container>
       </Box>
 
-      <BottomWaveSVG style={wave} />
+      <BottomWaveSVG />
 
       <Container
         id='contact'
@@ -230,7 +209,7 @@ export const Home = () => {
         </Grid>
       </Container>
 
-      <TopWaveSVG style={wave} />
+      <TopWaveSVG />
 
       <Box
         component='footer'
@@ -243,10 +222,20 @@ export const Home = () => {
       >
         <Container component='section'>
           <Typography variant='body2' align='center'>
-            Copyright © 2021 Equipa URIsolve. All rights reserved.
+            Copyright © 2021{' '}
+            <Link
+              href='https://urisolve.pt/app/'
+              target='_blank'
+              color='inherit'
+            >
+              URIsolve
+            </Link>
+            . All rights reserved.
           </Typography>
         </Container>
       </Box>
-    </main>
+
+      <ScrollToTopButton />
+    </Stack>
   );
 };

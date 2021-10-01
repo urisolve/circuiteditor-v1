@@ -19,6 +19,7 @@ import {
   IconButton,
   Divider,
   Box,
+  Hidden,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
@@ -73,13 +74,16 @@ export const Navbar = () => {
             }}
           >
             <Logo style={{ width: 60 }} />
-            <Typography
-              variant='h1'
-              noWrap
-              sx={{ ml: 2, fontSize: 24, fontWeight: 'regular' }}
-            >
-              Circuit Editor
-            </Typography>
+
+            <Hidden smDown>
+              <Typography
+                variant='h1'
+                noWrap
+                sx={{ ml: 2, fontSize: 24, fontWeight: 'regular' }}
+              >
+                Circuit Editor
+              </Typography>
+            </Hidden>
           </Button>
 
           <Box sx={{ flexGrow: 1 }} />
