@@ -1,17 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import { BrowserRouter } from 'react-router-dom';
 
+// MUI
 import { Global } from '@emotion/react';
-import { grey } from '@mui/material/colors';
-
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import { theme } from './theme';
 
+// App
 import { App } from './App.jsx';
+import { theme } from './theme';
+import { globalStyles } from './globalStyles';
 
+// PWA
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 ReactDOM.render(
@@ -19,28 +20,7 @@ ReactDOM.render(
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Global
-          styles={{
-            '*::-webkit-scrollbar': {
-              width: 10,
-              height: 10,
-            },
-            '*::-webkit-scrollbar-track': {
-              display: 'none',
-            },
-            '*::-webkit-scrollbar-thumb': {
-              borderRadius: theme.spacing(2),
-              background: grey[500],
-              '&:hover': {
-                background: grey[400],
-              },
-            },
-            html: {
-              scrollBehavior: 'smooth',
-              overflowY: 'overlay',
-            },
-          }}
-        />
+        <Global styles={globalStyles} />
         <App />
       </ThemeProvider>
     </BrowserRouter>
