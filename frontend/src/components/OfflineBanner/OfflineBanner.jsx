@@ -1,11 +1,17 @@
 import React from 'react';
+
 import { Alert } from '@mui/material';
+import OfflineIcon from '@mui/icons-material/SignalWifiStatusbarConnectedNoInternet4';
 
 export const OfflineBanner = ({ isOffline }) => {
   return (
     isOffline && (
-      <Alert sx={{ justifyContent: 'center' }} severity='warning'>
-        Network is unavailable. You are currently offline.
+      <Alert
+        severity='warning'
+        iconMapping={{ warning: <OfflineIcon /> }}
+        sx={{ justifyContent: 'center' }}
+      >
+        Network is unavailable
       </Alert>
     )
   );
