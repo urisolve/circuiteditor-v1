@@ -161,7 +161,7 @@ export const Circuits = () => {
   ];
 
   return (
-    <Container sx={{ p: 2, flexGrow: 1 }}>
+    <Container sx={{ mt: 2 }}>
       {menus.map((menu) => (
         <Card key={menu.title} variant='outlined' sx={{ mb: 2 }}>
           <CardHeader

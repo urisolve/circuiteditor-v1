@@ -35,7 +35,7 @@ export const Home = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <Stack>
+    <Stack sx={{ mt: { xs: 2, md: 5 } }}>
       <Container id='intro' component='section' sx={sectionPadding}>
         <Stack direction={{ xs: 'column', md: 'row' }} alignItems='center'>
           <Stack
@@ -49,6 +49,7 @@ export const Home = () => {
               sx={{
                 textTransform: 'uppercase',
                 textAlign: { xs: 'center', md: 'left' },
+                fontSize: { xs: 36, md: 52 },
               }}
             >
               Create <b>circuit schematics</b> and get their analytical models

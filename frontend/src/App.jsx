@@ -40,7 +40,7 @@ export const App = () => {
   return (
     <UserProvider value={{ user, setUser }}>
       <Stack sx={{ height: '100vh' }}>
-        <Navbar sx={{ mb: 5 }} />
+        <Navbar />
         <OfflineBanner isOffline={!isOnline} />
 
         <Stack component='main' sx={{ flexGrow: 1 }}>
