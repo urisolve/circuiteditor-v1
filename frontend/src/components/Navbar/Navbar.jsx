@@ -32,7 +32,7 @@ const menuLink = {
   textDecoration: 'none',
 };
 
-export const Navbar = () => {
+export const Navbar = ({ ...rest }) => {
   const { user, setUser } = useContext(UserContext);
   const gravatar = useGravatar(user?.email);
 
@@ -61,6 +61,7 @@ export const Navbar = () => {
       position='relative'
       color='primary'
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      {...rest}
     >
       <Container>
         <Toolbar>

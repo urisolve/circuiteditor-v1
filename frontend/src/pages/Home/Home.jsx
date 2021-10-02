@@ -6,12 +6,12 @@ import { TeamMember, teamMembers } from '../../components/TeamMember';
 import { ScrollToTopButton } from '../../components/ScrollToTopButton';
 import { instructions } from './instructions';
 
-// Section's waves
+// Waves
 import { ReactComponent as TopWaveSVG } from '../../assets/waves/top.svg';
 import { ReactComponent as BottomWaveSVG } from '../../assets/waves/bottom.svg';
 
-// Section's Images
-import { ReactComponent as IntroSVG } from '../../assets/undraw/intro.svg';
+// Images
+import iPhoneMockups from '../../assets/mockups/iPhoneMockups.png';
 import { ReactComponent as StepsSVG } from '../../assets/undraw/steps.svg';
 
 // Material-UI
@@ -28,10 +28,7 @@ import {
 } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-const sectionPadding = {
-  py: { xs: 5, sm: 10, md: 15 },
-  px: 2,
-};
+const sectionPadding = { py: 0, px: 2 };
 
 export const Home = () => {
   const history = useHistory();
@@ -54,7 +51,7 @@ export const Home = () => {
                 textAlign: { xs: 'center', md: 'left' },
               }}
             >
-              Create <b>circuits</b> and get their analytical <b>models</b>
+              Create <b>circuit schematics</b> and get their analytical models
             </Typography>
             <Button
               size='large'
@@ -70,11 +67,16 @@ export const Home = () => {
 
           <Box
             sx={{
+              height: 1,
               width: { xs: 1, md: 1 / 2 },
               pt: { xs: 10, md: 0 },
             }}
           >
-            <IntroSVG />
+            <img
+              src={iPhoneMockups}
+              alt='iPhone Mockups'
+              style={{ width: '100%' }}
+            />
           </Box>
         </Stack>
       </Container>
@@ -221,6 +223,16 @@ export const Home = () => {
         }}
       >
         <Container component='section'>
+          <Typography align='center' gutterBottom>
+            Proudly created at{' '}
+            <Link
+              href='https://www.isep.ipp.pt/'
+              target='_blank'
+              color='inherit'
+            >
+              ISEP
+            </Link>
+          </Typography>
           <Typography variant='body2' align='center'>
             Copyright © 2021{' '}
             <Link
