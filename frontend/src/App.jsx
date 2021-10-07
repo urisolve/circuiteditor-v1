@@ -43,7 +43,7 @@ export const App = () => {
         <Navbar />
         <OfflineBanner isOffline={!isOnline} />
 
-        <Stack component='main' sx={{ flexGrow: 1 }}>
+        <Stack component='main' flexGrow={1}>
           <Switch>
             <Route exact path='/'>
               <Home />

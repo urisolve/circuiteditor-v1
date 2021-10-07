@@ -8,7 +8,8 @@ export const Canvas = ({ schematic, selection, ...rest }) => {
     <Stack
       alignItems='center'
       justifyContent='center'
-      sx={{ flexGrow: 1, width: 1, height: 1 }}
+      flexGrow={1}
+      sx={{ width: 1, height: 1 }}
     >
       <Paper elevation={3} sx={{ width: '80%', height: '80%' }}>
         <Schematic schematic={schematic} selection={selection} {...rest} />
