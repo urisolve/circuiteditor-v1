@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { svgMap } from '../../assets/electrical/index.js';
 
 import { Avatar, Stack, Tooltip, Typography } from '@mui/material';

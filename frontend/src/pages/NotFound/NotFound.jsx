@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ReactComponent as NotFoundSVG } from '../../assets/undraw/not-found.svg';
 
 // Material-UI

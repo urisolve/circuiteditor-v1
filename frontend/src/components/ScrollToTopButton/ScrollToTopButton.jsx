@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { Fab, Slide, Tooltip } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';

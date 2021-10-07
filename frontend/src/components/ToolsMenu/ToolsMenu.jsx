@@ -20,6 +20,7 @@ import RedoIcon from '@mui/icons-material/Redo';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import RotateRightIcon from '@mui/icons-material/RotateRight';
+import CodeIcon from '@mui/icons-material/Code';
 import SaveIcon from '@mui/icons-material/Save';
 
 export const ToolsMenu = ({ schematic, selection, history }) => {
@@ -98,6 +99,11 @@ export const ToolsMenu = ({ schematic, selection, history }) => {
       },
     ],
     [
+      {
+        name: 'View Source',
+        icon: <CodeIcon />,
+        onClick: () => {},
+      },
       {
         name: 'Save',
         icon: <SaveIcon />,

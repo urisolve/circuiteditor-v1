@@ -1,4 +1,3 @@
-import React from 'react';
 import { Avatar, Box, Grid, Typography } from '@mui/material';
 
 export const TeamMember = ({ member }) => {

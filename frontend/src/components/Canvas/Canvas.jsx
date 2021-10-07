@@ -1,4 +1,3 @@
-import React from 'react';
 import { Schematic } from 'react-circuit-schematics';
 
 // Material-UI

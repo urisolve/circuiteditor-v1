@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSchematic } from 'react-circuit-schematics';
 
 // Custom components

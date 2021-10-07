@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Alert } from '@mui/material';
 import OfflineIcon from '@mui/icons-material/SignalWifiStatusbarConnectedNoInternet4';
 
