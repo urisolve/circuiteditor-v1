@@ -63,7 +63,7 @@ export const CompLib = ({ addToSchematic, ...rest }) => {
 
         <Box sx={{ p: 2 }}>
           {filteredComps.map((menu) => (
-            <Accordion variant='outlined'>
+            <Accordion variant='outlined' key={menu.title}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography>{menu.title}</Typography>
               </AccordionSummary>
