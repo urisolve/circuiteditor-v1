@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "An app that allows you to create and edit circuits.",
   "scripts": {
-    "dev": "concurrently \"cd backend && nodemon server\" \"cd frontend && yarn start\"",
-    "npm:dev": "concurrently \"cd backend && nodemon server\" \"cd frontend && npm run start\""
+    "server": "cd backend && nodemon server",
+    "client": "cd frontend && yarn start",
+    "npm:client": "cd frontend && npm run start",
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
+    "npm:dev": "concurrently \"npm run server\" \"npm run npm:client\""
   },
   "repository": {
     "type": "git",
