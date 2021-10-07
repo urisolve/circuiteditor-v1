@@ -23,7 +23,12 @@ import RotateRightIcon from '@mui/icons-material/RotateRight';
 import CodeIcon from '@mui/icons-material/Code';
 import SaveIcon from '@mui/icons-material/Save';
 
-export const ToolsMenu = ({ schematic, selection, history }) => {
+export const ToolsMenu = ({
+  schematic,
+  history,
+  selection,
+  toggleSourceView,
+}) => {
   const { id } = useParams();
 
   const [isAccountAlertOpen, setIsAccountAlertOpen] = useState(false);
@@ -100,9 +105,9 @@ export const ToolsMenu = ({ schematic, selection, history }) => {
     ],
     [
       {
-        name: 'View Source',
+        name: 'Toggle Source View',
         icon: <CodeIcon />,
-        onClick: () => {},
+        onClick: toggleSourceView,
       },
       {
         name: 'Save',
