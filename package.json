@@ -1,0 +1,18 @@
+{
+  "name": "circuiteditor",
+  "version": "1.0.0",
+  "description": "An app that allows you to create and edit circuits.",
+  "scripts": {
+    "dev": "concurrently \"cd backend && nodemon server\" \"cd frontend && yarn start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urisolve/circuiteditor.git"
+  },
+  "author": "pmorim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/urisolve/circuiteditor/issues"
+  },
+  "homepage": "https://github.com/urisolve/circuiteditor#readme"
+}
