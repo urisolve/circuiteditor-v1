@@ -33,7 +33,7 @@ export const SettingsPanel = () => {
   // Send new account information to database
   const onSubmit = async () => {
     await axios
-      .patch('http://localhost:5000/account/settings', settings)
+      .patch('/api/account/settings', settings)
       .catch((error) => console.log(error.response));
   };
 
