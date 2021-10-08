@@ -17,6 +17,8 @@ import {
   IconButton,
   Tooltip,
   Collapse,
+  CircularProgress,
+  Box,
 } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -26,6 +28,7 @@ import SortIcon from '@mui/icons-material/Sort';
 
 export const Circuits = () => {
   const [circuits, setCircuits] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [showStared, setShowStared] = useState(false);
   const toggleShowStared = () => setShowStared((showStared) => !showStared);
@@ -42,12 +45,16 @@ export const Circuits = () => {
 
   // Fetch all the circuits
   const fetchCircuits = useCallback(async () => {
+    setIsLoading(true);
+
     try {
       const { data } = await axios.get('/api/circuits');
       setCircuits(data);
     } catch (err) {
       console.error(err);
     }
+
+    setIsLoading(false);
   }, [setCircuits]);
 
   // Let the user upload a new circuit schematic
@@ -166,22 +173,35 @@ export const Circuits = () => {
 
           <Collapse in={menu?.collapse ?? true} timeout='auto' unmountOnExit>
             <CardContent>
-              <Grid
-                container
-                spacing={2}
-                justifyContent='flex-start'
-                alignItems='flex-start'
-              >
-                {menu.iterable.map((circuit) => (
-                  <Grid key={circuit._id} item>
-                    <CircuitCard
-                      circuit={circuit}
-                      onDelete={() => deleteCircuit(circuit._id)}
-                      onStar={() => starCircuit(circuit._id)}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
+              {isLoading ? (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <Grid
+                  container
+                  spacing={2}
+                  justifyContent='flex-start'
+                  alignItems='flex-start'
+                >
+                  {menu.iterable.map((circuit) => (
+                    <Grid key={circuit._id} item>
+                      <CircuitCard
+                        circuit={circuit}
+                        onDelete={() => deleteCircuit(circuit._id)}
+                        onStar={() => starCircuit(circuit._id)}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              )}
             </CardContent>
           </Collapse>
         </Card>
