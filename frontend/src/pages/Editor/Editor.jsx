@@ -2,10 +2,10 @@ import { useCallback, useState } from 'react';
 import { useSchematic } from 'react-circuit-schematics';
 
 // Custom components
-import { CompLib } from '../../components/CompLib';
-import { ToolsMenu } from '../../components/ToolsMenu';
-import { Canvas } from '../../components/Canvas';
-import { SourceView } from '../../components/SourceView';
+import { CompLib } from '../../components/UI/CompLib';
+import { ToolsMenu } from '../../components/UI/ToolsMenu';
+import { Canvas } from '../../components/UI/Canvas';
+import { SourceView } from '../../components/UI/SourceView';
 import { defaultCircuit } from './defaultCircuit';
 
 // Material-UI

@@ -1,0 +1,13 @@
+.port {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.port:hover {
+  transform: scale(1.25);
+}
+
+.connectionPoint {
+  width: 100%;
+  height: 100%;
+}

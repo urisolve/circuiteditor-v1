@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 
 import { UserContext } from '../../contexts/UserContext';
-import { Login } from '../../components/Login';
-import { Signup } from '../../components/Signup';
+import { Login } from '../../components/UI/Login';
+import { Signup } from '../../components/UI/Signup';
 
 import { Container, Grid, Stack } from '@mui/material';
 

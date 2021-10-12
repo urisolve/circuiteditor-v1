@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react';
 import axios from 'axios';
 
-import { SettingsCallbacksContext } from '../../contexts/SettingsCallbackContext';
-import { UserContext } from '../../contexts/UserContext';
+import { SettingsCallbacksContext } from '../../../contexts/SettingsCallbackContext';
+import { UserContext } from '../../../contexts/UserContext';
 
 // Material-UI
 import {

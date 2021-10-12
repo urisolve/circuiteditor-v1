@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { UserContext } from '../../contexts/UserContext';
 import { useGravatar } from '../../hooks/useGravatar';
-import { FormInput } from '../../components/FormInput';
+import { FormInput } from '../../components/UI/FormInput';
 
 // Material-UI
 import {

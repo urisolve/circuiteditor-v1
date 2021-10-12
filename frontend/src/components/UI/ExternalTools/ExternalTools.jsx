@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 // Custom components
 import BugReport from '../BugReport';
-import Import from '../ImportZone/ImportZone';
-import Settings from '../SettingsPanel/SettingsPanel';
+import Import from '../ImportZone';
+import Settings from '../SettingsPanel';
 
 // Material-UI
 import { IconButton, Tooltip } from '@mui/material';

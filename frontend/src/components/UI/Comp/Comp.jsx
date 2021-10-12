@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { svgMap } from '../../assets/electrical/index.js';
-
 import { Avatar, Stack, Tooltip, Typography } from '@mui/material';
+
+import { svgMap } from '../../../assets/electrical';
 
 const compSize = 65;
 

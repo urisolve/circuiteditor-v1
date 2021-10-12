@@ -1,8 +1,8 @@
-import mjf from '../../assets/team/mjf.webp';
-import fdp from '../../assets/team/fdp.webp';
-import txr from '../../assets/team/txr.webp';
-import sss from '../../assets/team/sss.webp';
-import phm from '../../assets/team/phm.webp';
+import mjf from '../../../assets/team/mjf.webp';
+import fdp from '../../../assets/team/fdp.webp';
+import txr from '../../../assets/team/txr.webp';
+import sss from '../../../assets/team/sss.webp';
+import phm from '../../../assets/team/phm.webp';
 
 export const teamMembers = [
   {
