@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
-import { useSchematic } from 'react-circuit-schematics';
 
-// Custom components
+// Custom hooks & components
+import { useSchematic } from '../../hooks/useSchematic';
 import { CompLib } from '../../components/UI/CompLib';
 import { ToolsMenu } from '../../components/UI/ToolsMenu';
 import { Canvas } from '../../components/UI/Canvas';

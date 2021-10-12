@@ -1,6 +1,5 @@
-import React, { forwardRef, useRef, useMemo } from 'react';
+import { forwardRef, useRef, useMemo } from 'react';
 import Draggable from 'react-draggable';
-import PropTypes from 'prop-types';
 
 import cx from 'classnames';
 import styles from './Node.module.css';
@@ -59,37 +58,3 @@ export const Node = forwardRef(
     );
   },
 );
-
-Node.displayName = 'Node';
-
-Node.propTypes = {
-  /**
-   * The unique id of the node
-   */
-  id: PropTypes.string,
-  /**
-   * The position of the node
-   */
-  position: PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number,
-  }).isRequired,
-  /**
-   * The optional properties fo the node
-   */
-  properties: PropTypes.shape({
-    color: PropTypes.string,
-    radius: PropTypes.number,
-    opacity: PropTypes.number,
-  }),
-  /**
-   * The size of the grid, i.e., the amount of pixels the drag skips
-   */
-  gridSize: PropTypes.number,
-};
-
-Node.defaultProps = {
-  position: { x: 0, y: 0 },
-  properties: { radius: 6, color: '#6495ED', opacity: 1 },
-  gridSize: 10,
-};

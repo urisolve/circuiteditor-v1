@@ -1,7 +1,5 @@
-import { Schematic } from 'react-circuit-schematics';
-
-// Material-UI
 import { Paper, Stack } from '@mui/material';
+import { Schematic } from '../../Electrical/Schematic';
 
 export const Canvas = ({ schematic, selection, ...rest }) => {
   return (

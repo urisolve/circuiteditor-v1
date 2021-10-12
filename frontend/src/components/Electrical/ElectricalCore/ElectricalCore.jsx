@@ -1,11 +1,10 @@
-import React, { useRef, useMemo, forwardRef } from 'react';
+import { useRef, useMemo, forwardRef } from 'react';
 import Draggable from 'react-draggable';
-import PropTypes from 'prop-types';
 
 import styles from './ElectricalCore.module.css';
 import cx from 'classnames';
 
-import { svgMap } from '../../assets';
+import { svgMap } from '../../../assets/electrical';
 import { Port } from '../Port';
 
 export const ElectricalCore = forwardRef(
@@ -113,70 +112,3 @@ export const ElectricalCore = forwardRef(
     );
   },
 );
-
-ElectricalCore.displayName = 'ElectricalCore';
-
-ElectricalCore.propTypes = {
-  /**
-   * The unique id of the component
-   */
-  id: PropTypes.string,
-  /**
-   * The type of the component
-   */
-  type: PropTypes.string.isRequired,
-  /**
-   * The position of the component
-   */
-  position: PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number,
-    z: PropTypes.number,
-    angle: PropTypes.number,
-  }),
-  /**
-   * An array of the connection ports
-   */
-  ports: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      type: PropTypes.string,
-      position: PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number,
-      }),
-      ref: PropTypes.oneOfType([
-        PropTypes.func,
-        PropTypes.shape({ current: PropTypes.any }),
-      ]),
-    }),
-  ),
-  /**
-   * The width of the component, in pixels
-   */
-  width: PropTypes.number,
-  /**
-   * The height of the component, in pixels
-   */
-  height: PropTypes.number,
-  /**
-   * The size of the grid, i.e., the amount of pixels the drag skips
-   */
-  gridSize: PropTypes.number,
-  /**
-   * Index of the alternate images. If `0` then use default image
-   */
-  altImageIdx: PropTypes.number,
-  /**
-   * The source path to a custom image to be used by the component
-   */
-  imgPath: PropTypes.string,
-};
-
-ElectricalCore.defaultProps = {
-  position: { x: 0, y: 0 },
-  width: 100,
-  height: 100,
-  gridSize: 10,
-  altImageIdx: 0,
-};

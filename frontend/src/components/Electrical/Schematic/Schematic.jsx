@@ -1,6 +1,5 @@
-import React, { useCallback, useRef, useEffect, useReducer } from 'react';
+import { useCallback, useRef, useEffect, useReducer } from 'react';
 import useDynamicRefs from 'use-dynamic-refs';
-import PropTypes from 'prop-types';
 
 import { SelectionArea } from '../SelectionArea';
 import { ElectricalCore } from '../ElectricalCore';
@@ -8,7 +7,7 @@ import { Connection } from '../Connection';
 import { Node } from '../Node';
 import { Label } from '../Label';
 
-import { snapValueToGrid } from '../../util';
+import { snapValueToGrid } from '../../../util';
 
 export const Schematic = ({
   schematic,
@@ -163,40 +162,4 @@ export const Schematic = ({
       ))}
     </div>
   );
-};
-
-Schematic.propTypes = {
-  /**
-   * The schematic data
-   */
-  schematic: PropTypes.object,
-  /**
-   * The width of the canvas
-   */
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  /**
-   * The height of the canvas
-   */
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  /**
-   * Flag that enables or disables the dragging/editing ability
-   */
-  readOnly: PropTypes.bool,
-  /**
-   * The size of the grid units, in pixels
-   */
-  gridSize: PropTypes.number,
-  /**
-   * The color of the grid dots
-   */
-  gridColor: PropTypes.string,
-};
-
-Schematic.defaultProps = {
-  schematic: {},
-  width: '100%',
-  height: '100%',
-  readOnly: false,
-  gridSize: 10,
-  gridColor: '#777',
 };

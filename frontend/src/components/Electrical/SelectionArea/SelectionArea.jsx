@@ -1,4 +1,4 @@
-import React, {
+import {
   forwardRef,
   useRef,
   useEffect,
@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import lodash from 'lodash';
 
-import { areasIntersect } from '../../util';
+import { areasIntersect } from '../../../util';
 
 // An ENUM of the different types of mouse-clicks
 const MOUSE = Object.freeze({ NONE: 0, LEFT: 1, MIDDLE: 2, RIGHT: 3 });

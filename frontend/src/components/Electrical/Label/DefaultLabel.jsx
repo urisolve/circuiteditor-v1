@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import styles from './Label.module.css';
 
 const setContentEditable = (ref, val) => {
