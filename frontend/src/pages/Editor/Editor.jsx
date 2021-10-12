@@ -1,11 +1,8 @@
 import { useCallback, useState } from 'react';
 
 // Custom hooks & components
-import { useSchematic } from '../../hooks/useSchematic';
-import { CompLib } from '../../components/UI/CompLib';
-import { ToolsMenu } from '../../components/UI/ToolsMenu';
-import { Canvas } from '../../components/UI/Canvas';
-import { SourceView } from '../../components/UI/SourceView';
+import { useSchematic } from '../../hooks';
+import { CompLib, ToolsMenu, Canvas, SourceView } from '../../components/UI';
 import { defaultCircuit } from './defaultCircuit';
 
 // Material-UI

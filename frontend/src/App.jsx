@@ -15,10 +15,9 @@ import {
   Editor,
   Settings,
 } from './pages';
-import { Navbar } from './components/UI/Navbar';
-import { useOnline } from './hooks/useOnline';
-import { UserProvider } from './contexts/UserContext';
-import { OfflineBanner } from './components/UI/OfflineBanner';
+import { Navbar, OfflineBanner } from './components/UI';
+import { useOnline } from './hooks';
+import { UserProvider } from './contexts';
 
 export const App = () => {
   const [user, setUser] = useState(null);

@@ -1,9 +1,12 @@
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { UserContext } from '../../contexts/UserContext';
-import { TeamMember, teamMembers } from '../../components/UI/TeamMember';
-import { ScrollToTopButton } from '../../components/UI/ScrollToTopButton';
+import {
+  TeamMember,
+  teamMembers,
+  ScrollToTopButton,
+} from '../../components/UI';
+import { UserContext } from '../../contexts';
 import { instructions } from './instructions';
 
 // Waves

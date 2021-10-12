@@ -2,11 +2,11 @@ import { useState, useRef, useCallback, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-import { UserContext } from '../../../contexts/UserContext';
-import { useGravatar } from '../../../hooks/useGravatar';
+import { UserContext } from '../../../contexts';
+import { useGravatar } from '../../../hooks';
 import { ReactComponent as Logo } from '../../../assets/brand/logo.svg';
 
-// Material-UI components
+// Material-UI
 import {
   AppBar,
   Toolbar,
