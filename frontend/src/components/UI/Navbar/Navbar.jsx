@@ -131,7 +131,6 @@ export const Navbar = ({ ...rest }) => {
       </Container>
 
       <Menu
-        getContentAnchorEl={null}
         anchorEl={anchorEl.current}
         anchorOrigin={{
           vertical: 'bottom',
