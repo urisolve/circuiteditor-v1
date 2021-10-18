@@ -65,74 +65,22 @@ export const SelectionArea = forwardRef(
       // Calculate the bounding areas of the items
       selectableAreas.current = [];
       for (const elem of selectableItems) {
-        const elemArea = getRef(elem.id).current.getBoundingClientRect();
-        selectableAreas.current.push({
-          id: elem.id,
-          left: elemArea.left - parentRect.current.left,
-          top: elemArea.top - parentRect.current.top,
-          width: elemArea.width,
-          height: elemArea.height,
-        });
+        try {
+          const elemArea = getRef(elem.id).current.getBoundingClientRect();
+          selectableAreas.current.push({
+            id: elem.id,
+            left: elemArea.left - parentRect.current.left,
+            top: elemArea.top - parentRect.current.top,
+            width: elemArea.width,
+            height: elemArea.height,
+          });
+        } catch {
+          console.info(
+            `Circuit Editor: Failed to calculate bounds of component with ID: ${elem.id}`,
+          );
+        }
       }
     }, [getRef, ignoreItems, selectableItems, parentRef]);
-
-    /**
-     * Handler for pressing left mouse button.
-     */
-    const onMouseDown = useCallback(
-      (event) => {
-        if (disabled) return;
-        if (event.which !== MOUSE.LEFT) return;
-
-        // Calculate click point
-        const clickPoint = {
-          left: event.pageX - parentRect.current.left,
-          top: event.pageY - parentRect.current.top,
-        };
-
-        // Ignore click if it was on an item marked to ignore
-        for (const area of ignoreAreas.current) {
-          if (areasIntersect(clickPoint, area)) {
-            event.preventDefault();
-            return;
-          }
-        }
-
-        // Single click on selectable items
-        for (const area of selectableAreas.current) {
-          if (areasIntersect(clickPoint, area)) {
-            if (event.ctrlKey)
-              setSelectedItems?.((items) => {
-                if (items.has(area.id)) items.delete(area.id);
-                else items.add(area.id);
-                return items;
-              });
-            else setSelectedItems?.(new Set([area.id]));
-
-            event.preventDefault();
-            return;
-          }
-        }
-
-        // Set the beginning of the selection area
-        startPoint.current = clickPoint;
-        selectionArea.current = {
-          ...startPoint.current,
-          width: 0,
-          height: 0,
-        };
-
-        // Unselect the selected items
-        setSelectedItems?.(new Set());
-
-        // Enable event listeners for drag
-        parentRef.current.addEventListener('mousemove', onMouseMove);
-        parentRef.current.addEventListener('mouseup', onMouseUp);
-
-        event.preventDefault();
-      },
-      [setSelectedItems, disabled, parentRef, onMouseUp, onMouseMove],
-    );
 
     /**
      * Handler for moving the mouse.
@@ -196,13 +144,65 @@ export const SelectionArea = forwardRef(
 
         event.preventDefault();
       },
-      [
-        setIsDragging,
-        setSelectedItems,
-        setSelectingItems,
-        onMouseMove,
-        parentRef,
-      ],
+      [setSelectedItems, setSelectingItems, onMouseMove, parentRef],
+    );
+
+    /**
+     * Handler for pressing left mouse button.
+     */
+    const onMouseDown = useCallback(
+      (event) => {
+        if (disabled) return;
+        if (event.which !== MOUSE.LEFT) return;
+
+        // Calculate click point
+        const clickPoint = {
+          left: event.pageX - parentRect.current.left,
+          top: event.pageY - parentRect.current.top,
+        };
+
+        // Ignore click if it was on an item marked to ignore
+        for (const area of ignoreAreas.current) {
+          if (areasIntersect(clickPoint, area)) {
+            event.preventDefault();
+            return;
+          }
+        }
+
+        // Single click on selectable items
+        for (const area of selectableAreas.current) {
+          if (areasIntersect(clickPoint, area)) {
+            if (event.ctrlKey)
+              setSelectedItems?.((items) => {
+                if (items.has(area.id)) items.delete(area.id);
+                else items.add(area.id);
+                return items;
+              });
+            else setSelectedItems?.(new Set([area.id]));
+
+            event.preventDefault();
+            return;
+          }
+        }
+
+        // Set the beginning of the selection area
+        startPoint.current = clickPoint;
+        selectionArea.current = {
+          ...startPoint.current,
+          width: 0,
+          height: 0,
+        };
+
+        // Unselect the selected items
+        setSelectedItems?.(new Set());
+
+        // Enable event listeners for drag
+        parentRef.current.addEventListener('mousemove', onMouseMove);
+        parentRef.current.addEventListener('mouseup', onMouseUp);
+
+        event.preventDefault();
+      },
+      [setSelectedItems, disabled, parentRef, onMouseUp, onMouseMove],
     );
 
     /**
