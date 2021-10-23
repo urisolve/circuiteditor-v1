@@ -31,7 +31,7 @@ export const defaultCircuit = {
         name: 'R',
         value: '10k',
         unit: 'Ω',
-        position: { x: 210, y: 110 },
+        position: { x: 220, y: 110 },
       },
       ports: [
         {
@@ -54,7 +54,7 @@ export const defaultCircuit = {
         name: 'L',
         value: '10m',
         unit: 'H',
-        position: { x: 410, y: 110 },
+        position: { x: 420, y: 110 },
       },
       ports: [
         {
