@@ -2,7 +2,8 @@ import { useCallback, useState } from 'react';
 
 // Custom hooks & components
 import { useSchematic } from '../../hooks';
-import { CompLib, ToolsMenu, Canvas, SourceView } from '../../components/UI';
+import { CompLib, ToolsMenu, SourceView } from '../../components/UI';
+import { Schematic } from '../../components/Electrical';
 import { defaultCircuit } from './defaultCircuit';
 
 // Material-UI
@@ -32,7 +33,7 @@ export const Editor = ({ ...rest }) => {
           selection={selection}
           toggleSourceView={toggleSourceView}
         />
-        <Canvas schematic={schematic} selection={selection} {...rest} />
+        <Schematic schematic={schematic} selection={selection} {...rest} />
       </Stack>
       <SourceView open={sourceView} schematic={schematic} />
     </Stack>

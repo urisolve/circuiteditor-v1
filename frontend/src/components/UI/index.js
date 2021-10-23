@@ -1,4 +1,3 @@
-export * from './Canvas';
 export * from './CircuitCard';
 export * from './Comp';
 export * from './CompLib';
