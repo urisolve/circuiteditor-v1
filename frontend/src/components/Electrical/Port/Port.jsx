@@ -19,6 +19,9 @@ export const Port = forwardRef(
         sx={{
           position: 'absolute',
           borderRadius: '50%',
+          '&:hover': {
+            transform: 'scale(1.25)',
+          },
 
           // Given properties
           width: properties.radius * 2,
@@ -28,10 +31,6 @@ export const Port = forwardRef(
           // Positioning
           left: realPos.x * bounds.width - properties.radius,
           top: realPos.y * bounds.height - properties.radius,
-
-          '&:hover': {
-            transform: 'scale(1.25)',
-          },
         }}
         {...rest}
       >
