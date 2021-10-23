@@ -4,6 +4,12 @@ export const defaultCircuit = {
       id: '8c0168ec-07fe-4b2c-96ee-4292ab34cfb2',
       type: 'DC Voltage Source',
       position: { x: 50, y: 150 },
+      label: {
+        name: 'U',
+        value: '5',
+        unit: 'V',
+        position: { x: 120, y: 220 },
+      },
       ports: [
         {
           id: '7ed2507f-14fe-45e2-9246-9ee1d36eb442',
@@ -21,6 +27,12 @@ export const defaultCircuit = {
       id: 'a2475d77-22a6-47b5-b60b-04aa5af69284',
       type: 'Resistor',
       position: { x: 200, y: 100 },
+      label: {
+        name: 'R',
+        value: '10k',
+        unit: 'Ω',
+        position: { x: 210, y: 110 },
+      },
       ports: [
         {
           id: 'ddd6efab-f8f2-4565-8010-1270556f1d00',
@@ -38,6 +50,12 @@ export const defaultCircuit = {
       id: 'ffe5a9ee-6619-4092-8246-336621497794',
       type: 'Inductor',
       position: { x: 400, y: 100 },
+      label: {
+        name: 'L',
+        value: '10m',
+        unit: 'H',
+        position: { x: 410, y: 110 },
+      },
       ports: [
         {
           id: '8909cf3b-f5cd-4edf-850a-37d1ac6ad9ed',
@@ -55,6 +73,12 @@ export const defaultCircuit = {
       id: 'ef4bc1f6-e72f-4c4c-b9bb-76ea5d36c13b',
       type: 'Capacitor',
       position: { x: 510, y: 200, angle: 90 },
+      label: {
+        name: 'C',
+        value: '1µ',
+        unit: 'F',
+        position: { x: 580, y: 220 },
+      },
       ports: [
         {
           id: 'dc54f032-592a-4c89-90d6-0727add0908f',
