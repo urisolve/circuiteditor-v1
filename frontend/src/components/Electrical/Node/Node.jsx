@@ -1,9 +1,8 @@
-import { forwardRef, useRef, useMemo } from 'react';
+import { forwardRef, useRef } from 'react';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
 
-import cx from 'classnames';
-import styles from './Node.module.css';
+import { Box } from '@mui/system';
 
 export const Node = forwardRef(
   (
@@ -21,18 +20,6 @@ export const Node = forwardRef(
   ) => {
     const draggableRef = useRef();
 
-    const selectionStyle = useMemo(() => {
-      const selectionColor = isSelected
-        ? '#3475FF'
-        : isSelecting
-        ? '#3475FF'
-        : properties.color;
-
-      return {
-        backgroundColor: selectionColor,
-      };
-    }, [isSelected, isSelecting, properties.color]);
-
     return (
       <Draggable
         handle='.node-handle'
@@ -43,18 +30,25 @@ export const Node = forwardRef(
         onStop={(_e, position) => updatePosition?.(id, position)}
         {...rest}
       >
-        <div
-          className={cx(styles.node, 'node-handle')}
+        <Box
+          className='node-handle'
           ref={draggableRef}
-          style={{
+          sx={{
+            position: 'absolute',
+            borderRadius: '50%',
+            '&:hover': {
+              transform: 'scale(1.25)',
+            },
+
+            // Given properties
             width: (properties.radius ?? 6) * 2,
             height: (properties.radius ?? 6) * 2,
             opacity: properties.opacity ?? 1,
-            ...selectionStyle,
+            backgroundColor: (isSelected || isSelecting) && '#3475FF',
           }}
         >
-          <div ref={ref} className={styles.connectionPoint} />
-        </div>
+          <Box ref={ref} sx={{ width: 1, height: 1 }} />
+        </Box>
       </Draggable>
     );
   },
