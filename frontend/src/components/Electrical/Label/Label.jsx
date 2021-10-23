@@ -2,27 +2,46 @@ import { createElement, forwardRef } from 'react';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
 
-import cx from 'classnames';
-import styles from './Label.module.css';
-import { DefaultLabel } from './DefaultLabel';
+// Material-UI
+import { Box } from '@mui/material'
 
 export const Label = forwardRef(
-  ({ as, owner, position, gridSize, updatePosition, ...rest }, ref) => {
-    return (
-      <Draggable
-        bounds='.schematic'
-        position={position}
-        nodeRef={ref}
-        grid={[gridSize, gridSize]}
-        onStop={(_e, position) => updatePosition?.(owner, position, true)}
-        {...rest}
+  ({
+    as,
+    owner,
+    position,
+    gridSize,
+    updatePosition,
+    name,
+    value,
+    unit,
+    ...rest
+  }, ref) => (
+    <Draggable
+      bounds='.schematic'
+      position={position}
+      nodeRef={ref}
+      grid={[gridSize, gridSize]}
+      onStop={(_e, position) => updatePosition?.(owner, position, true)}
+      {...rest}
+    >
+      <Box
+        ref={ref}
+        sx={{
+          userSelect: 'none',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+        }}
       >
-        <div className={cx(styles.wrapper, styles.unselectable)} ref={ref}>
-          {as ? createElement(as, rest) : <DefaultLabel {...rest} />}
-        </div>
-      </Draggable>
-    );
-  },
+        {as ? createElement(as, rest) : (
+          <b>
+            {name}{(value && unit) && ` = ${value} ${unit}`}
+          </b >
+        )}
+      </Box>
+    </Draggable>
+  )
 );
 
 Label.displayName = 'Label';
