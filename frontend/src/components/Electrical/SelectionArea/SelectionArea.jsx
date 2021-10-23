@@ -8,6 +8,10 @@ import {
 } from 'react';
 import lodash from 'lodash';
 
+// Material-UI
+import { Box } from '@mui/material';
+
+// Utility
 import { areasIntersect } from '../../../util';
 
 // An ENUM of the different types of mouse-clicks
@@ -18,12 +22,11 @@ export const SelectionArea = forwardRef(
     {
       getRef,
       parentRef,
-      ignoreItems = [],
-      selectableItems = [],
+      ignoreItems,
+      selectableItems,
       setSelectingItems,
       setSelectedItems,
-      fps = 30,
-      style,
+      fps,
       disabled,
       ...rest
     },
@@ -51,7 +54,7 @@ export const SelectionArea = forwardRef(
 
       // Calculate the bounding areas of the items marked to ignore
       ignoreAreas.current = [];
-      for (const elem of ignoreItems) {
+      for (const elem of ignoreItems ?? []) {
         const elemArea = getRef(elem.id).current.getBoundingClientRect();
         ignoreAreas.current.push({
           id: elem.id,
@@ -64,7 +67,7 @@ export const SelectionArea = forwardRef(
 
       // Calculate the bounding areas of the items
       selectableAreas.current = [];
-      for (const elem of selectableItems) {
+      for (const elem of selectableItems ?? []) {
         try {
           const elemArea = getRef(elem.id).current.getBoundingClientRect();
           selectableAreas.current.push({
@@ -114,7 +117,7 @@ export const SelectionArea = forwardRef(
           setSelectingItems?.(items);
 
           event.preventDefault();
-        }, 1000 / fps),
+        }, 1000 / (fps ?? 30)),
       [setSelectingItems, startPoint, fps],
     );
 
@@ -216,23 +219,22 @@ export const SelectionArea = forwardRef(
     }, [parentRef, onMouseDown]);
 
     return (
-      <div
+      <Box
         ref={ref}
-        style={{
-          // Non-Editable
+        sx={{
+          // Fixed
+          zIndex: 99,
+          position: 'absolute',
           width: selectionArea.current.width ?? 0,
           height: selectionArea.current.height ?? 0,
-          position: 'absolute',
+          display: isDragging ? 'inline-block' : 'none',
           transform: `translate(${selectionArea.current.left ?? 0}px, ${
             selectionArea.current.top ?? 0
           }px)`,
-          display: isDragging ? 'inline-block' : 'none',
 
-          // Editable
+          // Customizable
           backgroundColor: 'rgba(100, 149, 237, 0.25)',
           boxShadow: '0px 0px 0px 2px rgba(100, 149, 237, 0.75) inset',
-          zIndex: 99,
-          ...style,
         }}
         {...rest}
       />
