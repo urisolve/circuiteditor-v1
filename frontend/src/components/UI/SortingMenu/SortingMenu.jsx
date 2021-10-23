@@ -1,10 +1,11 @@
 import { Box, Divider, ListItemText, Menu, MenuItem } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 
+import { SORT_OPTIONS, ORDER_OPTIONS } from '../../../hooks';
+
 export const SortingMenu = ({
   params: { sortBy, orderBy },
   setters: { setSortBy, setOrderBy },
-  options: { SORT_OPTIONS, ORDER_OPTIONS },
   ...rest
 }) => {
   const sortItems = [

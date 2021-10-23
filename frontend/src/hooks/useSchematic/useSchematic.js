@@ -17,21 +17,12 @@ import { useHistory } from '../useHistory';
 const emptySchematic = { components: [], nodes: [], connections: [] };
 const defaultOptions = { maxHistoryLength: 10, gridSize: 10 };
 
-/**
- * A React Hook that takes care of the logic required to run a schematic.
- *
- * @param {Object} initialSchematic The initial value of the schematic.
- * @param {Object} options Extra options to define optional behaviour.
- * @returns {Object} Properties and methods that control the schematic.
- */
-export const useSchematic = (initialSchematic = {}, options = {}) => {
+export function useSchematic(initialSchematic = {}, options = {}) {
   initialSchematic = { ...emptySchematic, ...initialSchematic };
   options = { ...defaultOptions, ...options };
 
   const [getRef] = useDynamicRefs();
   const [schematic, setSchematic] = useState(initialSchematic);
-
-  // Extra logic
   const [selectingItems, setSelectingItems] = useState(new Set());
   const [selectedItems, setSelectedItems] = useState(new Set());
   const history = useHistory(setSchematic, options.maxHistoryLength);

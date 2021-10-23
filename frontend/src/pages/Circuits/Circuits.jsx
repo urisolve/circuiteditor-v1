@@ -34,7 +34,7 @@ export const Circuits = () => {
 
   const sortButton = useRef();
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
-  const [sortedCircuits, params, setters, options] = useSortAndOrder(circuits);
+  const [sortedCircuits, params, setters] = useSortAndOrder(circuits);
 
   // Filters the stared circuits
   const staredCircuits = useMemo(
@@ -212,7 +212,6 @@ export const Circuits = () => {
         anchorEl={sortButton.current}
         params={params}
         setters={setters}
-        options={options}
       />
     </Container>
   );

@@ -1,7 +1,7 @@
 import { useMemo, useEffect, useRef, useState } from 'react';
 import lodash from 'lodash';
 
-export const useMousePosition = (ref, fps = 30) => {
+export function useMousePosition(ref, fps = 30) {
   const [mousePosition, setMousePosition] = useState(null);
   const area = useRef(null);
 
