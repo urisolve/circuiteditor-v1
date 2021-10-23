@@ -1,7 +1,10 @@
 import { forwardRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './Port.module.css';
+// Material-UI
+import { Box } from '@mui/material';
+
+// Utility
 import { rotateCoords } from '../../../util';
 
 export const Port = forwardRef(
@@ -12,22 +15,28 @@ export const Port = forwardRef(
     );
 
     return (
-      <div
-        className={styles.port}
-        style={{
-          // The properties
+      <Box
+        sx={{
+          position: 'absolute',
+          borderRadius: '50%',
+
+          // Given properties
           width: properties.radius * 2,
           height: properties.radius * 2,
           backgroundColor: properties.color,
 
-          // The positioning
+          // Positioning
           left: realPos.x * bounds.width - properties.radius,
           top: realPos.y * bounds.height - properties.radius,
+
+          '&:hover': {
+            transform: 'scale(1.25)',
+          },
         }}
         {...rest}
       >
-        <div ref={ref} className={styles.connectionPoint} />
-      </div>
+        <Box ref={ref} sx={{ width: 1, height: 1 }} />
+      </Box>
     );
   },
 );
