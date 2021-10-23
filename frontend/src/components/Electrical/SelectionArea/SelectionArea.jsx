@@ -74,11 +74,7 @@ export const SelectionArea = forwardRef(
             width: elemArea.width,
             height: elemArea.height,
           });
-        } catch {
-          console.info(
-            `Circuit Editor: Failed to calculate bounds of component with ID: ${elem.id}`,
-          );
-        }
+        } catch {}
       }
     }, [getRef, ignoreItems, selectableItems, parentRef]);
 
