@@ -67,16 +67,8 @@ export const ElectricalCore = forwardRef(
             sx={{
               width,
               height,
-
-              // Rotation
               transform: `rotate(${position?.angle ?? 0}deg)`,
-              WebkitTransform: `rotate(${position?.angle ?? 0}deg)`,
-              msTransform: `rotate(${position?.angle ?? 0}deg)`,
-
-              // Selection
               filter:
-                (isSelected || isSelecting) && `drop-shadow(3px 2px 0px #888)`,
-              WebkitFilter:
                 (isSelected || isSelecting) && `drop-shadow(3px 2px 0px #888)`,
             }}
           />
