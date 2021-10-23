@@ -1,7 +1,5 @@
 import { forwardRef, useRef } from 'react';
 import Draggable from 'react-draggable';
-import PropTypes from 'prop-types';
-
 import { Box } from '@mui/system';
 
 export const Node = forwardRef(
@@ -24,10 +22,12 @@ export const Node = forwardRef(
       <Draggable
         handle='.node-handle'
         bounds='.schematic'
-        position={position}
+        position={position ?? { x: 0, y: 0 }}
         nodeRef={draggableRef}
-        grid={[gridSize, gridSize]}
-        onStop={(_e, position) => updatePosition?.(id, position)}
+        grid={[gridSize ?? 10, gridSize ?? 10]}
+        onStop={(_e, position) =>
+          updatePosition?.(id, position ?? { x: 0, y: 0 })
+        }
         {...rest}
       >
         <Box
@@ -41,9 +41,9 @@ export const Node = forwardRef(
             },
 
             // Given properties
-            width: (properties.radius ?? 6) * 2,
-            height: (properties.radius ?? 6) * 2,
-            opacity: properties.opacity ?? 1,
+            width: (properties?.radius ?? 6) * 2,
+            height: (properties?.radius ?? 6) * 2,
+            opacity: properties?.opacity ?? 1,
             backgroundColor: (isSelected || isSelecting) && '#3475FF',
           }}
         >
@@ -53,37 +53,3 @@ export const Node = forwardRef(
     );
   },
 );
-
-Node.displayName = 'Node';
-
-Node.propTypes = {
-  /**
-   * The unique id of the node
-   */
-  id: PropTypes.string,
-  /**
-   * The position of the node
-   */
-  position: PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number,
-  }).isRequired,
-  /**
-   * The optional properties fo the node
-   */
-  properties: PropTypes.shape({
-    color: PropTypes.string,
-    radius: PropTypes.number,
-    opacity: PropTypes.number,
-  }),
-  /**
-   * The size of the grid, i.e., the amount of pixels the drag skips
-   */
-  gridSize: PropTypes.number,
-};
-
-Node.defaultProps = {
-  position: { x: 0, y: 0 },
-  properties: { radius: 6, color: '#6495ED', opacity: 1 },
-  gridSize: 10,
-};

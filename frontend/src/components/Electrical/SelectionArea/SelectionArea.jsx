@@ -77,7 +77,7 @@ export const SelectionArea = forwardRef(
             width: elemArea.width,
             height: elemArea.height,
           });
-        } catch {}
+        } catch { }
       }
     }, [getRef, ignoreItems, selectableItems, parentRef]);
 
@@ -228,9 +228,8 @@ export const SelectionArea = forwardRef(
           width: selectionArea.current.width ?? 0,
           height: selectionArea.current.height ?? 0,
           display: isDragging ? 'inline-block' : 'none',
-          transform: `translate(${selectionArea.current.left ?? 0}px, ${
-            selectionArea.current.top ?? 0
-          }px)`,
+          transform: `translate(${selectionArea.current.left ?? 0}px, ${selectionArea.current.top ?? 0
+            }px)`,
 
           // Customizable
           backgroundColor: 'rgba(100, 149, 237, 0.25)',
