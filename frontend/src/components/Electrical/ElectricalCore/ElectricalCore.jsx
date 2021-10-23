@@ -2,8 +2,8 @@ import { useRef, useMemo, forwardRef } from 'react';
 import Draggable from 'react-draggable';
 import PropTypes from 'prop-types';
 
-import styles from './ElectricalCore.module.css';
-import cx from 'classnames';
+// Material-UI
+import { Avatar, Box } from '@mui/material';
 
 import { svgMap } from '../../../assets/electrical';
 import { Port } from '../Port';
@@ -46,34 +46,9 @@ export const ElectricalCore = forwardRef(
       return Array.isArray(src) ? src[altImageIdx ?? 0] : src;
     }, [altImageIdx, imgPath, type]);
 
-    /**
-     * Calculate the style that controls the rotation of the image
-     */
-    const rotationStyle = useMemo(() => {
-      const rotationString = `rotate(${position?.angle ?? 0}deg)`;
-      return {
-        transform: rotationString,
-        WebkitTransform: rotationString,
-        msTransform: rotationString,
-      };
-    }, [position.angle]);
-
-    const selectionStyle = useMemo(() => {
-      const selectionColor = '#888';
-      const blurAmount = 0;
-      const displacement = { x: 3, y: 2 };
-
-      const dropShadow = `drop-shadow(${displacement.x}px ${displacement.y}px ${blurAmount}px ${selectionColor})`;
-
-      return {
-        filter: (isSelected || isSelecting) && dropShadow,
-        WebkitFilter: (isSelected || isSelecting) && dropShadow,
-      };
-    }, [isSelected, isSelecting]);
-
     return (
       <Draggable
-        handle='.component-handle'
+        handle='.component-symbol'
         bounds='.schematic'
         nodeRef={draggableRef}
         position={position}
@@ -82,18 +57,28 @@ export const ElectricalCore = forwardRef(
         onStop={(e, position) => updatePosition?.(id, position)}
         {...rest}
       >
-        <div className={styles.wrapper} ref={draggableRef}>
-          <img
-            style={{
-              width: width,
-              height: height,
-              ...rotationStyle,
-              ...selectionStyle,
-            }}
-            className={cx(styles.noDrag, 'component-handle')}
+        <Box ref={draggableRef} sx={{ position: 'absolute', top: 0, left: 0 }}>
+          <Avatar
             ref={ref}
             src={src}
             alt={type}
+            variant='square'
+            className='component-symbol'
+            sx={{
+              width,
+              height,
+
+              // Rotation
+              transform: `rotate(${position?.angle ?? 0}deg)`,
+              WebkitTransform: `rotate(${position?.angle ?? 0}deg)`,
+              msTransform: `rotate(${position?.angle ?? 0}deg)`,
+
+              // Selection
+              filter:
+                (isSelected || isSelecting) && `drop-shadow(3px 2px 0px #888)`,
+              WebkitFilter:
+                (isSelected || isSelecting) && `drop-shadow(3px 2px 0px #888)`,
+            }}
           />
 
           {ports.map((port) => {
@@ -108,7 +93,7 @@ export const ElectricalCore = forwardRef(
               />
             );
           })}
-        </div>
+        </Box>
       </Draggable>
     );
   },
