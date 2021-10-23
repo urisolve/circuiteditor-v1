@@ -1,6 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 
 // Material-UI
 import {
@@ -24,26 +23,19 @@ import GetAppIcon from '@mui/icons-material/GetApp';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
+// Custom hook
+import { useDownloadJSON, useTimeSince } from '../../../hooks';
+
 const cardWidth = 300;
 const cardHeight = 300;
 
 export const CircuitCard = ({ circuit, onDelete, onStar }) => {
+  const circuitExport = useDownloadJSON(circuit.data.schematic);
+  const timeSince = useTimeSince(circuit.data.updatedAt);
+
   const [dialog, setDialog] = useState(false);
   const openDialog = () => setDialog(true);
   const closeDialog = () => setDialog(false);
-
-  const timeSince = useMemo(
-    () => moment(circuit.data.updatedAt).fromNow(),
-    [circuit.data.updatedAt],
-  );
-
-  const circuitExport = useMemo(
-    () =>
-      `data:text/json;charset=utf-8,${encodeURIComponent(
-        JSON.stringify(circuit.data.schematic, null, 2),
-      )}`,
-    [circuit],
-  );
 
   return (
     <>
