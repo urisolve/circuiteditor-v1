@@ -2,7 +2,7 @@ import { useCallback, useRef, useEffect, useReducer } from 'react';
 import useDynamicRefs from 'use-dynamic-refs';
 
 // Material-UI
-import { Paper, Stack } from '@mui/material';
+import { Paper } from '@mui/material';
 
 // Electrical componentes
 import {
@@ -67,106 +67,104 @@ export const Schematic = ({
   );
 
   return (
-    <Stack alignItems='center' justifyContent='center' flexGrow={1}>
-      <Paper
-        className='schematic'
-        ref={canvasRef}
-        elevation={3}
-        sx={{
-          width: '80%',
-          height: '80%',
-          position: 'relative',
-          zIndex: 0,
+    <Paper
+      className='schematic'
+      ref={canvasRef}
+      elevation={3}
+      sx={{
+        width: '80%',
+        height: '80%',
+        position: 'relative',
+        zIndex: 0,
 
-          // Grid pattern
-          backgroundImage: `radial-gradient(
-          circle,
-          ${gridColor} 1px,
-          transparent 1px
-          )`,
-          backgroundSize: `${gridSize}px ${gridSize}px`,
+        // Grid pattern
+        backgroundImage: `radial-gradient(
+        circle,
+        ${gridColor} 1px,
+        transparent 1px
+        )`,
+        backgroundSize: `${gridSize}px ${gridSize}px`,
 
-          // Shadow
-          border: '1px solid #eee',
-          boxShadow: '0px 0px 8px #eee',
-        }}
-        {...rest}
-      >
-        {children}
+        // Shadow
+        border: '1px solid #eee',
+        boxShadow: '0px 0px 8px #eee',
+      }}
+      {...rest}
+    >
+      {children}
 
-        <SelectionArea
-          getRef={getRef}
-          parentRef={canvasRef}
-          ignoreItems={schematic.labels}
-          selectableItems={schematic.items}
-          setSelectingItems={selection?.setSelectingItems}
-          setSelectedItems={selection?.setSelectedItems}
-          disabled={readOnly}
-        />
+      <SelectionArea
+        getRef={getRef}
+        parentRef={canvasRef}
+        ignoreItems={schematic.labels}
+        selectableItems={schematic.items}
+        setSelectingItems={selection?.setSelectingItems}
+        setSelectedItems={selection?.setSelectedItems}
+        disabled={readOnly}
+      />
 
-        {schematic?.data?.components?.map((comp) => {
-          const portsRefMap = new Map();
-          comp.ports.forEach((port) => {
-            portsRefMap.set(port.id, setRef(port.id));
-          });
+      {schematic?.data?.components?.map((comp) => {
+        const portsRefMap = new Map();
+        comp.ports.forEach((port) => {
+          portsRefMap.set(port.id, setRef(port.id));
+        });
 
-          return (
-            <ElectricalCore
-              {...comp}
-              key={comp.id}
-              ref={setRef(comp.id)}
-              portsRefMap={portsRefMap}
-              gridSize={gridSize}
-              updatePosition={updatePosition}
-              onDrag={reRender}
-              isSelected={selection?.selectedItems.has(comp.id)}
-              isSelecting={selection?.selectingItems.has(comp.id)}
-              disabled={readOnly}
-            />
-          );
-        })}
-
-        {schematic?.data?.nodes?.map((node) => (
-          <Node
-            {...node}
-            key={node.id}
-            ref={setRef(node.id)}
+        return (
+          <ElectricalCore
+            {...comp}
+            key={comp.id}
+            ref={setRef(comp.id)}
+            portsRefMap={portsRefMap}
             gridSize={gridSize}
             updatePosition={updatePosition}
             onDrag={reRender}
-            isSelected={selection?.selectedItems.has(node.id)}
-            isSelecting={selection?.selectingItems.has(node.id)}
+            isSelected={selection?.selectedItems.has(comp.id)}
+            isSelecting={selection?.selectingItems.has(comp.id)}
             disabled={readOnly}
           />
-        ))}
+        );
+      })}
 
-        {schematic?.data?.connections?.map(
-          (conn) =>
-            conn.start &&
-            conn.end && (
-              <Connection
-                {...conn}
-                key={conn.id}
-                ref={setRef(conn.id)}
-                start={getRef(conn.start)}
-                end={getRef(conn.end)}
-                isSelected={selection?.selectedItems.has(conn.id)}
-                isSelecting={selection?.selectingItems.has(conn.id)}
-                disabled={readOnly}
-              />
-            ),
-        )}
+      {schematic?.data?.nodes?.map((node) => (
+        <Node
+          {...node}
+          key={node.id}
+          ref={setRef(node.id)}
+          gridSize={gridSize}
+          updatePosition={updatePosition}
+          onDrag={reRender}
+          isSelected={selection?.selectedItems.has(node.id)}
+          isSelecting={selection?.selectingItems.has(node.id)}
+          disabled={readOnly}
+        />
+      ))}
 
-        {schematic?.labels?.map((label) => (
-          <Label
-            {...label}
-            key={label.id}
-            ref={setRef(label.id)}
-            updatePosition={updatePosition}
-            disabled={readOnly}
-          />
-        ))}
-      </Paper>
-    </Stack>
+      {schematic?.data?.connections?.map(
+        (conn) =>
+          conn.start &&
+          conn.end && (
+            <Connection
+              {...conn}
+              key={conn.id}
+              ref={setRef(conn.id)}
+              start={getRef(conn.start)}
+              end={getRef(conn.end)}
+              isSelected={selection?.selectedItems.has(conn.id)}
+              isSelecting={selection?.selectingItems.has(conn.id)}
+              disabled={readOnly}
+            />
+          ),
+      )}
+
+      {schematic?.labels?.map((label) => (
+        <Label
+          {...label}
+          key={label.id}
+          ref={setRef(label.id)}
+          updatePosition={updatePosition}
+          disabled={readOnly}
+        />
+      ))}
+    </Paper>
   );
 };

@@ -12,12 +12,12 @@ import { Stack } from '@mui/material';
 export const Editor = ({ ...rest }) => {
   const { schematic, history, selection } = useSchematic(defaultCircuit);
 
-  const [compLib, setCompLib] = useState(true);
+  // const [compLib, setCompLib] = useState(true);
   const [sourceView, setSourceView] = useState(false);
-  const toggleCompLib = useCallback(
-    () => setCompLib((compLib) => !compLib),
-    [setCompLib],
-  );
+  // const toggleCompLib = useCallback(
+  //   () => setCompLib((compLib) => !compLib),
+  //   [setCompLib],
+  // );
   const toggleSourceView = useCallback(
     () => setSourceView((sourceView) => !sourceView),
     [setSourceView],
@@ -33,7 +33,9 @@ export const Editor = ({ ...rest }) => {
           selection={selection}
           toggleSourceView={toggleSourceView}
         />
-        <Schematic schematic={schematic} selection={selection} {...rest} />
+        <Stack alignItems='center' justifyContent='center' flexGrow={1}>
+          <Schematic schematic={schematic} selection={selection} {...rest} />
+        </Stack>
       </Stack>
       <SourceView open={sourceView} schematic={schematic} />
     </Stack>
