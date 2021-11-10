@@ -80,10 +80,10 @@ export const Schematic = ({
         // Grid pattern
         backgroundImage: `radial-gradient(
         circle,
-        ${gridColor} 1px,
+        ${gridColor ?? '#0009'} 1px,
         transparent 1px
         )`,
-        backgroundSize: `${gridSize}px ${gridSize}px`,
+        backgroundSize: `${gridSize ?? 10}px ${gridSize ?? 10}px`,
 
         // Shadow
         border: '1px solid #eee',
