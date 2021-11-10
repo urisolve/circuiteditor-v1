@@ -1,10 +1,3 @@
-// Syntax highlighting
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import {
-  atomOneLight, // Light mode
-  // atomOneDark, // Dark mode
-} from 'react-syntax-highlighter/dist/esm/styles/hljs';
-
 // Material-UI
 import {
   Box,
@@ -14,6 +7,8 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+
+const drawerWidth = 310;
 
 const DrawerHeader = ({ children, ...rest }) => (
   <Typography
@@ -30,20 +25,25 @@ const DrawerHeader = ({ children, ...rest }) => (
 
 export const SourceView = ({ schematic, ...rest }) => {
   return (
-    <Drawer variant='persistent' anchor='right' {...rest}>
+    <Drawer
+      variant='persistent'
+      anchor='right'
+      sx={{
+        width: drawerWidth,
+        '& .MuiBox-root': {
+          width: drawerWidth,
+        },
+      }}
+      {...rest}
+    >
       <Toolbar />
       <Stack flexGrow={1} sx={{ py: 2 }}>
         <DrawerHeader>Source View</DrawerHeader>
         <Divider />
         <Box sx={{ flexGrow: 1, overflow: 'scroll' }}>
-          <SyntaxHighlighter
-            language='json'
-            style={atomOneLight}
-            showLineNumbers
-            customStyle={{ padding: 0, margin: 0 }}
-          >
-            {JSON.stringify(schematic, null, 1)}
-          </SyntaxHighlighter>
+          <pre>
+            <code>{JSON.stringify(schematic, null, 1)}</code>
+          </pre>
         </Box>
       </Stack>
     </Drawer>
