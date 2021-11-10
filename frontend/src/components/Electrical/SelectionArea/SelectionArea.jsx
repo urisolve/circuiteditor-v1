@@ -173,12 +173,14 @@ export const SelectionArea = forwardRef(
         // Single click on selectable items
         for (const area of selectableAreas.current) {
           if (areasIntersect(clickPoint, area)) {
+            // Add to the current selection if holding CTRL
             if (event.ctrlKey)
               setSelectedItems?.((items) => {
                 if (items.has(area.id)) items.delete(area.id);
                 else items.add(area.id);
                 return items;
               });
+            // Otherwise, create new selection
             else setSelectedItems?.(new Set([area.id]));
 
             event.preventDefault();
@@ -210,9 +212,8 @@ export const SelectionArea = forwardRef(
      * Apply the event listener for clicking the mouse.
      */
     useEffect(() => {
-      if (!parentRef.current) return;
-      parentRef.current.addEventListener('mousedown', onMouseDown);
       const cleanup = parentRef;
+      parentRef.current.addEventListener('mousedown', onMouseDown);
 
       return () => {
         if (!cleanup.current) return;
@@ -225,11 +226,11 @@ export const SelectionArea = forwardRef(
         ref={ref}
         sx={{
           // Fixed
-          zIndex: 99,
+          zIndex: 1,
           position: 'absolute',
+          display: isDragging ? 'inline-block' : 'none',
           width: selectionArea.current.width ?? 0,
           height: selectionArea.current.height ?? 0,
-          display: isDragging ? 'inline-block' : 'none',
           transform: `translate(${selectionArea.current.left ?? 0}px, ${
             selectionArea.current.top ?? 0
           }px)`,
