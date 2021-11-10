@@ -1,6 +1,6 @@
 import { Avatar, Box, Grid, Typography } from '@mui/material';
 
-export const TeamMember = ({ member }) => {
+export function TeamMember({ member }) {
   return (
     <Box sx={{ width: 200, pb: 5 }}>
       <Grid

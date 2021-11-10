@@ -3,7 +3,7 @@ import { FormHelperText, TextField } from '@mui/material';
 
 import { formMap } from './formData';
 
-export const FormInput = ({ name, errors, validationFunc, ...rest }) => {
+export function FormInput({ name, errors, validationFunc, ...rest }) {
   const formData = formMap.get(name);
   if (!formData) return;
 

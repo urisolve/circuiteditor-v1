@@ -1,7 +1,7 @@
 import { Alert } from '@mui/material';
 import OfflineIcon from '@mui/icons-material/SignalWifiStatusbarConnectedNoInternet4';
 
-export const OfflineBanner = ({ isOffline }) => {
+export function OfflineBanner({ isOffline }) {
   return (
     isOffline && (
       <Alert

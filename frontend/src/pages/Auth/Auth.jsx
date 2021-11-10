@@ -5,7 +5,7 @@ import { Login, Signup } from '../../components/UI';
 
 import { Container, Grid, Stack } from '@mui/material';
 
-export const Auth = () => {
+export function Auth() {
   const { setUser } = useContext(UserContext);
 
   return (

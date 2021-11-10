@@ -3,11 +3,11 @@ import CheckIcon from '@mui/icons-material/Check';
 
 import { SORT_OPTIONS, ORDER_OPTIONS } from '../../../hooks';
 
-export const SortingMenu = ({
+export function SortingMenu({
   params: { sortBy, orderBy },
   setters: { setSortBy, setOrderBy },
   ...rest
-}) => {
+}) {
   const sortItems = [
     { name: 'Alphabetically', id: SORT_OPTIONS.alphabetically },
     { name: 'Date created', id: SORT_OPTIONS.dateCreated },

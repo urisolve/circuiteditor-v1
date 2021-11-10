@@ -33,7 +33,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const sectionPadding = { py: 0, px: 2 };
 
-export const Home = () => {
+export function Home() {
   const history = useHistory();
   const { user } = useContext(UserContext);
 

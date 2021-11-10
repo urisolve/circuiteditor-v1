@@ -4,7 +4,7 @@ import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 
-export const SearchBar = ({ value, setValue }) => {
+export function SearchBar({ value, setValue }) {
   const clearValue = useCallback(() => setValue(''), [setValue]);
   const updateValue = useCallback((e) => setValue(e.target.value), [setValue]);
 

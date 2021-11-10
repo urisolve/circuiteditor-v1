@@ -20,7 +20,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const drawerWidth = 310;
 
-export const CompLib = ({ addToSchematic, ...rest }) => {
+export function CompLib({ addToSchematic, ...rest }) {
   const [searchBar, setSearchBar] = useState('');
 
   const filteredComps = useMemo(() => {

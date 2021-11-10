@@ -5,7 +5,7 @@ import { svgMap } from '../../../assets/electrical';
 
 const compSize = 65;
 
-export const Comp = ({ name, altImgIdx, ...rest }) => {
+export function Comp({ name, altImgIdx, ...rest }) {
   const src = useMemo(() => {
     let src = svgMap.get(name);
     if (src instanceof Array) src = src[altImgIdx ?? 0];

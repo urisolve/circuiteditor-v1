@@ -32,7 +32,7 @@ const menuLink = {
   textDecoration: 'none',
 };
 
-export const Navbar = ({ ...rest }) => {
+export function Navbar({ ...rest }) {
   const { user, setUser } = useContext(UserContext);
   const gravatar = useGravatar(user?.email);
 

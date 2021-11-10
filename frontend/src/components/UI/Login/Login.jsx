@@ -19,7 +19,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-export const Login = ({ setUser, ...rest }) => {
+export function Login({ setUser, ...rest }) {
   const history = useHistory();
   const { register, handleSubmit, errors, reset } = useForm({ mode: 'onBlur' });
 

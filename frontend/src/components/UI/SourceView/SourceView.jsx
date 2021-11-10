@@ -23,7 +23,7 @@ const DrawerHeader = ({ children, ...rest }) => (
   </Typography>
 );
 
-export const SourceView = ({ schematic, ...rest }) => {
+export function SourceView({ schematic, ...rest }) {
   return (
     <Drawer
       variant='persistent'

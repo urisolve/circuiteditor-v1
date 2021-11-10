@@ -16,7 +16,7 @@ import {
 // Utility
 import { snapValueToGrid } from '../../../util';
 
-export const Schematic = ({
+export function Schematic({
   schematic,
   selection,
   width,
@@ -27,7 +27,7 @@ export const Schematic = ({
   style,
   children,
   ...rest
-}) => {
+}) {
   const [getRef, setRef] = useDynamicRefs();
   const canvasRef = useRef();
 

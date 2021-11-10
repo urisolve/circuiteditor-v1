@@ -3,7 +3,7 @@ import { ReactComponent as NotFoundSVG } from '../../assets/undraw/not-found.svg
 // Material-UI
 import { Container, Grid, Typography } from '@mui/material';
 
-export const NotFound = () => {
+export function NotFound() {
   return (
     <Container sx={{ mt: 10 }}>
       <Grid container alignItems='center' justifyContent='center' spacing={10}>

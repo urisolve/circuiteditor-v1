@@ -9,7 +9,7 @@
  * @param {Number} rotation The amount to rotate, in degrees.
  * @returns The rotated coordinates.
  */
-export const rotateCoords = ({ x, y }, rotation = 0) => {
+export function rotateCoords({ x, y }, rotation = 0) {
   // Shift the coordinates to origin
   x = x * 2 - 1;
   y = y * 2 - 1;

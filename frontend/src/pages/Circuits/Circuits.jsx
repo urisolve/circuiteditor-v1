@@ -25,7 +25,7 @@ import AddIcon from '@mui/icons-material/Add';
 import UploadIcon from '@mui/icons-material/Publish';
 import SortIcon from '@mui/icons-material/Sort';
 
-export const Circuits = () => {
+export function Circuits() {
   const [circuits, setCircuits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 

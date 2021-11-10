@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Fab, Slide, Tooltip } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
-export const ScrollToTopButton = ({ threshold }) => {
+export function ScrollToTopButton({ threshold }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleScrollVisibility = useCallback(() => {

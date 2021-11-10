@@ -20,7 +20,7 @@ import {
   Typography,
 } from '@mui/material';
 
-export const Account = () => {
+export function Account() {
   const { user } = useContext(UserContext);
   const gravatar = useGravatar(user?.email);
 

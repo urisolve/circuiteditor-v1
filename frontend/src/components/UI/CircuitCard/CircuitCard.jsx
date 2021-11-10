@@ -29,7 +29,7 @@ import { useDownloadJSON, useTimeSince } from '../../../hooks';
 const cardWidth = 300;
 const cardHeight = 300;
 
-export const CircuitCard = ({ circuit, onDelete, onStar }) => {
+export function CircuitCard({ circuit, onDelete, onStar }) {
   const circuitExport = useDownloadJSON(circuit.data.schematic);
   const timeSince = useTimeSince(circuit.data.updatedAt);
 

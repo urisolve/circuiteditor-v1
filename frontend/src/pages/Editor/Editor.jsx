@@ -9,7 +9,7 @@ import { defaultCircuit } from './defaultCircuit';
 // Material-UI
 import { Stack } from '@mui/material';
 
-export const Editor = ({ ...rest }) => {
+export function Editor({ ...rest }) {
   const { schematic, history, selection } = useSchematic(defaultCircuit);
 
   // const [compLib, setCompLib] = useState(true);

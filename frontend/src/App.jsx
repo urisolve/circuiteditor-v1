@@ -19,7 +19,7 @@ import { Navbar, OfflineBanner } from './components/UI';
 import { useOnline } from './hooks';
 import { UserProvider } from './contexts';
 
-export const App = () => {
+export function App() {
   const [user, setUser] = useState(null);
   const isOnline = useOnline();
 
