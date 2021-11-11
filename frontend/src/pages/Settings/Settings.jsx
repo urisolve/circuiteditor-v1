@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import RestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 
-export const Settings = () => {
+export function Settings() {
   const restoreSettings = useCallback(() => {}, []);
 
   return (

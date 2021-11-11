@@ -2,9 +2,9 @@ import { useEffect, useContext, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
-import { UserContext } from '../../contexts/UserContext';
-import { useGravatar } from '../../hooks/useGravatar';
-import { FormInput } from '../../components/FormInput';
+import { UserContext } from '../../contexts';
+import { useGravatar } from '../../hooks';
+import { FormInput } from '../../components/UI';
 
 // Material-UI
 import {
@@ -20,7 +20,7 @@ import {
   Typography,
 } from '@mui/material';
 
-export const Account = () => {
+export function Account() {
   const { user } = useContext(UserContext);
   const gravatar = useGravatar(user?.email);
 

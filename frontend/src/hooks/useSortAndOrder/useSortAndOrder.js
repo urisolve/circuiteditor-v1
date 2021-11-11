@@ -1,17 +1,17 @@
 import { useState, useMemo } from 'react';
 
-const SORT_OPTIONS = Object.freeze({
+export const SORT_OPTIONS = Object.freeze({
   alphabetically: 'name',
   dateCreated: 'createdAt',
   lastModified: 'updatedAt',
 });
 
-const ORDER_OPTIONS = Object.freeze({
+export const ORDER_OPTIONS = Object.freeze({
   ascending: +1,
   descending: -1,
 });
 
-export const useSortAndOrder = (values) => {
+export function useSortAndOrder(values) {
   const [sortBy, setSortBy] = useState(SORT_OPTIONS.lastModified);
   const [orderBy, setOrderBy] = useState(ORDER_OPTIONS.descending);
 
@@ -29,6 +29,5 @@ export const useSortAndOrder = (values) => {
     sortedValues,
     { sortBy, orderBy },
     { setSortBy, setOrderBy },
-    { SORT_OPTIONS, ORDER_OPTIONS },
   ];
 };

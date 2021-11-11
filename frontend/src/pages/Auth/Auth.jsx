@@ -1,12 +1,11 @@
 import { useContext } from 'react';
 
-import { UserContext } from '../../contexts/UserContext';
-import { Login } from '../../components/Login';
-import { Signup } from '../../components/Signup';
+import { UserContext } from '../../contexts';
+import { Login, Signup } from '../../components/UI';
 
 import { Container, Grid, Stack } from '@mui/material';
 
-export const Auth = () => {
+export function Auth() {
   const { setUser } = useContext(UserContext);
 
   return (

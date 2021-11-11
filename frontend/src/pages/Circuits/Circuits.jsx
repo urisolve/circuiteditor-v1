@@ -3,9 +3,8 @@ import lodash from 'lodash';
 import axios from 'axios';
 
 // Custom components/hooks
-import { CircuitCard } from '../../components/CircuitCard';
-import { SortingMenu } from '../../components/SortingMenu';
-import { useSortAndOrder } from '../../hooks/useSortAndOrder';
+import { CircuitCard, SortingMenu } from '../../components/UI';
+import { useSortAndOrder } from '../../hooks';
 
 // Material-UI
 import {
@@ -26,7 +25,7 @@ import AddIcon from '@mui/icons-material/Add';
 import UploadIcon from '@mui/icons-material/Publish';
 import SortIcon from '@mui/icons-material/Sort';
 
-export const Circuits = () => {
+export function Circuits() {
   const [circuits, setCircuits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,7 +34,7 @@ export const Circuits = () => {
 
   const sortButton = useRef();
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
-  const [sortedCircuits, params, setters, options] = useSortAndOrder(circuits);
+  const [sortedCircuits, params, setters] = useSortAndOrder(circuits);
 
   // Filters the stared circuits
   const staredCircuits = useMemo(
@@ -213,7 +212,6 @@ export const Circuits = () => {
         anchorEl={sortButton.current}
         params={params}
         setters={setters}
-        options={options}
       />
     </Container>
   );

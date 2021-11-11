@@ -1,9 +1,12 @@
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { UserContext } from '../../contexts/UserContext';
-import { TeamMember, teamMembers } from '../../components/TeamMember';
-import { ScrollToTopButton } from '../../components/ScrollToTopButton';
+import {
+  TeamMember,
+  teamMembers,
+  ScrollToTopButton,
+} from '../../components/UI';
+import { UserContext } from '../../contexts';
 import { instructions } from './instructions';
 
 // Waves
@@ -30,7 +33,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const sectionPadding = { py: 0, px: 2 };
 
-export const Home = () => {
+export function Home() {
   const history = useHistory();
   const { user } = useContext(UserContext);
 

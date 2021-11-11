@@ -1,25 +1,23 @@
 import { useCallback, useState } from 'react';
-import { useSchematic } from 'react-circuit-schematics';
 
-// Custom components
-import { CompLib } from '../../components/CompLib';
-import { ToolsMenu } from '../../components/ToolsMenu';
-import { Canvas } from '../../components/Canvas';
-import { SourceView } from '../../components/SourceView';
+// Custom hooks & components
+import { useSchematic } from '../../hooks';
+import { CompLib, ToolsMenu, SourceView } from '../../components/UI';
+import { Schematic } from '../../components/Electrical';
 import { defaultCircuit } from './defaultCircuit';
 
 // Material-UI
 import { Stack } from '@mui/material';
 
-export const Editor = ({ ...rest }) => {
+export function Editor({ ...rest }) {
   const { schematic, history, selection } = useSchematic(defaultCircuit);
 
-  const [compLib, setCompLib] = useState(true);
+  // const [compLib, setCompLib] = useState(true);
   const [sourceView, setSourceView] = useState(false);
-  const toggleCompLib = useCallback(
-    () => setCompLib((compLib) => !compLib),
-    [setCompLib],
-  );
+  // const toggleCompLib = useCallback(
+  //   () => setCompLib((compLib) => !compLib),
+  //   [setCompLib],
+  // );
   const toggleSourceView = useCallback(
     () => setSourceView((sourceView) => !sourceView),
     [setSourceView],
@@ -35,7 +33,9 @@ export const Editor = ({ ...rest }) => {
           selection={selection}
           toggleSourceView={toggleSourceView}
         />
-        <Canvas schematic={schematic} selection={selection} {...rest} />
+        <Stack alignItems='center' justifyContent='center' flexGrow={1}>
+          <Schematic schematic={schematic} selection={selection} {...rest} />
+        </Stack>
       </Stack>
       <SourceView open={sourceView} schematic={schematic} />
     </Stack>

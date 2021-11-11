@@ -1,22 +1,38 @@
 {
   "name": "circuiteditor",
-  "version": "1.0.0",
   "description": "An app that allows you to create and edit circuits.",
-  "scripts": {
-    "server": "cd backend && nodemon server",
-    "client": "cd frontend && yarn start",
-    "npm:client": "cd frontend && npm run start",
-    "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "npm:dev": "concurrently \"npm run server\" \"npm run npm:client\""
-  },
+  "version": "1.0.0",
+  "author": "pmorim",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/urisolve/circuiteditor.git"
   },
-  "author": "pmorim",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/urisolve/circuiteditor/issues"
   },
-  "homepage": "https://github.com/urisolve/circuiteditor#readme"
+  "homepage": "https://github.com/urisolve/circuiteditor#readme",
+  "scripts": {
+    "setup:server": "cd backend && yarn",
+    "setup:client": "cd frontend && yarn",
+    "setup": "yarn && yarn setup:server && yarn setup:client",
+    "dev:server": "cd backend && yarn dev",
+    "dev:client": "cd frontend && yarn dev",
+    "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
+    "build": "echo \"Command not yet available\" && exit 1"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-config-standard-react": "^11.0.1",
+    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "prettier": "^2.3.2"
+  }
 }
