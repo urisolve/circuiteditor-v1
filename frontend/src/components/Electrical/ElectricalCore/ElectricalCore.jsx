@@ -26,13 +26,6 @@ export const ElectricalCore = forwardRef(
   ) => {
     const draggableRef = useRef();
 
-    /**
-     * Calculate which SVG to use.
-     *
-     * If a custom image is provided, then it uses that one.
-     * Otherwise, if it was provided an alternate image index, use that.
-     * Otherwise, use the default one.
-     */
     const src = useMemo(() => {
       // If there is a custom image, use that one
       if (imgPath) return imgPath;

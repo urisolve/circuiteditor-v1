@@ -83,7 +83,7 @@ export function useSchematic(initialSchematic = {}, options = {}) {
   );
 
   /**
-   * Take care of connections
+   * Handle the connections' main logic.
    */
   useEffect(() => {
     setSchematic((schematic) => {
