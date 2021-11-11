@@ -3,17 +3,7 @@ import XArrow from 'react-xarrows';
 
 export const Connection = forwardRef(
   (
-    {
-      start,
-      end,
-      type,
-      properties,
-      gridBreak,
-      onClick,
-      isSelected,
-      isSelecting,
-      ...rest
-    },
+    { start, end, type, properties, gridBreak, onClick, isSelected, ...rest },
     ref,
   ) => (
     <XArrow
@@ -31,5 +21,5 @@ export const Connection = forwardRef(
       passProps={{ onClick }}
       {...rest}
     />
-  )
+  ),
 );

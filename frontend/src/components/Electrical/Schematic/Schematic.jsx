@@ -98,7 +98,6 @@ export function Schematic({
         parentRef={canvasRef}
         ignoreItems={schematic.labels}
         selectableItems={schematic.items}
-        setSelectingItems={selection?.setSelectingItems}
         setSelectedItems={selection?.setSelectedItems}
         disabled={readOnly}
       />
@@ -119,7 +118,6 @@ export function Schematic({
             updatePosition={updatePosition}
             onDrag={reRender}
             isSelected={selection?.selectedItems.has(comp.id)}
-            isSelecting={selection?.selectingItems.has(comp.id)}
             disabled={readOnly}
           />
         );
@@ -134,7 +132,6 @@ export function Schematic({
           updatePosition={updatePosition}
           onDrag={reRender}
           isSelected={selection?.selectedItems.has(node.id)}
-          isSelecting={selection?.selectingItems.has(node.id)}
           disabled={readOnly}
         />
       ))}
@@ -150,7 +147,6 @@ export function Schematic({
               start={getRef(conn.start)}
               end={getRef(conn.end)}
               isSelected={selection?.selectedItems.has(conn.id)}
-              isSelecting={selection?.selectingItems.has(conn.id)}
               disabled={readOnly}
             />
           ),

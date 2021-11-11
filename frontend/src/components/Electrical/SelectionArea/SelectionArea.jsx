@@ -24,7 +24,6 @@ export const SelectionArea = forwardRef(
       parentRef,
       ignoreItems,
       selectableItems,
-      setSelectingItems,
       setSelectedItems,
       fps,
       disabled,
@@ -32,7 +31,7 @@ export const SelectionArea = forwardRef(
     },
     ref,
   ) => {
-    const [isDragging, setIsDragging] = useState(false);
+    const [showArea, setShowArea] = useState(false);
     const selectionArea = useRef({ left: 0, top: 0, width: 0, height: 0 });
     const ignoreAreas = useRef([]);
     const selectableAreas = useRef([]);
@@ -90,7 +89,7 @@ export const SelectionArea = forwardRef(
       () =>
         lodash.throttle((event) => {
           // Start dragging
-          setIsDragging(true);
+          setShowArea(true);
 
           // Calculate the current position of mouse
           const endPoint = {
@@ -116,11 +115,13 @@ export const SelectionArea = forwardRef(
           const items = new Set();
           for (const area of selectableAreas.current)
             if (areasIntersect(area, selectionArea.current)) items.add(area.id);
-          setSelectingItems?.(items);
+
+          // Apply the selection
+          setSelectedItems?.((selected) => new Set([...selected, ...items]));
 
           event.preventDefault();
         }, 1000 / (fps ?? 30)),
-      [setSelectingItems, startPoint, fps],
+      [setSelectedItems, startPoint, fps],
     );
 
     /**
@@ -128,13 +129,8 @@ export const SelectionArea = forwardRef(
      */
     const onMouseUp = useCallback(
       (event) => {
-        setIsDragging(false);
-
-        // Apply the selection
-        setSelectingItems?.((items) => {
-          setSelectedItems?.(new Set([...items]));
-          return new Set();
-        });
+        // Stop dragging
+        setShowArea(false);
 
         // Cancel throttled function calls
         onMouseMove.cancel();
@@ -145,7 +141,7 @@ export const SelectionArea = forwardRef(
 
         event.preventDefault();
       },
-      [setSelectedItems, setSelectingItems, onMouseMove, parentRef],
+      [onMouseMove, parentRef],
     );
 
     /**
@@ -154,7 +150,12 @@ export const SelectionArea = forwardRef(
     const onMouseDown = useCallback(
       (event) => {
         if (disabled) return;
+
+        // Only allow left clicks
         if (event.which !== MOUSE.LEFT) return;
+
+        // Check if CTRL was pressed
+        if (!event.ctrlKey) setSelectedItems?.(new Set());
 
         // Calculate click point
         const clickPoint = {
@@ -173,31 +174,24 @@ export const SelectionArea = forwardRef(
         // Single click on selectable items
         for (const area of selectableAreas.current) {
           if (areasIntersect(clickPoint, area)) {
-            // Add to the current selection if holding CTRL
-            if (event.ctrlKey)
-              setSelectedItems?.((items) => {
-                if (items.has(area.id)) items.delete(area.id);
-                else items.add(area.id);
-                return items;
-              });
-            // Otherwise, create new selection
-            else setSelectedItems?.(new Set([area.id]));
+            setSelectedItems?.((items) => {
+              if (items.has(area.id)) items.delete(area.id);
+              else items.add(area.id);
+              return items;
+            });
 
             event.preventDefault();
             return;
           }
         }
 
-        // Set the beginning of the selection area
+        // Initialize the selection area
         startPoint.current = clickPoint;
         selectionArea.current = {
           ...startPoint.current,
           width: 0,
           height: 0,
         };
-
-        // Unselect the selected items
-        setSelectedItems?.(new Set());
 
         // Enable event listeners for drag
         parentRef.current.addEventListener('mousemove', onMouseMove);
@@ -228,12 +222,10 @@ export const SelectionArea = forwardRef(
           // Fixed
           zIndex: 1,
           position: 'absolute',
-          display: isDragging ? 'inline-block' : 'none',
-          width: selectionArea.current.width ?? 0,
-          height: selectionArea.current.height ?? 0,
-          transform: `translate(${selectionArea.current.left ?? 0}px, ${
-            selectionArea.current.top ?? 0
-          }px)`,
+          display: showArea ? 'inline-block' : 'none',
+          width: selectionArea.current.width,
+          height: selectionArea.current.height,
+          transform: `translate(${selectionArea.current.left}px, ${selectionArea.current.top}px)`,
 
           // Customizable
           backgroundColor: 'rgba(100, 149, 237, 0.25)',

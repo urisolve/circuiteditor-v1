@@ -4,16 +4,7 @@ import { Box } from '@mui/system';
 
 export const Node = forwardRef(
   (
-    {
-      id,
-      position,
-      properties,
-      gridSize,
-      updatePosition,
-      isSelected,
-      isSelecting,
-      ...rest
-    },
+    { id, position, properties, gridSize, updatePosition, isSelected, ...rest },
     ref,
   ) => {
     const draggableRef = useRef();
@@ -44,7 +35,7 @@ export const Node = forwardRef(
             width: (properties?.radius ?? 6) * 2,
             height: (properties?.radius ?? 6) * 2,
             opacity: properties?.opacity ?? 1,
-            backgroundColor: (isSelected || isSelecting) && '#3475FF',
+            backgroundColor: isSelected && '#3475FF',
           }}
         >
           <Box ref={ref} sx={{ width: 1, height: 1 }} />

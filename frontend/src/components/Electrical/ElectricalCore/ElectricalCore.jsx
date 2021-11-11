@@ -20,7 +20,6 @@ export const ElectricalCore = forwardRef(
       imgPath,
       updatePosition,
       isSelected,
-      isSelecting,
       ...rest
     },
     ref,
@@ -67,8 +66,7 @@ export const ElectricalCore = forwardRef(
               width: width ?? 100,
               height: height ?? 100,
               transform: `rotate(${position?.angle ?? 0}deg)`,
-              filter:
-                (isSelected || isSelecting) && `drop-shadow(3px 2px 0px #888)`,
+              filter: isSelected && `drop-shadow(3px 2px 0px #888)`,
             }}
           />
 
