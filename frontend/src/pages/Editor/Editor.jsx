@@ -37,7 +37,7 @@ export function Editor({ ...rest }) {
           <Schematic schematic={schematic} selection={selection} {...rest} />
         </Stack>
       </Stack>
-      <SourceView open={sourceView} schematic={schematic} />
+      <SourceView open={sourceView} code={schematic?.data} />
     </Stack>
   );
 };

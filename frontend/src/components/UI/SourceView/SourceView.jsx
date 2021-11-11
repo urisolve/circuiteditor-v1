@@ -23,7 +23,7 @@ const DrawerHeader = ({ children, ...rest }) => (
   </Typography>
 );
 
-export function SourceView({ schematic, ...rest }) {
+export function SourceView({ code, ...rest }) {
   return (
     <Drawer
       variant='persistent'
@@ -42,7 +42,7 @@ export function SourceView({ schematic, ...rest }) {
         <Divider />
         <Box sx={{ flexGrow: 1, overflow: 'scroll' }}>
           <pre>
-            <code>{JSON.stringify(schematic, null, 1)}</code>
+            <code>{JSON.stringify(code, null, 1)}</code>
           </pre>
         </Box>
       </Stack>
