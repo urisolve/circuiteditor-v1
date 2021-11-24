@@ -88,13 +88,13 @@ export function ToolsMenu({ schematic, history, selection, toggleSourceView }) {
       {
         name: 'Rotate Left',
         icon: <RotateLeftIcon />,
-        onClick: () => rotateSelection(-90),
+        onClick: () => rotateSelection(-45),
         disabled: !selection.selectedItems.size,
       },
       {
         name: 'Rotate Right',
         icon: <RotateRightIcon />,
-        onClick: () => rotateSelection(-90),
+        onClick: () => rotateSelection(+45),
         disabled: !selection.selectedItems.size,
       },
     ],
