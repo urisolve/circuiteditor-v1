@@ -4,7 +4,6 @@ import useDynamicRefs from 'use-dynamic-refs';
 import lodash from 'lodash';
 
 import {
-  hasLabel,
   isComponent,
   isConnection,
   isNode,
@@ -65,21 +64,6 @@ export function useSchematic(initialSchematic = {}, options = {}) {
       ...schematic.connections,
     ],
     [schematic],
-  );
-
-  /**
-   * Array of all the schematic's labels.
-   */
-  const labels = useMemo(
-    () =>
-      lodash.compact(
-        items.map((item) =>
-          hasLabel(item)
-            ? { ...item.label, id: uuidv4(), owner: item.id }
-            : null,
-        ),
-      ),
-    [items],
   );
 
   /**
@@ -306,7 +290,6 @@ export function useSchematic(initialSchematic = {}, options = {}) {
     schematic: {
       data: schematic,
       items,
-      labels,
 
       add,
       deleteById,

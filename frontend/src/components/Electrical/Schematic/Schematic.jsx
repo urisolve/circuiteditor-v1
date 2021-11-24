@@ -5,13 +5,7 @@ import useDynamicRefs from 'use-dynamic-refs';
 import { Paper } from '@mui/material';
 
 // Electrical componentes
-import {
-  SelectionArea,
-  ElectricalCore,
-  Connection,
-  Node,
-  Label,
-} from '../index';
+import { SelectionArea, Component, Connection, Node } from '../index';
 
 // Utility
 import { snapValueToGrid } from '../../../util';
@@ -109,10 +103,11 @@ export function Schematic({
         });
 
         return (
-          <ElectricalCore
+          <Component
             {...comp}
             key={comp.id}
             ref={setRef(comp.id)}
+            canvasRef={canvasRef}
             portsRefMap={portsRefMap}
             gridSize={gridSize}
             updatePosition={updatePosition}
@@ -151,16 +146,6 @@ export function Schematic({
             />
           ),
       )}
-
-      {schematic?.labels?.map((label) => (
-        <Label
-          {...label}
-          key={label.id}
-          ref={setRef(label.id)}
-          updatePosition={updatePosition}
-          disabled={readOnly}
-        />
-      ))}
     </Paper>
   );
 };

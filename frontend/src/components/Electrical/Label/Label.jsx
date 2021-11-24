@@ -1,31 +1,35 @@
-import { createElement, forwardRef } from 'react';
-import Draggable from 'react-draggable';
-import { Box } from '@mui/material'
+import { createElement, useRef } from 'react';
+import { Box } from '@mui/material';
 
-export const Label = forwardRef(
-  ({
-    as,
-    owner,
-    position,
-    gridSize,
-    updatePosition,
-    name,
-    value,
-    unit,
-    ...rest
-  }, ref) => (
-    <Draggable
-      bounds='.schematic'
+import { DraggableComponent } from '..';
+
+export function Label({
+  as,
+  canvasRef,
+  owner,
+  position,
+  gridSize,
+  updatePosition,
+  name,
+  value,
+  unit,
+  ...rest
+}) {
+  const draggableRef = useRef();
+
+  return (
+    <DraggableComponent
+      handle='.label-handle'
       position={position}
-      nodeRef={ref}
-      grid={[gridSize ?? 10, gridSize ?? 10]}
-      onStop={(_e, position) =>
+      nodeRef={draggableRef}
+      onDrag={(_e, position) =>
         updatePosition?.(owner, position ?? { x: 0, y: 0 }, true)
       }
       {...rest}
     >
       <Box
-        ref={ref}
+        className='label-handle'
+        ref={draggableRef}
         sx={{
           userSelect: 'none',
           position: 'absolute',
@@ -33,12 +37,15 @@ export const Label = forwardRef(
           left: 0,
         }}
       >
-        {as ? createElement(as, rest) : (
+        {as ? (
+          createElement(as, rest)
+        ) : (
           <b>
-            {name}{(value && unit) && ` = ${value} ${unit}`}
-          </b >
+            {name}
+            {value && unit && ` = ${value} ${unit}`}
+          </b>
         )}
       </Box>
-    </Draggable>
-  )
-);
+    </DraggableComponent>
+  );
+}

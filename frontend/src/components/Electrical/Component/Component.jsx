@@ -1,17 +1,20 @@
 import { useRef, useMemo, forwardRef } from 'react';
-import Draggable from 'react-draggable';
+
+// Material-UI
 import { Avatar, Box } from '@mui/material';
 
+import { DraggableComponent, Label, Port } from '..';
 import { svgMap } from '../../../assets/electrical';
-import { Port } from '../Port';
 
-export const ElectricalCore = forwardRef(
+export const Component = forwardRef(
   (
     {
+      canvasRef,
       id,
       type,
       position,
       ports,
+      label,
       portsRefMap,
       width,
       height,
@@ -20,6 +23,7 @@ export const ElectricalCore = forwardRef(
       imgPath,
       updatePosition,
       isSelected,
+      disabled,
       ...rest
     },
     ref,
@@ -36,25 +40,22 @@ export const ElectricalCore = forwardRef(
     }, [altImageIdx, imgPath, type]);
 
     return (
-      <Draggable
-        handle='.component-symbol'
-        bounds='.schematic'
+      <DraggableComponent
+        handle='.component-handle'
+        position={position}
         nodeRef={draggableRef}
-        position={position ?? { x: 0, y: 0 }}
-        positionOffset={{ x: 5, y: 5 }}
-        grid={[gridSize ?? 10, gridSize ?? 10]}
-        onStop={(e, position) =>
+        onDrag={(_e, position) =>
           updatePosition?.(id, position ?? { x: 0, y: 0 })
         }
         {...rest}
       >
-        <Box ref={draggableRef} sx={{ position: 'absolute', top: 0, left: 0 }}>
+        <Box ref={draggableRef} sx={{ position: 'absolute' }}>
           <Avatar
             ref={ref}
             src={src}
             alt={type}
             variant='square'
-            className='component-symbol'
+            className='component-handle'
             sx={{
               width: width ?? 100,
               height: height ?? 100,
@@ -75,8 +76,16 @@ export const ElectricalCore = forwardRef(
               />
             );
           })}
+
+          <Label
+            {...label}
+            key={label.id}
+            canvasRef={canvasRef}
+            updatePosition={updatePosition}
+            disabled={disabled}
+          />
         </Box>
-      </Draggable>
+      </DraggableComponent>
     );
   },
 );

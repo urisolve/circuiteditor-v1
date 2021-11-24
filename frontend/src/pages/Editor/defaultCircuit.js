@@ -8,7 +8,7 @@ export const defaultCircuit = {
         name: 'U',
         value: '5',
         unit: 'V',
-        position: { x: 120, y: 220 },
+        position: { x: 70, y: 70 },
       },
       ports: [
         {
@@ -31,7 +31,7 @@ export const defaultCircuit = {
         name: 'R',
         value: '10k',
         unit: 'Ω',
-        position: { x: 220, y: 110 },
+        position: { x: 10, y: 0 },
       },
       ports: [
         {
@@ -54,7 +54,7 @@ export const defaultCircuit = {
         name: 'L',
         value: '10m',
         unit: 'H',
-        position: { x: 420, y: 110 },
+        position: { x: 10, y: 0 },
       },
       ports: [
         {
@@ -77,7 +77,7 @@ export const defaultCircuit = {
         name: 'C',
         value: '1µ',
         unit: 'F',
-        position: { x: 580, y: 220 },
+        position: { x: 70, y: 70 },
       },
       ports: [
         {

@@ -1,6 +1,7 @@
 import { forwardRef, useRef } from 'react';
-import Draggable from 'react-draggable';
 import { Box } from '@mui/system';
+
+import { DraggableComponent } from '..';
 
 export const Node = forwardRef(
   (
@@ -10,13 +11,11 @@ export const Node = forwardRef(
     const draggableRef = useRef();
 
     return (
-      <Draggable
+      <DraggableComponent
         handle='.node-handle'
-        bounds='.schematic'
-        position={position ?? { x: 0, y: 0 }}
+        position={position}
         nodeRef={draggableRef}
-        grid={[gridSize ?? 10, gridSize ?? 10]}
-        onStop={(_e, position) =>
+        onDrag={(_e, position) =>
           updatePosition?.(id, position ?? { x: 0, y: 0 })
         }
         {...rest}
@@ -40,7 +39,7 @@ export const Node = forwardRef(
         >
           <Box ref={ref} sx={{ width: 1, height: 1 }} />
         </Box>
-      </Draggable>
+      </DraggableComponent>
     );
   },
 );

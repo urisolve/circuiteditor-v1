@@ -1,5 +1,6 @@
+export * from './Component';
 export * from './Connection';
-export * from './ElectricalCore';
+export * from './DraggableComponent';
 export * from './Label';
 export * from './Node';
 export * from './Port';
