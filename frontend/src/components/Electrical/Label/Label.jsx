@@ -1,8 +1,7 @@
-import useDynamicRefs from 'use-dynamic-refs';
-
 // Material-UI
 import { Box } from '@mui/material';
 
+import { useRefMap } from '../../../hooks';
 import { DraggableComponent } from '..';
 
 export function Label({
@@ -17,7 +16,7 @@ export function Label({
   unit,
   ...rest
 }) {
-  const [getRef, setRef] = useDynamicRefs();
+  const { setRef } = useRefMap();
 
   return (
     <DraggableComponent
@@ -31,7 +30,7 @@ export function Label({
     >
       <Box
         className='label-handle'
-        ref={getRef(id)}
+        ref={setRef(id)}
         sx={{
           userSelect: 'none',
           position: 'absolute',

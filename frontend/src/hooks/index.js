@@ -3,6 +3,7 @@ export * from './useGravatar';
 export * from './useHistory';
 export * from './useMousePosition';
 export * from './useOnline';
+export * from './useRefMap';
 export * from './useSchematic';
 export * from './useSortAndOrder';
 export * from './useTimeSince';

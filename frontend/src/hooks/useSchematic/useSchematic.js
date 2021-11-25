@@ -1,6 +1,5 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import useDynamicRefs from 'use-dynamic-refs';
 import lodash from 'lodash';
 
 import {
@@ -11,7 +10,7 @@ import {
   rotateCoords,
   snapPosToGrid,
 } from '../../util';
-import { useHistory } from '../useHistory';
+import { useHistory, useRefMap } from '../';
 
 const emptySchematic = { components: [], nodes: [], connections: [] };
 const defaultOptions = { maxHistoryLength: 10, gridSize: 10 };
@@ -20,7 +19,7 @@ export function useSchematic(initialSchematic = {}, options = {}) {
   initialSchematic = { ...emptySchematic, ...initialSchematic };
   options = { ...defaultOptions, ...options };
 
-  const [getRef] = useDynamicRefs();
+  const { getRef } = useRefMap();
   const [schematic, setSchematic] = useState(initialSchematic);
   const [selectingItems, setSelectingItems] = useState(new Set());
   const [selectedItems, setSelectedItems] = useState(new Set());

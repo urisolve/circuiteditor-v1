@@ -79,6 +79,7 @@ export const Component = forwardRef(
 
           <Label
             key={label.id}
+            id={`${id}-label`}
             canvasRef={canvasRef}
             updatePosition={updatePosition}
             disabled={disabled}

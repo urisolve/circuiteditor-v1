@@ -1,14 +1,12 @@
 import { useCallback, useRef, useEffect, useReducer } from 'react';
-import useDynamicRefs from 'use-dynamic-refs';
 
 // Material-UI
 import { Paper } from '@mui/material';
 
-// Electrical componentes
+// Custom libraries
 import { SelectionArea, Component, Connection, Node } from '../index';
-
-// Utility
 import { snapValueToGrid } from '../../../util';
+import { useRefMap } from '../../../hooks';
 
 export function Schematic({
   schematic,
@@ -22,7 +20,7 @@ export function Schematic({
   children,
   ...rest
 }) {
-  const [getRef, setRef] = useDynamicRefs();
+  const { getRef, setRef } = useRefMap();
   const canvasRef = useRef();
 
   // Work-around for react-xarrows updating the connection.
@@ -146,4 +144,4 @@ export function Schematic({
       )}
     </Paper>
   );
-};
+}

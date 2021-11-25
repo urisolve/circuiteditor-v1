@@ -26,8 +26,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "react-syntax-highlighter": "^15.4.4",
-    "react-xarrows": "^2.0.2",
-    "use-dynamic-refs": "^1.0.0"
+    "react-xarrows": "^2.0.2"
   },
   "eslintConfig": {
     "extends": [
