@@ -1,10 +1,12 @@
-import { createElement, useRef } from 'react';
+import useDynamicRefs from 'use-dynamic-refs';
+
+// Material-UI
 import { Box } from '@mui/material';
 
 import { DraggableComponent } from '..';
 
 export function Label({
-  as,
+  id,
   canvasRef,
   owner,
   position,
@@ -15,13 +17,13 @@ export function Label({
   unit,
   ...rest
 }) {
-  const draggableRef = useRef();
+  const [getRef, setRef] = useDynamicRefs();
 
   return (
     <DraggableComponent
       handle='.label-handle'
       position={position}
-      nodeRef={draggableRef}
+      nodeRef={setRef(id)}
       onDrag={(_e, position) =>
         updatePosition?.(owner, position ?? { x: 0, y: 0 }, true)
       }
@@ -29,7 +31,7 @@ export function Label({
     >
       <Box
         className='label-handle'
-        ref={draggableRef}
+        ref={getRef(id)}
         sx={{
           userSelect: 'none',
           position: 'absolute',
@@ -37,14 +39,10 @@ export function Label({
           left: 0,
         }}
       >
-        {as ? (
-          createElement(as, rest)
-        ) : (
-          <b>
-            {name}
-            {value && unit && ` = ${value} ${unit}`}
-          </b>
-        )}
+        <b>
+          {name}
+          {value && unit && ` = ${value} ${unit}`}
+        </b>
       </Box>
     </DraggableComponent>
   );

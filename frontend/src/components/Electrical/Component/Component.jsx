@@ -71,18 +71,18 @@ export const Component = forwardRef(
                 ref={portsRefMap.get(port.id)}
                 bounds={{ width: width ?? 100, height: height ?? 100 }}
                 rotation={position?.angle ?? 0}
-                {...rest}
                 {...port}
+                {...rest}
               />
             );
           })}
 
           <Label
-            {...label}
             key={label.id}
             canvasRef={canvasRef}
             updatePosition={updatePosition}
             disabled={disabled}
+            {...label}
           />
         </Box>
       </DraggableComponent>

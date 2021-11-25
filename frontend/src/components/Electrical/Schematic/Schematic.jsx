@@ -88,9 +88,7 @@ export function Schematic({
       {children}
 
       <SelectionArea
-        getRef={getRef}
         parentRef={canvasRef}
-        ignoreItems={schematic.labels}
         selectableItems={schematic.items}
         setSelectedItems={selection?.setSelectedItems}
         disabled={readOnly}
@@ -104,7 +102,6 @@ export function Schematic({
 
         return (
           <Component
-            {...comp}
             key={comp.id}
             ref={setRef(comp.id)}
             canvasRef={canvasRef}
@@ -114,6 +111,7 @@ export function Schematic({
             onDrag={reRender}
             isSelected={selection?.selectedItems.has(comp.id)}
             disabled={readOnly}
+            {...comp}
           />
         );
       })}

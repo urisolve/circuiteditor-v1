@@ -7,6 +7,7 @@ import {
   useMemo,
 } from 'react';
 import lodash from 'lodash';
+import useDynamicRefs from 'use-dynamic-refs';
 
 // Material-UI
 import { Box } from '@mui/material';
@@ -20,7 +21,6 @@ const MOUSE = Object.freeze({ NONE: 0, LEFT: 1, MIDDLE: 2, RIGHT: 3 });
 export const SelectionArea = forwardRef(
   (
     {
-      getRef,
       parentRef,
       ignoreItems,
       selectableItems,
@@ -37,6 +37,8 @@ export const SelectionArea = forwardRef(
     const selectableAreas = useRef([]);
     const parentRect = useRef(null);
     const startPoint = useRef(null);
+
+    const [getRef] = useDynamicRefs();
 
     /**
      * Calculate the areas of the elements
