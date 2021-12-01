@@ -25,7 +25,6 @@
     "react-hook-form": "^6.15.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
-    "react-syntax-highlighter": "^15.4.4",
     "react-xarrows": "^2.0.2"
   },
   "eslintConfig": {
