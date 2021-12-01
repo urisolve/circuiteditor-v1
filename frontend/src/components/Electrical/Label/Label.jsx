@@ -23,9 +23,7 @@ export function Label({
       handle='.label-handle'
       position={position}
       nodeRef={setRef(id)}
-      onDrag={(_e, position) =>
-        updatePosition?.(owner, position ?? { x: 0, y: 0 }, true)
-      }
+      onDrag={(_e, position) => updatePosition(owner, position, true)}
       {...rest}
     >
       <Box

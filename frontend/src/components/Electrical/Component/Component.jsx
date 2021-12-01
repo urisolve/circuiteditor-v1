@@ -24,6 +24,7 @@ export const Component = forwardRef(
       updatePosition,
       isSelected,
       disabled,
+      reRender,
       ...rest
     },
     ref,
@@ -44,9 +45,10 @@ export const Component = forwardRef(
         handle='.component-handle'
         position={position}
         nodeRef={draggableRef}
-        onDrag={(_e, position) =>
-          updatePosition?.(id, position ?? { x: 0, y: 0 })
-        }
+        onDrag={(_e, position) => {
+          updatePosition(id, position);
+          reRender();
+        }}
         {...rest}
       >
         <Box ref={draggableRef} sx={{ position: 'absolute' }}>

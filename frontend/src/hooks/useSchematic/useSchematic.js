@@ -25,6 +25,8 @@ export function useSchematic(initialSchematic = {}, options = {}) {
   const [selectedItems, setSelectedItems] = useState(new Set());
   const history = useHistory(setSchematic, options.maxHistoryLength);
 
+  // useEffect(() => console.log(schematic), [schematic]);
+
   /**
    * Calculate each Node and Port's connections.
    */

@@ -5,7 +5,16 @@ import { DraggableComponent } from '..';
 
 export const Node = forwardRef(
   (
-    { id, position, properties, gridSize, updatePosition, isSelected, ...rest },
+    {
+      id,
+      position,
+      properties,
+      gridSize,
+      updatePosition,
+      isSelected,
+      reRender,
+      ...rest
+    },
     ref,
   ) => {
     const draggableRef = useRef();
@@ -15,9 +24,10 @@ export const Node = forwardRef(
         handle='.node-handle'
         position={position}
         nodeRef={draggableRef}
-        onDrag={(_e, position) =>
-          updatePosition?.(id, position ?? { x: 0, y: 0 })
-        }
+        onDrag={(_e, position) => {
+          updatePosition(id, position);
+          reRender();
+        }}
         {...rest}
       >
         <Box

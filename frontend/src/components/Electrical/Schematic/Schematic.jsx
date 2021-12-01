@@ -44,8 +44,8 @@ export function Schematic({
   const updatePosition = useCallback(
     (id, { x, y }, isLabel = false) => {
       // Snap the values to the grid
-      x = snapValueToGrid(x, gridSize);
-      y = snapValueToGrid(y, gridSize);
+      x = snapValueToGrid(x ?? 0, gridSize ?? 10);
+      y = snapValueToGrid(y ?? 0, gridSize ?? 10);
 
       // Apply the new position
       schematic.editById(id, (elem) => {
@@ -106,7 +106,7 @@ export function Schematic({
             portsRefMap={portsRefMap}
             gridSize={gridSize}
             updatePosition={updatePosition}
-            onDrag={reRender}
+            reRender={reRender}
             isSelected={selection?.selectedItems.has(comp.id)}
             disabled={readOnly}
             {...comp}
@@ -121,7 +121,7 @@ export function Schematic({
           ref={setRef(node.id)}
           gridSize={gridSize}
           updatePosition={updatePosition}
-          onDrag={reRender}
+          reRender={reRender}
           isSelected={selection?.selectedItems.has(node.id)}
           disabled={readOnly}
         />
