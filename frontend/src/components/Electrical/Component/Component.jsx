@@ -81,7 +81,7 @@ export const Component = forwardRef(
 
           <Label
             key={label.id}
-            id={`${id}-label`}
+            owner={id}
             canvasRef={canvasRef}
             updatePosition={updatePosition}
             disabled={disabled}
