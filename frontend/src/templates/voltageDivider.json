@@ -1,0 +1,138 @@
+{
+  "components": [
+    {
+      "id": "8c0168ec-07fe-4b2c-96ee-4292ab34cfb2",
+      "type": "DC Voltage Source",
+      "position": { "x": 150, "y": 180 },
+      "label": {
+        "name": "Vi",
+        "value": "5",
+        "unit": "V",
+        "position": { "x": 70, "y": 70 }
+      },
+      "ports": [
+        {
+          "id": "7ed2507f-14fe-45e2-9246-9ee1d36eb442",
+          "type": "hybrid",
+          "position": { "x": 0.5, "y": 0 }
+        },
+        {
+          "id": "c990e78e-2bc5-4afb-92ee-b8a6d1faab0f",
+          "type": "hybrid",
+          "position": { "x": 0.5, "y": 1 }
+        }
+      ]
+    },
+    {
+      "id": "a2475d77-22a6-47b5-b60b-04aa5af69284",
+      "type": "Resistor",
+      "position": { "x": 300, "y": 100, "angle": 90 },
+      "label": {
+        "name": "R",
+        "value": "10k",
+        "unit": "Ω",
+        "position": { "x": 70, "y": 30 }
+      },
+      "ports": [
+        {
+          "id": "ddd6efab-f8f2-4565-8010-1270556f1d00",
+          "type": "hybrid",
+          "position": { "x": 0, "y": 0.5 }
+        },
+        {
+          "id": "1f7b8784-184b-4733-ae81-53c74b62462c",
+          "type": "hybrid",
+          "position": { "x": 1, "y": 0.5 }
+        }
+      ]
+    },
+    {
+      "id": "1cae12d0-21fe-4b7e-952e-fb471c677bc8",
+      "type": "Resistor",
+      "position": { "x": 300, "y": 260, "angle": 90 },
+      "label": {
+        "name": "R",
+        "value": "10k",
+        "unit": "Ω",
+        "position": { "x": 70, "y": 30 }
+      },
+      "ports": [
+        {
+          "id": "6ab8738d-c2d6-4cfb-a399-00c92d1ff497",
+          "type": "hybrid",
+          "position": { "x": 0, "y": 0.5 }
+        },
+        {
+          "id": "a5e84b5d-caeb-40bd-892b-96a958166b28",
+          "type": "hybrid",
+          "position": { "x": 1, "y": 0.5 }
+        }
+      ]
+    },
+    {
+      "id": "ef4bc1f6-e72f-4c4c-b9bb-76ea5d36c13b",
+      "type": "Voltmeter",
+      "position": { "x": 450, "y": 260, "angle": 90 },
+      "label": {
+        "name": "Vo",
+        "position": { "x": 70, "y": 70 }
+      },
+      "ports": [
+        {
+          "id": "dc54f032-592a-4c89-90d6-0727add0908f",
+          "type": "hybrid",
+          "position": { "x": 0, "y": 0.5 }
+        },
+        {
+          "id": "b4c2c42a-24d8-4230-8ee7-f8330926205f",
+          "type": "hybrid",
+          "position": { "x": 1, "y": 0.5 }
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "bfc8216e-74b3-4a2b-9fcd-ee26ab327c7a",
+      "position": { "x": 350, "y": 230 }
+    }
+  ],
+  "connections": [
+    {
+      "id": "59c13370-2901-4ced-8d4b-cdc239c04bda",
+      "start": "7ed2507f-14fe-45e2-9246-9ee1d36eb442",
+      "end": "ddd6efab-f8f2-4565-8010-1270556f1d00",
+      "properties": {
+        "gridBreak": "0%"
+      }
+    },
+    {
+      "id": "8fb25576-a918-4179-960b-18917de1b1ea",
+      "start": "1f7b8784-184b-4733-ae81-53c74b62462c",
+      "end": "bfc8216e-74b3-4a2b-9fcd-ee26ab327c7a"
+    },
+    {
+      "id": "bf58328d-be5a-43cb-9759-598e461f1b06",
+      "start": "bfc8216e-74b3-4a2b-9fcd-ee26ab327c7a",
+      "end": "6ab8738d-c2d6-4cfb-a399-00c92d1ff497"
+    },
+    {
+      "id": "8641afff-606c-4f4c-86fd-5de9509f9dd1",
+      "start": "bfc8216e-74b3-4a2b-9fcd-ee26ab327c7a",
+      "end": "dc54f032-592a-4c89-90d6-0727add0908f"
+    },
+    {
+      "id": "d9098b0d-9d74-4647-9ca3-2ad7e6bb6c28",
+      "start": "c990e78e-2bc5-4afb-92ee-b8a6d1faab0f",
+      "end": "a5e84b5d-caeb-40bd-892b-96a958166b28",
+      "properties": {
+        "gridBreak": "0%"
+      }
+    },
+    {
+      "id": "ced28b76-3977-45fc-823a-629dd0c87b46",
+      "start": "a5e84b5d-caeb-40bd-892b-96a958166b28",
+      "end": "b4c2c42a-24d8-4230-8ee7-f8330926205f"
+    }
+  ]
+}
