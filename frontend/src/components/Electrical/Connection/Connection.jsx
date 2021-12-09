@@ -1,17 +1,21 @@
-import { forwardRef } from 'react';
 import XArrow from 'react-xarrows';
 
-export const Connection = forwardRef(
-  (
-    { start, end, type, properties, gridBreak, onClick, isSelected, ...rest },
-    ref,
-  ) => (
+export function Connection({
+  start,
+  end,
+  type,
+  properties,
+  onClick,
+  isSelected,
+  ...rest
+}) {
+  return (
     <XArrow
       start={start}
       end={end}
       path={type ?? 'grid'}
       showHead={false}
-      gridBreak={gridBreak ?? '100%'}
+      gridBreak={properties?.gridBreak ?? '100%'}
       startAnchor='middle'
       endAnchor='middle'
       divContainerStyle={{
@@ -21,5 +25,5 @@ export const Connection = forwardRef(
       passProps={{ onClick }}
       {...rest}
     />
-  ),
-);
+  );
+}
