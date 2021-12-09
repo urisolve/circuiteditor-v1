@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { useGlobalRefMap } from '../../../hooks';
 import { DraggableComponent } from '..';
+import { Typography, Box } from '@mui/material';
 
 export function Label({
   owner,
@@ -19,26 +20,25 @@ export function Label({
 
   return (
     <DraggableComponent
-      handle='.label-handle'
       position={position}
       nodeRef={refMap(labelID)}
       onDrag={(_e, position) => updatePosition(owner, position, true)}
       {...rest}
     >
       <Box
-        className='label-handle'
-        ref={setRef(labelID)}
         sx={{
-          userSelect: 'none',
-          position: 'absolute',
-          top: 0,
-          left: 0,
+          padding: '5px',
+          '&:hover': {
+            transform: 'scale(1.1)',
+          },
         }}
       >
-        <b>
-          {name}
-          {value && unit && ` = ${value} ${unit}`}
-        </b>
+        <Typography sx={{ height: 20 }}>
+          <b>
+            {name}
+            {value && unit && ` = ${value} ${unit}`}
+          </b>
+        </Typography>
       </Box>
     </DraggableComponent>
   );

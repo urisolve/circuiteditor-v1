@@ -21,7 +21,6 @@ export const Node = forwardRef(
 
     return (
       <DraggableComponent
-        handle='.node-handle'
         position={position}
         nodeRef={draggableRef}
         onDrag={(_e, position) => {
@@ -31,8 +30,6 @@ export const Node = forwardRef(
         {...rest}
       >
         <Box
-          className='node-handle'
-          ref={draggableRef}
           sx={{
             position: 'absolute',
             borderRadius: '50%',
@@ -41,10 +38,10 @@ export const Node = forwardRef(
             },
 
             // Given properties
-            width: (properties?.radius ?? 6) * 2,
-            height: (properties?.radius ?? 6) * 2,
+            width: (properties?.radius ?? 5) * 2,
+            height: (properties?.radius ?? 5) * 2,
             opacity: properties?.opacity ?? 1,
-            backgroundColor: isSelected && '#3475FF',
+            backgroundColor: isSelected ? '#3475FF' : '#6495ED',
           }}
         >
           <Box ref={ref} sx={{ width: 1, height: 1 }} />
