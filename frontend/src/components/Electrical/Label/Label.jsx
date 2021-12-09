@@ -1,9 +1,6 @@
 import { useMemo } from 'react';
 
-// Material-UI
-import { Box } from '@mui/material';
-
-import { useRefMap } from '../../../hooks';
+import { useGlobalRefMap } from '../../../hooks';
 import { DraggableComponent } from '..';
 
 export function Label({
@@ -17,14 +14,14 @@ export function Label({
   unit,
   ...rest
 }) {
-  const { setRef } = useRefMap();
+  const refMap = useGlobalRefMap();
   const labelID = useMemo(() => `${owner}-label`, [owner]);
 
   return (
     <DraggableComponent
       handle='.label-handle'
       position={position}
-      nodeRef={setRef(labelID)}
+      nodeRef={refMap(labelID)}
       onDrag={(_e, position) => updatePosition(owner, position, true)}
       {...rest}
     >

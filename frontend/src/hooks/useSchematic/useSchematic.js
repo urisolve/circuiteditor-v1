@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import lodash from 'lodash';
-
+  
 import {
   isComponent,
   isConnection,
@@ -10,7 +10,7 @@ import {
   rotateCoords,
   snapPosToGrid,
 } from '../../util';
-import { useHistory, useRefMap } from '../';
+import { useHistory, useGlobalRefMap } from '../';
 
 const emptySchematic = { components: [], nodes: [], connections: [] };
 const defaultOptions = { maxHistoryLength: 10, gridSize: 10 };
@@ -19,7 +19,7 @@ export function useSchematic(initialSchematic = {}, options = {}) {
   initialSchematic = { ...emptySchematic, ...initialSchematic };
   options = { ...defaultOptions, ...options };
 
-  const { getRef } = useRefMap();
+  const refMap = useGlobalRefMap();
   const [schematic, setSchematic] = useState(initialSchematic);
   const [selectingItems, setSelectingItems] = useState(new Set());
   const [selectedItems, setSelectedItems] = useState(new Set());
@@ -77,7 +77,7 @@ export function useSchematic(initialSchematic = {}, options = {}) {
       for (const component of schematic.components) {
         for (const port of component.ports) {
           // Calculate component's width and height
-          const compRef = getRef(component.id).current;
+          const compRef = refMap(component.id).current;
           const { width, height } = compRef.getBoundingClientRect();
 
           // Calculate port's real position
@@ -130,7 +130,7 @@ export function useSchematic(initialSchematic = {}, options = {}) {
 
       return schematic;
     });
-  }, [setSchematic, schematic, items, getRef]);
+  }, [setSchematic, schematic, items, refMap]);
 
   /**
    * Adds an element to the schematic.

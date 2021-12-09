@@ -5,7 +5,7 @@ import lodash from 'lodash';
 import { Box } from '@mui/material';
 
 // Utility
-import { useRefMap } from '../../../hooks';
+import { useGlobalRefMap } from '../../../hooks';
 import { areasIntersect } from '../../../util';
 
 // An ENUM of the different types of mouse-clicks
@@ -27,7 +27,7 @@ export function SelectionArea({
   const parentRect = useRef(null);
   const startPoint = useRef(null);
 
-  const { getRef } = useRefMap();
+  const refMap = useGlobalRefMap();
 
   /**
    * Calculate the areas of the elements
@@ -45,7 +45,7 @@ export function SelectionArea({
     // Calculate the bounding areas of the items marked to ignore
     ignoreAreas.current = [];
     for (const elem of ignoreItems ?? []) {
-      const elemArea = getRef(elem.id).current.getBoundingClientRect();
+      const elemArea = refMap(elem.id).current.getBoundingClientRect();
       ignoreAreas.current.push({
         id: elem.id,
         left: elemArea.left - parentRect.current.left,
@@ -59,7 +59,7 @@ export function SelectionArea({
     selectableAreas.current = [];
     for (const elem of selectableItems ?? []) {
       try {
-        const elemArea = getRef(elem.id).current.getBoundingClientRect();
+        const elemArea = refMap(elem.id).current.getBoundingClientRect();
         selectableAreas.current.push({
           id: elem.id,
           left: elemArea.left - parentRect.current.left,
@@ -71,7 +71,7 @@ export function SelectionArea({
         continue;
       }
     }
-  }, [getRef, ignoreItems, selectableItems, parentRef]);
+  }, [refMap, ignoreItems, selectableItems, parentRef]);
 
   /**
    * Handler for moving the mouse.

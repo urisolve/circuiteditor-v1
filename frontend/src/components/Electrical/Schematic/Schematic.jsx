@@ -6,7 +6,7 @@ import { Paper } from '@mui/material';
 // Custom libraries
 import { SelectionArea, Component, Connection, Node } from '../index';
 import { snapValueToGrid } from '../../../util';
-import { useRefMap } from '../../../hooks';
+import { useGlobalRefMap } from '../../../hooks';
 
 export function Schematic({
   schematic,
@@ -20,7 +20,7 @@ export function Schematic({
   children,
   ...rest
 }) {
-  const { getRef, setRef } = useRefMap();
+  const refMap = useGlobalRefMap();
   const canvasRef = useRef();
 
   // Work-around for react-xarrows updating the connection.
@@ -95,13 +95,13 @@ export function Schematic({
       {schematic?.data?.components?.map((comp) => {
         const portsRefMap = new Map();
         comp.ports.forEach((port) => {
-          portsRefMap.set(port.id, setRef(port.id));
+          portsRefMap.set(port.id, refMap(port.id));
         });
 
         return (
           <Component
             key={comp.id}
-            ref={setRef(comp.id)}
+            ref={refMap(comp.id)}
             canvasRef={canvasRef}
             portsRefMap={portsRefMap}
             gridSize={gridSize}
@@ -118,7 +118,7 @@ export function Schematic({
         <Node
           {...node}
           key={node.id}
-          ref={setRef(node.id)}
+          ref={refMap(node.id)}
           gridSize={gridSize}
           updatePosition={updatePosition}
           reRender={reRender}
@@ -134,9 +134,9 @@ export function Schematic({
             <Connection
               {...conn}
               key={conn.id}
-              ref={setRef(conn.id)}
-              start={getRef(conn.start)}
-              end={getRef(conn.end)}
+              ref={refMap(conn.id)}
+              start={refMap(conn.start)}
+              end={refMap(conn.end)}
               isSelected={selection?.selectedItems.has(conn.id)}
               disabled={readOnly}
             />
