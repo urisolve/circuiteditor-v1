@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { useSchematic } from '../../hooks';
 import { CompLib, ToolsMenu, SourceView } from '../../components/UI';
 import { Schematic } from '../../components/Electrical';
-import { defaultCircuit } from './defaultCircuit';
+import defaultCircuit from './defaultCircuit.json';
 
 // Material-UI
 import { Stack } from '@mui/material';
