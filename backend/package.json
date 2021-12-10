@@ -1,7 +1,7 @@
 {
   "name": "circuiteditor-backend",
   "description": "The backend of the circuiteditor app.",
-  "author": "pmorim",
+  "author": "urisolve",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon server"

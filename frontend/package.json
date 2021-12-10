@@ -2,7 +2,7 @@
   "name": "circuiteditor-frontend",
   "description": "The frontend of the circuiteditor app.",
   "version": "1.0.0",
-  "author": "pmorim",
+  "author": "urisolve",
   "license": "MIT",
   "scripts": {
     "dev": "react-scripts start",
