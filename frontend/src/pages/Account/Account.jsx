@@ -31,7 +31,7 @@ export function Account() {
   const onSubmit = useCallback(
     async (data) => {
       try {
-        await axios.patch('/api/account/info', data);
+        await axios.patch('api/account/info', data);
       } catch (err) {
         console.error(err);
       }

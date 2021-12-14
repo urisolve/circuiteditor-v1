@@ -46,7 +46,7 @@ export function Navbar({ ...rest }) {
   const history = useHistory();
   const logOut = useCallback(async () => {
     try {
-      await axios.get('/api/auth/logout');
+      await axios.get('api/auth/logout');
       await setUser(null);
       history.push('/');
     } catch (err) {

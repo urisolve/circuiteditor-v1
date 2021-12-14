@@ -47,7 +47,7 @@ export function Circuits() {
     setIsLoading(true);
 
     try {
-      const { data } = await axios.get('/api/circuits');
+      const { data } = await axios.get('api/circuits');
       setCircuits(data);
     } catch (err) {
       console.error(err);
@@ -60,7 +60,7 @@ export function Circuits() {
   const uploadCircuit = useCallback(
     async (circuit) => {
       try {
-        await axios.post('/api/circuits', circuit);
+        await axios.post('api/circuits', circuit);
         fetchCircuits();
       } catch (err) {
         console.error(err);
@@ -72,7 +72,7 @@ export function Circuits() {
   // Adds a new circuit ot the database
   const createCircuit = useCallback(async () => {
     try {
-      await axios.post('/api/circuits');
+      await axios.post('api/circuits');
       fetchCircuits();
     } catch (err) {
       console.error(err);

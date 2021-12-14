@@ -30,7 +30,7 @@ export function Login({ setUser, ...rest }) {
   // Send the new user info to the server and grab the authenticated user
   const onSubmit = async (formData) => {
     try {
-      const { data } = await axios.post('/api/auth/login', formData);
+      const { data } = await axios.post('api/auth/login', formData);
       await setUser(data);
       history.push('/circuits');
     } catch (err) {

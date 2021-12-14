@@ -26,7 +26,7 @@ export function App() {
   useEffect(() => {
     async function grabUser() {
       try {
-        const { data } = await axios.get('/api/auth');
+        const { data } = await axios.get('api/auth');
         setUser(data);
       } catch (err) {
         console.error(err);

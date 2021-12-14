@@ -35,7 +35,7 @@ export function Signup({ ...rest }) {
   // Send the new user info to the server and reset the form
   const onSubmit = async (formData) => {
     try {
-      await axios.post('/api/auth/signup', formData);
+      await axios.post('api/auth/signup', formData);
       history.push('/circuits');
     } catch (err) {
       console.error(err);
