@@ -4,6 +4,11 @@
   "version": "1.0.0",
   "author": "urisolve",
   "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "circuiteditor-frontend",
+    "circuiteditor-backend"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/urisolve/circuiteditor.git"
