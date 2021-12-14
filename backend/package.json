@@ -1,6 +1,7 @@
 {
   "name": "backend",
   "description": "The backend of the circuiteditor app.",
+  "version": "1.0.0",
   "author": "urisolve",
   "license": "MIT",
   "scripts": {
