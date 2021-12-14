@@ -21,7 +21,9 @@
     "dev:server": "cd backend && yarn dev",
     "dev:client": "cd frontend && yarn dev",
     "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
-    "build": "echo \"Command not yet available\" && exit 1"
+    "build": "echo \"Command not yet available\" && exit 1",
+    "test": "snyk test --all-projects",
+    "monitor": "snyk monitor --all-projects"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
@@ -35,6 +37,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-standard": "^5.0.0",
-    "prettier": "^2.3.2"
+    "prettier": "^2.3.2",
+    "snyk": "^1.791.0"
   }
 }
