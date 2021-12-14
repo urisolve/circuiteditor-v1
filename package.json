@@ -18,9 +18,6 @@
   },
   "homepage": "https://github.com/urisolve/circuiteditor#readme",
   "scripts": {
-    "setup:server": "cd backend && yarn",
-    "setup:client": "cd frontend && yarn",
-    "setup": "yarn && yarn setup:server && yarn setup:client",
     "dev:server": "cd backend && yarn dev",
     "dev:client": "cd frontend && yarn dev",
     "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
