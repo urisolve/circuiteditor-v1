@@ -1,5 +1,5 @@
 {
-  "name": "circuiteditor-frontend",
+  "name": "frontend",
   "description": "The frontend of the circuiteditor app.",
   "version": "1.0.0",
   "author": "urisolve",
@@ -19,6 +19,7 @@
     "cross-env": "^7.0.3",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.10.7",
+    "eslint-config-react-app": "^7.0.0",
     "lodash": "^4.17.21",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
