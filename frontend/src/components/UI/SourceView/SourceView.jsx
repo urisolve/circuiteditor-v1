@@ -26,9 +26,10 @@ const DrawerHeader = ({ children, ...rest }) => (
 export function SourceView({ code, ...rest }) {
   return (
     <Drawer
-      variant='persistent'
+      disableScrollLock
       anchor='right'
       sx={{
+        position: 'absolute',
         width: drawerWidth,
         '& .MuiBox-root': {
           width: drawerWidth,

@@ -41,10 +41,10 @@ export function CompLib({ addToSchematic, ...rest }) {
 
   return (
     <Drawer
-      variant='permanent'
+      disableScrollLock
       sx={{
+        position: 'absolute',
         width: drawerWidth,
-        flexShrink: 0,
         display: 'flex',
         '& .MuiBox-root': {
           width: drawerWidth,

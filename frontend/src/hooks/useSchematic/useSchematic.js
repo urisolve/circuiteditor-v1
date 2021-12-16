@@ -263,6 +263,7 @@ export function useSchematic(initialSchematic = {}, options = {}) {
         // Apply the edits
         for (const id of ids) {
           for (const type in newSchematic) {
+            console.log(newSchematic, type);
             newSchematic[type] = newSchematic[type].map((elem) => {
               if (elem.id !== id) return elem;
               return lodash.isFunction(edits)

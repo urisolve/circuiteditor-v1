@@ -60,7 +60,7 @@ export function App() {
               {user ? <Circuits /> : <Redirect to='/' />}
             </Route>
             <Route path='/editor/:id'>
-              {user ? <Editor /> : <Redirect to='/' />}
+              {user ? <Editor /> : <Redirect to='/editor' />}
             </Route>
             <Route exact path='/editor'>
               <Editor />

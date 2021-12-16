@@ -64,8 +64,8 @@ export function Schematic({
       ref={canvasRef}
       elevation={3}
       sx={{
-        width: '80%',
-        height: '80%',
+        width: '90%',
+        height: '90%',
         position: 'relative',
         zIndex: 0,
 
