@@ -1,9 +1,9 @@
-import { useState, useRef, useCallback, useContext } from 'react';
+import { useRef, useCallback, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import { UserContext } from '../../../contexts';
-import { useGravatar } from '../../../hooks';
+import { useBoolean, useGravatar } from '../../../hooks';
 import { ReactComponent as Logo } from '../../../assets/brand/logo.svg';
 
 // Material-UI
@@ -38,9 +38,7 @@ export function Navbar({ ...rest }) {
 
   // User menu
   const anchorEl = useRef();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const openMenu = () => setIsMenuOpen(true);
-  const closeMenu = () => setIsMenuOpen(false);
+  const isMenuOpen = useBoolean(false);
 
   // Logout
   const history = useHistory();
@@ -58,9 +56,9 @@ export function Navbar({ ...rest }) {
 
   return (
     <AppBar
-      position='relative'
+      position='sticky'
       color='primary'
-      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      sx={{ width: 1, zIndex: (theme) => theme.zIndex.drawer + 1 }}
       {...rest}
     >
       <Container>
@@ -93,7 +91,7 @@ export function Navbar({ ...rest }) {
             sm ? (
               <Button
                 ref={anchorEl}
-                onClick={openMenu}
+                onClick={isMenuOpen.on}
                 startIcon={
                   <Avatar
                     alt={`${user.firstName} ${user.lastName}`}
@@ -109,7 +107,7 @@ export function Navbar({ ...rest }) {
                 {`${user.firstName} ${user.lastName}`}
               </Button>
             ) : (
-              <IconButton ref={anchorEl} onClick={openMenu}>
+              <IconButton ref={anchorEl} onClick={isMenuOpen.on}>
                 <Avatar
                   alt={`${user.firstName} ${user.lastName}`}
                   src={gravatar}
@@ -140,14 +138,14 @@ export function Navbar({ ...rest }) {
           vertical: 'top',
           horizontal: 'right',
         }}
-        open={isMenuOpen}
-        onClose={closeMenu}
+        open={isMenuOpen.value}
+        onClose={isMenuOpen.off}
         keepMounted
       >
         <MenuItem
           component={Link}
           to='/circuits'
-          onClick={closeMenu}
+          onClick={isMenuOpen.off}
           sx={menuLink}
         >
           <MenuIcon sx={{ mr: 2 }} />
@@ -156,16 +154,17 @@ export function Navbar({ ...rest }) {
         <MenuItem
           component={Link}
           to='/account'
-          onClick={closeMenu}
+          onClick={isMenuOpen.off}
           sx={menuLink}
         >
           <PersonIcon sx={{ mr: 2 }} />
           Account
         </MenuItem>
         <MenuItem
+          disabled
           component={Link}
           to='/settings'
-          onClick={closeMenu}
+          onClick={isMenuOpen.off}
           sx={menuLink}
         >
           <SettingsIcon sx={{ mr: 2 }} />
@@ -174,7 +173,7 @@ export function Navbar({ ...rest }) {
         <Divider />
         <MenuItem
           onClick={() => {
-            closeMenu();
+            isMenuOpen.off();
             logOut();
           }}
         >
@@ -184,4 +183,4 @@ export function Navbar({ ...rest }) {
       </Menu>
     </AppBar>
   );
-};
+}

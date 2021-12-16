@@ -1,14 +1,18 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
+// Material-UI
 import { Fab, Slide, Tooltip } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
+// Custom hook
+import { useBoolean } from '../../../hooks';
+
 export function ScrollToTopButton({ threshold }) {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const isScrolled = useBoolean(false);
 
   const toggleScrollVisibility = useCallback(() => {
-    setIsScrolled(window.pageYOffset >= (threshold ?? 100));
-  }, [threshold, setIsScrolled]);
+    isScrolled.set(window.pageYOffset >= (threshold ?? 100));
+  }, [threshold, isScrolled]);
 
   useEffect(() => {
     window.addEventListener('scroll', toggleScrollVisibility);
@@ -26,7 +30,7 @@ export function ScrollToTopButton({ threshold }) {
   };
 
   return (
-    <Slide direction='up' in={isScrolled} mountOnEnter unmountOnExit>
+    <Slide direction='up' in={isScrolled.value} mountOnEnter unmountOnExit>
       <Tooltip title='Scroll back to top' placement='left' arrow>
         <Fab
           color='primary'
@@ -44,4 +48,4 @@ export function ScrollToTopButton({ threshold }) {
       </Tooltip>
     </Slide>
   );
-};
+}

@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // Custom components/hooks
 import { CircuitCard, SortingMenu } from '../../components/UI';
-import { useSortAndOrder } from '../../hooks';
+import { useBoolean, useSortAndOrder } from '../../hooks';
 
 // Material-UI
 import {
@@ -27,13 +27,12 @@ import SortIcon from '@mui/icons-material/Sort';
 
 export function Circuits() {
   const [circuits, setCircuits] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = useBoolean(false);
 
-  const [showStared, setShowStared] = useState(false);
-  const toggleShowStared = () => setShowStared((showStared) => !showStared);
+  const showStared = useBoolean(false);
 
   const sortButton = useRef();
-  const [sortMenuOpen, setSortMenuOpen] = useState(false);
+  const sortMenuOpen = useBoolean(false);
   const [sortedCircuits, params, setters] = useSortAndOrder(circuits);
 
   // Filters the stared circuits
@@ -44,7 +43,7 @@ export function Circuits() {
 
   // Fetch all the circuits
   const fetchCircuits = useCallback(async () => {
-    setIsLoading(true);
+    isLoading.on();
 
     try {
       const { data } = await axios.get('api/circuits');
@@ -53,8 +52,8 @@ export function Circuits() {
       console.error(err);
     }
 
-    setIsLoading(false);
-  }, [setCircuits]);
+    isLoading.off();
+  }, [setCircuits, isLoading]);
 
   // Let the user upload a new circuit schematic
   const uploadCircuit = useCallback(
@@ -122,9 +121,12 @@ export function Circuits() {
       subheader: 'Star a circuit for it to appear here',
       iterable: staredCircuits,
       action: (
-        <Tooltip title={showStared ? 'Hide favorites' : 'Show favorites'} arrow>
-          <IconButton onClick={toggleShowStared}>
-            {showStared ? (
+        <Tooltip
+          title={showStared.value ? 'Hide favorites' : 'Show favorites'}
+          arrow
+        >
+          <IconButton onClick={showStared.toggle}>
+            {showStared.value ? (
               <ChevronDownIcon fontSize='large' />
             ) : (
               <ChevronRightIcon fontSize='large' />
@@ -132,7 +134,7 @@ export function Circuits() {
           </IconButton>
         </Tooltip>
       ),
-      collapse: showStared,
+      collapse: showStared.value,
     },
     {
       title: 'All Circuits',
@@ -141,7 +143,7 @@ export function Circuits() {
       action: (
         <>
           <Tooltip title='Sort' arrow>
-            <IconButton onClick={() => setSortMenuOpen(true)} ref={sortButton}>
+            <IconButton onClick={sortMenuOpen.on} ref={sortButton}>
               <SortIcon fontSize='large' />
             </IconButton>
           </Tooltip>
@@ -172,7 +174,7 @@ export function Circuits() {
 
           <Collapse in={menu?.collapse ?? true} timeout='auto' unmountOnExit>
             <CardContent>
-              {isLoading ? (
+              {isLoading.value ? (
                 <Box
                   sx={{
                     display: 'flex',
@@ -207,8 +209,8 @@ export function Circuits() {
       ))}
 
       <SortingMenu
-        open={sortMenuOpen}
-        onClose={() => setSortMenuOpen(false)}
+        open={sortMenuOpen.value}
+        onClose={sortMenuOpen.off}
         anchorEl={sortButton.current}
         params={params}
         setters={setters}

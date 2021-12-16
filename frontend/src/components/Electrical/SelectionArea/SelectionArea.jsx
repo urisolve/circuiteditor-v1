@@ -1,11 +1,11 @@
-import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
+import { useRef, useEffect, useCallback, useMemo } from 'react';
 import lodash from 'lodash';
 
 // Material-UI
 import { Box } from '@mui/material';
 
 // Utility
-import { useGlobalRefMap } from '../../../hooks';
+import { useBoolean, useGlobalRefMap } from '../../../hooks';
 import { areasIntersect } from '../../../util';
 
 // An ENUM of the different types of mouse-clicks
@@ -20,7 +20,7 @@ export function SelectionArea({
   disabled,
   ...rest
 }) {
-  const [showArea, setShowArea] = useState(false);
+  const showArea = useBoolean(false);
   const selectionArea = useRef({ left: 0, top: 0, width: 0, height: 0 });
   const ignoreAreas = useRef([]);
   const selectableAreas = useRef([]);
@@ -80,7 +80,7 @@ export function SelectionArea({
     () =>
       lodash.throttle((event) => {
         // Start dragging
-        setShowArea(true);
+        showArea.on();
 
         // Calculate the current position of mouse
         const endPoint = {
@@ -112,7 +112,7 @@ export function SelectionArea({
 
         event.preventDefault();
       }, 1000 / (fps ?? 30)),
-    [setSelectedItems, startPoint, fps],
+    [setSelectedItems, startPoint, fps, showArea],
   );
 
   /**
@@ -121,7 +121,7 @@ export function SelectionArea({
   const onMouseUp = useCallback(
     (event) => {
       // Stop dragging
-      setShowArea(false);
+      showArea.off();
 
       // Cancel throttled function calls
       onMouseMove.cancel();
@@ -132,7 +132,7 @@ export function SelectionArea({
 
       event.preventDefault();
     },
-    [onMouseMove, parentRef],
+    [onMouseMove, parentRef, showArea],
   );
 
   /**
@@ -212,7 +212,7 @@ export function SelectionArea({
         // Fixed
         zIndex: 1,
         position: 'absolute',
-        display: showArea ? 'inline-block' : 'none',
+        display: showArea.value ? 'inline-block' : 'none',
         width: selectionArea.current.width,
         height: selectionArea.current.height,
         transform: `translate(${selectionArea.current.left}px, ${selectionArea.current.top}px)`,

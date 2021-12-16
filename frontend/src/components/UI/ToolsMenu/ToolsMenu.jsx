@@ -1,8 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import { Fragment, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-
-import { Tool } from '../Tool';
 
 // Material-UI
 import {
@@ -22,12 +20,22 @@ import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import RotateRightIcon from '@mui/icons-material/RotateRight';
 import CodeIcon from '@mui/icons-material/Code';
 import SaveIcon from '@mui/icons-material/Save';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
-export function ToolsMenu({ schematic, history, selection, toggleSourceView }) {
+// Custom hook & component
+import { useBoolean } from '../../../hooks';
+import { Tool } from '../Tool';
+
+export function ToolsMenu({
+  schematic,
+  history,
+  selection,
+  toggleSourceView,
+  toggleCompLib,
+}) {
   const { id } = useParams();
 
-  const [isAccountAlertOpen, setIsAccountAlertOpen] = useState(false);
-  const closeAccountAlert = () => setIsAccountAlertOpen(false);
+  const isAccountAlertOpen = useBoolean(false);
 
   // Deletes all of the currently selected elements
   const deleteSelection = useCallback(() => {
@@ -47,8 +55,8 @@ export function ToolsMenu({ schematic, history, selection, toggleSourceView }) {
 
   // Save the current circuit to the database
   const saveCircuit = useCallback(async () => {
-    if (!Boolean(id)) {
-      setIsAccountAlertOpen(true);
+    if (!id) {
+      isAccountAlertOpen.on();
       return;
     }
 
@@ -59,7 +67,7 @@ export function ToolsMenu({ schematic, history, selection, toggleSourceView }) {
     } catch (err) {
       console.error(err);
     }
-  }, [id, schematic]);
+  }, [id, schematic, isAccountAlertOpen]);
 
   const tools = [
     [
@@ -100,6 +108,11 @@ export function ToolsMenu({ schematic, history, selection, toggleSourceView }) {
     ],
     [
       {
+        name: 'Toggle Component Library',
+        icon: <MenuBookIcon />,
+        onClick: toggleCompLib,
+      },
+      {
         name: 'Toggle Source View',
         icon: <CodeIcon />,
         onClick: toggleSourceView,
@@ -115,7 +128,7 @@ export function ToolsMenu({ schematic, history, selection, toggleSourceView }) {
   return (
     <Grid container direction='row' justifyContent='center' alignItems='center'>
       {tools.map((menu, menuId) => (
-        <React.Fragment key={menuId}>
+        <Fragment key={menuId}>
           {menuId !== 0 && (
             <Divider
               orientation='vertical'
@@ -125,10 +138,10 @@ export function ToolsMenu({ schematic, history, selection, toggleSourceView }) {
           {menu.map((tool, toolId) => (
             <Tool key={toolId} {...tool} />
           ))}
-        </React.Fragment>
+        </Fragment>
       ))}
 
-      <Dialog open={isAccountAlertOpen} onClose={closeAccountAlert}>
+      <Dialog open={isAccountAlertOpen.value} onClose={isAccountAlertOpen.off}>
         <DialogTitle>Log In</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -139,13 +152,13 @@ export function ToolsMenu({ schematic, history, selection, toggleSourceView }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeAccountAlert} color='primary'>
+          <Button onClick={isAccountAlertOpen.off} color='primary'>
             Remain like this
           </Button>
           <Button
             component={Link}
             to='/auth'
-            onClick={closeAccountAlert}
+            onClick={isAccountAlertOpen.off}
             color='primary'
             variant='contained'
           >
@@ -155,4 +168,4 @@ export function ToolsMenu({ schematic, history, selection, toggleSourceView }) {
       </Dialog>
     </Grid>
   );
-};
+}

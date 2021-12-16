@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -19,13 +18,15 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
+// Custom hook
+import { useBoolean } from '../../../hooks';
+
 export function Login({ setUser, ...rest }) {
   const history = useHistory();
   const { register, handleSubmit, errors, reset } = useForm({ mode: 'onBlur' });
 
   // Password visibility
-  const [showPassword, setShowPassword] = useState(false);
-  const toggleShowPassword = () => setShowPassword(!showPassword);
+  const showPassword = useBoolean(false);
 
   // Send the new user info to the server and grab the authenticated user
   const onSubmit = async (formData) => {
@@ -73,7 +74,7 @@ export function Login({ setUser, ...rest }) {
                 variant='outlined'
                 name='password'
                 label='Password'
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword.value ? 'text' : 'password'}
                 autoComplete='current-password'
                 error={errors.password}
                 inputRef={register({
@@ -97,15 +98,15 @@ export function Login({ setUser, ...rest }) {
             Login
           </Button>
           <Tooltip
-            title={showPassword ? 'Hide password' : 'Show password'}
+            title={showPassword.value ? 'Hide password' : 'Show password'}
             arrow
           >
-            <IconButton onClick={toggleShowPassword}>
-              {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            <IconButton onClick={showPassword.toggle}>
+              {showPassword.value ? <VisibilityOffIcon /> : <VisibilityIcon />}
             </IconButton>
           </Tooltip>
         </CardActions>
       </Card>
     </form>
   );
-};
+}

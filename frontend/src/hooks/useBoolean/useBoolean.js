@@ -3,11 +3,13 @@ import { useRef, useState } from 'react';
 export function useBoolean(initialValue) {
   const [value, setValue] = useState(initialValue);
 
-  const updateValue = useRef({
-    toggle: () => setValue((oldValue) => !oldValue),
+  const boolean = useRef({
+    value,
     on: () => setValue(true),
     off: () => setValue(false),
+    set: (value) => setValue(value),
+    toggle: () => setValue((oldValue) => !oldValue),
   });
 
-  return [value, updateValue.current];
+  return boolean.current;
 }

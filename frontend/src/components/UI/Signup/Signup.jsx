@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -18,11 +17,11 @@ import {
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useBoolean } from '../../../hooks';
 
 export function Signup({ ...rest }) {
   // Password visibility
-  const [showPassword, setShowPassword] = useState(false);
-  const toggleShowPassword = () => setShowPassword(!showPassword);
+  const showPassword = useBoolean(false);
 
   // Form validation hook
   const { register, handleSubmit, errors, watch, reset } = useForm({
@@ -156,7 +155,7 @@ export function Signup({ ...rest }) {
               <TextField
                 name='password'
                 label='Password'
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword.value ? 'text' : 'password'}
                 autoComplete='new-password'
                 variant='outlined'
                 error={errors.password}
@@ -177,7 +176,7 @@ export function Signup({ ...rest }) {
               <TextField
                 name='confirmPassword'
                 label='Confirm password'
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword.value ? 'text' : 'password'}
                 autoComplete='new-password'
                 variant='outlined'
                 error={errors.confirmPassword}
@@ -200,15 +199,15 @@ export function Signup({ ...rest }) {
           </Button>
 
           <Tooltip
-            title={showPassword ? 'Hide password' : 'Show password'}
+            title={showPassword.value ? 'Hide password' : 'Show password'}
             arrow
           >
-            <IconButton onClick={toggleShowPassword}>
-              {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            <IconButton onClick={showPassword.toggle}>
+              {showPassword.value ? <VisibilityOffIcon /> : <VisibilityIcon />}
             </IconButton>
           </Tooltip>
         </CardActions>
       </Card>
     </form>
   );
-};
+}

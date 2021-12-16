@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Material-UI
@@ -24,7 +23,7 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 // Custom hook
-import { useDownloadJSON, useTimeSince } from '../../../hooks';
+import { useBoolean, useDownloadJSON, useTimeSince } from '../../../hooks';
 
 const cardWidth = 300;
 const cardHeight = 300;
@@ -33,9 +32,7 @@ export function CircuitCard({ circuit, onDelete, onStar }) {
   const circuitExport = useDownloadJSON(circuit.data.schematic);
   const timeSince = useTimeSince(circuit.data.updatedAt);
 
-  const [dialog, setDialog] = useState(false);
-  const openDialog = () => setDialog(true);
-  const closeDialog = () => setDialog(false);
+  const dialog = useBoolean(false);
 
   return (
     <>
@@ -79,7 +76,7 @@ export function CircuitCard({ circuit, onDelete, onStar }) {
             </IconButton>
           </Tooltip>
           <Tooltip title='Delete' arrow>
-            <IconButton onClick={openDialog}>
+            <IconButton onClick={dialog.on}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
@@ -99,7 +96,7 @@ export function CircuitCard({ circuit, onDelete, onStar }) {
         </CardActions>
       </Card>
 
-      <Dialog open={dialog} onClose={closeDialog}>
+      <Dialog open={dialog.value} onClose={dialog.off}>
         <DialogTitle>Are you sure?</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -109,7 +106,7 @@ export function CircuitCard({ circuit, onDelete, onStar }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeDialog} color='primary'>
+          <Button onClick={dialog.off} color='primary'>
             Cancel
           </Button>
           <Button onClick={onDelete} color='primary'>
@@ -119,4 +116,4 @@ export function CircuitCard({ circuit, onDelete, onStar }) {
       </Dialog>
     </>
   );
-};
+}
