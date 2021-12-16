@@ -21,6 +21,10 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CodeIcon from '@mui/icons-material/Code';
 import SaveIcon from '@mui/icons-material/Save';
 
+const fabOffset = 16;
+const sidebarSize = 310;
+const canvasSize = { width: 2000, height: 2000 };
+
 export function Editor({ ...rest }) {
   const { schematic, history, selection } = useSchematic(defaultCircuit);
   const { id } = useParams();
@@ -75,14 +79,12 @@ export function Editor({ ...rest }) {
   ];
 
   return (
-    <>
-      <Stack
-        alignItems='center'
-        justifyContent='center'
-        sx={{ width: 2000, height: 2000 }}
-      >
-        <Schematic schematic={schematic} selection={selection} {...rest} />
-      </Stack>
+    <Stack
+      alignItems='center'
+      justifyContent='center'
+      sx={{ ...canvasSize, overflow: 'scroll' }}
+    >
+      <Schematic schematic={schematic} selection={selection} {...rest} />
 
       <CompLib
         addToSchematic={schematic.add}
@@ -98,12 +100,16 @@ export function Editor({ ...rest }) {
       <SpeedDial
         ariaLabel="Tools' menu"
         icon={<SpeedDialIcon />}
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
+        sx={{
+          position: 'fixed',
+          bottom: fabOffset,
+          right: fabOffset + sourceView.value * (sidebarSize + 2 * fabOffset),
+        }}
       >
         {actions.map((action, idx) => (
           <SpeedDialAction key={idx} {...action} />
         ))}
       </SpeedDial>
-    </>
+    </Stack>
   );
 }

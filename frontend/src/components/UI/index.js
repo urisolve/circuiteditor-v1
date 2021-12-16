@@ -11,6 +11,7 @@ export * from './Navbar';
 export * from './OfflineBanner';
 export * from './ScrollToTopButton';
 export * from './SearchBar';
+export * from './SidebarHeader';
 export * from './Signup';
 export * from './SortingMenu';
 export * from './SourceView';

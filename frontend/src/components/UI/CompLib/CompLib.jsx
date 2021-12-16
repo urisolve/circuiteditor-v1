@@ -18,9 +18,12 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const drawerWidth = 310;
+// Custom component
+import { SidebarHeader } from '..';
 
-export function CompLib({ addToSchematic, ...rest }) {
+const sidebarWidth = 310;
+
+export function CompLib({ addToSchematic, onClose, ...rest }) {
   const [searchBar, setSearchBar] = useState('');
 
   const filteredComps = useMemo(() => {
@@ -41,23 +44,22 @@ export function CompLib({ addToSchematic, ...rest }) {
 
   return (
     <Drawer
-      disableScrollLock
+      variant='persistent'
       sx={{
-        position: 'absolute',
-        width: drawerWidth,
+        width: sidebarWidth,
         display: 'flex',
         '& .MuiBox-root': {
-          width: drawerWidth,
+          width: sidebarWidth,
         },
       }}
+      ModalProps={{ keepMounted: true }} // Better performance on mobile.
+      disableScrollLock
       {...rest}
     >
       <Toolbar /> {/* Push the content down by the size of a Toolbar */}
       <Box sx={{ overflowY: 'auto', flexGrow: 1 }}>
         <Box sx={{ p: 2 }}>
-          <Typography variant='h5' component='h2' gutterBottom noWrap>
-            Components library
-          </Typography>
+          <SidebarHeader onClose={onClose}>Components</SidebarHeader>
           <SearchBar value={searchBar} setValue={setSearchBar} />
         </Box>
 
