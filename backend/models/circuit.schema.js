@@ -5,7 +5,7 @@ const emptySchematic = { components: [], nodes: [], connections: [] };
 
 const circuitSchema = new mongoose.Schema(
   {
-    data: { type: schematicSchema, default: emptySchematic },
+    schematic: { type: schematicSchema, default: emptySchematic },
     name: { type: String, default: 'Untitled Circuit' },
     description: { type: String, default: '' },
     isStared: { type: Boolean, default: false },

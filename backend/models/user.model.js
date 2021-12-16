@@ -16,20 +16,10 @@ const userSchema = new mongoose.Schema(
     number: { type: Number, required: true },
     institution: { type: String, required: true, trim: true },
     password: { type: String, required: true },
-
-    settings: { type: settingsSchema, default: () => ({}) },
+    settings: settingsSchema,
     circuits: [circuitSchema],
   },
   { timestamps: true },
 );
-
-/**
- * Calculates the user's full name.
- *
- * @returns {String} the user's full name.
- */
-userSchema.methods.fullName = function () {
-  return `${this.fullName} ${this.lastName}`;
-};
 
 module.exports = mongoose.model('User', userSchema);

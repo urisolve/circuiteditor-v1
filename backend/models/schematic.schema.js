@@ -5,13 +5,11 @@ const connectionSchema = require('./connection.schema');
 
 const schematicSchema = new mongoose.Schema(
   {
-    schematic: {
-      components: [componentSchema],
-      nodes: [nodeSchema],
-      connections: [connectionSchema],
-    },
+    components: [componentSchema],
+    nodes: [nodeSchema],
+    connections: [connectionSchema],
   },
-  { timestamps: true },
+  { _id: false },
 );
 
 module.exports = schematicSchema;
