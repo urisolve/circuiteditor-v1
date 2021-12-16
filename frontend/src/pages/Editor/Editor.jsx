@@ -76,25 +76,24 @@ export function Editor({ ...rest }) {
 
   return (
     <>
-      <Stack direction='row' sx={{ flexGrow: 1, width: 2000, height: 2000 }}>
-        <CompLib
-          addToSchematic={schematic.add}
-          open={compLib.value}
-          onClose={compLib.off}
-        />
-        <Stack
-          alignItems='center'
-          justifyContent='center'
-          sx={{ width: 2000, height: 2000 }}
-        >
-          <Schematic schematic={schematic} selection={selection} {...rest} />
-        </Stack>
-        <SourceView
-          code={schematic?.data}
-          open={sourceView.value}
-          onClose={sourceView.off}
-        />
+      <Stack
+        alignItems='center'
+        justifyContent='center'
+        sx={{ width: 2000, height: 2000 }}
+      >
+        <Schematic schematic={schematic} selection={selection} {...rest} />
       </Stack>
+
+      <CompLib
+        addToSchematic={schematic.add}
+        open={compLib.value}
+        onClose={compLib.off}
+      />
+      <SourceView
+        code={schematic?.data}
+        open={sourceView.value}
+        onClose={sourceView.off}
+      />
 
       <SpeedDial
         ariaLabel="Tools' menu"
