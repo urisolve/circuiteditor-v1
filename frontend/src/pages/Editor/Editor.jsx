@@ -22,7 +22,7 @@ import SaveIcon from '@mui/icons-material/Save';
 
 const fabOffset = 16;
 const sidebarSize = 310;
-const canvasSize = { width: 2560, height: 1440 };
+const canvasSize = { width: 2560, height: 1440 }; // 16:9 resolution (1440p)
 
 const defaultCircuit = require('../../templates/voltageDivider.json');
 
