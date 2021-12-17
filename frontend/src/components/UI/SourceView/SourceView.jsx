@@ -18,7 +18,6 @@ export function SourceView({ code, onClose, ...rest }) {
         },
       }}
       ModalProps={{ keepMounted: true }} // Better performance on mobile.
-      disableScrollLock
       {...rest}
     >
       <Toolbar />

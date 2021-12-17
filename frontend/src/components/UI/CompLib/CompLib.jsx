@@ -53,7 +53,6 @@ export function CompLib({ addToSchematic, onClose, ...rest }) {
         },
       }}
       ModalProps={{ keepMounted: true }} // Better performance on mobile.
-      disableScrollLock
       {...rest}
     >
       <Toolbar /> {/* Push the content down by the size of a Toolbar */}
