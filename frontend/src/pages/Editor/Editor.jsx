@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useBoolean, useSchematic } from '../../hooks';
 import { CompLib, SourceView } from '../../components/UI';
 import { Schematic } from '../../components/Electrical';
-import { voltageDivider as defaultCircuit } from '../../templates';
 
 // Material-UI
 import {
@@ -24,6 +23,8 @@ import SaveIcon from '@mui/icons-material/Save';
 const fabOffset = 16;
 const sidebarSize = 310;
 const canvasSize = { width: 2000, height: 2000 };
+
+const defaultCircuit = require('../../templates/voltageDivider.json');
 
 export function Editor({ ...rest }) {
   const { schematic, history, selection } = useSchematic(defaultCircuit);
