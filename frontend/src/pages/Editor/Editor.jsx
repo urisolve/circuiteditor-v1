@@ -22,7 +22,7 @@ import SaveIcon from '@mui/icons-material/Save';
 
 const fabOffset = 16;
 const sidebarSize = 310;
-const canvasSize = { width: 2000, height: 2000 };
+const canvasSize = { width: 2560, height: 1440 };
 
 const defaultCircuit = require('../../templates/voltageDivider.json');
 
@@ -83,7 +83,11 @@ export function Editor({ ...rest }) {
     <Stack
       alignItems='center'
       justifyContent='center'
-      sx={{ ...canvasSize, overflow: 'scroll' }}
+      sx={{
+        ...canvasSize,
+        overflow: 'scroll',
+        background: 'radial-gradient(#fff, #eee)',
+      }}
     >
       <Schematic schematic={schematic} selection={selection} {...rest} />
 

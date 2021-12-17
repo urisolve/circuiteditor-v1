@@ -15,7 +15,6 @@ export function Schematic({
   height,
   readOnly,
   gridSize,
-  gridColor,
   style,
   children,
   ...rest
@@ -64,22 +63,18 @@ export function Schematic({
       ref={canvasRef}
       elevation={3}
       sx={{
-        width: '90%',
-        height: '90%',
+        width: '80%',
+        height: '80%',
         position: 'relative',
         zIndex: 0,
 
         // Grid pattern
-        backgroundImage: `radial-gradient(
-        circle,
-        ${gridColor ?? '#0009'} 1px,
-        transparent 1px
-        )`,
         backgroundSize: `${gridSize ?? 10}px ${gridSize ?? 10}px`,
+        backgroundImage: `radial-gradient(circle, #0007 1px, transparent 1px)`,
 
-        // Shadow
-        border: '1px solid #eee',
-        boxShadow: '0px 0px 8px #eee',
+        // Border styling
+        boxShadow: '0px 0px 8px #0003',
+        borderRadius: `${2 * (gridSize ?? 10)}px`,
       }}
       {...rest}
     >
