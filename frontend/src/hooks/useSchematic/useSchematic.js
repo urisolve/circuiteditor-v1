@@ -10,7 +10,7 @@ import {
   rotateCoords,
   snapPosToGrid,
 } from '../../util';
-import { useHistory, useGlobalRefMap } from '../';
+import { useHistory, useNetlist, useGlobalRefMap } from '../';
 
 const emptySchematic = { components: [], nodes: [], connections: [] };
 const defaultOptions = { maxHistoryLength: 10, gridSize: 10 };
@@ -21,9 +21,11 @@ export function useSchematic(initialSchematic = {}, options = {}) {
 
   const refMap = useGlobalRefMap();
   const [schematic, setSchematic] = useState(initialSchematic);
-  const [selectingItems, setSelectingItems] = useState(new Set());
   const [selectedItems, setSelectedItems] = useState(new Set());
+  const netlist = useNetlist(schematic);
   const history = useHistory(setSchematic, options.maxHistoryLength);
+
+  useEffect(() => console.log(netlist), [netlist]);
 
   /**
    * Calculate each Node and Port's connections.
@@ -296,12 +298,11 @@ export function useSchematic(initialSchematic = {}, options = {}) {
     },
 
     selection: {
-      selectingItems,
       selectedItems,
-      setSelectingItems,
       setSelectedItems,
     },
 
     history,
+    netlist,
   };
 };

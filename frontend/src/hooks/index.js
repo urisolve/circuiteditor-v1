@@ -3,6 +3,7 @@ export * from './useDownloadJSON';
 export * from './useGravatar';
 export * from './useHistory';
 export * from './useMousePosition';
+export * from './useNetlist';
 export * from './useOnline';
 export * from './useGlobalRefMap';
 export * from './useSchematic';
