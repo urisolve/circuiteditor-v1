@@ -1,0 +1,76 @@
+[
+  {
+    "title": "Connectors",
+    "items": [
+      {
+        "name": "Earth Ground",
+        "type": "gnd"
+      },
+      {
+        "name": "Chassis Ground",
+        "type": "gnd2"
+      },
+      {
+        "name": "Node"
+      },
+      {
+        "name": "Connection"
+      }
+    ]
+  },
+  {
+    "title": "Sources",
+    "items": [
+      {
+        "name": "DC Voltage Source",
+        "type": "Vdc"
+      },
+      {
+        "name": "AC Voltage Source",
+        "type": "Vac"
+      },
+      {
+        "name": "DC Current Source",
+        "type": "Idc"
+      },
+      {
+        "name": "AC Current Source",
+        "type": "Iac"
+      }
+    ]
+  },
+  {
+    "title": "Passive",
+    "items": [
+      {
+        "name": "Resistor",
+        "type": "R"
+      },
+      {
+        "name": "Capacitor",
+        "type": "C"
+      },
+      {
+        "name": "Inductor",
+        "type": "L"
+      },
+      {
+        "name": "Reactance",
+        "type": "Z"
+      }
+    ]
+  },
+  {
+    "title": "Probes",
+    "items": [
+      {
+        "name": "Voltmeter",
+        "type": "VProbe"
+      },
+      {
+        "name": "Ammeter",
+        "type": "IProbe"
+      }
+    ]
+  }
+]

@@ -5,12 +5,12 @@ import { svgMap } from '../../../assets/electrical';
 
 const compSize = 65;
 
-export function Comp({ name, altImgIdx, ...rest }) {
+export function Comp({ type, name, altImgIdx, ...rest }) {
   const src = useMemo(() => {
-    let src = svgMap.get(name);
+    let src = svgMap.get(type ?? name);
     if (src instanceof Array) src = src[altImgIdx ?? 0];
     return src;
-  }, [name, altImgIdx]);
+  }, [type, name, altImgIdx]);
 
   return (
     <Tooltip title={name} arrow>

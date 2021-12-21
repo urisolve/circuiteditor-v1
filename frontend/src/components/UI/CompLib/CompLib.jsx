@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import lodash from 'lodash';
 
-import { compData } from './compData';
 import { Comp } from '../Comp';
 import { SearchBar } from '../SearchBar';
 
@@ -22,6 +21,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { SidebarHeader } from '..';
 
 const sidebarWidth = 310;
+const compData = require('./compData');
 
 export function CompLib({ addToSchematic, onClose, ...rest }) {
   const [searchBar, setSearchBar] = useState('');
