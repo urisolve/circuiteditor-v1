@@ -25,8 +25,6 @@ export function useSchematic(initialSchematic = {}, options = {}) {
   const netlist = useNetlist(schematic);
   const history = useHistory(setSchematic, options.maxHistoryLength);
 
-  useEffect(() => console.log(netlist), [netlist]);
-
   /**
    * Calculate each Node and Port's connections.
    */
