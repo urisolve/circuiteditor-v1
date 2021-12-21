@@ -28,7 +28,7 @@
       "type": "Resistor",
       "position": { "x": 300, "y": 100, "angle": 90 },
       "label": {
-        "name": "R",
+        "name": "R1",
         "value": "10k",
         "unit": "Ω",
         "position": { "x": 70, "y": 30 }
@@ -51,7 +51,7 @@
       "type": "Resistor",
       "position": { "x": 300, "y": 260, "angle": 90 },
       "label": {
-        "name": "R",
+        "name": "R2",
         "value": "10k",
         "unit": "Ω",
         "position": { "x": 70, "y": 30 }
