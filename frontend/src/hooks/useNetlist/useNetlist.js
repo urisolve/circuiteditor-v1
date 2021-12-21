@@ -6,9 +6,14 @@ function isConnected(el, connection) {
   return el.id === connection.start || el.id === connection.end;
 }
 
+// TODO: Create a non-colliding '_netX' name
+function generateVirtualNode() {
+  return { id: uuidv4(), label: { name: '_netX' } };
+}
+
 // TODO: Condense unnecessary nodes
 function condenseNodes(schematic) {
-  return schematic
+  return schematic;
 }
 
 function withVirtualNodes(schematic) {
@@ -22,16 +27,16 @@ function withVirtualNodes(schematic) {
     // create a new virtual node between them.
     if (connectors.length === 2) {
       // Create virtual node
-      const virtualNode = { id: uuidv4() };
+      const virtualNode = generateVirtualNode();
       schematic.nodes.push(virtualNode);
-      
+
       // Create new connection
       schematic.connections.push({
         id: uuidv4(),
         start: virtualNode.id,
         end: connection.end,
       });
-      
+
       // Update old connection
       connection.end = virtualNode.id;
     }
@@ -46,13 +51,14 @@ function generateNodesString(component, schematic) {
   for (const port of component.ports) {
     // Search for the node connected to the port
     const conn = schematic.connections.find((conn) => isConnected(port, conn));
-    const node = schematic.nodes.find((node) => isConnected(node, conn))
+    const node = schematic.nodes.find((node) => isConnected(node, conn));
 
     // Convert it into string
-    nodeStr += `${node.label?.name ?? node.id} `
+    nodeStr += (node.label?.name ?? node.id) + ' ';
   }
 
-  return nodeStr;
+  // Trim the last space
+  return lodash.trimEnd(nodeStr);
 }
 
 function buildNetlist(schematic) {
