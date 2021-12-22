@@ -90,13 +90,13 @@ export function Schematic({
       {schematic?.data?.components?.map((comp) => {
         const portsRefMap = new Map();
         comp.ports.forEach((port) => {
-          portsRefMap.set(port.id, refMap(port.id));
+          portsRefMap.set(port.id, refMap.set(port.id));
         });
 
         return (
           <Component
             key={comp.id}
-            ref={refMap(comp.id)}
+            ref={refMap.set(comp.id)}
             canvasRef={canvasRef}
             portsRefMap={portsRefMap}
             gridSize={gridSize}
@@ -113,7 +113,7 @@ export function Schematic({
         <Node
           {...node}
           key={node.id}
-          ref={refMap(node.id)}
+          ref={refMap.set(node.id)}
           gridSize={gridSize}
           updatePosition={updatePosition}
           reRender={reRender}
@@ -129,9 +129,9 @@ export function Schematic({
             <Connection
               {...conn}
               key={conn.id}
-              ref={refMap(conn.id)}
-              start={refMap(conn.start)}
-              end={refMap(conn.end)}
+              ref={refMap.set(conn.id)}
+              start={refMap.set(conn.start)}
+              end={refMap.set(conn.end)}
               isSelected={selection?.selectedItems.has(conn.id)}
               disabled={readOnly}
             />

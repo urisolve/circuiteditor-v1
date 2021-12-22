@@ -1,10 +1,15 @@
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 
 import { rotateCoords } from '../../../util';
+import { useGlobalRefMap } from '../../../hooks';
 
 export const Port = forwardRef(
-  ({ position, bounds, properties, rotation, ...rest }, ref) => {
+  ({ id, position, bounds, properties, rotation, ...rest }, ref) => {
+    const refMap = useGlobalRefMap();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => () => refMap.remove(id), []);
+
     const realPos = useMemo(
       () => rotateCoords(position ?? { x: 0.5, y: 0.5 }, rotation ?? 0),
       [position, rotation],

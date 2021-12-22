@@ -32,7 +32,7 @@ function buildPortsMap(schematic, refMap) {
   for (const component of schematic.components) {
     for (const port of component.ports) {
       // Calculate component's width and height
-      const compRef = refMap(component.id).current;
+      const compRef = refMap.get(component.id).current;
       const { width, height } = compRef.getBoundingClientRect();
 
       // Calculate port's real position

@@ -1,19 +1,25 @@
 import { createRef } from 'react';
 
-const refs = new Map();
+const map = new Map();
 
-function refMap(key) {
+function set(key) {
   if (!key) throw new Error(`The ref key must be valid (key: "${key}")`);
 
   // If the Ref already exists
-  if (refs.has(key)) return refs.get(key);
+  if (map.has(key)) return map.get(key);
 
   // If the Ref doesn't exist
   const ref = createRef();
-  refs.set(key, ref);
+  map.set(key, ref);
   return ref;
 }
 
+function remove(key) {
+  if (!key) throw new Error(`The ref key must be valid (key: "${key}")`);
+
+  return map.delete(key);
+}
+
 export function useGlobalRefMap() {
-  return refMap;
+  return { set, get: set, remove };
 }

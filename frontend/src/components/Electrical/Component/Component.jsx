@@ -1,10 +1,11 @@
-import { useRef, useMemo, forwardRef } from 'react';
+import { useRef, useMemo, forwardRef, useEffect } from 'react';
 
 // Material-UI
 import { Avatar } from '@mui/material';
 
 import { DraggableComponent, Label, Port } from '..';
 import { svgMap } from '../../../assets/electrical';
+import { useGlobalRefMap } from '../../../hooks';
 
 export const Component = forwardRef(
   (
@@ -30,6 +31,10 @@ export const Component = forwardRef(
     ref,
   ) => {
     const draggableRef = useRef();
+
+    const refMap = useGlobalRefMap();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => () => refMap.remove(id), []);
 
     const src = useMemo(() => {
       // If there is a custom image, use that one

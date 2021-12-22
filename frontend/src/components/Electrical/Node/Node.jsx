@@ -1,7 +1,8 @@
-import { forwardRef, useRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 import { Box } from '@mui/system';
 
 import { DraggableComponent } from '..';
+import { useGlobalRefMap } from '../../../hooks';
 
 export const Node = forwardRef(
   (
@@ -18,6 +19,10 @@ export const Node = forwardRef(
     ref,
   ) => {
     const draggableRef = useRef();
+
+    const refMap = useGlobalRefMap();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => () => refMap.remove(id), []);
 
     return (
       <DraggableComponent

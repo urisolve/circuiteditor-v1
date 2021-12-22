@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { useGlobalRefMap } from '../../../hooks';
 import { DraggableComponent } from '..';
@@ -17,11 +17,13 @@ export function Label({
 }) {
   const refMap = useGlobalRefMap();
   const labelID = useMemo(() => `${owner}-label`, [owner]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => () => refMap.remove(labelID), []);
 
   return (
     <DraggableComponent
       position={position}
-      nodeRef={refMap(labelID)}
+      nodeRef={refMap.set(labelID)}
       onDrag={(_e, position) => updatePosition(owner, position, true)}
       {...rest}
     >

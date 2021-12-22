@@ -1,8 +1,14 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import XArrow from 'react-xarrows';
 
+import { useGlobalRefMap } from '../../../hooks';
+
 export const Connection = forwardRef(
-  ({ start, end, type, properties, onClick, isSelected, ...rest }, ref) => {
+  ({ id, start, end, type, properties, onClick, isSelected, ...rest }, ref) => {
+    const refMap = useGlobalRefMap();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => () => refMap.remove(id), []);
+
     return (
       <XArrow
         start={start}

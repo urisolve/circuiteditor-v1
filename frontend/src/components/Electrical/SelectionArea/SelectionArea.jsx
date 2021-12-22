@@ -45,7 +45,7 @@ export function SelectionArea({
     // Calculate the bounding areas of the items marked to ignore
     ignoreAreas.current = [];
     for (const elem of ignoreItems ?? []) {
-      const elemArea = refMap(elem.id).current.getBoundingClientRect();
+      const elemArea = refMap.get(elem.id).current.getBoundingClientRect();
       ignoreAreas.current.push({
         id: elem.id,
         left: elemArea.left - parentRect.current.left,
@@ -59,7 +59,7 @@ export function SelectionArea({
     selectableAreas.current = [];
     for (const elem of selectableItems ?? []) {
       try {
-        const elemArea = refMap(elem.id).current.getBoundingClientRect();
+        const elemArea = refMap.get(elem.id).current.getBoundingClientRect();
         selectableAreas.current.push({
           id: elem.id,
           left: elemArea.left - parentRect.current.left,
