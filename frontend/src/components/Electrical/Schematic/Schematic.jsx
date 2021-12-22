@@ -6,7 +6,6 @@ import { Paper } from '@mui/material';
 // Custom libraries
 import { SelectionArea, Component, Connection, Node } from '../index';
 import { snapValueToGrid } from '../../../util';
-import { useGlobalRefMap } from '../../../hooks';
 
 export function Schematic({
   schematic,
@@ -19,7 +18,6 @@ export function Schematic({
   children,
   ...rest
 }) {
-  const refMap = useGlobalRefMap();
   const canvasRef = useRef();
 
   // Work-around for react-xarrows updating the connection.
@@ -87,33 +85,23 @@ export function Schematic({
         disabled={readOnly}
       />
 
-      {schematic?.data?.components?.map((comp) => {
-        const portsRefMap = new Map();
-        comp.ports.forEach((port) => {
-          portsRefMap.set(port.id, refMap.set(port.id));
-        });
-
-        return (
-          <Component
-            key={comp.id}
-            ref={refMap.set(comp.id)}
-            canvasRef={canvasRef}
-            portsRefMap={portsRefMap}
-            gridSize={gridSize}
-            updatePosition={updatePosition}
-            reRender={reRender}
-            isSelected={selection?.selectedItems.has(comp.id)}
-            disabled={readOnly}
-            {...comp}
-          />
-        );
-      })}
+      {schematic?.data?.components?.map((comp) => (
+        <Component
+          {...comp}
+          key={comp.id}
+          canvasRef={canvasRef}
+          gridSize={gridSize}
+          updatePosition={updatePosition}
+          reRender={reRender}
+          isSelected={selection?.selectedItems.has(comp.id)}
+          disabled={readOnly}
+        />
+      ))}
 
       {schematic?.data?.nodes?.map((node) => (
         <Node
           {...node}
           key={node.id}
-          ref={refMap.set(node.id)}
           gridSize={gridSize}
           updatePosition={updatePosition}
           reRender={reRender}
@@ -129,9 +117,6 @@ export function Schematic({
             <Connection
               {...conn}
               key={conn.id}
-              ref={refMap.set(conn.id)}
-              start={refMap.set(conn.start)}
-              end={refMap.set(conn.end)}
               isSelected={selection?.selectedItems.has(conn.id)}
               disabled={readOnly}
             />

@@ -1,4 +1,4 @@
-import { createRef } from 'react';
+import { createRef, useEffect } from 'react';
 
 const map = new Map();
 
@@ -20,6 +20,14 @@ function remove(key) {
   return map.delete(key);
 }
 
-export function useGlobalRefMap() {
+export function useGlobalRefMap(id) {
+  useEffect(() => {
+    // Prevent memory leaks
+    return () => remove(id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Defined "get" as an alias of "set" for extra syntactic sugar
   return { set, get: set, remove };
 }

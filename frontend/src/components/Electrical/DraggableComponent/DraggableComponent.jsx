@@ -1,8 +1,9 @@
-import { Box } from '@mui/system';
+import { useRef } from 'react';
 import Draggable from 'react-draggable';
 
+import { Box } from '@mui/material';
+
 export function DraggableComponent({
-  nodeRef,
   bounds,
   handle,
   gridSize,
@@ -11,16 +12,18 @@ export function DraggableComponent({
   children,
   ...rest
 }) {
+  const draggableRef = useRef();
+
   return (
     <Draggable
-      nodeRef={nodeRef}
+      nodeRef={draggableRef}
       bounds={bounds ?? '.schematic'}
       handle={handle}
       grid={[gridSize ?? 10, gridSize ?? 10]}
       {...rest}
     >
       <Box
-        ref={nodeRef}
+        ref={draggableRef}
         sx={{
           position: 'absolute',
           userSelect: 'none',
