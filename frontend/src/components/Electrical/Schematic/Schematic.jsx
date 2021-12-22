@@ -1,4 +1,4 @@
-import { useCallback, useRef, useEffect, useReducer } from 'react';
+import { useCallback, useRef } from 'react';
 
 // Material-UI
 import { Paper } from '@mui/material';
@@ -19,17 +19,6 @@ export function Schematic({
   ...rest
 }) {
   const canvasRef = useRef();
-
-  // Work-around for react-xarrows updating the connection.
-  const [, reRender] = useReducer(() => ({}), {});
-  const renderCount = useRef(0);
-  useEffect(() => {
-    renderCount.current += 1;
-    if (renderCount.current === 2) {
-      reRender();
-      renderCount.current = 0;
-    }
-  });
 
   /**
    * Update the coordinates of a Component.
@@ -92,7 +81,6 @@ export function Schematic({
           canvasRef={canvasRef}
           gridSize={gridSize}
           updatePosition={updatePosition}
-          reRender={reRender}
           isSelected={selection?.selectedItems.has(comp.id)}
           disabled={readOnly}
         />
@@ -104,7 +92,6 @@ export function Schematic({
           key={node.id}
           gridSize={gridSize}
           updatePosition={updatePosition}
-          reRender={reRender}
           isSelected={selection?.selectedItems.has(node.id)}
           disabled={readOnly}
         />

@@ -10,7 +10,6 @@ export function Node({
   gridSize,
   updatePosition,
   isSelected,
-  reRender,
   ...rest
 }) {
   const refMap = useGlobalRefMap(id);
@@ -18,10 +17,7 @@ export function Node({
   return (
     <DraggableComponent
       position={position}
-      onDrag={(_e, position) => {
-        updatePosition(id, position);
-        reRender();
-      }}
+      onDrag={(_e, position) => updatePosition(id, position)}
       {...rest}
     >
       <Box

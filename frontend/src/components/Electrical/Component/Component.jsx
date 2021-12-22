@@ -21,7 +21,6 @@ export function Component({
   updatePosition,
   isSelected,
   disabled,
-  reRender,
   ...rest
 }) {
   const refMap = useGlobalRefMap(id);
@@ -36,10 +35,7 @@ export function Component({
       handle='.component-handle'
       position={position}
       positionOffset={{ x: 5, y: 5 }}
-      onDrag={(_e, position) => {
-        updatePosition(id, position);
-        reRender();
-      }}
+      onDrag={(_e, position) => updatePosition(id, position)}
       {...rest}
     >
       <Avatar
