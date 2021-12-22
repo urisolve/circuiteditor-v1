@@ -51,7 +51,11 @@ function generateVirtualNode(schematic, virtualCount = 0) {
   }
 
   // Return the successful Virtual Node
-  return { id: uuidv4(), label: { name: `_net${virtualCount}` } };
+  return {
+    id: uuidv4(),
+    type: 'virtual',
+    label: { name: `_net${virtualCount}` },
+  };
 }
 
 function withVirtualNodes(schematic) {
