@@ -6,8 +6,36 @@ function isConnected(el, connection) {
   return el.id === connection.start || el.id === connection.end;
 }
 
-// TODO: Split a port with more than 2 connections into a node
 function splitPorts(schematic) {
+  for (const component of schematic.components) {
+    for (const port of component.ports) {
+      // Grab all connections to the port
+      const connections = schematic.connections.filter((connection) =>
+        isConnected(port, connection),
+      );
+
+      // Split the port
+      if (connections.length >= 2) {
+        // Create a new node
+        const newNode = { id: uuidv4() };
+        schematic.nodes.push(newNode);
+
+        // Connect the port to the new node
+        schematic.connections.push({
+          id: uuidv4(),
+          start: port.id,
+          end: newNode.id,
+        });
+
+        // Move old port' connections to the new node
+        for (const connection of connections) {
+          if (connection.start === port.id) connection.start = newNode.id;
+          else connection.end = newNode.id;
+        }
+      }
+    }
+  }
+
   return schematic;
 }
 
