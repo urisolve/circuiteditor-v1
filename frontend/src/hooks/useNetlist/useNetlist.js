@@ -35,14 +35,10 @@ function splitPorts(schematic) {
       }
     }
   }
-
-  return schematic;
 }
 
 // TODO: Condense unnecessary nodes
-function condenseNodes(schematic) {
-  return schematic;
-}
+function condenseNodes(schematic) {}
 
 function generateVirtualNode(schematic, virtualCount = 0) {
   // Check if there are nodes that match the name
@@ -83,8 +79,6 @@ function withVirtualNodes(schematic) {
       connection.end = virtualNode.id;
     }
   }
-
-  return schematic;
 }
 
 function generateNodesString(component, schematic) {
