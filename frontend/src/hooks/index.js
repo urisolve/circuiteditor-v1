@@ -1,4 +1,5 @@
 export * from './useBoolean';
+export * from './useConnections';
 export * from './useDownloadJSON';
 export * from './useGravatar';
 export * from './useHistory';
