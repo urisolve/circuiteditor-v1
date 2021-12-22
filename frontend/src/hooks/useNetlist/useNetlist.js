@@ -14,8 +14,8 @@ function splitPorts(schematic) {
         isConnected(port, connection),
       );
 
-      // Split the port
-      if (connections.length >= 2) {
+      // If the port had more than 1 connection, split it into a node
+      if (connections.length > 1) {
         // Create a new node
         const newNode = { id: uuidv4() };
         schematic.nodes.push(newNode);
@@ -27,7 +27,7 @@ function splitPorts(schematic) {
           end: newNode.id,
         });
 
-        // Move old port' connections to the new node
+        // Move old port's connections to the new node
         for (const connection of connections) {
           if (connection.start === port.id) connection.start = newNode.id;
           else connection.end = newNode.id;
@@ -45,12 +45,16 @@ function condenseNodes(schematic) {
 }
 
 function generateVirtualNode(schematic, virtualCount = 0) {
+  // Check if there are nodes that match the name
   for (const node of schematic.nodes) {
     const pattern = new RegExp(`_net${virtualCount}`);
+
+    // If the name already exists, try another one
     if (pattern.test(node.label?.name))
       return generateVirtualNode(schematic, ++virtualCount);
   }
 
+  // Return the successful Virtual Node
   return { id: uuidv4(), label: { name: `_net${virtualCount}` } };
 }
 
@@ -95,7 +99,7 @@ function generateNodesString(component, schematic) {
     nodeStr += (node.label?.name ?? node.id) + ' ';
   }
 
-  // Trim the last space
+  // Trim the last space and return
   return lodash.trimEnd(nodeStr);
 }
 
@@ -119,8 +123,10 @@ function buildNetlist(schematic) {
 
 export function useNetlist(schematic) {
   return useMemo(() => {
+    // Clone the schematic to not change the circuit itself
     const sch = lodash.cloneDeep(schematic);
+
+    // Build the netlist
     return buildNetlist(sch);
   }, [schematic]);
 };
-  
