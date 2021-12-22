@@ -18,7 +18,6 @@ export function Component({
   height,
   gridSize,
   altImageIdx,
-  imgPath,
   updatePosition,
   isSelected,
   disabled,
@@ -28,13 +27,9 @@ export function Component({
   const refMap = useGlobalRefMap(id);
 
   const src = useMemo(() => {
-    // If there is a custom image, use that one
-    if (imgPath) return imgPath;
-
-    // Otherwise, grab the correct SVG
     const src = svgMap.get(type);
     return Array.isArray(src) ? src[altImageIdx ?? 0] : src;
-  }, [altImageIdx, imgPath, type]);
+  }, [altImageIdx, type]);
 
   return (
     <DraggableComponent
