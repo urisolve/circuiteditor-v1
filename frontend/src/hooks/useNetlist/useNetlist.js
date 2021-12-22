@@ -2,9 +2,7 @@ import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid'
 import lodash from 'lodash';
 
-function isConnected(el, connection) {
-  return el.id === connection.start || el.id === connection.end;
-}
+import { isConnected } from '../../util';
 
 function splitPorts(schematic) {
   for (const component of schematic.components) {
