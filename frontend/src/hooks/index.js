@@ -8,5 +8,6 @@ export * from './useNetlist';
 export * from './useOnline';
 export * from './useGlobalRefMap';
 export * from './useSchematic';
+export * from './useSchematicTools';
 export * from './useSortAndOrder';
 export * from './useTimeSince';

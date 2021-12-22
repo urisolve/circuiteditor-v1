@@ -27,7 +27,7 @@ const canvasSize = { width: 2560, height: 1440 }; // 16:9 resolution (1440p)
 const defaultCircuit = require('../../templates/voltageDivider.json');
 
 export function Editor({ ...rest }) {
-  const { schematic, history, selection } = useSchematic(defaultCircuit);
+  const schematic = useSchematic(defaultCircuit);
   const { id } = useParams();
 
   const compLib = useBoolean(false);
@@ -53,14 +53,14 @@ export function Editor({ ...rest }) {
     {
       tooltipTitle: 'Undo',
       icon: <UndoIcon />,
-      onClick: history.undo,
-      disabled: !history.canUndo,
+      onClick: schematic.history.undo,
+      disabled: !schematic.history.canUndo,
     },
     {
       tooltipTitle: 'Redo',
       icon: <RedoIcon />,
-      onClick: history.redo,
-      disabled: !history.canRedo,
+      onClick: schematic.history.redo,
+      disabled: !schematic.history.canRedo,
     },
     {
       tooltipTitle: `${compLib.value ? 'Hide' : 'Show'} Component Library`,
@@ -89,7 +89,11 @@ export function Editor({ ...rest }) {
         background: 'radial-gradient(#fff, #eee)',
       }}
     >
-      <Schematic schematic={schematic} selection={selection} {...rest} />
+      <Schematic
+        schematic={schematic}
+        selection={schematic.selection}
+        {...rest}
+      />
 
       <CompLib
         addToSchematic={schematic.add}
