@@ -45,10 +45,14 @@ export function ToolsMenu({
   // Rotate all of the currently selected elements
   const rotateSelection = useCallback(
     (amount) => {
-      schematic.editById([...selection.selectedItems], (elem) => {
-        elem.position.angle = (elem.position.angle ?? 0) + amount;
-        return elem;
-      });
+      schematic.editById(
+        [...selection.selectedItems],
+        (elem) => {
+          elem.position.angle = (elem.position.angle ?? 0) + amount;
+          return elem;
+        },
+        true,
+      );
     },
     [schematic, selection.selectedItems],
   );

@@ -1,7 +1,10 @@
+import { useContext, useState } from 'react';
+
 import { Box } from '@mui/material';
 
 import { DraggableComponent } from '..';
 import { useGlobalRefMap } from '../../../hooks';
+import { SchematicContext } from '../../../contexts';
 
 export function Node({
   id,
@@ -14,10 +17,15 @@ export function Node({
 }) {
   const refMap = useGlobalRefMap(id);
 
+  const schematic = useContext(SchematicContext);
+  const [startSch, setStartSch] = useState(schematic);
+
   return (
     <DraggableComponent
       position={position}
-      onDrag={(_e, position) => updatePosition(id, position)}
+      onStart={() => setStartSch(schematic)}
+      onDrag={(_e, { x, y }) => updatePosition(id, { x, y })}
+      onStop={(_e, { x, y }) => updatePosition(id, { x, y }, startSch.data)}
       {...rest}
     >
       <Box

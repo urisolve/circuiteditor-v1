@@ -1,8 +1,10 @@
-import { useMemo } from 'react';
+import { useContext, useMemo, useState } from 'react';
+
+import { Typography } from '@mui/material';
 
 import { useGlobalRefMap } from '../../../hooks';
 import { DraggableComponent } from '..';
-import { Typography } from '@mui/material';
+import { SchematicContext } from '../../../contexts';
 
 export function Label({
   owner,
@@ -18,10 +20,17 @@ export function Label({
   const labelID = useMemo(() => `${owner}-label`, [owner]);
   const refMap = useGlobalRefMap(labelID);
 
+  const schematic = useContext(SchematicContext);
+  const [startSch, setStartSch] = useState(schematic);
+
   return (
     <DraggableComponent
       position={position}
-      onDrag={(_e, position) => updatePosition(owner, position, true)}
+      onStart={() => setStartSch(schematic)}
+      onDrag={(_e, { x, y }) => updatePosition(owner, { x, y }, null, true)}
+      onStop={(_e, { x, y }) =>
+        updatePosition(owner, { x, y }, startSch.data, true)
+      }
       {...rest}
     >
       <Typography

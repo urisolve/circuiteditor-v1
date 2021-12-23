@@ -4,19 +4,21 @@ import { useConnections, useHistory, useNetlist } from '../';
 import { useSchematicTools } from '../useSchematicTools';
 
 const emptySchematic = { components: [], nodes: [], connections: [] };
-const defaultOptions = { maxHistoryLength: 10, gridSize: 10 };
 
-export function useSchematic(initialSchematic = {}, options = {}) {
+export function useSchematic(
+  initialSchematic = {},
+  gridSize = 10,
+  maxHistoryLength = 20,
+) {
   initialSchematic = { ...emptySchematic, ...initialSchematic };
-  options = { ...defaultOptions, ...options };
 
   const [schematic, setSchematic] = useState(initialSchematic);
   const [selectedItems, setSelectedItems] = useState(new Set());
 
   const items = useConnections(schematic, setSchematic);
   const netlist = useNetlist(schematic);
-  const history = useHistory(setSchematic, options.maxHistoryLength);
-  const tools = useSchematicTools(setSchematic, history, options.gridSize);
+  const history = useHistory(setSchematic, maxHistoryLength);
+  const tools = useSchematicTools(setSchematic, history, gridSize);
 
   // Temporary debug logging
   useEffect(() => console.log(netlist), [netlist]);

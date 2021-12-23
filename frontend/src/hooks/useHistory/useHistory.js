@@ -48,4 +48,4 @@ export function useHistory(setter, maxLength) {
   );
 
   return { save, undo, redo, canUndo, canRedo };
-};
+}

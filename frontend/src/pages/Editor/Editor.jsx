@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useBoolean, useSchematic } from '../../hooks';
 import { CompLib, SourceView } from '../../components/UI';
 import { Schematic } from '../../components/Electrical';
+import { SchematicContext } from '../../contexts';
 
 // Material-UI
 import {
@@ -80,45 +81,47 @@ export function Editor({ ...rest }) {
   ];
 
   return (
-    <Stack
-      alignItems='center'
-      justifyContent='center'
-      sx={{
-        ...canvasSize,
-        overflow: 'scroll',
-        background: 'radial-gradient(#fff, #eee)',
-      }}
-    >
-      <Schematic
-        schematic={schematic}
-        selection={schematic.selection}
-        {...rest}
-      />
-
-      <CompLib
-        addToSchematic={schematic.add}
-        open={compLib.value}
-        onClose={compLib.off}
-      />
-      <SourceView
-        code={schematic?.data}
-        open={sourceView.value}
-        onClose={sourceView.off}
-      />
-
-      <SpeedDial
-        ariaLabel="Tools' menu"
-        icon={<SpeedDialIcon />}
+    <SchematicContext.Provider value={schematic}>
+      <Stack
+        alignItems='center'
+        justifyContent='center'
         sx={{
-          position: 'fixed',
-          bottom: fabOffset,
-          right: fabOffset + sourceView.value * (sidebarSize + 2 * fabOffset),
+          ...canvasSize,
+          overflow: 'scroll',
+          background: 'radial-gradient(#fff, #eee)',
         }}
       >
-        {actions.map((action, idx) => (
-          <SpeedDialAction key={idx} {...action} />
-        ))}
-      </SpeedDial>
-    </Stack>
+        <Schematic
+          schematic={schematic}
+          selection={schematic.selection}
+          {...rest}
+        />
+
+        <CompLib
+          addToSchematic={schematic.add}
+          open={compLib.value}
+          onClose={compLib.off}
+        />
+        <SourceView
+          code={schematic?.data}
+          open={sourceView.value}
+          onClose={sourceView.off}
+        />
+
+        <SpeedDial
+          ariaLabel="Tools' menu"
+          icon={<SpeedDialIcon />}
+          sx={{
+            position: 'fixed',
+            bottom: fabOffset,
+            right: fabOffset + sourceView.value * (sidebarSize + 2 * fabOffset),
+          }}
+        >
+          {actions.map((action, idx) => (
+            <SpeedDialAction key={idx} {...action} />
+          ))}
+        </SpeedDial>
+      </Stack>
+    </SchematicContext.Provider>
   );
 }

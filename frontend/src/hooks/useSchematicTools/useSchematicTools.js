@@ -121,12 +121,12 @@ export function useSchematicTools(setSchematic, history, gridSize) {
    * @param {Boolean} If If it should save the changes to the history.
    */
   const editById = useCallback(
-    (ids, edits, saveChanges = true) => {
+    (ids, edits, startSch = null) => {
       setSchematic((oldSchematic) => {
         // Make a clone of the current schematic
         const newSchematic = lodash.cloneDeep(oldSchematic);
 
-        // Force ids into array format
+        // Force IDs into array format
         if (ids instanceof Set) ids = [...ids];
         if (!(ids instanceof Array)) ids = [ids];
 
@@ -143,8 +143,8 @@ export function useSchematicTools(setSchematic, history, gridSize) {
         }
 
         // If the changes are valid, save the old schematic
-        if (saveChanges && !lodash.isEqual(oldSchematic, newSchematic))
-          history.save(oldSchematic);
+        if (startSch && !lodash.isEqual(startSch, newSchematic))
+          history.save(startSch);
 
         return newSchematic;
       });

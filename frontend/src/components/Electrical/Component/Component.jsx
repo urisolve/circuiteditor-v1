@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useContext, useMemo, useState } from 'react';
 
 // Material-UI
 import { Avatar } from '@mui/material';
@@ -6,6 +6,7 @@ import { Avatar } from '@mui/material';
 import { DraggableComponent, Label, Port } from '..';
 import { svgMap } from '../../../assets/electrical';
 import { useGlobalRefMap } from '../../../hooks';
+import { SchematicContext } from '../../../contexts';
 
 export function Component({
   canvasRef,
@@ -25,6 +26,9 @@ export function Component({
 }) {
   const refMap = useGlobalRefMap(id);
 
+  const schematic = useContext(SchematicContext);
+  const [startSch, setStartSch] = useState(schematic);
+
   const src = useMemo(() => {
     const src = svgMap.get(type);
     return Array.isArray(src) ? src[altImageIdx ?? 0] : src;
@@ -35,7 +39,9 @@ export function Component({
       handle='.component-handle'
       position={position}
       positionOffset={{ x: 5, y: 5 }}
-      onDrag={(_e, position) => updatePosition(id, position)}
+      onStart={() => setStartSch(schematic)}
+      onDrag={(_e, { x, y }) => updatePosition(id, { x, y })}
+      onStop={(_e, { x, y }) => updatePosition(id, { x, y }, startSch.data)}
       {...rest}
     >
       <Avatar

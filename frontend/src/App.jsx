@@ -17,7 +17,7 @@ import {
 } from './pages';
 import { Navbar, OfflineBanner } from './components/UI';
 import { useOnline } from './hooks';
-import { UserProvider } from './contexts';
+import { UserContext } from './contexts';
 
 export function App() {
   const [user, setUser] = useState(null);
@@ -37,7 +37,7 @@ export function App() {
   }, []);
 
   return (
-    <UserProvider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser }}>
       <Stack sx={{ height: '100vh' }}>
         <Navbar />
         <OfflineBanner isOffline={!isOnline} />
@@ -71,6 +71,6 @@ export function App() {
           </Switch>
         </Stack>
       </Stack>
-    </UserProvider>
+    </UserContext.Provider>
   );
 };

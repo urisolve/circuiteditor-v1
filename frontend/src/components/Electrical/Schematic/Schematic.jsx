@@ -28,18 +28,22 @@ export function Schematic({
    * @param {Boolean} isLabel If you want to update the label's coordinates
    */
   const updatePosition = useCallback(
-    (id, { x, y }, isLabel = false) => {
+    (id, { x, y }, startSch = null, isLabel = false) => {
       // Snap the values to the grid
       x = snapValueToGrid(x ?? 0, gridSize ?? 10);
       y = snapValueToGrid(y ?? 0, gridSize ?? 10);
 
       // Apply the new position
-      schematic.editById(id, (elem) => {
-        const positionObject = isLabel ? elem.label.position : elem.position;
-        positionObject.x = x;
-        positionObject.y = y;
-        return elem;
-      });
+      schematic.editById(
+        id,
+        (elem) => {
+          if (!isLabel) elem.position = { ...elem.position, x, y };
+          else elem.label.position = { ...elem.label.position, x, y };
+
+          return elem;
+        },
+        startSch,
+      );
     },
     [schematic, gridSize],
   );
