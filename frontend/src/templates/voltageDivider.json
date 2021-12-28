@@ -3,6 +3,7 @@
     {
       "id": "8c0168ec-07fe-4b2c-96ee-4292ab34cfb2",
       "type": "Vdc",
+      "fullName": "DCVoltageSource",
       "position": { "x": 150, "y": 180 },
       "label": {
         "name": "Vi",
@@ -26,6 +27,7 @@
     {
       "id": "a2475d77-22a6-47b5-b60b-04aa5af69284",
       "type": "R",
+      "fullName": "Resistor",
       "position": { "x": 300, "y": 100, "angle": 90 },
       "label": {
         "name": "R1",
@@ -49,6 +51,7 @@
     {
       "id": "1cae12d0-21fe-4b7e-952e-fb471c677bc8",
       "type": "R",
+      "fullName": "Resistor",
       "position": { "x": 300, "y": 260, "angle": 90 },
       "label": {
         "name": "R2",
@@ -72,6 +75,7 @@
     {
       "id": "ef4bc1f6-e72f-4c4c-b9bb-76ea5d36c13b",
       "type": "VProbe",
+      "fullName": "Voltmeter",
       "position": { "x": 450, "y": 260, "angle": 90 },
       "label": {
         "name": "Vo",

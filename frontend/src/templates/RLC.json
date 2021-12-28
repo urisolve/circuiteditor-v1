@@ -3,6 +3,7 @@
     {
       "id": "8c0168ec-07fe-4b2c-96ee-4292ab34cfb2",
       "type": "Vdc",
+      "fullName": "DCVoltageSource",
       "position": { "x": 50, "y": 150 },
       "label": {
         "name": "U",
@@ -26,6 +27,7 @@
     {
       "id": "a2475d77-22a6-47b5-b60b-04aa5af69284",
       "type": "R",
+      "fullName": "Resistor",
       "position": { "x": 200, "y": 100 },
       "label": {
         "name": "R",
@@ -49,6 +51,7 @@
     {
       "id": "ffe5a9ee-6619-4092-8246-336621497794",
       "type": "L",
+      "fullName": "Inductor",
       "position": { "x": 400, "y": 100 },
       "label": {
         "name": "L",
@@ -72,6 +75,7 @@
     {
       "id": "ef4bc1f6-e72f-4c4c-b9bb-76ea5d36c13b",
       "type": "C",
+      "fullName": "Capacitor",
       "position": { "x": 510, "y": 200, "angle": 90 },
       "label": {
         "name": "C",
