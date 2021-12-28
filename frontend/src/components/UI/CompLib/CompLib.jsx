@@ -19,26 +19,26 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // Custom component
 import { SidebarHeader } from '..';
+import { library } from '../../../configs';
 
 const sidebarWidth = 310;
-const compData = require('./compData');
 
 export function CompLib({ addToSchematic, onClose, ...rest }) {
   const [searchBar, setSearchBar] = useState('');
 
-  const filteredComps = useMemo(() => {
+  const filteredLib = useMemo(() => {
     // Do a deep copy of the original array of components
-    const filtered = lodash.cloneDeep(compData);
+    const filtered = lodash.cloneDeep(library);
 
     // Filter the array and re-render it
-    return filtered.filter((menu) => {
+    return filtered.filter((group) => {
       // Remove the components that don't match the filter
-      menu.items = menu.items.filter((item) =>
-        item.name.toLowerCase().includes(searchBar.toLowerCase()),
+      group.items = group.items.filter((item) =>
+        lodash.lowerCase(item.fullName).includes(searchBar.toLowerCase()),
       );
 
-      // Remove the menus that get emptied
-      return menu.items.length;
+      // Remove the groups that get emptied
+      return group.items.length > 0;
     });
   }, [searchBar]);
 
@@ -63,10 +63,10 @@ export function CompLib({ addToSchematic, onClose, ...rest }) {
         </Box>
 
         <Box sx={{ p: 2 }}>
-          {filteredComps.map((menu) => (
-            <Accordion variant='outlined' key={menu.title}>
+          {filteredLib.map((group) => (
+            <Accordion variant='outlined' key={group.title}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{menu.title}</Typography>
+                <Typography>{group.title}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Stack
@@ -75,10 +75,10 @@ export function CompLib({ addToSchematic, onClose, ...rest }) {
                   align-items='flex-start'
                   sx={{ flexWrap: 'wrap' }}
                 >
-                  {menu.items.map((item) => (
+                  {group.items.map((item, idx) => (
                     <Comp
-                      key={item.name}
-                      onDoubleClick={() => addToSchematic?.(item.struct)}
+                      key={idx}
+                      action={() => addToSchematic(item)}
                       {...item}
                     />
                   ))}
@@ -87,7 +87,7 @@ export function CompLib({ addToSchematic, onClose, ...rest }) {
             </Accordion>
           ))}
 
-          {filteredComps.length === 0 && (
+          {filteredLib.length === 0 && (
             <>
               <Typography variant='h6' align='center' gutterBottom>
                 Nothing found

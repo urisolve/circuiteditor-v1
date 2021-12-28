@@ -1,23 +1,24 @@
 import { useMemo } from 'react';
+import lodash from 'lodash';
+
+// Material-UI
 import { Avatar, Stack, Tooltip, Typography } from '@mui/material';
 
-import { svgMap } from '../../../assets/electrical';
+// Custom config
+import { symbols } from '../../../configs';
 
 const compSize = 65;
 
-export function Comp({ type, name, altImgIdx, ...rest }) {
-  const src = useMemo(() => {
-    let src = svgMap.get(type ?? name);
-    if (src instanceof Array) src = src[altImgIdx ?? 0];
-    return src;
-  }, [type, name, altImgIdx]);
+export function Comp({ type, fullName, action, ...rest }) {
+  const name = useMemo(() => lodash.startCase(fullName), [fullName]);
 
   return (
     <Tooltip title={name} arrow>
       <Stack direction='column' alignItems='center' spacing={1} sx={{ p: 1 }}>
         <Avatar
-          src={src}
+          src={symbols[fullName]}
           alt={name}
+          onDoubleClick={action}
           variant='square'
           sx={{ width: compSize, height: compSize }}
           {...rest}
@@ -28,4 +29,4 @@ export function Comp({ type, name, altImgIdx, ...rest }) {
       </Stack>
     </Tooltip>
   );
-};
+}
