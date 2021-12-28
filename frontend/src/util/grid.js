@@ -21,7 +21,7 @@ export function snapValueToGrid(value, gridSize) {
  */
 export function snapPosToGrid(position, gridSize) {
   return {
-    x: snapValueToGrid(position.x ?? 0, gridSize),
-    y: snapValueToGrid(position.y ?? 0, gridSize),
+    x: snapValueToGrid(position?.x ?? 0, gridSize),
+    y: snapValueToGrid(position?.y ?? 0, gridSize),
   };
 } 
