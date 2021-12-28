@@ -14,7 +14,7 @@ export function useSchematicTools(setSchematic, history, gridSize) {
    * @param {Object} element The element to be added.
    */
   const add = useCallback(
-    (elements) => {
+    (elements, where = 'components') => {
       setSchematic((oldSchematic) => {
         // Make a clone of the current schematic
         const newSchematic = lodash.cloneDeep(oldSchematic);
@@ -31,9 +31,6 @@ export function useSchematicTools(setSchematic, history, gridSize) {
           }
 
           // Add the new element to the schematic
-          let where = 'nodes';
-          if (isComponent(element)) where = 'components';
-          else if (isConnection(element)) where = 'connections';
           newSchematic[where].push({ id: uuidv4(), ...element });
         }
 
@@ -46,6 +43,19 @@ export function useSchematicTools(setSchematic, history, gridSize) {
     },
     [setSchematic, history, gridSize],
   );
+
+  /**
+   * Simple helper functions
+   */
+  const addComponents = useCallback(
+    (elements) => add(elements, 'components'),
+    [add],
+  );
+  const addConnections = useCallback(
+    (elements) => add(elements, 'connections'),
+    [add],
+  );
+  const addNodes = useCallback((elements) => add(elements, 'nodes'), [add]);
 
   /**
    * Deletes an element from the schematic.
@@ -152,5 +162,5 @@ export function useSchematicTools(setSchematic, history, gridSize) {
     [setSchematic, history],
   );
 
-  return { add, deleteById, editById };
+  return { add, addComponents, addConnections, addNodes, deleteById, editById };
 }
