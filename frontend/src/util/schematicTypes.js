@@ -3,7 +3,7 @@ export function isConnected(el, connection) {
 }
 
 export function isComponent(element) {
-  return !isConnection(element) && !isNode(element);
+  return Object.prototype.hasOwnProperty.call(element, 'ports');
 }
 
 export function isConnection(element) {
