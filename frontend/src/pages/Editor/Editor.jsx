@@ -98,7 +98,7 @@ export function Editor({ ...rest }) {
         />
 
         <CompLib
-          addToSchematic={schematic.add}
+          addToSchematic={schematic.addComponents}
           open={compLib.value}
           onClose={compLib.off}
         />
