@@ -1,17 +1,17 @@
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useState } from 'react';
 
-// Material-UI
 import { Avatar } from '@mui/material';
 
 import { DraggableComponent, Label, Port } from '..';
-import { svgMap } from '../../../assets/electrical';
 import { useGlobalRefMap } from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
+import { symbols } from '../../../configs';
 
 export function Component({
   canvasRef,
   id,
   type,
+  fullName,
   position,
   ports,
   label,
@@ -29,11 +29,6 @@ export function Component({
   const schematic = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
 
-  const src = useMemo(() => {
-    const src = svgMap.get(type);
-    return Array.isArray(src) ? src[altImageIdx ?? 0] : src;
-  }, [altImageIdx, type]);
-
   return (
     <DraggableComponent
       handle='.component-handle'
@@ -46,7 +41,7 @@ export function Component({
     >
       <Avatar
         ref={refMap.set(id)}
-        src={src}
+        src={symbols[fullName]}
         alt={type}
         variant='square'
         className='component-handle'
@@ -61,7 +56,7 @@ export function Component({
         }}
       />
 
-      {ports.map((port) => {
+      {ports?.map((port) => {
         return (
           <Port
             key={port.id}
@@ -73,14 +68,16 @@ export function Component({
         );
       })}
 
-      <Label
-        key={label.id}
-        owner={id}
-        canvasRef={canvasRef}
-        updatePosition={updatePosition}
-        disabled={disabled}
-        {...label}
-      />
+      {label && (
+        <Label
+          key={label.id}
+          owner={id}
+          canvasRef={canvasRef}
+          updatePosition={updatePosition}
+          disabled={disabled}
+          {...label}
+        />
+      )}
     </DraggableComponent>
   );
 }
