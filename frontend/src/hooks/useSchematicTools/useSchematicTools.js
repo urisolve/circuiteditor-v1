@@ -30,6 +30,13 @@ export function useSchematicTools(setSchematic, history, gridSize) {
             element.position = snapPosToGrid(element.position, gridSize);
           }
 
+          // Add IDs to the ports
+          if (isComponent(element)) {
+            for (const port of element.ports) {
+              port.id = port.id ?? uuidv4();
+            }
+          }
+
           // Add the new element to the schematic
           newSchematic[where].push({ id: uuidv4(), ...element });
         }
