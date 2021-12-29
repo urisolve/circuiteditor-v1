@@ -28,7 +28,7 @@ export function Login({ setUser, ...rest }) {
   // Password visibility
   const showPassword = useBoolean(false);
 
-  // Send the new user info to the server and grab the authenticated user
+  // Send the auth info to the server and grab the authenticated user
   const onSubmit = async (formData) => {
     try {
       const { data } = await axios.post('api/auth/login', formData);
