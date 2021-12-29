@@ -62,6 +62,7 @@ export const components = Object.freeze({
       unit: 'Ω',
       position: { x: 10, y: 0 },
     },
+    ports: [{ position: { x: 0, y: 0.5 } }, { position: { x: 1, y: 0.5 } }],
   },
   Capacitor: {
     type: 'C',
@@ -72,6 +73,7 @@ export const components = Object.freeze({
       unit: 'H',
       position: { x: 10, y: 0 },
     },
+    ports: [{ position: { x: 0, y: 0.5 } }, { position: { x: 1, y: 0.5 } }],
   },
   Inductor: {
     type: 'L',
@@ -82,6 +84,7 @@ export const components = Object.freeze({
       unit: 'F',
       position: { x: 10, y: 0 },
     },
+    ports: [{ position: { x: 0, y: 0.5 } }, { position: { x: 1, y: 0.5 } }],
   },
   Reactance: {
     type: 'Z',
@@ -92,6 +95,7 @@ export const components = Object.freeze({
       unit: 'Ω',
       position: { x: 10, y: 0 },
     },
+    ports: [{ position: { x: 0, y: 0.5 } }, { position: { x: 1, y: 0.5 } }],
   },
   Voltmeter: {
     type: 'VProbe',
@@ -100,6 +104,7 @@ export const components = Object.freeze({
       name: 'V',
       position: { x: 10, y: 0 },
     },
+    ports: [{ position: { x: 0, y: 0.5 } }, { position: { x: 1, y: 0.5 } }],
   },
   Ammeter: {
     type: 'IProbe',
@@ -108,5 +113,6 @@ export const components = Object.freeze({
       name: 'I',
       position: { x: 10, y: 0 },
     },
+    ports: [{ position: { x: 0, y: 0.5 } }, { position: { x: 1, y: 0.5 } }],
   },
 });
