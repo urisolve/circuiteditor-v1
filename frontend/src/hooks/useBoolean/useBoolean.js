@@ -1,18 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 export function useBoolean(initialValue) {
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState(!!initialValue);
 
-  const boolean = useMemo(
-    () => ({
-      value,
-      on: () => setValue(true),
-      off: () => setValue(false),
-      set: (newValue) => setValue(newValue),
-      toggle: () => setValue((oldValue) => !oldValue),
-    }),
-    [value, setValue],
-  );
+  const on = () => setValue(true);
+  const off = () => setValue(false);
+  const toggle = () => setValue((oldValue) => !oldValue);
 
-  return boolean;
+  return { value, set: setValue, on, off, toggle };
 }
