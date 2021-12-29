@@ -149,9 +149,11 @@ export function Circuits() {
             </IconButton>
           </Tooltip>
           <Tooltip title='Upload circuit' arrow>
-            <IconButton onClick={uploadCircuit} disabled>
-              <UploadIcon fontSize='large' />
-            </IconButton>
+            <span>
+              <IconButton onClick={uploadCircuit} disabled>
+                <UploadIcon fontSize='large' />
+              </IconButton>
+            </span>
           </Tooltip>
           <Tooltip title='Create new circuit' arrow>
             <IconButton onClick={createCircuit}>
