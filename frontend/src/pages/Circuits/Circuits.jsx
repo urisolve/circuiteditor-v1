@@ -112,7 +112,8 @@ export function Circuits() {
   // Fetch all circuits when the page loads
   useEffect(() => {
     fetchCircuits();
-  }, [fetchCircuits]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Data to build the menus
   const menus = [
