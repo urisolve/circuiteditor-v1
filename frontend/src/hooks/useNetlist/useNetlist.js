@@ -87,8 +87,11 @@ function generateNodesString(component, schematic) {
   let nodeStr = '';
 
   for (const port of component.ports) {
-    // Search for the node connected to the port
+    // Check if the port is connected to somewhere
     const conn = schematic.connections.find((conn) => isConnected(port, conn));
+    if (!conn) continue;
+
+    // Search for the node (virtual or real) that is connected to the port
     const node = schematic.nodes.find((node) => isConnected(node, conn));
 
     // Convert it into string
