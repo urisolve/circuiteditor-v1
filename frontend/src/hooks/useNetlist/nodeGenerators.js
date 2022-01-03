@@ -37,7 +37,8 @@ export function generateNodesString(component, schematic) {
 
     // Convert it into string
     nodeStr +=
-      (node.label?.name ?? generateNodeLabel(schematic) ?? node.id) + ' ';
+      (node?.label?.name ?? generateNodeLabel(schematic) ?? node?.id ?? '?') +
+      ' ';
   }
 
   // Trim the last space and return

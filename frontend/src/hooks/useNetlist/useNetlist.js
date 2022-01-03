@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import lodash from 'lodash';
 
 import { generateNodesString, generateVirtualNode } from './nodeGenerators';
-import { isConnected, moveConnection } from '../../util';
+import { isConnected, isConnectionRedundant, moveConnection } from '../../util';
 
 function splitPorts(schematic) {
   for (const component of schematic.components) {
@@ -60,8 +60,49 @@ function applyGround(schematic) {
   }
 }
 
-// TODO: Condense unnecessary nodes
-function condenseNodes(schematic) {}
+function condenseNodes(schematic) {
+  for (const node of schematic.nodes) {
+    // Grab all connections to this node
+    const nodeConnections = schematic.connections.filter((connection) =>
+      isConnected(node, connection),
+    );
+
+    // Grab all the nodes that are connected to this one
+    const connectedNodes = schematic.nodes.filter((connectedNode) =>
+      nodeConnections
+        .map(
+          (connection) =>
+            isConnected(connectedNode, connection) && connectedNode !== node,
+        )
+        .some(Boolean),
+    );
+
+    // If the node is isolated, ignore it
+    if (!connectedNodes.length) continue;
+
+    // Move connections to new node
+    for (const connectedNode of connectedNodes) {
+      for (const connection of schematic.connections) {
+        if (isConnected(connectedNode, connection))
+          moveConnection(connection, connectedNode, node);
+      }
+    }
+
+    // Delete old nodes
+    for (const connectedNode of connectedNodes) {
+      const idx = connectedNodes.indexOf(connectedNode);
+      schematic.nodes.splice(idx, 1);
+    }
+
+    // Delete useless old connections
+    for (const connection of schematic.connections) {
+      if (!isConnectionRedundant(connection)) continue;
+
+      const idx = schematic.connections.indexOf(connection);
+      schematic.connections.splice(idx, 1);
+    }
+  }
+}
 
 function withVirtualNodes(schematic) {
   for (const connection of schematic.connections) {
