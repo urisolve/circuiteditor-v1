@@ -1,7 +1,7 @@
 import lodash from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
-import { isConnected, nextChar } from '../../util';
+import { isConnected, nextChar } from '.';
 
 export function generateVirtualNode(schematic, virtualCount = 0) {
   // Check if there are nodes that match the name

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid'
 import lodash from 'lodash';
 
-import { generateNodesString, generateVirtualNode } from './nodeGenerators';
+import { generateNodesString, generateVirtualNode } from '../../util';
 import { isConnected, isConnectionRedundant, moveConnection } from '../../util';
 
 function splitPorts(schematic) {
