@@ -1,7 +1,7 @@
 import lodash from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
-import { isConnected } from '../../util';
+import { isConnected, nextChar } from '../../util';
 
 export function generateVirtualNode(schematic, virtualCount = 0) {
   // Check if there are nodes that match the name
@@ -21,8 +21,23 @@ export function generateVirtualNode(schematic, virtualCount = 0) {
   };
 }
 
-// TODO: Generate human-friendly node labels
-export function generateNodeLabel(schematic) {}
+export function generateNodeLabel(schematic, label = 'A') {
+  // Check if label already exists
+  for (const node of schematic.nodes) {
+    if (node.label?.name !== label) continue;
+
+    // Add another letter if there aren't any more
+    const lastChar = label.slice(-1);
+    if (lastChar === 'Z') return generateNodeLabel(schematic, label + 'A');
+
+    // If there are more letters to cycle through
+    const newLabel = label.slice(0, -1) + nextChar(lastChar);
+    return generateNodeLabel(schematic, newLabel);
+  }
+
+  // Return the generated label
+  return label;
+}
 
 export function generateNodesString(component, schematic) {
   let nodeStr = '';
@@ -35,10 +50,21 @@ export function generateNodesString(component, schematic) {
     // Search for the node (virtual or real) that is connected to the port
     const node = schematic.nodes.find((node) => isConnected(node, conn));
 
+    // If the component is not fully connected
+    if (!node) {
+      nodeStr += '?';
+      continue;
+    }
+
+    // Generate a name if the node doesn't have one
+    if (!node.label) {
+      node.label = { name: generateNodeLabel(schematic) };
+    } else if (!node.label.name) {
+      node.label.name = generateNodeLabel(schematic);
+    }
+
     // Convert it into string
-    nodeStr +=
-      (node?.label?.name ?? generateNodeLabel(schematic) ?? node?.id ?? '?') +
-      ' ';
+    nodeStr += node?.label.name + ' ';
   }
 
   // Trim the last space and return
