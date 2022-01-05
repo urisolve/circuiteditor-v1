@@ -88,20 +88,20 @@ export function useSchematicTools(setSchematic, history, gridSize) {
           for (const type in newSchematic) {
             // Find the element
             const elem = lodash.find(newSchematic[type], { id });
+            if (!elem) continue;
 
             // Remove all connections if the element is a node
-            if (isNode(elem ?? {})) {
-              newSchematic.connections.filter(
+            if (isNode(elem)) {
+              newSchematic.connections = newSchematic.connections.filter(
                 (conn) => conn.start !== id && conn.end !== id,
               );
             }
 
             // Remove all connections to the ports of the component
-            else if (isComponent(elem ?? {})) {
+            else if (isComponent(elem)) {
               for (const port of elem.ports) {
-                newSchematic.connections = lodash.reject(
-                  newSchematic.connections,
-                  { id: port.connection },
+                newSchematic.connections = newSchematic.connections.filter(
+                  (conn) => conn.start !== port.id && conn.end !== port.id,
                 );
               }
             }
