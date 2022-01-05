@@ -53,6 +53,7 @@ export function Schematic({
       className='schematic'
       ref={canvasRef}
       elevation={3}
+      onContextMenu={(e) => e.preventDefault()}
       sx={{
         width: '80%',
         height: '80%',

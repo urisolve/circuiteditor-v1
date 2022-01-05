@@ -2,8 +2,8 @@ import { useContext, useState } from 'react';
 
 import { Avatar } from '@mui/material';
 
-import { DraggableComponent, Label, Port } from '..';
-import { useGlobalRefMap } from '../../../hooks';
+import { ContextMenu, DraggableComponent, Label, Port } from '..';
+import { useContextMenu, useGlobalRefMap } from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
 import { symbols } from '../../../configs';
 
@@ -25,6 +25,7 @@ export function Component({
   ...rest
 }) {
   const refMap = useGlobalRefMap(id);
+  const contextMenu = useContextMenu();
 
   const schematic = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
@@ -39,12 +40,15 @@ export function Component({
       onStop={(_e, { x, y }) => updatePosition(id, { x, y }, startSch.data)}
       {...rest}
     >
+      <ContextMenu id={id} {...contextMenu} />
+
       <Avatar
         ref={refMap.set(id)}
         src={symbols[fullName]}
         alt={type}
         variant='square'
         className='component-handle'
+        onContextMenu={contextMenu.open}
         sx={{
           width: width ?? 100,
           height: height ?? 100,

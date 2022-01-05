@@ -1,5 +1,6 @@
 export * from './Component';
 export * from './Connection';
+export * from './ContextMenu';
 export * from './DraggableComponent';
 export * from './Label';
 export * from './Node';
