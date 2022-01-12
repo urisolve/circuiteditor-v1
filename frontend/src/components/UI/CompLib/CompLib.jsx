@@ -18,7 +18,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // Custom component
-import { SidebarHeader } from '..';
+import { MenuHeader } from '..';
 import { library } from '../../../configs';
 
 const sidebarWidth = 310;
@@ -58,7 +58,7 @@ export function CompLib({ addToSchematic, onClose, ...rest }) {
       <Toolbar /> {/* Push the content down by the size of a Toolbar */}
       <Box sx={{ overflowY: 'auto', flexGrow: 1 }}>
         <Box sx={{ p: 2 }}>
-          <SidebarHeader onClose={onClose}>Components</SidebarHeader>
+          <MenuHeader onClose={onClose}>Components</MenuHeader>
           <SearchBar value={searchBar} setValue={setSearchBar} />
         </Box>
 

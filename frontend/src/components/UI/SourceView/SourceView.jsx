@@ -2,7 +2,7 @@
 import { Box, Drawer, Stack, Toolbar } from '@mui/material';
 
 // Custom component
-import { SidebarHeader } from '..';
+import { MenuHeader } from '..';
 
 const sidebarWidth = 310;
 
@@ -22,7 +22,7 @@ export function SourceView({ code, onClose, ...rest }) {
     >
       <Toolbar />
       <Stack flexGrow={1} sx={{ p: 2 }}>
-        <SidebarHeader onClose={onClose}>Source View</SidebarHeader>
+        <MenuHeader onClose={onClose}>Source View</MenuHeader>
         <Box sx={{ flexGrow: 1, overflow: 'scroll' }}>
           <pre>
             <code>{JSON.stringify(code, null, 1)}</code>
