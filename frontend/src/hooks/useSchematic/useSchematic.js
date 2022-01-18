@@ -1,24 +1,45 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import lodash from 'lodash';
 
-import { useConnections, useHistory, useNetlist } from '../';
-import { useSchematicTools } from '../useSchematicTools';
-
-const emptySchematic = { components: [], nodes: [], connections: [] };
+import {
+  useConnections,
+  useHistory,
+  useNetlist,
+  useSchematicParser,
+  useSchematicTools,
+} from '../';
 
 export function useSchematic(
   initialSchematic = {},
   gridSize = 10,
   maxHistoryLength = 20,
 ) {
-  initialSchematic = { ...emptySchematic, ...initialSchematic };
+  const [schematic, setSchematic] = useState({
+    components: [],
+    nodes: [],
+    connections: [],
+    ...initialSchematic,
+  });
 
-  const [schematic, setSchematic] = useState(initialSchematic);
-  const [selectedItems, setSelectedItems] = useState(new Set());
+  // Array of all the schematic's items.
+  const items = useMemo(
+    () =>
+      lodash.concat(
+        schematic.components,
+        schematic.nodes,
+        schematic.connections,
+      ),
+    [schematic],
+  );
 
-  const items = useConnections(schematic, setSchematic);
+  useSchematicParser(schematic, setSchematic);
+  useConnections(schematic, setSchematic, items);
+
   const netlist = useNetlist(schematic);
   const history = useHistory(setSchematic, maxHistoryLength);
   const tools = useSchematicTools(setSchematic, history, gridSize);
+
+  const [selectedItems, setSelectedItems] = useState(new Set());
 
   // Temporary debug logging
   useEffect(() => console.log(netlist), [netlist]);

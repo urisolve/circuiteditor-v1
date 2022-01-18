@@ -10,6 +10,7 @@ export * from './useNetlist';
 export * from './useOnline';
 export * from './usePropertiesMenu';
 export * from './useSchematic';
+export * from './useSchematicParser';
 export * from './useSchematicTools';
 export * from './useSortAndOrder';
 export * from './useTimeSince';
