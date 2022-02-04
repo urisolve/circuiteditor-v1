@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import lodash from 'lodash';
 
 import {
@@ -40,9 +40,6 @@ export function useSchematic(
   const tools = useSchematicTools(setSchematic, history, gridSize);
 
   const [selectedItems, setSelectedItems] = useState(new Set());
-
-  // Temporary debug logging
-  useEffect(() => console.log(netlist), [netlist]);
 
   return {
     data: schematic,
