@@ -8,6 +8,7 @@ export * from './useHistory';
 export * from './useMousePosition';
 export * from './useNetlist';
 export * from './useOnline';
+export * from './usePropertiesForm';
 export * from './usePropertiesMenu';
 export * from './useSchematic';
 export * from './useSchematicParser';

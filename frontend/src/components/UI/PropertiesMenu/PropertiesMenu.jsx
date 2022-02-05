@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import lodash from 'lodash';
 
 import {
@@ -14,6 +14,7 @@ import {
 
 import { MenuHeader, Property, TabPanel } from '..';
 import { SchematicContext } from '../../../contexts';
+import { usePropertiesForm } from '../../../hooks';
 
 const modalStyle = {
   // Positioning
@@ -29,29 +30,17 @@ const modalStyle = {
   p: 2,
 };
 
-const labelProperties = {
+const specialLabelProps = {
   omit: ['position', 'isHidden'],
   disabled: ['unit'],
 };
 
 export function PropertiesMenu({ menu, id, label, properties }) {
-  // Properties form
-  const starterComp = {
-    label: label ?? { isHidden: false },
-    properties: properties ?? {},
-  };
-  const [newComp, setNewComp] = useState(starterComp);
-  const resetNewComp = () => setNewComp(starterComp);
-  const updateNewComp = (mods) => setNewComp((comp) => ({ ...comp, ...mods }));
-  const updateNewLabel = (key, value) =>
-    updateNewComp({ label: { ...newComp.label, [key]: value } });
-  const toggleLabel = () => updateNewLabel('isHidden', !newComp.label.isHidden);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => resetNewComp(), [menu.isOpen]);
+  const form = usePropertiesForm(label, properties, menu.isOpen);
 
   // Buttons' actions
   const schematic = useContext(SchematicContext);
-  const save = () => schematic.editById(id, newComp, schematic.data);
+  const save = () => schematic.editById(id, form.newComp, schematic.data);
   const actions = {
     ok: () => {
       save();
@@ -59,7 +48,7 @@ export function PropertiesMenu({ menu, id, label, properties }) {
     },
     cancel: () => {
       menu.close();
-      resetNewComp();
+      form.resetNewComp();
     },
     apply: () => {
       save();
@@ -100,21 +89,23 @@ export function PropertiesMenu({ menu, id, label, properties }) {
         {/* Label */}
         <TabPanel value={menu.selectedTab} index={1}>
           {label &&
-            Object.keys(lodash.omit(label, labelProperties.omit)).map((key) => (
-              <Property
-                key={key}
-                name={lodash.capitalize(key)}
-                value={newComp.label?.[key] ?? ''}
-                onChange={(event) => updateNewLabel(key, event.target.value)}
-                disabled={labelProperties.disabled.includes(key)}
-              />
-            ))}
+            Object.keys(lodash.omit(label, specialLabelProps.omit)).map(
+              (key) => (
+                <Property
+                  key={key}
+                  name={lodash.capitalize(key)}
+                  value={form.newComp.label?.[key] ?? ''}
+                  onChange={(e) => form.updateNewLabel(key, e.target.value)}
+                  disabled={specialLabelProps.disabled.includes(key)}
+                />
+              ),
+            )}
 
           <FormControlLabel
             control={
               <Checkbox
-                checked={newComp.label.isHidden}
-                onChange={toggleLabel}
+                checked={form.newComp.label.isHidden}
+                onChange={form.toggleLabel}
               />
             }
             label='Hide Label'
