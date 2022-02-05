@@ -20,6 +20,11 @@ const modalStyle = {
   p: 2,
 };
 
+const labelProperties = {
+  omit: ['position', 'isHidden'],
+  disabled: ['unit'],
+};
+
 export function PropertiesMenu({ id, label, properties, isOpen, close }) {
   // Tabs
   const [openTab, setOpenTab] = useState(0);
@@ -75,13 +80,13 @@ export function PropertiesMenu({ id, label, properties, isOpen, close }) {
         {/* Label */}
         <TabPanel value={openTab} index={0}>
           {label &&
-            Object.keys(lodash.omit(label, ['position'])).map((key) => (
+            Object.keys(lodash.omit(label, labelProperties.omit)).map((key) => (
               <Property
                 key={key}
                 name={lodash.capitalize(key)}
                 value={newComp.label?.[key] ?? ''}
-                onChange={(event) => updateNewLabel(key, event)}
-                disabled={key === 'unit'}
+                onChange={(event) => updateNewLabel(key, event.target.value)}
+                disabled={labelProperties.disabled.includes(key)}
               />
             ))}
         </TabPanel>
