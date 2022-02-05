@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import lodash from 'lodash';
 
 import {
@@ -50,6 +50,8 @@ export function PropertiesMenu({ id, label, properties, isOpen, close }) {
   const updateNewLabel = (key, value) =>
     updateNewComp({ label: { ...label, [key]: value } });
   const toggleLabel = () => updateNewLabel('isHidden', !newComp.label.isHidden);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => resetNewComp(), [isOpen]);
 
   // Buttons' actions
   const schematic = useContext(SchematicContext);
