@@ -1,7 +1,16 @@
 import { useContext, useState } from 'react';
 import lodash from 'lodash';
 
-import { Box, Button, Modal, Stack, Tab, Tabs } from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Modal,
+  Stack,
+  Tab,
+  Tabs,
+} from '@mui/material';
 
 import { MenuHeader, Property, TabPanel } from '..';
 import { SchematicContext } from '../../../contexts';
@@ -32,14 +41,15 @@ export function PropertiesMenu({ id, label, properties, isOpen, close }) {
 
   // Properties form
   const starterComp = {
-    label: label ?? {},
+    label: label ?? { isHidden: false },
     properties: properties ?? {},
   };
   const [newComp, setNewComp] = useState(starterComp);
   const resetNewComp = () => setNewComp(starterComp);
   const updateNewComp = (mods) => setNewComp((comp) => ({ ...comp, ...mods }));
-  const updateNewLabel = (key, event) =>
-    updateNewComp({ label: { ...label, [key]: event.target.value } });
+  const updateNewLabel = (key, value) =>
+    updateNewComp({ label: { ...label, [key]: value } });
+  const toggleLabel = () => updateNewLabel('isHidden', !newComp.label.isHidden);
 
   // Buttons' actions
   const schematic = useContext(SchematicContext);
@@ -89,6 +99,16 @@ export function PropertiesMenu({ id, label, properties, isOpen, close }) {
                 disabled={labelProperties.disabled.includes(key)}
               />
             ))}
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={newComp.label.isHidden}
+                onChange={toggleLabel}
+              />
+            }
+            label='Hide Label'
+          />
         </TabPanel>
 
         {/* Properties */}

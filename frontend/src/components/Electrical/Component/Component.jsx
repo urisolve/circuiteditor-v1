@@ -85,7 +85,7 @@ export function Component({
         );
       })}
 
-      {label && (
+      {label && !label.isHidden && (
         <Label
           key={label.id}
           owner={id}
