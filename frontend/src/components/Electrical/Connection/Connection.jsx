@@ -48,7 +48,7 @@ export function Connection({
         id={id}
         label={label}
         properties={properties}
-        {...propertiesMenu}
+        menu={propertiesMenu}
       />
     </Box>
   );

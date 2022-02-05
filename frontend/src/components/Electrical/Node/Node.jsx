@@ -59,7 +59,7 @@ export function Node({
           id={id}
           label={label}
           properties={properties}
-          {...propertiesMenu}
+          menu={propertiesMenu}
         />
 
         <Box ref={refMap.set(id)} sx={{ width: 1, height: 1 }} />

@@ -34,18 +34,7 @@ const labelProperties = {
   disabled: ['unit'],
 };
 
-export function PropertiesMenu({
-  openTab,
-  setOpenTab,
-  id,
-  label,
-  properties,
-  isOpen,
-  close,
-}) {
-  // Tabs
-  const changeTab = (_, newTab) => setOpenTab(newTab);
-
+export function PropertiesMenu({ menu, id, label, properties }) {
   // Properties form
   const starterComp = {
     label: label ?? { isHidden: false },
@@ -58,7 +47,7 @@ export function PropertiesMenu({
     updateNewComp({ label: { ...newComp.label, [key]: value } });
   const toggleLabel = () => updateNewLabel('isHidden', !newComp.label.isHidden);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => resetNewComp(), [isOpen]);
+  useEffect(() => resetNewComp(), [menu.isOpen]);
 
   // Buttons' actions
   const schematic = useContext(SchematicContext);
@@ -66,10 +55,10 @@ export function PropertiesMenu({
   const actions = {
     ok: () => {
       save();
-      close();
+      menu.close();
     },
     cancel: () => {
-      close();
+      menu.close();
       resetNewComp();
     },
     apply: () => {
@@ -79,25 +68,29 @@ export function PropertiesMenu({
 
   return (
     <Modal
-      open={isOpen}
-      onClose={close}
+      open={menu.isOpen}
+      onClose={menu.close}
       aria-labelledby='Property Editor Menu'
       aria-describedby={`Properties for component ${id}`}
     >
       <Box sx={modalStyle}>
-        <MenuHeader sx={{ mb: 2 }} onClose={close}>
+        <MenuHeader sx={{ mb: 2 }} onClose={menu.close}>
           Properties Editor
         </MenuHeader>
 
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={openTab} onChange={changeTab} variant='fullWidth'>
+          <Tabs
+            value={menu.selectedTab}
+            onChange={menu.changeTab}
+            variant='fullWidth'
+          >
             <Tab label='Properties' />
             <Tab label='Label' />
           </Tabs>
         </Box>
 
         {/* Properties */}
-        <TabPanel value={openTab} index={0}>
+        <TabPanel value={menu.selectedTab} index={0}>
           <Property name='ID' value={id} disabled />
           {Object.entries(properties ?? {}).map(([name, value], idx) => (
             <Property key={idx} name={name} value={value} />
@@ -105,7 +98,7 @@ export function PropertiesMenu({
         </TabPanel>
 
         {/* Label */}
-        <TabPanel value={openTab} index={1}>
+        <TabPanel value={menu.selectedTab} index={1}>
           {label &&
             Object.keys(lodash.omit(label, labelProperties.omit)).map((key) => (
               <Property
