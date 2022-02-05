@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import lodash from 'lodash';
 
 import {
@@ -13,8 +12,7 @@ import {
 } from '@mui/material';
 
 import { MenuHeader, Property, TabPanel } from '..';
-import { SchematicContext } from '../../../contexts';
-import { usePropertiesForm } from '../../../hooks';
+import { usePropertiesActions, usePropertiesForm } from '../../../hooks';
 
 const modalStyle = {
   // Positioning
@@ -37,23 +35,7 @@ const specialLabelProps = {
 
 export function PropertiesMenu({ menu, id, label, properties }) {
   const form = usePropertiesForm(label, properties, menu.isOpen);
-
-  // Buttons' actions
-  const schematic = useContext(SchematicContext);
-  const save = () => schematic.editById(id, form.newComp, schematic.data);
-  const actions = {
-    ok: () => {
-      save();
-      menu.close();
-    },
-    cancel: () => {
-      menu.close();
-      form.resetNewComp();
-    },
-    apply: () => {
-      save();
-    },
-  };
+  const actions = usePropertiesActions(id, menu, form);
 
   return (
     <Modal
