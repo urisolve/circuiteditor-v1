@@ -55,7 +55,7 @@ export function PropertiesMenu({
   const resetNewComp = () => setNewComp(starterComp);
   const updateNewComp = (mods) => setNewComp((comp) => ({ ...comp, ...mods }));
   const updateNewLabel = (key, value) =>
-    updateNewComp({ label: { ...label, [key]: value } });
+    updateNewComp({ label: { ...newComp.label, [key]: value } });
   const toggleLabel = () => updateNewLabel('isHidden', !newComp.label.isHidden);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => resetNewComp(), [isOpen]);
