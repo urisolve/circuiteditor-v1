@@ -15,6 +15,7 @@ export function Label({
   name,
   value,
   unit,
+  onDoubleClick,
   ...rest
 }) {
   const labelID = useMemo(() => `${owner}-label`, [owner]);
@@ -22,6 +23,17 @@ export function Label({
 
   const schematic = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
+
+  const multiplier = useMemo(() => {
+    if (!value) return null;
+    const lastChar = value.charAt(value.length - 1);
+    return lastChar.match(/[a-z]/i) ? lastChar : '';
+  }, [value]);
+
+  const cleanValue = useMemo(
+    () => (multiplier ? value.slice(0, -1) : value),
+    [multiplier, value],
+  );
 
   return (
     <DraggableComponent
@@ -34,6 +46,7 @@ export function Label({
       {...rest}
     >
       <Typography
+        onDoubleClick={onDoubleClick}
         ref={refMap.set(labelID)}
         sx={{
           height: 20,
@@ -45,7 +58,7 @@ export function Label({
       >
         <b>
           {name}
-          {value && unit && ` = ${value} ${unit}`}
+          {value && unit && ` = ${cleanValue} ${multiplier}${unit}`}
         </b>
       </Typography>
     </DraggableComponent>

@@ -1,28 +1,8 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import lodash from 'lodash';
 
 import { useGlobalRefMap } from '..';
-import { isConnected, isPort, rotateCoords } from '../../util';
-
-function normalizeNodes(schematic) {
-  for (const node of schematic.nodes) {
-    node.connections = schematic.connections.filter((connection) =>
-      isConnected(node, connection),
-    );
-
-    node.type = node.connections.length > 2 ? 'real' : 'virtual';
-  }
-}
-
-function normalizePorts(schematic) {
-  for (const component of schematic.components) {
-    for (const port of component.ports) {
-      port.connection = schematic.connections.find((connection) =>
-        isConnected(port, connection),
-      );
-    }
-  }
-}
+import { isPort, rotateCoords } from '../../util';
 
 function buildPortsMap(schematic, refMap) {
   // Map of (position string) -> (element id)
@@ -54,29 +34,8 @@ function buildPortsMap(schematic, refMap) {
   return seenPositions;
 }
 
-export function useConnections(schematic, setSchematic) {
+export function useConnections(schematic, setSchematic, items) {
   const refMap = useGlobalRefMap();
-
-  // Array of all the schematic's items.
-  const items = useMemo(
-    () =>
-      lodash.concat(
-        schematic.components,
-        schematic.nodes,
-        schematic.connections,
-      ),
-    [schematic],
-  );
-
-  // Calculate each Node and Port's connections.
-  useEffect(() => {
-    setSchematic((schematic) => {
-      normalizeNodes(schematic);
-      normalizePorts(schematic);
-
-      return schematic;
-    });
-  }, [setSchematic, schematic]);
 
   // Handle the connections' main logic.
   useEffect(() => {
@@ -118,7 +77,4 @@ export function useConnections(schematic, setSchematic) {
       return schematic;
     });
   }, [setSchematic, schematic, items, refMap]);
-
-  // Return the 'items' array
-  return items;
 }

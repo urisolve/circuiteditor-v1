@@ -2,10 +2,15 @@ import { useContext, useState } from 'react';
 
 import { Avatar } from '@mui/material';
 
-import { ContextMenu, DraggableComponent, Label, Port } from '..';
-import { useContextMenu, useGlobalRefMap } from '../../../hooks';
+import { DraggableComponent, Label, Port } from '..';
+import {
+  useContextMenu,
+  useGlobalRefMap,
+  usePropertiesMenu,
+} from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
 import { symbols } from '../../../configs';
+import { ContextMenu, PropertiesMenu } from '../../UI';
 
 export function Component({
   canvasRef,
@@ -15,20 +20,21 @@ export function Component({
   position,
   ports,
   label,
+  properties,
   width,
   height,
-  gridSize,
-  altImageIdx,
   updatePosition,
   isSelected,
   disabled,
   ...rest
 }) {
   const refMap = useGlobalRefMap(id);
-  const contextMenu = useContextMenu();
 
   const schematic = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
+
+  const contextMenu = useContextMenu();
+  const propertiesMenu = usePropertiesMenu();
 
   return (
     <DraggableComponent
@@ -41,6 +47,12 @@ export function Component({
       {...rest}
     >
       <ContextMenu id={id} {...contextMenu} />
+      <PropertiesMenu
+        id={id}
+        label={label}
+        properties={properties}
+        menu={propertiesMenu}
+      />
 
       <Avatar
         ref={refMap.set(id)}
@@ -49,6 +61,7 @@ export function Component({
         variant='square'
         className='component-handle'
         onContextMenu={contextMenu.open}
+        onDoubleClick={() => propertiesMenu.openTab(0)}
         sx={{
           width: width ?? 100,
           height: height ?? 100,
@@ -72,13 +85,14 @@ export function Component({
         );
       })}
 
-      {label && (
+      {label && !label.isHidden && (
         <Label
           key={label.id}
           owner={id}
           canvasRef={canvasRef}
           updatePosition={updatePosition}
           disabled={disabled}
+          onDoubleClick={() => propertiesMenu.openTab(1)}
           {...label}
         />
       )}
