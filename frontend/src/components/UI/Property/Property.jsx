@@ -1,15 +1,16 @@
-import { Box, FormHelperText, TextField } from '@mui/material';
 import lodash from 'lodash';
 
-export function Property({ name, value, desc }) {
+import { Box, FormHelperText, TextField } from '@mui/material';
+
+export function Property({ name, desc, ...rest }) {
   return (
     <Box>
       <TextField
         variant='outlined'
         margin='dense'
         label={lodash.startCase(name)}
-        value={value}
         fullWidth
+        {...rest}
       />
       <FormHelperText>{desc}</FormHelperText>
     </Box>
