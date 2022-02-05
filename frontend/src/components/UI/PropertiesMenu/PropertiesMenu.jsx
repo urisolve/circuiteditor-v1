@@ -34,9 +34,16 @@ const labelProperties = {
   disabled: ['unit'],
 };
 
-export function PropertiesMenu({ id, label, properties, isOpen, close }) {
+export function PropertiesMenu({
+  openTab,
+  setOpenTab,
+  id,
+  label,
+  properties,
+  isOpen,
+  close,
+}) {
   // Tabs
-  const [openTab, setOpenTab] = useState(0);
   const changeTab = (_, newTab) => setOpenTab(newTab);
 
   // Properties form
@@ -84,13 +91,21 @@ export function PropertiesMenu({ id, label, properties, isOpen, close }) {
 
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={openTab} onChange={changeTab} variant='fullWidth'>
-            <Tab label='Label' />
             <Tab label='Properties' />
+            <Tab label='Label' />
           </Tabs>
         </Box>
 
-        {/* Label */}
+        {/* Properties */}
         <TabPanel value={openTab} index={0}>
+          <Property name='ID' value={id} disabled />
+          {Object.entries(properties ?? {}).map(([name, value], idx) => (
+            <Property key={idx} name={name} value={value} />
+          ))}
+        </TabPanel>
+
+        {/* Label */}
+        <TabPanel value={openTab} index={1}>
           {label &&
             Object.keys(lodash.omit(label, labelProperties.omit)).map((key) => (
               <Property
@@ -111,14 +126,6 @@ export function PropertiesMenu({ id, label, properties, isOpen, close }) {
             }
             label='Hide Label'
           />
-        </TabPanel>
-
-        {/* Properties */}
-        <TabPanel value={openTab} index={1}>
-          <Property name='ID' value={id} disabled />
-          {Object.entries(properties ?? {}).map(([name, value], idx) => (
-            <Property key={idx} name={name} value={value} />
-          ))}
         </TabPanel>
 
         <Stack direction='row' justifyContent='flex-end'>

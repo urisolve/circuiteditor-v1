@@ -15,6 +15,7 @@ export function Label({
   name,
   value,
   unit,
+  onDoubleClick,
   ...rest
 }) {
   const labelID = useMemo(() => `${owner}-label`, [owner]);
@@ -45,6 +46,7 @@ export function Label({
       {...rest}
     >
       <Typography
+        onDoubleClick={onDoubleClick}
         ref={refMap.set(labelID)}
         sx={{
           height: 20,

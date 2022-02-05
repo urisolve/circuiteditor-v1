@@ -34,7 +34,13 @@ export function Component({
   const [startSch, setStartSch] = useState(schematic);
 
   const contextMenu = useContextMenu();
+
   const propertiesMenu = usePropertiesMenu();
+  const [openTab, setOpenTab] = useState(-1);
+  function openProperties(tab) {
+    setOpenTab(tab);
+    propertiesMenu.open();
+  }
 
   return (
     <DraggableComponent
@@ -48,6 +54,8 @@ export function Component({
     >
       <ContextMenu id={id} {...contextMenu} />
       <PropertiesMenu
+        openTab={openTab}
+        setOpenTab={setOpenTab}
         id={id}
         label={label}
         properties={properties}
@@ -61,7 +69,7 @@ export function Component({
         variant='square'
         className='component-handle'
         onContextMenu={contextMenu.open}
-        onDoubleClick={propertiesMenu.open}
+        onDoubleClick={() => openProperties(0)}
         sx={{
           width: width ?? 100,
           height: height ?? 100,
@@ -92,6 +100,7 @@ export function Component({
           canvasRef={canvasRef}
           updatePosition={updatePosition}
           disabled={disabled}
+          onDoubleClick={() => openProperties(1)}
           {...label}
         />
       )}
