@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import lodash from 'lodash';
 
 import { Box, Button, Modal, Stack, Tab, Tabs } from '@mui/material';
 
 import { MenuHeader, Property, TabPanel } from '..';
+import { SchematicContext } from '../../../contexts';
 
 const modalStyle = {
   // Positioning
@@ -20,16 +21,37 @@ const modalStyle = {
 };
 
 export function PropertiesMenu({ id, label, properties, isOpen, close }) {
+  // Tabs
   const [openTab, setOpenTab] = useState(0);
   const changeTab = (_, newTab) => setOpenTab(newTab);
 
-  const [newComp, setNewComp] = useState({ label, properties });
+  // Properties form
+  const starterComp = {
+    label: label ?? {},
+    properties: properties ?? {},
+  };
+  const [newComp, setNewComp] = useState(starterComp);
+  const resetNewComp = () => setNewComp(starterComp);
   const updateNewComp = (mods) => setNewComp((comp) => ({ ...comp, ...mods }));
   const updateNewLabel = (key, event) =>
-    updateNewComp({ label: { [key]: event.target.value } });
+    updateNewComp({ label: { ...label, [key]: event.target.value } });
 
-  // TODO: Save the changes to the schematic
-  function save() {}
+  // Buttons' actions
+  const schematic = useContext(SchematicContext);
+  const save = () => schematic.editById(id, newComp, schematic.data);
+  const actions = {
+    ok: () => {
+      save();
+      close();
+    },
+    cancel: () => {
+      close();
+      resetNewComp();
+    },
+    apply: () => {
+      save();
+    },
+  };
 
   return (
     <Modal
@@ -57,7 +79,7 @@ export function PropertiesMenu({ id, label, properties, isOpen, close }) {
               <Property
                 key={key}
                 name={lodash.capitalize(key)}
-                value={newComp.label?.[key]}
+                value={newComp.label?.[key] ?? ''}
                 onChange={(event) => updateNewLabel(key, event)}
                 disabled={key === 'unit'}
               />
@@ -73,16 +95,9 @@ export function PropertiesMenu({ id, label, properties, isOpen, close }) {
         </TabPanel>
 
         <Stack direction='row' justifyContent='flex-end'>
-          <Button
-            onClick={() => {
-              save();
-              close();
-            }}
-          >
-            OK
-          </Button>
-          <Button onClick={close}>Cancel</Button>
-          <Button onClick={save}>Apply</Button>
+          <Button onClick={actions.ok}>OK</Button>
+          <Button onClick={actions.cancel}>Cancel</Button>
+          <Button onClick={actions.apply}>Apply</Button>
         </Stack>
       </Box>
     </Modal>
