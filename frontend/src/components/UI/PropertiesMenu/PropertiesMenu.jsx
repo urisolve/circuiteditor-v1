@@ -1,5 +1,7 @@
-import { Box, Modal, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
+import lodash from 'lodash';
+
+import { Box, Button, Modal, Stack, Tab, Tabs } from '@mui/material';
 
 import { MenuHeader, Property, TabPanel } from '..';
 
@@ -19,9 +21,15 @@ const modalStyle = {
 
 export function PropertiesMenu({ id, label, properties, isOpen, close }) {
   const [openTab, setOpenTab] = useState(0);
-  function changeTab(event, newTab) {
-    setOpenTab(newTab);
-  }
+  const changeTab = (_, newTab) => setOpenTab(newTab);
+
+  const [newComp, setNewComp] = useState({ label, properties });
+  const updateNewComp = (mods) => setNewComp((comp) => ({ ...comp, ...mods }));
+  const updateNewLabel = (key, event) =>
+    updateNewComp({ label: { [key]: event.target.value } });
+
+  // TODO: Save the changes to the schematic
+  function save() {}
 
   return (
     <Modal
@@ -42,16 +50,40 @@ export function PropertiesMenu({ id, label, properties, isOpen, close }) {
           </Tabs>
         </Box>
 
+        {/* Label */}
         <TabPanel value={openTab} index={0}>
-          <Property name='Name' value={label?.name} />
-          <Property name='Value' value={label?.value} />
+          {label &&
+            Object.keys(lodash.omit(label, ['position'])).map((key) => (
+              <Property
+                key={key}
+                name={lodash.capitalize(key)}
+                value={newComp.label?.[key]}
+                onChange={(event) => updateNewLabel(key, event)}
+                disabled={key === 'unit'}
+              />
+            ))}
         </TabPanel>
 
+        {/* Properties */}
         <TabPanel value={openTab} index={1}>
+          <Property name='ID' value={id} disabled />
           {Object.entries(properties ?? {}).map(([name, value], idx) => (
             <Property key={idx} name={name} value={value} />
           ))}
         </TabPanel>
+
+        <Stack direction='row' justifyContent='flex-end'>
+          <Button
+            onClick={() => {
+              save();
+              close();
+            }}
+          >
+            OK
+          </Button>
+          <Button onClick={close}>Cancel</Button>
+          <Button onClick={save}>Apply</Button>
+        </Stack>
       </Box>
     </Modal>
   );
