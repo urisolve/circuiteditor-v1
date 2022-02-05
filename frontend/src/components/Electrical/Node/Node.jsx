@@ -2,13 +2,19 @@ import { useContext, useState } from 'react';
 
 import { Box } from '@mui/material';
 
+import {
+  useContextMenu,
+  useGlobalRefMap,
+  usePropertiesMenu,
+} from '../../../hooks';
 import { DraggableComponent } from '..';
-import { useGlobalRefMap } from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
+import { ContextMenu, PropertiesMenu } from '../../UI';
 
 export function Node({
   id,
   position,
+  label,
   properties,
   gridSize,
   updatePosition,
@@ -19,6 +25,9 @@ export function Node({
 
   const schematic = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
+
+  const contextMenu = useContextMenu();
+  const propertiesMenu = usePropertiesMenu();
 
   return (
     <DraggableComponent
@@ -42,7 +51,17 @@ export function Node({
           opacity: properties?.opacity ?? 1,
           backgroundColor: isSelected ? '#3475FF' : '#6495ED',
         }}
+        onContextMenu={contextMenu.open}
+        onDoubleClick={propertiesMenu.open}
       >
+        <ContextMenu id={id} {...contextMenu} />
+        <PropertiesMenu
+          id={id}
+          label={label}
+          properties={properties}
+          {...propertiesMenu}
+        />
+
         <Box ref={refMap.set(id)} sx={{ width: 1, height: 1 }} />
       </Box>
     </DraggableComponent>
