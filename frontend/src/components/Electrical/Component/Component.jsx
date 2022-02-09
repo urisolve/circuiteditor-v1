@@ -9,7 +9,7 @@ import {
   usePropertiesMenu,
 } from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
-import { symbols } from '../../../configs';
+import { symbols } from '../../../assets/electrical';
 import { ContextMenu, PropertiesMenu } from '../../UI';
 
 export function Component({

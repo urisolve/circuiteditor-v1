@@ -5,7 +5,7 @@ import lodash from 'lodash';
 import { Avatar, Stack, Tooltip, Typography } from '@mui/material';
 
 // Custom config
-import { symbols } from '../../../configs';
+import { symbols } from '../../../assets/electrical';
 
 const compSize = 65;
 
