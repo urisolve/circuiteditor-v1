@@ -7,7 +7,7 @@ import {
   useGlobalRefMap,
   usePropertiesMenu,
 } from '../../../hooks';
-import { DraggableComponent } from '..';
+import { DraggableComponent, Label } from '..';
 import { SchematicContext } from '../../../contexts';
 import { ContextMenu, PropertiesMenu } from '../../UI';
 
@@ -19,6 +19,7 @@ export function Node({
   gridSize,
   updatePosition,
   isSelected,
+  canvasRef,
   ...rest
 }) {
   const refMap = useGlobalRefMap(id);
@@ -52,7 +53,7 @@ export function Node({
           backgroundColor: isSelected ? '#3475FF' : '#6495ED',
         }}
         onContextMenu={contextMenu.open}
-        onDoubleClick={propertiesMenu.open}
+        onDoubleClick={() => propertiesMenu.openTab(0)}
       >
         <ContextMenu id={id} {...contextMenu} />
         <PropertiesMenu
@@ -63,6 +64,17 @@ export function Node({
         />
 
         <Box ref={refMap.set(id)} sx={{ width: 1, height: 1 }} />
+
+        {label && (
+          <Label
+            key={label.id}
+            owner={id}
+            canvasRef={canvasRef}
+            updatePosition={updatePosition}
+            onDoubleClick={() => propertiesMenu.openTab(1)}
+            {...label}
+          />
+        )}
       </Box>
     </DraggableComponent>
   );
