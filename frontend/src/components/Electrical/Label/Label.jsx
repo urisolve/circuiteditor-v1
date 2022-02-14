@@ -28,7 +28,7 @@ export function Label({
   const multiplier = useMemo(() => {
     if (!value) return null;
     const lastChar = value.charAt(value.length - 1);
-    return lastChar.match(/[a-z]/i) ? lastChar : '';
+    return lastChar.match(/[a-zA-Z]/i) ? lastChar : '';
   }, [value]);
 
   const cleanValue = useMemo(
