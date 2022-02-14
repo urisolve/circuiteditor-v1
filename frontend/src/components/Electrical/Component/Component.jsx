@@ -45,14 +45,6 @@ export function Component({
       onStop={(_e, { x, y }) => updatePosition(id, { x, y }, startSch.data)}
       {...rest}
     >
-      <ContextMenu id={id} {...contextMenu} />
-      <PropertiesMenu
-        id={id}
-        label={label}
-        properties={properties}
-        menu={propertiesMenu}
-      />
-
       <Avatar
         ref={refMap.set(id)}
         src={symbols[fullName]}
@@ -94,6 +86,14 @@ export function Component({
           {...label}
         />
       )}
+
+      <ContextMenu id={id} {...contextMenu} />
+      <PropertiesMenu
+        id={id}
+        label={label}
+        properties={properties}
+        menu={propertiesMenu}
+      />
     </DraggableComponent>
   );
 }
