@@ -28,6 +28,7 @@ const modalStyle = {
   p: 2,
 };
 
+const defaultLabel = { name: '', value: '' };
 const specialLabelProps = {
   omit: ['position', 'isHidden'],
   disabled: ['unit'],
@@ -70,19 +71,18 @@ export function PropertiesMenu({ menu, id, label, properties }) {
 
         {/* Label */}
         <TabPanel value={menu.selectedTab} index={1}>
-          {label &&
-            Object.keys(lodash.omit(label, specialLabelProps.omit)).map(
-              (key) => (
-                <Property
-                  key={key}
-                  name={lodash.capitalize(key)}
-                  value={form.newComp.label?.[key] ?? ''}
-                  onChange={(e) => form.updateNewLabel(key, e.target.value)}
-                  disabled={specialLabelProps.disabled.includes(key)}
-                />
-              ),
-            )}
-
+          {Object.keys({
+            ...defaultLabel,
+            ...lodash.omit(label, specialLabelProps.omit),
+          }).map((key) => (
+            <Property
+              key={key}
+              name={lodash.capitalize(key)}
+              value={form.newComp.label?.[key] ?? ''}
+              onChange={(e) => form.updateNewLabel(key, e.target.value)}
+              disabled={specialLabelProps.disabled.includes(key)}
+            />
+          ))}
           <FormControlLabel
             control={
               <Checkbox

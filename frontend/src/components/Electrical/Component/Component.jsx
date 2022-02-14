@@ -25,7 +25,6 @@ export function Component({
   height,
   updatePosition,
   isSelected,
-  disabled,
   ...rest
 }) {
   const refMap = useGlobalRefMap(id);
@@ -46,14 +45,6 @@ export function Component({
       onStop={(_e, { x, y }) => updatePosition(id, { x, y }, startSch.data)}
       {...rest}
     >
-      <ContextMenu id={id} {...contextMenu} />
-      <PropertiesMenu
-        id={id}
-        label={label}
-        properties={properties}
-        menu={propertiesMenu}
-      />
-
       <Avatar
         ref={refMap.set(id)}
         src={symbols[fullName]}
@@ -85,17 +76,24 @@ export function Component({
         );
       })}
 
-      {label && !label.isHidden && (
+      {label && (
         <Label
           key={label.id}
           owner={id}
           canvasRef={canvasRef}
           updatePosition={updatePosition}
-          disabled={disabled}
           onDoubleClick={() => propertiesMenu.openTab(1)}
           {...label}
         />
       )}
+
+      <ContextMenu id={id} {...contextMenu} />
+      <PropertiesMenu
+        id={id}
+        label={label}
+        properties={properties}
+        menu={propertiesMenu}
+      />
     </DraggableComponent>
   );
 }

@@ -87,7 +87,6 @@ export function Schematic({
           gridSize={gridSize}
           updatePosition={updatePosition}
           isSelected={selection?.selectedItems.has(comp.id)}
-          disabled={readOnly}
         />
       ))}
 
@@ -95,10 +94,10 @@ export function Schematic({
         <Node
           {...node}
           key={node.id}
+          canvasRef={canvasRef}
           gridSize={gridSize}
           updatePosition={updatePosition}
           isSelected={selection?.selectedItems.has(node.id)}
-          disabled={readOnly}
         />
       ))}
 
