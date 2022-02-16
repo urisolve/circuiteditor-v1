@@ -1,5 +1,6 @@
 export * from './Component';
 export * from './Connection';
+export * from './ConnectionPoint';
 export * from './DraggableComponent';
 export * from './Label';
 export * from './Node';
