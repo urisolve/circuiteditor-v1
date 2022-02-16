@@ -62,7 +62,6 @@ export function Node({
 
       {label && (
         <Label
-          key={label.id}
           owner={id}
           canvasRef={canvasRef}
           updatePosition={updatePosition}
