@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import XArrow from 'react-xarrows';
+import { Label } from '..';
 
 import {
   useContextMenu,
@@ -16,6 +17,8 @@ export function Connection({
   label,
   properties,
   isSelected,
+  canvasRef,
+  updatePosition,
   ...rest
 }) {
   const refMap = useGlobalRefMap(id);
@@ -41,6 +44,15 @@ export function Connection({
           onContextMenu: contextMenu.open,
           onDoubleClick: propertiesMenu.open,
         }}
+        labels={
+          <Label
+            owner={id}
+            canvasRef={canvasRef}
+            updatePosition={updatePosition}
+            onDoubleClick={() => propertiesMenu.openTab(1)}
+            {...label}
+          />
+        }
         {...rest}
       />
       <ContextMenu id={id} {...contextMenu} />
