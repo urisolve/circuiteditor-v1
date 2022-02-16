@@ -18,7 +18,7 @@ export function isNode(element) {
 }
 
 export function isPort(element) {
-  return Object.prototype.hasOwnProperty.call(element, 'connection');
+  return Object.prototype.hasOwnProperty.call(element, 'owner');
 }
 
 export function hasLabel(element) {

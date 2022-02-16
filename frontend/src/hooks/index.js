@@ -1,4 +1,5 @@
 export * from './useBoolean';
+export * from './useConnectionAnchors';
 export * from './useConnections';
 export * from './useContextMenu';
 export * from './useDownloadJSON';
