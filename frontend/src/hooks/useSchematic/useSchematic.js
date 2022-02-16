@@ -32,6 +32,13 @@ export function useSchematic(
     [schematic],
   );
 
+  const itemsMap = useMemo(
+    () => items.reduce((acc, item) => acc.set(item.id, item), new Map()),
+    [items],
+  );
+
+  console.log(itemsMap);
+
   useSchematicParser(schematic, setSchematic);
   useConnections(schematic, setSchematic, items);
 
