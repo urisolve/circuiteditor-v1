@@ -5,6 +5,7 @@ export * from './useDownloadJSON';
 export * from './useGlobalRefMap';
 export * from './useGravatar';
 export * from './useHistory';
+export * from './useLabelValue';
 export * from './useMousePosition';
 export * from './useNetlist';
 export * from './useOnline';

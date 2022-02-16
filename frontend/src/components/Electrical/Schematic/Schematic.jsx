@@ -108,8 +108,9 @@ export function Schematic({
             <Connection
               {...conn}
               key={conn.id}
+              canvasRef={canvasRef}
+              updatePosition={updatePosition}
               isSelected={selection?.selectedItems.has(conn.id)}
-              disabled={readOnly}
             />
           ),
       )}
