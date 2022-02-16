@@ -1,5 +1,4 @@
-import { useMemo, useState } from 'react';
-import lodash from 'lodash';
+import { useState } from 'react';
 
 import {
   useConnections,
@@ -8,6 +7,7 @@ import {
   useSchematicParser,
   useSchematicTools,
 } from '../';
+import { useSchematicItems } from '../useSchematicItems';
 
 export function useSchematic(
   initialSchematic = {},
@@ -22,23 +22,7 @@ export function useSchematic(
   });
 
   // Array of all the schematic's items.
-  const items = useMemo(
-    () =>
-      lodash.concat(
-        schematic.components,
-        schematic.nodes,
-        schematic.connections,
-      ),
-    [schematic],
-  );
-
-  const itemsMap = useMemo(
-    () => items.reduce((acc, item) => acc.set(item.id, item), new Map()),
-    [items],
-  );
-
-  console.log(itemsMap);
-
+  const { items, itemsMap } = useSchematicItems(schematic);
   useSchematicParser(schematic, setSchematic);
   useConnections(schematic, setSchematic, items);
 
@@ -51,6 +35,7 @@ export function useSchematic(
   return {
     data: schematic,
     items,
+    itemsMap,
 
     ...tools,
     history,

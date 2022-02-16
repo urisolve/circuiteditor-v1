@@ -1,0 +1,23 @@
+import { useMemo } from 'react';
+import lodash from 'lodash';
+
+export function useSchematicItems(schematic) {
+  // Squish all items into a single array
+  const items = useMemo(
+    () =>
+      lodash.concat(
+        schematic.components,
+        schematic.nodes,
+        schematic.connections,
+      ),
+    [schematic],
+  );
+
+  // Create an "[id]: item" map for easy access to all items
+  const itemsMap = useMemo(
+    () => items.reduce((acc, item) => acc.set(item.id, item), new Map()),
+    [items],
+  );
+
+  return { items, itemsMap };
+}
