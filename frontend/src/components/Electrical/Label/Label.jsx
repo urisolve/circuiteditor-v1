@@ -2,9 +2,9 @@ import { useContext, useMemo, useState } from 'react';
 
 import { Typography } from '@mui/material';
 
-import { useGlobalRefMap } from '../../../hooks';
 import { DraggableComponent } from '..';
 import { SchematicContext } from '../../../contexts';
+import { useGlobalRefMap, useLabelValue } from '../../../hooks';
 
 export function Label({
   owner,
@@ -25,16 +25,7 @@ export function Label({
   const schematic = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
 
-  const multiplier = useMemo(() => {
-    if (!value) return null;
-    const lastChar = value.charAt(value.length - 1);
-    return lastChar.match(/[a-zA-Z]/i) ? lastChar : '';
-  }, [value]);
-
-  const cleanValue = useMemo(
-    () => (multiplier ? value.slice(0, -1) : value),
-    [multiplier, value],
-  );
+  const { cleanValue, multiplier } = useLabelValue(value);
 
   return (
     !isHidden && (
