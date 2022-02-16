@@ -9,27 +9,27 @@ import {
 } from '../';
 import { useSchematicItems } from '../useSchematicItems';
 
+const emptySchematic = { components: [], nodes: [], connections: [] };
+
 export function useSchematic(
   initialSchematic = {},
   gridSize = 10,
   maxHistoryLength = 20,
 ) {
   const [schematic, setSchematic] = useState({
-    components: [],
-    nodes: [],
-    connections: [],
+    ...emptySchematic,
     ...initialSchematic,
   });
 
-  // Array of all the schematic's items.
-  const { items, itemsMap } = useSchematicItems(schematic);
+  // Parse the schematic before anything else
   useSchematicParser(schematic, setSchematic);
-  useConnections(schematic, setSchematic, items);
 
+  // Add extra functionality to the schematic
+  const { items, itemsMap } = useSchematicItems(schematic);
+  useConnections(schematic, setSchematic, items);
   const netlist = useNetlist(schematic);
   const history = useHistory(setSchematic, maxHistoryLength);
   const tools = useSchematicTools(setSchematic, history, gridSize);
-
   const [selectedItems, setSelectedItems] = useState(new Set());
 
   return {
