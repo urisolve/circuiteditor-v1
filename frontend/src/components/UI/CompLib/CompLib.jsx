@@ -7,13 +7,13 @@ import { SearchBar } from '../SearchBar';
 // Material-UI
 import {
   Typography,
-  Drawer,
   Toolbar,
   Accordion,
   AccordionSummary,
   AccordionDetails,
   Box,
   Stack,
+  SwipeableDrawer,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
@@ -23,7 +23,7 @@ import { library } from '../../../configs';
 
 const sidebarWidth = 310;
 
-export function CompLib({ addToSchematic, onClose, ...rest }) {
+export function CompLib({ controller, addToSchematic, ...rest }) {
   const [searchBar, setSearchBar] = useState('');
 
   const filteredLib = useMemo(() => {
@@ -43,7 +43,7 @@ export function CompLib({ addToSchematic, onClose, ...rest }) {
   }, [searchBar]);
 
   return (
-    <Drawer
+    <SwipeableDrawer
       variant='persistent'
       sx={{
         width: sidebarWidth,
@@ -53,12 +53,15 @@ export function CompLib({ addToSchematic, onClose, ...rest }) {
         },
       }}
       ModalProps={{ keepMounted: true }} // Better performance on mobile.
+      open={controller.value}
+      onClose={controller.off}
+      onOpen={controller.on}
       {...rest}
     >
       <Toolbar /> {/* Push the content down by the size of a Toolbar */}
       <Box sx={{ overflowY: 'auto', flexGrow: 1 }}>
         <Box sx={{ p: 2 }}>
-          <MenuHeader onClose={onClose}>Components</MenuHeader>
+          <MenuHeader onClose={controller.off}>Components</MenuHeader>
           <SearchBar value={searchBar} setValue={setSearchBar} />
         </Box>
 
@@ -99,6 +102,6 @@ export function CompLib({ addToSchematic, onClose, ...rest }) {
           )}
         </Box>
       </Box>
-    </Drawer>
+    </SwipeableDrawer>
   );
 };

@@ -98,14 +98,9 @@ export function Editor({ ...rest }) {
 
         <CompLib
           addToSchematic={schematic.addComponents}
-          open={compLib.value}
-          onClose={compLib.off}
+          controller={compLib}
         />
-        <SourceView
-          code={schematic?.data}
-          open={sourceView.value}
-          onClose={sourceView.off}
-        />
+        <SourceView code={schematic?.data} controller={sourceView} />
 
         <QuickActionMenu shift={compLib.value ? sidebarSize : 0}>
           {actions.map((action, idx) => (
