@@ -10,6 +10,7 @@ const anchorPoints = Object.freeze({
   MIDDLE: 'middle',
 });
 
+// Clockwise order (+)
 const directionOrder = [
   anchorPoints.TOP,
   anchorPoints.RIGHT,
