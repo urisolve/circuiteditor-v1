@@ -31,7 +31,6 @@ export function Connection({
 
   const schematic = useContext(SchematicContext);
   const anchors = useConnectionAnchors(schematic, { start, end });
-  console.log('🚀 ~ file: Connection.jsx ~ line 34 ~ anchors', anchors);
 
   return (
     <Box>
