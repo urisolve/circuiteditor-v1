@@ -8,7 +8,7 @@ export function isComponent(element) {
 
 export function isConnection(element) {
   return (
-    Object.prototype.hasOwnProperty.call(element, 'start') ||
+    Object.prototype.hasOwnProperty.call(element, 'start') &&
     Object.prototype.hasOwnProperty.call(element, 'end')
   );
 }
