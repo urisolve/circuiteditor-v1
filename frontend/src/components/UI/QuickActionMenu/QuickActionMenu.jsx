@@ -1,21 +1,26 @@
 import { Paper, Stack } from '@mui/material';
 
-export function QuickActionMenu({ shift, children, sx }) {
+export function QuickActionMenu({
+  offset,
+  anchor,
+  children,
+  duration,
+  easing,
+  sx,
+  ...rest
+}) {
   return (
     <Paper
       sx={{
         position: 'fixed',
-        bottom: 20,
-        left: 20,
-        transform: `translate(${shift}px)`,
-        transition: 'transform 0.25s ease-out',
-        backgroundColor: 'white',
-        borderRadius: 2,
-        '-webkit-backface-visibility': 'hidden',
+        transform: `translate(${offset.x ?? 0}px, ${offset.y ?? 0}px)`,
+        transition: `transform ${duration ?? '0.25s'} ${easing ?? ''}`,
+        ...anchor,
         ...sx,
       }}
+      {...rest}
     >
-      <Stack direction='row'>{children}</Stack>
+      <Stack {...rest}>{children}</Stack>
     </Paper>
   );
 }

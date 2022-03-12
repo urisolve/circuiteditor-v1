@@ -102,7 +102,11 @@ export function Editor({ ...rest }) {
         />
         <SourceView code={schematic?.data} controller={sourceView} />
 
-        <QuickActionMenu shift={compLib.value ? sidebarSize : 0}>
+        <QuickActionMenu
+          offset={{ x: compLib.value ? sidebarSize : 0 }}
+          anchor={{ bottom: 20, left: 20 }}
+          direction='row'
+        >
           {actions.map((action, idx) => (
             <QuickAction key={idx} aria-label={action.tooltip} {...action} />
           ))}
