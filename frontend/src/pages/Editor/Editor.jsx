@@ -4,24 +4,23 @@ import axios from 'axios';
 
 // Custom hooks & components
 import { useBoolean, useSchematic } from '../../hooks';
-import { CompLib, SourceView } from '../../components/UI';
+import {
+  CompLib,
+  QuickAction,
+  QuickActionMenu,
+  SourceView,
+} from '../../components/UI';
 import { Schematic } from '../../components/Electrical';
 import { SchematicContext } from '../../contexts';
 
 // Material-UI
-import {
-  SpeedDial,
-  SpeedDialAction,
-  SpeedDialIcon,
-  Stack,
-} from '@mui/material';
+import { Stack } from '@mui/material';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CodeIcon from '@mui/icons-material/Code';
 import SaveIcon from '@mui/icons-material/Save';
 
-const fabOffset = 16;
 const sidebarSize = 310;
 const canvasSize = { width: 2560, height: 1440 }; // 16:9 resolution (1440p)
 
@@ -52,29 +51,29 @@ export function Editor({ ...rest }) {
 
   const actions = [
     {
-      tooltipTitle: 'Undo',
+      tooltip: 'Undo',
       icon: <UndoIcon />,
       onClick: schematic.history.undo,
       disabled: !schematic.history.canUndo,
     },
     {
-      tooltipTitle: 'Redo',
+      tooltip: 'Redo',
       icon: <RedoIcon />,
       onClick: schematic.history.redo,
       disabled: !schematic.history.canRedo,
     },
     {
-      tooltipTitle: `${compLib.value ? 'Hide' : 'Show'} Component Library`,
+      tooltip: `${compLib.value ? 'Hide' : 'Show'} Component Library`,
       icon: <MenuBookIcon />,
       onClick: compLib.toggle,
     },
     {
-      tooltipTitle: `${sourceView.value ? 'Hide' : 'Show'} Source View`,
+      tooltip: `${sourceView.value ? 'Hide' : 'Show'} Source View`,
       icon: <CodeIcon />,
       onClick: sourceView.toggle,
     },
     {
-      tooltipTitle: 'Save',
+      tooltip: 'Save',
       icon: <SaveIcon />,
       onClick: saveCircuit,
     },
@@ -99,28 +98,19 @@ export function Editor({ ...rest }) {
 
         <CompLib
           addToSchematic={schematic.addComponents}
-          open={compLib.value}
-          onClose={compLib.off}
+          controller={compLib}
         />
-        <SourceView
-          code={schematic?.data}
-          open={sourceView.value}
-          onClose={sourceView.off}
-        />
+        <SourceView code={schematic?.data} controller={sourceView} />
 
-        <SpeedDial
-          ariaLabel="Tools' menu"
-          icon={<SpeedDialIcon />}
-          sx={{
-            position: 'fixed',
-            bottom: fabOffset,
-            right: fabOffset + sourceView.value * (sidebarSize + 2 * fabOffset),
-          }}
+        <QuickActionMenu
+          offset={{ x: compLib.value ? sidebarSize : 0 }}
+          anchor={{ bottom: 20, left: 20 }}
+          direction='row'
         >
           {actions.map((action, idx) => (
-            <SpeedDialAction key={idx} {...action} />
+            <QuickAction key={idx} aria-label={action.tooltip} {...action} />
           ))}
-        </SpeedDial>
+        </QuickActionMenu>
       </Stack>
     </SchematicContext.Provider>
   );
