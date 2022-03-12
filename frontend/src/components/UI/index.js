@@ -12,6 +12,8 @@ export * from './Navbar';
 export * from './OfflineBanner';
 export * from './PropertiesMenu';
 export * from './Property';
+export * from './QuickAction';
+export * from './QuickActionMenu';
 export * from './ScrollToTopButton';
 export * from './SearchBar';
 export * from './MenuHeader';
