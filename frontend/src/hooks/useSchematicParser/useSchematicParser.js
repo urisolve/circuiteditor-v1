@@ -1,8 +1,8 @@
+import { useEffect } from 'react';
 import lodash from 'lodash';
 
 import { isConnected } from '../../util';
 import { components } from '../../configs';
-import { useEffect } from 'react';
 
 function normalizeNodes(schematic) {
   for (const node of schematic.nodes) {
@@ -17,9 +17,11 @@ function normalizeNodes(schematic) {
 function normalizePorts(schematic) {
   for (const component of schematic.components) {
     for (const port of component.ports) {
-      port.connection = schematic.connections.find((connection) =>
-        isConnected(port, connection),
-      );
+      port.owner = component.id;
+      port.connection =
+        schematic.connections.find((connection) =>
+          isConnected(port, connection),
+        ) ?? null;
     }
   }
 }

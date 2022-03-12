@@ -1,19 +1,22 @@
-import { Box } from '@mui/material';
+import { useContext } from 'react';
 import XArrow from 'react-xarrows';
-import { Label } from '..';
+
+import { Box } from '@mui/material';
 
 import {
+  useConnectionAnchors,
   useContextMenu,
   useGlobalRefMap,
   usePropertiesMenu,
 } from '../../../hooks';
+import { Label } from '..';
 import { ContextMenu, PropertiesMenu } from '../../UI';
+import { SchematicContext } from '../../../contexts';
 
 export function Connection({
   id,
   start,
   end,
-  type,
   label,
   properties,
   isSelected,
@@ -26,16 +29,18 @@ export function Connection({
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
 
+  const schematic = useContext(SchematicContext);
+  const anchors = useConnectionAnchors(schematic, { start, end });
+
   return (
     <Box>
       <XArrow
         start={refMap.get(start)}
         end={refMap.get(end)}
-        path={type ?? 'grid'}
-        showHead={false}
+        {...anchors}
+        path='grid'
         gridBreak={properties?.gridBreak ?? '100%'}
-        startAnchor='middle'
-        endAnchor='middle'
+        showHead={false}
         divContainerStyle={{
           zIndex: -1,
           opacity: properties?.opacity ?? 1,

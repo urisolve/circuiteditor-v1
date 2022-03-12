@@ -8,7 +8,7 @@ export function isComponent(element) {
 
 export function isConnection(element) {
   return (
-    Object.prototype.hasOwnProperty.call(element, 'start') ||
+    Object.prototype.hasOwnProperty.call(element, 'start') &&
     Object.prototype.hasOwnProperty.call(element, 'end')
   );
 }
@@ -18,7 +18,7 @@ export function isNode(element) {
 }
 
 export function isPort(element) {
-  return Object.prototype.hasOwnProperty.call(element, 'connection');
+  return Object.prototype.hasOwnProperty.call(element, 'owner');
 }
 
 export function hasLabel(element) {

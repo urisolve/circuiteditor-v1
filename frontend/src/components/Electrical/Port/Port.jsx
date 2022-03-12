@@ -1,26 +1,24 @@
 import { useMemo } from 'react';
-import { Box } from '@mui/material';
 
+import { ConnectionPoint } from '..';
 import { rotateCoords } from '../../../util';
-import { useGlobalRefMap } from '../../../hooks';
 
-export function Port({ id, position, bounds, properties, rotation, ...rest }) {
-  const refMap = useGlobalRefMap(id);
-
+export function Port({
+  id,
+  position,
+  bounds,
+  properties,
+  compRotation,
+  ...rest
+}) {
   const realPos = useMemo(
-    () => rotateCoords(position ?? { x: 0.5, y: 0.5 }, rotation ?? 0),
-    [position, rotation],
+    () => rotateCoords(position, compRotation ?? 0),
+    [position, compRotation],
   );
 
   return (
-    <Box
+    <ConnectionPoint
       sx={{
-        position: 'absolute',
-        borderRadius: '50%',
-        '&:hover': {
-          transform: 'scale(1.25)',
-        },
-
         // Given properties
         width: (properties?.radius ?? 6) * 2,
         height: (properties?.radius ?? 6) * 2,
@@ -30,10 +28,8 @@ export function Port({ id, position, bounds, properties, rotation, ...rest }) {
         left: realPos.x * (bounds?.width ?? 100) - (properties?.radius ?? 6),
         top: realPos.y * (bounds?.height ?? 100) - (properties?.radius ?? 6),
       }}
+      id={id}
       {...rest}
-    >
-      {/* Connection point */}
-      <Box ref={refMap.set(id)} sx={{ width: 1, height: 1 }} />
-    </Box>
+    />
   );
 }

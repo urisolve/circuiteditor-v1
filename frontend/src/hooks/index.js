@@ -1,4 +1,5 @@
 export * from './useBoolean';
+export * from './useConnectionAnchors';
 export * from './useConnections';
 export * from './useContextMenu';
 export * from './useDownloadJSON';
@@ -13,6 +14,7 @@ export * from './usePropertiesActions';
 export * from './usePropertiesForm';
 export * from './usePropertiesMenu';
 export * from './useSchematic';
+export * from './useSchematicItems';
 export * from './useSchematicParser';
 export * from './useSchematicTools';
 export * from './useSortAndOrder';

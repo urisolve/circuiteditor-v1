@@ -14,11 +14,13 @@
       "ports": [
         {
           "id": "7ed2507f-14fe-45e2-9246-9ee1d36eb442",
+          "owner": "8c0168ec-07fe-4b2c-96ee-4292ab34cfb2",
           "type": "hybrid",
           "position": { "x": 0.5, "y": 0 }
         },
         {
           "id": "c990e78e-2bc5-4afb-92ee-b8a6d1faab0f",
+          "owner": "8c0168ec-07fe-4b2c-96ee-4292ab34cfb2",
           "type": "hybrid",
           "position": { "x": 0.5, "y": 1 }
         }
@@ -38,11 +40,13 @@
       "ports": [
         {
           "id": "ddd6efab-f8f2-4565-8010-1270556f1d00",
+          "owner": "a2475d77-22a6-47b5-b60b-04aa5af69284",
           "type": "hybrid",
           "position": { "x": 0, "y": 0.5 }
         },
         {
           "id": "1f7b8784-184b-4733-ae81-53c74b62462c",
+          "owner": "a2475d77-22a6-47b5-b60b-04aa5af69284",
           "type": "hybrid",
           "position": { "x": 1, "y": 0.5 }
         }
@@ -62,11 +66,13 @@
       "ports": [
         {
           "id": "6ab8738d-c2d6-4cfb-a399-00c92d1ff497",
+          "owner": "1cae12d0-21fe-4b7e-952e-fb471c677bc8",
           "type": "hybrid",
           "position": { "x": 0, "y": 0.5 }
         },
         {
           "id": "a5e84b5d-caeb-40bd-892b-96a958166b28",
+          "owner": "1cae12d0-21fe-4b7e-952e-fb471c677bc8",
           "type": "hybrid",
           "position": { "x": 1, "y": 0.5 }
         }
@@ -84,11 +90,13 @@
       "ports": [
         {
           "id": "dc54f032-592a-4c89-90d6-0727add0908f",
+          "owner": "ef4bc1f6-e72f-4c4c-b9bb-76ea5d36c13b",
           "type": "hybrid",
           "position": { "x": 0, "y": 0.5 }
         },
         {
           "id": "b4c2c42a-24d8-4230-8ee7-f8330926205f",
+          "owner": "ef4bc1f6-e72f-4c4c-b9bb-76ea5d36c13b",
           "type": "hybrid",
           "position": { "x": 1, "y": 0.5 }
         }
@@ -109,10 +117,7 @@
     {
       "id": "59c13370-2901-4ced-8d4b-cdc239c04bda",
       "start": "7ed2507f-14fe-45e2-9246-9ee1d36eb442",
-      "end": "ddd6efab-f8f2-4565-8010-1270556f1d00",
-      "properties": {
-        "gridBreak": "0%"
-      }
+      "end": "ddd6efab-f8f2-4565-8010-1270556f1d00"
     },
     {
       "id": "8fb25576-a918-4179-960b-18917de1b1ea",
