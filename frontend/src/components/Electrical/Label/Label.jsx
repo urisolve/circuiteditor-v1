@@ -4,7 +4,7 @@ import { Typography } from '@mui/material';
 
 import { DraggableComponent } from '..';
 import { SchematicContext } from '../../../contexts';
-import { useGlobalRefMap, useLabelValue } from '../../../hooks';
+import { useGlobalRefMap, useFormattedLabel } from '../../../hooks';
 
 export function Label({
   owner,
@@ -25,36 +25,35 @@ export function Label({
   const schematic = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
 
-  const { cleanValue, multiplier } = useLabelValue(value);
+  const formattedLabel = useFormattedLabel(name, value, unit);
+
+  if (isHidden) {
+    return null;
+  }
 
   return (
-    !isHidden && (
-      <DraggableComponent
-        position={position}
-        onStart={() => setStartSch(schematic)}
-        onDrag={(_e, { x, y }) => updatePosition(owner, { x, y }, null, true)}
-        onStop={(_e, { x, y }) =>
-          updatePosition(owner, { x, y }, startSch.data, true)
-        }
-        {...rest}
+    <DraggableComponent
+      position={position}
+      onStart={() => setStartSch(schematic)}
+      onDrag={(_e, { x, y }) => updatePosition(owner, { x, y }, null, true)}
+      onStop={(_e, { x, y }) =>
+        updatePosition(owner, { x, y }, startSch.data, true)
+      }
+      {...rest}
+    >
+      <Typography
+        onDoubleClick={onDoubleClick}
+        ref={refMap.set(labelID)}
+        sx={{
+          height: 20,
+          padding: '5px',
+          '&:hover': {
+            transform: 'scale(1.1)',
+          },
+        }}
       >
-        <Typography
-          onDoubleClick={onDoubleClick}
-          ref={refMap.set(labelID)}
-          sx={{
-            height: 20,
-            padding: '5px',
-            '&:hover': {
-              transform: 'scale(1.1)',
-            },
-          }}
-        >
-          <b>
-            {name}
-            {value && unit && ` = ${cleanValue} ${multiplier}${unit}`}
-          </b>
-        </Typography>
-      </DraggableComponent>
-    )
+        <b>{formattedLabel}</b>
+      </Typography>
+    </DraggableComponent>
   );
 }
