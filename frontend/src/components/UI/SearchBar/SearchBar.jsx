@@ -23,7 +23,11 @@ export function SearchBar({ value, setValue }) {
           </InputAdornment>
         ),
         endAdornment: (
-          <InputAdornment position='end' onClick={clearValue}>
+          <InputAdornment
+            position='end'
+            onClick={clearValue}
+            sx={{ cursor: 'pointer' }}
+          >
             {value.length ? <CloseIcon fontSize='small' /> : ''}
           </InputAdornment>
         ),
