@@ -1,6 +1,6 @@
 import { components } from '.';
 
-export const library = [
+const library = [
   {
     title: 'Connectors',
     items: [components.EarthGround, components.ChassisGround],
@@ -28,3 +28,11 @@ export const library = [
     items: [components.Voltmeter, components.Ammeter],
   },
 ];
+
+const SORT_KEY = 'fullName';
+const sortedLibrary = library.map((menu) => {
+  menu.items.sort((a, b) => a[SORT_KEY].localeCompare(b[SORT_KEY]));
+  return menu;
+});
+
+export { sortedLibrary as library };
