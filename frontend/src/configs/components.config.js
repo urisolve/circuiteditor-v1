@@ -1,12 +1,7 @@
 export const components = Object.freeze({
-  EarthGround: {
+  Ground: {
     type: 'gnd',
-    fullName: 'EarthGround',
-    ports: [{ position: { x: 0.5, y: 0 } }],
-  },
-  ChassisGround: {
-    type: 'gnd',
-    fullName: 'ChassisGround',
+    fullName: 'Ground',
     ports: [{ position: { x: 0.5, y: 0 } }],
   },
   DCVoltageSource: {

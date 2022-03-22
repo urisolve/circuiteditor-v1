@@ -3,7 +3,7 @@ import { components } from '.';
 const library = [
   {
     title: 'Connectors',
-    items: [components.EarthGround, components.ChassisGround],
+    items: [components.Ground],
   },
   {
     title: 'Sources',

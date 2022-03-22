@@ -2,8 +2,7 @@ import Resistor from '../assets/electrical/resistor.svg';
 import Inductor from '../assets/electrical/inductor.svg';
 import Capacitor from '../assets/electrical/capacitor.svg';
 import Reactance from '../assets/electrical/reactance.svg';
-import EarthGround from '../assets/electrical/earth-gnd.svg';
-import ChassisGround from '../assets/electrical/chassis-gnd.svg';
+import Ground from '../assets/electrical/gnd.svg';
 import ACVoltageSource from '../assets/electrical/vac.svg';
 import DCVoltageSource from '../assets/electrical/vdc1.svg';
 import ACCurrentSource from '../assets/electrical/iac.svg';
@@ -16,8 +15,7 @@ export const symbols = {
   Inductor,
   Capacitor,
   Reactance,
-  EarthGround,
-  ChassisGround,
+  Ground,
   ACVoltageSource,
   DCVoltageSource,
   ACCurrentSource,
