@@ -13,20 +13,30 @@ export function Comp({ type, fullName, action, ...rest }) {
   const name = useMemo(() => lodash.startCase(fullName), [fullName]);
 
   return (
-    <Tooltip title={name} arrow>
-      <Stack direction='column' alignItems='center' spacing={1} sx={{ p: 1 }}>
-        <Avatar
-          src={symbols[fullName]}
-          alt={name}
-          onDoubleClick={action}
-          variant='square'
-          sx={{ width: compSize, height: compSize }}
-          {...rest}
-        />
+    <Stack
+      direction='column'
+      alignItems='center'
+      spacing={1}
+      sx={{
+        p: 1,
+        '&:hover': {
+          transform: 'scale(1.1)',
+        },
+      }}
+    >
+      <Avatar
+        src={symbols[fullName]}
+        alt={name}
+        onDoubleClick={action}
+        variant='square'
+        sx={{ width: compSize, height: compSize }}
+        {...rest}
+      />
+      <Tooltip title={name} arrow>
         <Typography align='center' noWrap sx={{ width: compSize }}>
           {name}
         </Typography>
-      </Stack>
-    </Tooltip>
+      </Tooltip>
+    </Stack>
   );
 }

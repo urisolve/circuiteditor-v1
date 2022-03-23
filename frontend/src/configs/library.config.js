@@ -1,38 +1,30 @@
 import { components } from '.';
 
-const library = [
+export const library = [
   {
     title: 'Connectors',
     items: [components.Ground],
   },
   {
-    title: 'Sources',
-    items: [
-      components.DCVoltageSource,
-      components.ACVoltageSource,
-      components.DCCurrentSource,
-      components.ACCurrentSource,
-    ],
-  },
-  {
     title: 'Passive',
     items: [
-      components.Resistor,
       components.Capacitor,
       components.Inductor,
       components.Reactance,
+      components.Resistor,
     ],
   },
   {
     title: 'Probes',
-    items: [components.Voltmeter, components.Ammeter],
+    items: [components.Ammeter, components.Voltmeter],
+  },
+  {
+    title: 'Sources',
+    items: [
+      components.ACCurrentSource,
+      components.ACVoltageSource,
+      components.DCCurrentSource,
+      components.DCVoltageSource,
+    ],
   },
 ];
-
-const SORT_KEY = 'fullName';
-const sortedLibrary = library.map((menu) => {
-  menu.items.sort((a, b) => a[SORT_KEY].localeCompare(b[SORT_KEY]));
-  return menu;
-});
-
-export { sortedLibrary as library };
