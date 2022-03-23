@@ -6,9 +6,9 @@ import { components } from '../../configs';
 
 function normalizeNodes(schematic) {
   for (const node of schematic.nodes) {
-    node.connections = schematic.connections.filter((connection) =>
-      isConnected(node, connection),
-    );
+    node.connections = schematic.connections
+      .filter((connection) => isConnected(node, connection))
+      .map((conn) => conn.id);
 
     node.type = node.connections.length > 2 ? 'real' : 'virtual';
   }
@@ -21,7 +21,7 @@ function normalizePorts(schematic) {
       port.connection =
         schematic.connections.find((connection) =>
           isConnected(port, connection),
-        ) ?? null;
+        )?.id ?? null;
     }
   }
 }
