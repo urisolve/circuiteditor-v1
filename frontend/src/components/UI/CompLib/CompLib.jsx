@@ -24,23 +24,19 @@ import { library } from '../../../configs';
 const sidebarWidth = 310;
 
 export function CompLib({ controller, addToSchematic, ...rest }) {
-  const [searchBar, setSearchBar] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const filteredLib = useMemo(() => {
-    // Do a deep copy of the original array of components
     const filtered = lodash.cloneDeep(library);
 
-    // Filter the array and re-render it
     return filtered.filter((group) => {
-      // Remove the components that don't match the filter
       group.items = group.items.filter((item) =>
-        lodash.lowerCase(item.fullName).includes(searchBar.toLowerCase()),
+        lodash.lowerCase(item.fullName).includes(searchQuery.toLowerCase()),
       );
 
-      // Remove the groups that get emptied
-      return group.items.length > 0;
+      return !!group.items.length;
     });
-  }, [searchBar]);
+  }, [searchQuery]);
 
   return (
     <SwipeableDrawer
@@ -62,7 +58,7 @@ export function CompLib({ controller, addToSchematic, ...rest }) {
       <Box sx={{ overflowY: 'auto', flexGrow: 1 }}>
         <Box sx={{ p: 2 }}>
           <MenuHeader onClose={controller.off}>Components</MenuHeader>
-          <SearchBar value={searchBar} setValue={setSearchBar} />
+          <SearchBar value={searchQuery} setValue={setSearchQuery} />
         </Box>
 
         <Box sx={{ p: 2 }}>
