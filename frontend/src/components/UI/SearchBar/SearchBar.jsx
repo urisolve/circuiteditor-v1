@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
+import BackspaceIcon from '@mui/icons-material/Backspace';
 
 export function SearchBar({ value, setValue }) {
   const clearValue = useCallback(() => setValue(''), [setValue]);
@@ -28,7 +28,7 @@ export function SearchBar({ value, setValue }) {
             onClick={clearValue}
             sx={{ cursor: 'pointer' }}
           >
-            {value.length ? <CloseIcon fontSize='small' /> : ''}
+            {value.length ? <BackspaceIcon fontSize='small' /> : ''}
           </InputAdornment>
         ),
       }}
