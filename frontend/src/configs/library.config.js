@@ -3,11 +3,11 @@ import { components } from '.';
 export const library = [
   {
     title: 'Connectors',
-    items: [components.Ground],
+    elements: [components.Ground, components.Wire],
   },
   {
     title: 'Passive',
-    items: [
+    elements: [
       components.Capacitor,
       components.Inductor,
       components.Reactance,
@@ -16,11 +16,11 @@ export const library = [
   },
   {
     title: 'Probes',
-    items: [components.Ammeter, components.Voltmeter],
+    elements: [components.Ammeter, components.Voltmeter],
   },
   {
     title: 'Sources',
-    items: [
+    elements: [
       components.ACCurrentSource,
       components.ACVoltageSource,
       components.DCCurrentSource,

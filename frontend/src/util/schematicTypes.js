@@ -1,5 +1,13 @@
-export function isConnected(el, connection) {
-  return el.id === connection.start || el.id === connection.end;
+export function isSchematic(element) {
+  return (
+    Object.prototype.hasOwnProperty.call(element, 'components') &&
+    Object.prototype.hasOwnProperty.call(element, 'nodes') &&
+    Object.prototype.hasOwnProperty.call(element, 'connections')
+  );
+}
+
+export function isConnected(element, connection) {
+  return element.id === connection.start || element.id === connection.end;
 }
 
 export function isComponent(element) {

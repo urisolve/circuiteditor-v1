@@ -28,26 +28,26 @@ const defaultCircuit = require('../../templates/voltageDivider.json');
 
 export function Editor({ ...rest }) {
   const schematic = useSchematic(defaultCircuit);
-  const { id } = useParams();
+  const { circuitID } = useParams();
 
   const compLib = useBoolean(false);
   const sourceView = useBoolean(false);
   const isAccountAlertOpen = useBoolean(false);
 
   const saveCircuit = useCallback(async () => {
-    if (!id) {
+    if (!circuitID) {
       isAccountAlertOpen.on();
       return;
     }
 
     try {
-      await axios.patch(`/api/circuits?id=${id}`, {
+      await axios.patch(`/api/circuits?id=${circuitID}`, {
         schematic: schematic.data,
       });
     } catch (err) {
       console.error(err);
     }
-  }, [id, schematic, isAccountAlertOpen]);
+  }, [circuitID, schematic, isAccountAlertOpen]);
 
   const actions = [
     {
@@ -96,10 +96,7 @@ export function Editor({ ...rest }) {
           {...rest}
         />
 
-        <CompLib
-          addToSchematic={schematic.addComponents}
-          controller={compLib}
-        />
+        <CompLib addToSchematic={schematic.add} controller={compLib} />
         <SourceView code={schematic?.data} controller={sourceView} />
 
         <QuickActionMenu

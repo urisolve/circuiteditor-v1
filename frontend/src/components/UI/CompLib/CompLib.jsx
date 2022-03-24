@@ -30,11 +30,11 @@ export function CompLib({ controller, addToSchematic, ...rest }) {
     const filtered = lodash.cloneDeep(library);
 
     return filtered.filter((group) => {
-      group.items = group.items.filter((item) =>
+      group.elements = group.elements.filter((item) =>
         lodash.lowerCase(item.fullName).includes(searchQuery.toLowerCase()),
       );
 
-      return !!group.items.length;
+      return !!group.elements.length;
     });
   }, [searchQuery]);
 
@@ -74,13 +74,19 @@ export function CompLib({ controller, addToSchematic, ...rest }) {
                   align-items='flex-start'
                   sx={{ flexWrap: 'wrap' }}
                 >
-                  {group.items.map((item, idx) => (
-                    <Comp
-                      key={idx}
-                      action={() => addToSchematic(item)}
-                      {...item}
-                    />
-                  ))}
+                  {group.elements.map((element, idx) => {
+                    const comp = lodash.isFunction(element)
+                      ? element()
+                      : element;
+
+                    return (
+                      <Comp
+                        key={idx}
+                        action={() => addToSchematic(comp)}
+                        {...comp}
+                      />
+                    );
+                  })}
                 </Stack>
               </AccordionDetails>
             </Accordion>
@@ -100,4 +106,4 @@ export function CompLib({ controller, addToSchematic, ...rest }) {
       </Box>
     </SwipeableDrawer>
   );
-};
+}
