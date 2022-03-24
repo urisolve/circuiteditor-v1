@@ -9,7 +9,7 @@ import { symbols } from '../../../configs';
 
 const compSize = 65;
 
-export function Comp({ type, fullName, action, ...rest }) {
+export function Comp({ fullName, action, ...rest }) {
   const name = useMemo(() => lodash.startCase(fullName), [fullName]);
 
   return (
@@ -32,7 +32,7 @@ export function Comp({ type, fullName, action, ...rest }) {
         sx={{ width: compSize, height: compSize }}
         {...rest}
       />
-      <Tooltip title={name} arrow>
+      <Tooltip enterDelay={500} enterNextDelay={500} title={name} arrow>
         <Typography align='center' noWrap sx={{ width: compSize }}>
           {name}
         </Typography>

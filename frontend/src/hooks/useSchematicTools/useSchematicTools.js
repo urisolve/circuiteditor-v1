@@ -2,48 +2,56 @@ import { useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import lodash from 'lodash';
 
-import { isComponent, isConnection, isNode, snapPosToGrid } from '../../util';
+import {
+  isComponent,
+  isConnection,
+  isNode,
+  isSchematic,
+  snapPosToGrid,
+} from '../../util';
 
 export function useSchematicTools(setSchematic, history, gridSize) {
-  /**
-   * Adds an element to the schematic.
-   *
-   * Automatically detects if it is a Component, Node or Connection
-   * by it's properties.
-   *
-   * @param {Object} element The element to be added.
-   */
   const add = useCallback(
-    (elements, where = 'components') => {
+    (elements) => {
       setSchematic((oldSchematic) => {
         // Make a clone of the current schematic
         const newSchematic = lodash.cloneDeep(oldSchematic);
 
-        // Force element into array format
-        if (elements instanceof Set) elements = [...elements];
-        if (!(elements instanceof Array)) elements = [elements];
+        // Default stranded elements to be components
+        const schema = !isSchematic(elements)
+          ? { components: [elements], nodes: [], connections: [] }
+          : elements;
 
-        // Add all of the given elements to the schematic
-        for (const element of elements) {
-          // Lock the element's position to the grid
-          if (!isConnection(element)) {
-            element.position = snapPosToGrid(element.position, gridSize);
-          }
+        // Add elements to schematic
+        Object.entries(schema).forEach(([key, elementArr]) => {
+          if (!['components', 'nodes', 'connections'].includes(key)) return;
 
-          // Add IDs to the ports
-          if (isComponent(element)) {
-            for (const port of element.ports) {
-              port.id = port.id ?? uuidv4();
-            }
-          }
+          newSchematic[key] = newSchematic[key].concat(
+            elementArr.map((element) => ({
+              id: uuidv4(),
+              ...element,
 
-          // Add the new element to the schematic
-          newSchematic[where].push({ id: uuidv4(), ...element });
-        }
+              // Add a position that is snapped to the grid
+              ...(!isConnection(element) && {
+                position: snapPosToGrid(element.position, gridSize),
+              }),
+
+              // Add IDs to the ports
+              ...(isComponent(element) && {
+                ports: element.ports?.map((port) => ({
+                  id: uuidv4(),
+                  ...port,
+                })),
+              }),
+            })),
+          );
+        });
 
         // If the changes are valid, save the old schematic
         if (!lodash.isEqual(oldSchematic, newSchematic))
           history.save(oldSchematic);
+
+        console.log(oldSchematic, newSchematic);
 
         return newSchematic;
       });
@@ -51,28 +59,6 @@ export function useSchematicTools(setSchematic, history, gridSize) {
     [setSchematic, history, gridSize],
   );
 
-  /**
-   * Simple helper functions
-   */
-  const addComponents = useCallback(
-    (elements) => add(elements, 'components'),
-    [add],
-  );
-  const addConnections = useCallback(
-    (elements) => add(elements, 'connections'),
-    [add],
-  );
-  const addNodes = useCallback((elements) => add(elements, 'nodes'), [add]);
-
-  /**
-   * Deletes an element from the schematic.
-   *
-   * Searches for the element that has the given id, and removes it from the
-   * schematic. Note that if multiple elements share the same id, they will all
-   * be deleted.
-   *
-   * @param {String} id The id of the element to be deleted.
-   */
   const deleteById = useCallback(
     (ids) => {
       setSchematic((oldSchematic) => {
@@ -123,20 +109,6 @@ export function useSchematicTools(setSchematic, history, gridSize) {
     [setSchematic, history],
   );
 
-  /**
-   * Applies certain edits to the specified element.
-   *
-   * Searches for the element that has the given id, and applies the given
-   * edits. Note that if multiple elements share the same id, they will all
-   * be edited. The edits can be directly passed and added to the element, but,
-   * if a more complex edit is required, you can pass a callback to be applied
-   * to the element.
-   *
-   * @param {String} id The id of the element to be edited.
-   * @param {any} edits If it's a function, apply it to the correct element.
-   * Otherwise, apply the given edits (Object) to the state.
-   * @param {Boolean} If If it should save the changes to the history.
-   */
   const editById = useCallback(
     (ids, edits, startSch = null) => {
       setSchematic((oldSchematic) => {
@@ -169,5 +141,5 @@ export function useSchematicTools(setSchematic, history, gridSize) {
     [setSchematic, history],
   );
 
-  return { add, addComponents, addConnections, addNodes, deleteById, editById };
+  return { add, deleteById, editById };
 }

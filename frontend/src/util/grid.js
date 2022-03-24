@@ -19,9 +19,9 @@ export function snapValueToGrid(value, gridSize) {
  * @param {*} gridSize The size of the desired grid.
  * @returns The snapped position.
  */
-export function snapPosToGrid(position, gridSize) {
+export function snapPosToGrid({ x, y } = { x: 0, y: 0 }, gridSize) {
   return {
-    x: snapValueToGrid(position?.x ?? 0, gridSize),
-    y: snapValueToGrid(position?.y ?? 0, gridSize),
+    x: snapValueToGrid(x, gridSize),
+    y: snapValueToGrid(y, gridSize),
   };
 } 
