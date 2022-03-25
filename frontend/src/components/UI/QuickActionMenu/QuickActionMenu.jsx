@@ -2,15 +2,16 @@ import { useCallback, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import { Paper, Stack } from '@mui/material';
+import { Box, IconButton, Paper, Stack, Tooltip } from '@mui/material';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CodeIcon from '@mui/icons-material/Code';
 import SaveIcon from '@mui/icons-material/Save';
+import ShareIcon from '@mui/icons-material/Share';
+import DownloadIcon from '@mui/icons-material/Download';
 
 import { useBoolean } from '../../../hooks';
-import { QuickAction } from '../QuickAction';
 import { SchematicContext } from '../../../contexts';
 
 export function QuickActionMenu({
@@ -43,33 +44,60 @@ export function QuickActionMenu({
     }
   }, [circuitID, schematic, isAccountAlertOpen]);
 
-  const actions = [
+  const actionGroups = [
     {
-      tooltip: 'Undo',
-      icon: <UndoIcon />,
-      onClick: schematic.history.undo,
-      disabled: !schematic.history.canUndo,
+      name: 'History',
+      actions: [
+        {
+          name: 'Undo',
+          icon: <UndoIcon />,
+          onClick: schematic.history.undo,
+          disabled: !schematic.history.canUndo,
+        },
+        {
+          name: 'Redo',
+          icon: <RedoIcon />,
+          onClick: schematic.history.redo,
+          disabled: !schematic.history.canRedo,
+        },
+      ],
     },
     {
-      tooltip: 'Redo',
-      icon: <RedoIcon />,
-      onClick: schematic.history.redo,
-      disabled: !schematic.history.canRedo,
+      name: 'Drawers',
+      actions: [
+        {
+          name: `${compLib.value ? 'Hide' : 'Show'} Component Library`,
+          icon: <MenuBookIcon />,
+          onClick: compLib.toggle,
+        },
+        {
+          name: `${sourceView.value ? 'Hide' : 'Show'} Source View`,
+          icon: <CodeIcon />,
+          onClick: sourceView.toggle,
+        },
+      ],
     },
     {
-      tooltip: `${compLib.value ? 'Hide' : 'Show'} Component Library`,
-      icon: <MenuBookIcon />,
-      onClick: compLib.toggle,
-    },
-    {
-      tooltip: `${sourceView.value ? 'Hide' : 'Show'} Source View`,
-      icon: <CodeIcon />,
-      onClick: sourceView.toggle,
-    },
-    {
-      tooltip: 'Save',
-      icon: <SaveIcon />,
-      onClick: saveCircuit,
+      name: 'External',
+      actions: [
+        {
+          name: 'Save',
+          icon: <SaveIcon />,
+          onClick: saveCircuit,
+        },
+        {
+          name: 'Share',
+          icon: <ShareIcon />,
+          onClick: () => {},
+          disabled: true,
+        },
+        {
+          name: 'Download',
+          icon: <DownloadIcon />,
+          onClick: () => {},
+          disabled: true,
+        },
+      ],
     },
   ];
 
@@ -85,8 +113,22 @@ export function QuickActionMenu({
       {...rest}
     >
       <Stack direction='row' {...rest}>
-        {actions.map((action, idx) => (
-          <QuickAction key={idx} aria-label={action.tooltip} {...action} />
+        {actionGroups.map((group, groupIdx) => (
+          <Box sx={{ mr: groupIdx !== actionGroups.length - 1 ? 2 : 0 }}>
+            {group.actions.map((action, actionIdx) => (
+              <Tooltip key={actionIdx} title={action.name} arrow>
+                <span>
+                  <IconButton
+                    aria-label={action.name}
+                    disabled={action.disabled || group.disabled}
+                    onClick={action}
+                  >
+                    {action.icon}
+                  </IconButton>
+                </span>
+              </Tooltip>
+            ))}
+          </Box>
         ))}
       </Stack>
     </Paper>
