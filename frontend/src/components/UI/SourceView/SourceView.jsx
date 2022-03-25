@@ -1,12 +1,16 @@
 // Material-UI
 import { Box, Stack, SwipeableDrawer, Toolbar } from '@mui/material';
+import { useContext } from 'react';
 
 // Custom component
 import { MenuHeader } from '..';
+import { SchematicContext } from '../../../contexts';
 
 const sidebarWidth = 310;
 
-export function SourceView({ controller, code, ...rest }) {
+export function SourceView({ controller, ...rest }) {
+  const { data: code } = useContext(SchematicContext);
+
   return (
     <SwipeableDrawer
       variant='persistent'

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useContext } from 'react';
 import lodash from 'lodash';
 
 import { Comp } from '../Comp';
@@ -20,10 +20,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // Custom component
 import { MenuHeader } from '..';
 import { library } from '../../../configs';
+import { SchematicContext } from '../../../contexts';
 
 const sidebarWidth = 310;
 
-export function CompLib({ controller, addToSchematic, ...rest }) {
+export function CompLib({ controller, ...rest }) {
+  const { add: addToSchematic } = useContext(SchematicContext);
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredLib = useMemo(() => {
