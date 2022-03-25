@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useContext, useRef } from 'react';
 
 // Material-UI
 import { Paper } from '@mui/material';
@@ -6,9 +6,9 @@ import { Paper } from '@mui/material';
 // Custom libraries
 import { SelectionArea, Component, Connection, Node } from '../index';
 import { snapValueToGrid } from '../../../util';
+import { SchematicContext } from '../../../contexts';
 
 export function Schematic({
-  schematic,
   selection,
   width,
   height,
@@ -19,14 +19,8 @@ export function Schematic({
   ...rest
 }) {
   const canvasRef = useRef();
+  const schematic = useContext(SchematicContext);
 
-  /**
-   * Update the coordinates of a Component.
-   *
-   * @param {String} id The id of the element that is dragged.
-   * @param {Object} position The new coordinates of the element.
-   * @param {Boolean} isLabel If you want to update the label's coordinates
-   */
   const updatePosition = useCallback(
     (id, { x, y }, startSch = null, isLabel = false) => {
       // Snap the values to the grid
