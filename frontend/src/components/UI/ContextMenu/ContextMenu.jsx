@@ -35,47 +35,55 @@ export function ContextMenu({ id, isOpen, close, position }) {
     [id, schematic],
   );
 
-  const items = useMemo(
+  const actions = useMemo(
     () => [
-      [
-        {
-          disabled: true,
-          icon: <DuplicateIcon />,
-          name: 'Copy',
-        },
-        {
-          disabled: true,
-          icon: <PasteIcon />,
-          name: 'Paste',
-        },
-        {
-          disabled: true,
-          icon: <CutIcon />,
-          name: 'Cut',
-        },
-      ],
-      [
-        {
-          disabled: !isClickingOnComponent,
-          icon: <RotateLeftIcon />,
-          name: 'RotateLeft',
-          onClick: () => rotateSelection(-ROTATION_INCREMENT),
-        },
-        {
-          disabled: !isClickingOnComponent,
-          icon: <RotateRightIcon />,
-          name: 'RotateRight',
-          onClick: () => rotateSelection(+ROTATION_INCREMENT),
-        },
-      ],
-      [
-        {
-          color: 'IndianRed',
-          icon: <DeleteIcon />,
-          name: 'Delete',
-          onClick: () => deleteById([id, ...selectedItems]),
-        },
-      ],
+      {
+        name: 'Edit',
+        items: [
+          {
+            disabled: true,
+            icon: <DuplicateIcon />,
+            name: 'Copy',
+          },
+          {
+            disabled: true,
+            icon: <PasteIcon />,
+            name: 'Paste',
+          },
+          {
+            disabled: true,
+            icon: <CutIcon />,
+            name: 'Cut',
+          },
+        ],
+      },
+      {
+        name: 'Rotate',
+        hidden: !isClickingOnComponent,
+        items: [
+          {
+            icon: <RotateLeftIcon />,
+            name: 'Rotate Left',
+            onClick: () => rotateSelection(-ROTATION_INCREMENT),
+          },
+          {
+            icon: <RotateRightIcon />,
+            name: 'Rotate Right',
+            onClick: () => rotateSelection(+ROTATION_INCREMENT),
+          },
+        ],
+      },
+      {
+        name: 'Delete',
+        items: [
+          {
+            color: 'IndianRed',
+            icon: <DeleteIcon />,
+            name: 'Delete',
+            onClick: () => deleteById([id, ...selectedItems]),
+          },
+        ],
+      },
     ],
     [deleteById, id, isClickingOnComponent, rotateSelection, selectedItems],
   );
@@ -95,27 +103,33 @@ export function ContextMenu({ id, isOpen, close, position }) {
         },
       })}
     >
-      {items.map((group, groupIdx) => (
-        <Box key={groupIdx}>
-          {group.map((item, itemIdx) => (
-            <MenuItem
-              dense
-              disabled={item.disabled}
-              key={itemIdx}
-              onClick={() => {
-                item.onClick();
-                close();
-              }}
-              sx={{ color: item.color }}
-            >
-              {item.icon}
-              {item.name}
-            </MenuItem>
-          ))}
+      {actions.map(
+        (group, groupIdx) =>
+          !group.hidden && (
+            <Box key={groupIdx}>
+              {group.items.map(
+                (item, itemIdx) =>
+                  !item.hidden && (
+                    <MenuItem
+                      dense
+                      disabled={item.disabled || group.disabled}
+                      key={itemIdx}
+                      onClick={() => {
+                        item.onClick();
+                        close();
+                      }}
+                      sx={{ color: item.color }}
+                    >
+                      {item.icon}
+                      {item.name}
+                    </MenuItem>
+                  ),
+              )}
 
-          {groupIdx !== items.length - 1 && <Divider />}
-        </Box>
-      ))}
+              {groupIdx !== actions.length - 1 && <Divider />}
+            </Box>
+          ),
+      )}
     </Menu>
   );
 }
