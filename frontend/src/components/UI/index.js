@@ -22,5 +22,3 @@ export * from './SortingMenu';
 export * from './SourceView';
 export * from './TabPanel';
 export * from './TeamMember';
-export * from './Tool';
-export * from './ToolsMenu';
