@@ -35,11 +35,11 @@ export function ContextMenu({ id, isOpen, close, position }) {
     [id, schematic],
   );
 
-  const actions = useMemo(
+  const actionGroups = useMemo(
     () => [
       {
         name: 'Edit',
-        items: [
+        actions: [
           {
             disabled: true,
             icon: <DuplicateIcon />,
@@ -60,7 +60,7 @@ export function ContextMenu({ id, isOpen, close, position }) {
       {
         name: 'Rotate',
         hidden: !isClickingOnComponent,
-        items: [
+        actions: [
           {
             icon: <RotateLeftIcon />,
             name: 'Rotate Left',
@@ -75,7 +75,7 @@ export function ContextMenu({ id, isOpen, close, position }) {
       },
       {
         name: 'Delete',
-        items: [
+        actions: [
           {
             color: 'IndianRed',
             icon: <DeleteIcon />,
@@ -103,30 +103,30 @@ export function ContextMenu({ id, isOpen, close, position }) {
         },
       })}
     >
-      {actions.map(
+      {actionGroups.map(
         (group, groupIdx) =>
           !group.hidden && (
             <Box key={groupIdx}>
-              {group.items.map(
-                (item, itemIdx) =>
-                  !item.hidden && (
+              {group.actions.map(
+                (action, actionIdx) =>
+                  !action.hidden && (
                     <MenuItem
                       dense
-                      disabled={item.disabled || group.disabled}
-                      key={itemIdx}
+                      disabled={action.disabled || group.disabled}
+                      key={actionIdx}
                       onClick={() => {
-                        item.onClick();
+                        action.onClick();
                         close();
                       }}
-                      sx={{ color: item.color }}
+                      sx={{ color: action.color }}
                     >
-                      {item.icon}
-                      {item.name}
+                      {action.icon}
+                      {action.name}
                     </MenuItem>
                   ),
               )}
 
-              {groupIdx !== actions.length - 1 && <Divider />}
+              {groupIdx !== actionGroups.length - 1 && <Divider />}
             </Box>
           ),
       )}
