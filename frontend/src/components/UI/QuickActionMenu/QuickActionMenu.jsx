@@ -2,7 +2,7 @@ import { useCallback, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import { Box, IconButton, Paper, Stack, Tooltip } from '@mui/material';
+import { Box, Paper, Stack } from '@mui/material';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -13,6 +13,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 
 import { useBoolean } from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
+import { QuickAction } from '../QuickAction';
 
 export function QuickActionMenu({
   offset,
@@ -116,17 +117,7 @@ export function QuickActionMenu({
         {actionGroups.map((group, groupIdx) => (
           <Box sx={{ mr: groupIdx !== actionGroups.length - 1 ? 2 : 0 }}>
             {group.actions.map((action, actionIdx) => (
-              <Tooltip key={actionIdx} title={action.name} arrow>
-                <span>
-                  <IconButton
-                    aria-label={action.name}
-                    disabled={action.disabled || group.disabled}
-                    onClick={action}
-                  >
-                    {action.icon}
-                  </IconButton>
-                </span>
-              </Tooltip>
+              <QuickAction key={actionIdx} {...action} />
             ))}
           </Box>
         ))}
