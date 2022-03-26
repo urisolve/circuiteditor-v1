@@ -9,7 +9,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 // App
 import { App } from './App.jsx';
-import { globalStyles, theme } from './mui';
+import { globalStyles, theme } from './styles';
 
 // PWA
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
