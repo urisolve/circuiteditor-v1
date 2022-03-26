@@ -1,7 +1,7 @@
 import { grey } from '@mui/material/colors';
 import { theme } from './theme';
 
-export const customScrollbar = {
+export const globalStyles = {
   '*::-webkit-scrollbar': {
     width: 10,
     height: 10,
@@ -15,5 +15,10 @@ export const customScrollbar = {
     '&:hover': {
       background: grey[400],
     },
+  },
+  html: {
+    scrollBehavior: 'smooth',
+    overflowY: 'overlay',
+    overFlowX: 'overlay',
   },
 };
