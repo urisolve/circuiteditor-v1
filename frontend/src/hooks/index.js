@@ -2,7 +2,7 @@ export * from './useBoolean';
 export * from './useConnectionAnchors';
 export * from './useConnections';
 export * from './useContextMenu';
-export * from './useDownloadJSON';
+export * from './useDownloadFile';
 export * from './useGlobalRefMap';
 export * from './useGravatar';
 export * from './useHistory';

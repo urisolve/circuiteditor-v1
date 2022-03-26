@@ -22,10 +22,11 @@ const modalStyle = {
   transform: 'translate(-50%, -50%)',
 
   // Styling
-  width: 360,
   bgcolor: 'background.paper',
+  borderRadius: 2,
   boxShadow: 24,
   p: 2,
+  width: 360,
 };
 
 const defaultLabel = { name: '', value: '' };

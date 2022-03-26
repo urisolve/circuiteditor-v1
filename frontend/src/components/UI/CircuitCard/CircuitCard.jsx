@@ -23,13 +23,12 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 // Custom hook
-import { useBoolean, useDownloadJSON, useTimeSince } from '../../../hooks';
+import { useBoolean, useTimeSince } from '../../../hooks';
 
 const cardWidth = 300;
 const cardHeight = 300;
 
 export function CircuitCard({ circuit, onDelete, onStar }) {
-  const circuitExport = useDownloadJSON(circuit.data.schematic);
   const timeSince = useTimeSince(circuit.data.updatedAt);
 
   const dialog = useBoolean(false);
@@ -71,7 +70,7 @@ export function CircuitCard({ circuit, onDelete, onStar }) {
         </CardActionArea>
         <CardActions>
           <Tooltip title='Export' arrow>
-            <IconButton href={circuitExport} download={`${circuit.name}.json`}>
+            <IconButton href={null} download={`${circuit.name}.json`} disabled>
               <GetAppIcon />
             </IconButton>
           </Tooltip>

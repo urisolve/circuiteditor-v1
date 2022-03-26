@@ -6,8 +6,8 @@ import {
   useNetlist,
   useSchematicParser,
   useSchematicTools,
+  useSchematicItems,
 } from '../';
-import { useSchematicItems } from '../useSchematicItems';
 
 const emptySchematic = { components: [], nodes: [], connections: [] };
 
@@ -21,10 +21,8 @@ export function useSchematic(
     ...initialSchematic,
   });
 
-  // Parse the schematic before anything else
   useSchematicParser(schematic, setSchematic);
 
-  // Add extra functionality to the schematic
   const { items, itemsMap } = useSchematicItems(schematic);
   useConnections(schematic, setSchematic, items);
   const netlist = useNetlist(schematic);
