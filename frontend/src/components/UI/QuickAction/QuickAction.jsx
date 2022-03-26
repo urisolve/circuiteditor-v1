@@ -1,15 +1,10 @@
 import { IconButton, Tooltip } from '@mui/material';
 
-export function QuickAction({ disabled, icon, name, onClick, ...rest }) {
+export function QuickAction({ icon, name, ...rest }) {
   return (
     <Tooltip title={name} arrow>
       <span>
-        <IconButton
-          aria-label={name}
-          disabled={disabled}
-          onClick={onClick}
-          {...rest}
-        >
+        <IconButton aria-label={name} {...rest}>
           {icon}
         </IconButton>
       </span>

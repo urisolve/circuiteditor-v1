@@ -29,15 +29,15 @@ export function Editor({ ...rest }) {
       >
         <Schematic selection={schematic.selection} {...rest} />
 
-        <CompLib controller={compLib} />
-        <SourceView controller={sourceView} />
-
         <QuickActionMenu
           offset={{ x: compLib.value ? sidebarSize : 0 }}
           anchor={{ bottom: 20, left: 20 }}
           compLib={compLib}
           sourceView={sourceView}
         />
+
+        <CompLib controller={compLib} />
+        <SourceView controller={sourceView} />
       </Stack>
     </SchematicContext.Provider>
   );

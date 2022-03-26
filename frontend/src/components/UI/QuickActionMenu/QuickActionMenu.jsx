@@ -9,7 +9,6 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CodeIcon from '@mui/icons-material/Code';
 import SaveIcon from '@mui/icons-material/Save';
 import ShareIcon from '@mui/icons-material/Share';
-import DownloadIcon from '@mui/icons-material/Download';
 
 import { useBoolean } from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
@@ -89,14 +88,9 @@ export function QuickActionMenu({
         {
           name: 'Share',
           icon: <ShareIcon />,
-          onClick: () => {},
-          disabled: true,
-        },
-        {
-          name: 'Download',
-          icon: <DownloadIcon />,
-          onClick: () => {},
-          disabled: true,
+          href: 'https://urisolve.pt/app/',
+          target: '_blank',
+          rel: 'noopener',
         },
       ],
     },
@@ -115,7 +109,10 @@ export function QuickActionMenu({
     >
       <Stack direction='row' {...rest}>
         {actionGroups.map((group, groupIdx) => (
-          <Box sx={{ mr: groupIdx !== actionGroups.length - 1 ? 2 : 0 }}>
+          <Box
+            key={groupIdx}
+            sx={{ mr: groupIdx !== actionGroups.length - 1 ? 2 : 0 }}
+          >
             {group.actions.map((action, actionIdx) => (
               <QuickAction key={actionIdx} {...action} />
             ))}

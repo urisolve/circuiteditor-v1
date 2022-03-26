@@ -1,7 +1,7 @@
 import { IconButton, Stack, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-export function MenuHeader({ onClose, children, ...rest }) {
+export function MenuHeader({ onClose, children, icon, ...rest }) {
   return (
     <Stack
       direction='row'
@@ -9,9 +9,14 @@ export function MenuHeader({ onClose, children, ...rest }) {
       justifyContent='space-between'
       {...rest}
     >
-      <Typography variant='h5' component='h3' noWrap>
-        {children}
-      </Typography>
+      <Stack direction='row' alignItems='center' spacing={1}>
+        {icon}
+
+        <Typography variant='h5' component='h3' textAlign='center' noWrap>
+          {children}
+        </Typography>
+      </Stack>
+
       <IconButton onClick={onClose}>
         <CloseIcon />
       </IconButton>
