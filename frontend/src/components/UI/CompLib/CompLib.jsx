@@ -16,6 +16,7 @@ import {
   SwipeableDrawer,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 // Custom component
 import { MenuHeader } from '..';
@@ -59,7 +60,9 @@ export function CompLib({ controller, ...rest }) {
       <Toolbar /> {/* Push the content down by the size of a Toolbar */}
       <Box sx={{ overflowY: 'auto', flexGrow: 1 }}>
         <Box sx={{ p: 2 }}>
-          <MenuHeader onClose={controller.off}>Components</MenuHeader>
+          <MenuHeader icon={<MenuBookIcon />} onClose={controller.off}>
+            Components
+          </MenuHeader>
           <SearchBar value={searchQuery} setValue={setSearchQuery} />
         </Box>
 

@@ -1,8 +1,8 @@
-// Material-UI
-import { Box, Stack, SwipeableDrawer, Toolbar } from '@mui/material';
 import { useContext } from 'react';
 
-// Custom component
+import { Box, Stack, SwipeableDrawer, Toolbar } from '@mui/material';
+import CodeIcon from '@mui/icons-material/Code';
+
 import { MenuHeader } from '..';
 import { SchematicContext } from '../../../contexts';
 
@@ -29,7 +29,9 @@ export function SourceView({ controller, ...rest }) {
     >
       <Toolbar />
       <Stack flexGrow={1} sx={{ p: 2 }}>
-        <MenuHeader onClose={controller.off}>Source View</MenuHeader>
+        <MenuHeader icon={<CodeIcon />} onClose={controller.off}>
+          Source View
+        </MenuHeader>
         <Box sx={{ flexGrow: 1, overflow: 'scroll' }}>
           <pre>
             <code>{JSON.stringify(code, null, 1)}</code>
@@ -38,4 +40,4 @@ export function SourceView({ controller, ...rest }) {
       </Stack>
     </SwipeableDrawer>
   );
-};
+}
