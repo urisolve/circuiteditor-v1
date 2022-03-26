@@ -16,7 +16,6 @@ import { QuickAction } from '../QuickAction';
 
 export function QuickActionMenu({
   offset,
-  anchor,
   children,
   duration,
   easing,
@@ -99,10 +98,10 @@ export function QuickActionMenu({
   return (
     <Paper
       sx={{
+        bottom: 0,
+        left: '50%',
         position: 'fixed',
-        transform: `translate(${offset.x ?? 0}px, ${offset.y ?? 0}px)`,
-        transition: `transform ${duration ?? '0.25s'} ${easing ?? ''}`,
-        ...anchor,
+        transform: 'translate(-50%, -50%)',
         ...sx,
       }}
       {...rest}

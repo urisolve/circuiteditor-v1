@@ -4,26 +4,21 @@ import lodash from 'lodash';
 import { Comp } from '../Comp';
 import { SearchBar } from '../SearchBar';
 
-// Material-UI
 import {
   Typography,
-  Toolbar,
   Accordion,
   AccordionSummary,
   AccordionDetails,
   Box,
-  Stack,
-  SwipeableDrawer,
+  Grid,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
-// Custom component
 import { MenuHeader } from '..';
 import { library } from '../../../configs';
 import { SchematicContext } from '../../../contexts';
-
-const sidebarWidth = 310;
+import { Drawer } from '../Drawer';
 
 export function CompLib({ controller, ...rest }) {
   const { add: addToSchematic } = useContext(SchematicContext);
@@ -42,73 +37,49 @@ export function CompLib({ controller, ...rest }) {
   }, [searchQuery]);
 
   return (
-    <SwipeableDrawer
-      variant='persistent'
-      sx={{
-        width: sidebarWidth,
-        display: 'flex',
-        '& .MuiBox-root': {
-          width: sidebarWidth,
-        },
-      }}
-      ModalProps={{ keepMounted: true }} // Better performance on mobile.
-      open={controller.value}
-      onClose={controller.off}
-      onOpen={controller.on}
-      {...rest}
-    >
-      <Toolbar /> {/* Push the content down by the size of a Toolbar */}
-      <Box sx={{ overflowY: 'auto', flexGrow: 1 }}>
-        <Box sx={{ p: 2 }}>
-          <MenuHeader icon={<MenuBookIcon />} onClose={controller.off}>
-            Components
-          </MenuHeader>
-          <SearchBar value={searchQuery} setValue={setSearchQuery} />
-        </Box>
+    <Drawer controller={controller} {...rest}>
+      <Box>
+        <MenuHeader icon={<MenuBookIcon />} onClose={controller.off}>
+          Components
+        </MenuHeader>
 
-        <Box sx={{ p: 2 }}>
-          {filteredLib.map((group) => (
-            <Accordion variant='outlined' key={group.title}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{group.title}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Stack
-                  direction='row'
-                  justifyContent='flex-start'
-                  align-items='flex-start'
-                  sx={{ flexWrap: 'wrap' }}
-                >
-                  {group.elements.map((element, idx) => {
-                    const comp = lodash.isFunction(element)
-                      ? element()
-                      : element;
-
-                    return (
-                      <Comp
-                        key={idx}
-                        action={() => addToSchematic(comp)}
-                        {...comp}
-                      />
-                    );
-                  })}
-                </Stack>
-              </AccordionDetails>
-            </Accordion>
-          ))}
-
-          {filteredLib.length === 0 && (
-            <>
-              <Typography variant='h6' align='center' gutterBottom>
-                Nothing found
-              </Typography>
-              <Typography variant='body1' align='center'>
-                There are no components that match that name
-              </Typography>
-            </>
-          )}
-        </Box>
+        <SearchBar value={searchQuery} setValue={setSearchQuery} />
       </Box>
-    </SwipeableDrawer>
+
+      <Box>
+        {filteredLib.map((group) => (
+          <Accordion variant='outlined' key={group.title}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>{group.title}</Typography>
+            </AccordionSummary>
+
+            <AccordionDetails>
+              <Grid container>
+                {group.elements.map((element, idx) => {
+                  const comp = lodash.isFunction(element) ? element() : element;
+
+                  return (
+                    <Grid key={idx} xs={4} item>
+                      <Comp action={() => addToSchematic(comp)} {...comp} />
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+
+        {filteredLib.length === 0 && (
+          <>
+            <Typography variant='h6' align='center' gutterBottom>
+              Nothing found
+            </Typography>
+            <Typography variant='body1' align='center'>
+              There are no components that match that name
+            </Typography>
+          </>
+        )}
+      </Box>
+    </Drawer>
   );
 }
