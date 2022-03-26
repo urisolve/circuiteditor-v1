@@ -1,43 +1,67 @@
 import { useContext } from 'react';
 
-import { Box, Stack, SwipeableDrawer, Toolbar } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Stack,
+  Typography,
+} from '@mui/material';
 import CodeIcon from '@mui/icons-material/Code';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { MenuHeader } from '..';
 import { SchematicContext } from '../../../contexts';
+import { Drawer } from '../Drawer';
+import { DownloadButton } from '../DownloadButton';
 
-const sidebarWidth = 310;
+export function SourceView({ circuitName, controller, ...rest }) {
+  const { data: json, netlist } = useContext(SchematicContext);
 
-export function SourceView({ controller, ...rest }) {
-  const { data: code } = useContext(SchematicContext);
+  const sources = [
+    {
+      code: netlist,
+      fileName: `${circuitName} - netlist.txt`,
+      title: 'Netlist',
+      type: 'plain',
+    },
+    {
+      code: JSON.stringify(json, null, 2),
+      fileName: `${circuitName} - schematic.json`,
+      title: 'JSON',
+      type: 'plain',
+    },
+  ];
 
   return (
-    <SwipeableDrawer
-      variant='persistent'
-      anchor='right'
-      sx={{
-        width: sidebarWidth,
-        '& .MuiBox-root': {
-          width: sidebarWidth,
-        },
-      }}
-      ModalProps={{ keepMounted: true }} // Better performance on mobile.
-      open={controller.value}
-      onClose={controller.off}
-      onOpen={controller.on}
-      {...rest}
-    >
-      <Toolbar />
-      <Stack flexGrow={1} sx={{ p: 2 }}>
-        <MenuHeader icon={<CodeIcon />} onClose={controller.off}>
-          Source View
-        </MenuHeader>
-        <Box sx={{ flexGrow: 1, overflow: 'scroll' }}>
-          <pre>
-            <code>{JSON.stringify(code, null, 1)}</code>
-          </pre>
-        </Box>
-      </Stack>
-    </SwipeableDrawer>
+    <Drawer anchor='right' controller={controller} {...rest}>
+      <MenuHeader icon={<CodeIcon />} onClose={controller.off}>
+        Source View
+      </MenuHeader>
+
+      <Box>
+        {sources.map(({ code, disabled, title, fileName, type }) => (
+          <Accordion disabled={disabled} variant='outlined'>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Stack direction='row' alignItems='center'>
+                <DownloadButton
+                  content={code}
+                  fileName={fileName}
+                  type={type}
+                />
+                <Typography>{title}</Typography>
+              </Stack>
+            </AccordionSummary>
+
+            <AccordionDetails sx={{ overflow: 'auto' }}>
+              <pre>
+                <code>{code}</code>
+              </pre>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+      </Box>
+    </Drawer>
   );
 }

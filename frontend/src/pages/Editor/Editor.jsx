@@ -5,12 +5,11 @@ import { SchematicContext } from '../../contexts';
 
 import { Stack } from '@mui/material';
 
-const sidebarSize = 310;
 const canvasSize = { width: 2560, height: 1440 }; // 16:9 resolution (1440p)
 
 const defaultCircuit = require('../../circuits/voltageDivider.json');
 
-export function Editor({ ...rest }) {
+export function Editor({ circuit, ...rest }) {
   const schematic = useSchematic(defaultCircuit);
 
   const compLib = useBoolean(false);
@@ -23,21 +22,18 @@ export function Editor({ ...rest }) {
         justifyContent='center'
         sx={{
           ...canvasSize,
-          overflow: 'scroll',
           background: 'radial-gradient(#fff, #eee)',
         }}
       >
         <Schematic selection={schematic.selection} {...rest} />
 
-        <QuickActionMenu
-          offset={{ x: compLib.value ? sidebarSize : 0 }}
-          anchor={{ bottom: 20, left: 20 }}
-          compLib={compLib}
-          sourceView={sourceView}
-        />
+        <QuickActionMenu compLib={compLib} sourceView={sourceView} />
 
         <CompLib controller={compLib} />
-        <SourceView controller={sourceView} />
+        <SourceView
+          circuitName={circuit?.name ?? 'circuit'}
+          controller={sourceView}
+        />
       </Stack>
     </SchematicContext.Provider>
   );
