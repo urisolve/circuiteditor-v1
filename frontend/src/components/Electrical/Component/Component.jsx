@@ -35,6 +35,8 @@ export function Component({
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
 
+  const rotationTransform = `rotate(${position?.angle ?? 0}deg)`;
+
   return (
     <DraggableComponent
       handle='.component-handle'
@@ -56,10 +58,13 @@ export function Component({
         sx={{
           width: width ?? 100,
           height: height ?? 100,
-          transform: `rotate(${position?.angle ?? 0}deg)`,
           filter: isSelected && `drop-shadow(3px 2px 0px #888)`,
+
+          transform: rotationTransform,
           '&:hover': {
-            transform: `scale(1.05) rotate(${position?.angle ?? 0}deg)`,
+            transform: `${rotationTransform} scale(${
+              process.env.REACT_APP_SCHEMATIC_HOVER_SCALE ?? 1
+            })`,
           },
         }}
       />

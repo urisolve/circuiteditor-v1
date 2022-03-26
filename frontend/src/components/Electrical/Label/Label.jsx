@@ -47,8 +47,11 @@ export function Label({
         sx={{
           height: 20,
           padding: '5px',
+
           '&:hover': {
-            transform: 'scale(1.1)',
+            transform: `scale(${
+              process.env.REACT_APP_SCHEMATIC_HOVER_SCALE ?? 1
+            })`,
           },
         }}
       >

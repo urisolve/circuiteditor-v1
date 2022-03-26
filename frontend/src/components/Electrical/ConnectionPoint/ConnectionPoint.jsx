@@ -10,8 +10,11 @@ export function ConnectionPoint({ id, sx, ...rest }) {
       sx={{
         position: 'absolute',
         borderRadius: '50%',
+
         '&:hover': {
-          transform: 'scale(1.25)',
+          transform: `scale(${
+            process.env.REACT_APP_SCHEMATIC_HOVER_SCALE ?? 1
+          })`,
         },
 
         ...sx,
