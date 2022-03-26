@@ -10,8 +10,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { SchematicContext } from '../../../contexts';
 
-const ROTATION_INCREMENT = 45;
-
 export function ContextMenu({ id, isOpen, close, position }) {
   const {
     data: schematic,
@@ -19,6 +17,8 @@ export function ContextMenu({ id, isOpen, close, position }) {
     editById,
     selection: { selectedItems },
   } = useContext(SchematicContext);
+
+  const rotationIncrement = process.env.REACT_APP_ROTATION_INCREMENT ?? 45;
 
   const rotateSelection = useCallback(
     (amount) => {
@@ -35,58 +35,55 @@ export function ContextMenu({ id, isOpen, close, position }) {
     [id, schematic],
   );
 
-  const actionGroups = useMemo(
-    () => [
-      {
-        name: 'Edit',
-        actions: [
-          {
-            disabled: true,
-            icon: <DuplicateIcon />,
-            name: 'Copy',
-          },
-          {
-            disabled: true,
-            icon: <PasteIcon />,
-            name: 'Paste',
-          },
-          {
-            disabled: true,
-            icon: <CutIcon />,
-            name: 'Cut',
-          },
-        ],
-      },
-      {
-        name: 'Rotate',
-        hidden: !isClickingOnComponent,
-        actions: [
-          {
-            icon: <RotateLeftIcon />,
-            name: 'Rotate Left',
-            onClick: () => rotateSelection(-ROTATION_INCREMENT),
-          },
-          {
-            icon: <RotateRightIcon />,
-            name: 'Rotate Right',
-            onClick: () => rotateSelection(+ROTATION_INCREMENT),
-          },
-        ],
-      },
-      {
-        name: 'Delete',
-        actions: [
-          {
-            color: 'IndianRed',
-            icon: <DeleteIcon />,
-            name: 'Delete',
-            onClick: () => deleteById([id, ...selectedItems]),
-          },
-        ],
-      },
-    ],
-    [deleteById, id, isClickingOnComponent, rotateSelection, selectedItems],
-  );
+  const actionGroups = [
+    {
+      name: 'Edit',
+      actions: [
+        {
+          disabled: true,
+          icon: <DuplicateIcon />,
+          name: 'Copy',
+        },
+        {
+          disabled: true,
+          icon: <PasteIcon />,
+          name: 'Paste',
+        },
+        {
+          disabled: true,
+          icon: <CutIcon />,
+          name: 'Cut',
+        },
+      ],
+    },
+    {
+      name: 'Rotate',
+      hidden: !isClickingOnComponent,
+      actions: [
+        {
+          icon: <RotateLeftIcon />,
+          name: 'Rotate Left',
+          onClick: () => rotateSelection(-rotationIncrement),
+        },
+        {
+          icon: <RotateRightIcon />,
+          name: 'Rotate Right',
+          onClick: () => rotateSelection(+rotationIncrement),
+        },
+      ],
+    },
+    {
+      name: 'Delete',
+      actions: [
+        {
+          color: 'IndianRed',
+          icon: <DeleteIcon />,
+          name: 'Delete',
+          onClick: () => deleteById([id, ...selectedItems]),
+        },
+      ],
+    },
+  ];
 
   return (
     <Menu
