@@ -8,7 +8,7 @@ import { Stack } from '@mui/material';
 const sidebarSize = 310;
 const canvasSize = { width: 2560, height: 1440 }; // 16:9 resolution (1440p)
 
-const defaultCircuit = require('../../templates/voltageDivider.json');
+const defaultCircuit = require('../../circuits/voltageDivider.json');
 
 export function Editor({ ...rest }) {
   const schematic = useSchematic(defaultCircuit);
