@@ -22,13 +22,13 @@ export function SourceView({ circuitName, controller, ...rest }) {
   const sources = [
     {
       code: netlist,
-      fileName: `${circuitName} - netlist.txt`,
+      fileName: `${circuitName}.txt`,
       title: 'Netlist',
       type: 'plain',
     },
     {
       code: JSON.stringify(json, null, 2),
-      fileName: `${circuitName} - schematic.json`,
+      fileName: `${circuitName}.json`,
       title: 'JSON',
       type: 'plain',
     },

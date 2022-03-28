@@ -31,7 +31,7 @@ export function Editor({ circuit, ...rest }) {
 
         <CompLib controller={compLib} />
         <SourceView
-          circuitName={circuit?.name ?? 'circuit'}
+          circuitName={circuit?.name ?? 'untitled'}
           controller={sourceView}
         />
       </Stack>
