@@ -40,27 +40,20 @@ function splitPorts(schematic) {
 }
 
 function applyGround(schematic) {
-  for (const [idx, component] of schematic.components.entries()) {
+  for (const component of schematic.components) {
     // Ignore non-ground components
     if (component.type !== 'gnd') continue;
 
-    // Create a node named "gnd"
-    const gndNode = { id: uuidv4(), type: 'virtual', label: { name: 'gnd' } };
-    schematic.nodes.push(gndNode);
+    // Find the ground node
+    const [gndPort] = component.ports; // GND only has 1 port
+    const gndNode = schematic.nodes.find((node) =>
+      node.connections?.includes(gndPort.connection),
+    );
 
-    // Move the component's connections to the node
-    for (const connection of schematic.connections) {
-      for (const port of component.ports) {
-        // Ignore unrelated connections
-        if (!isConnected(port, connection)) continue;
-
-        // Move connection to the new node
-        moveConnection(connection, port, gndNode);
-      }
+    // Rename the node
+    if (gndNode) {
+      gndNode.label = { name: 'gnd' };
     }
-
-    // Delete the original component
-    schematic.components.splice(idx, 1);
   }
 }
 
@@ -85,10 +78,12 @@ function condenseNodes(schematic) {
     if (!connectedNodes.length) continue;
 
     // Move connections to new node
+    // TODO: Also move the label
     for (const connectedNode of connectedNodes) {
       for (const connection of schematic.connections) {
-        if (isConnected(connectedNode, connection))
+        if (isConnected(connectedNode, connection)) {
           moveConnection(connection, connectedNode, node);
+        }
       }
     }
 
@@ -140,12 +135,13 @@ function buildNetlist(schematic) {
 
   // Normalize the schematic's data model
   splitPorts(schematic);
-  applyGround(schematic);
   condenseNodes(schematic);
+  applyGround(schematic);
   withVirtualNodes(schematic);
 
   // Add each component to the netlist
   for (const component of schematic.components) {
+    if (component.type === 'gnd') continue;
     const nodesStr = generateNodesString(component, schematic);
     netlist += `${component.type}:${component.label?.name} ${nodesStr}\n`;
   }
