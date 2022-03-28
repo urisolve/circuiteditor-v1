@@ -42,7 +42,7 @@ export function SourceView({ circuitName, controller, ...rest }) {
 
       <Box>
         {sources.map(({ code, disabled, title, fileName, type }) => (
-          <Accordion disabled={disabled} variant='outlined'>
+          <Accordion key={title} disabled={disabled} variant='outlined'>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Stack direction='row' alignItems='center'>
                 <DownloadButton
