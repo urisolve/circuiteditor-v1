@@ -12,7 +12,7 @@ const defaultCircuit = require('../../circuits/voltageDivider.json');
 export function Editor({ circuit, ...rest }) {
   const schematic = useSchematic(defaultCircuit);
 
-  const compLib = useBoolean(false);
+  const compLib = useBoolean(true);
   const sourceView = useBoolean(false);
 
   return (
