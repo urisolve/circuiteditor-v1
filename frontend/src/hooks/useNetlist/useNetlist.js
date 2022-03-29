@@ -7,7 +7,7 @@ import { isConnected, isConnectionRedundant, moveConnection } from '../../util';
 
 // TODO: Add more info to the header (author, date, ...)
 const version = process.env.REACT_APP_VERSION ?? '1.0.0';
-const netlistHeader = `# U=RIsolve's CircuitEditor v${version}\n\n`;
+const netlistHeader = `# CircuitEditor v${version}\n\n`;
 
 function splitPorts(schematic) {
   for (const component of schematic.components) {
