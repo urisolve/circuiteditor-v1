@@ -13,7 +13,7 @@ import {
   Grid,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 import { MenuHeader } from '..';
 import { library } from '../../../configs';
@@ -39,7 +39,7 @@ export function CompLib({ controller, ...rest }) {
   return (
     <Drawer controller={controller} {...rest}>
       <Box>
-        <MenuHeader icon={<MenuBookIcon />} onClose={controller.off}>
+        <MenuHeader icon={<ListAltIcon />} onClose={controller.off}>
           Components
         </MenuHeader>
 
