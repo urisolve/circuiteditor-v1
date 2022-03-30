@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Box, Paper, Stack } from '@mui/material';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import CodeIcon from '@mui/icons-material/Code';
 import SaveIcon from '@mui/icons-material/Save';
 import ShareIcon from '@mui/icons-material/Share';
@@ -66,7 +66,7 @@ export function QuickActionMenu({
       actions: [
         {
           name: `${compLib.value ? 'Hide' : 'Show'} Component Library`,
-          icon: <MenuBookIcon />,
+          icon: <ListAltIcon />,
           onClick: compLib.toggle,
         },
         {
