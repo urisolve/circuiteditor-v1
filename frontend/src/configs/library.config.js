@@ -3,7 +3,7 @@ import { components } from '.';
 export const library = [
   {
     title: 'Connectors',
-    elements: [components.Ground, components.Wire],
+    elements: [components.Ground, components.Wire, components.Marker],
   },
   {
     title: 'Passive',
