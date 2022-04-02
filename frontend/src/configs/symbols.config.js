@@ -10,6 +10,7 @@ import DCCurrentSource from '../assets/electrical/idc.svg';
 import Voltmeter from '../assets/electrical/voltmeter.svg';
 import Ammeter from '../assets/electrical/ammeter.svg';
 import Wire from '../assets/electrical/wire.svg';
+import Marker from '../assets/electrical/node.svg';
 
 export const symbols = {
   Resistor,
@@ -24,4 +25,5 @@ export const symbols = {
   Voltmeter,
   Ammeter,
   Wire,
+  Marker,
 };

@@ -142,4 +142,10 @@ export const components = Object.freeze({
       ],
     };
   },
+  Marker: (position) => ({
+    fullName: 'Marker',
+    components: [],
+    connections: [],
+    nodes: [{ id: uuidv4(), position }],
+  }),
 });
