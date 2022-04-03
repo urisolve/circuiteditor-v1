@@ -5,6 +5,7 @@ import { Typography } from '@mui/material';
 import { DraggableComponent } from '..';
 import { SchematicContext } from '../../../contexts';
 import { useGlobalRefMap } from '../../../hooks';
+import { formatLabel } from '../../../util';
 
 export function Label({
   owner,
@@ -25,18 +26,10 @@ export function Label({
   const schematic = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
 
-  const formattedLabel = useMemo(() => {
-    const formattedValue = (value ?? '')
-      .replace(/(?<=\d)[^\d.,]$/gm, ' $&')
-      .trim();
-
-    let label = name;
-    if (name && value) label += ' = ';
-    if (value) label += formattedValue;
-    if (unit) label += value ? `${unit}` : ` (${unit})`;
-
-    return label;
-  }, [name, value, unit]);
+  const formattedLabel = useMemo(
+    () => formatLabel({ name, value, unit }),
+    [name, value, unit],
+  );
 
   if (isHidden) {
     return null;

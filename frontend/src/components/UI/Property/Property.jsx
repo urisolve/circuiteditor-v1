@@ -1,18 +1,21 @@
 import lodash from 'lodash';
 
-import { Box, FormHelperText, TextField } from '@mui/material';
+import { forwardRef, useMemo } from 'react';
+import { TextField } from '@mui/material';
 
-export function Property({ name, desc, ...rest }) {
+export const Property = forwardRef(({ errors, name, ...rest }, ref) => {
+  const error = useMemo(() => lodash.get(errors, name), [errors, name]);
+
   return (
-    <Box>
-      <TextField
-        variant='outlined'
-        margin='dense'
-        label={lodash.startCase(name)}
-        fullWidth
-        {...rest}
-      />
-      <FormHelperText>{desc}</FormHelperText>
-    </Box>
+    <TextField
+      fullWidth
+      error={!!error}
+      helperText={error?.message}
+      margin='normal'
+      name={name}
+      ref={ref}
+      variant='outlined'
+      {...rest}
+    />
   );
-}
+});
