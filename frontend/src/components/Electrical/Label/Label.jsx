@@ -23,7 +23,7 @@ export function Label({
   const labelID = useMemo(() => `${owner}-label`, [owner]);
   const refMap = useGlobalRefMap(labelID);
 
-  const schematic = useContext(SchematicContext);
+  const { data: schematic } = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
 
   const formattedLabel = useMemo(
@@ -40,16 +40,15 @@ export function Label({
       position={position}
       onStart={() => setStartSch(schematic)}
       onDrag={(_e, { x, y }) => updatePosition(owner, { x, y }, null, true)}
-      onStop={(_e, { x, y }) =>
-        updatePosition(owner, { x, y }, startSch.data, true)
-      }
+      onStop={(_e, { x, y }) => updatePosition(owner, { x, y }, startSch, true)}
       {...rest}
     >
       <Typography
         onDoubleClick={onDoubleClick}
+        noWrap
         ref={refMap.set(labelID)}
         sx={{
-          height: 20,
+          fontWeight: 'bold',
           padding: '5px',
 
           '&:hover': {
@@ -59,7 +58,7 @@ export function Label({
           },
         }}
       >
-        <b>{formattedLabel}</b>
+        {formattedLabel}
       </Typography>
     </DraggableComponent>
   );
