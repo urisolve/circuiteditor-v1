@@ -34,7 +34,7 @@
       "label": {
         "name": "R",
         "value": "10k",
-        "unit": "Ω",
+        "unit": "Ohm",
         "position": { "x": 10, "y": 0 }
       },
       "ports": [
@@ -85,7 +85,7 @@
       "position": { "x": 510, "y": 200, "angle": 90 },
       "label": {
         "name": "C",
-        "value": "1µ",
+        "value": "1u",
         "unit": "F",
         "position": { "x": 70, "y": 70 }
       },

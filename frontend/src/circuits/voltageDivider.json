@@ -34,7 +34,7 @@
       "label": {
         "name": "R1",
         "value": "10k",
-        "unit": "Ω",
+        "unit": "Ohm",
         "position": { "x": 70, "y": 30 }
       },
       "ports": [
@@ -60,7 +60,7 @@
       "label": {
         "name": "R2",
         "value": "10k",
-        "unit": "Ω",
+        "unit": "Ohm",
         "position": { "x": 70, "y": 30 }
       },
       "ports": [
@@ -82,7 +82,7 @@
       "id": "ef4bc1f6-e72f-4c4c-b9bb-76ea5d36c13b",
       "type": "VProbe",
       "fullName": "Voltmeter",
-      "position": { "x": 450, "y": 260, "angle": 90 },
+      "position": { "x": 470, "y": 260, "angle": 90 },
       "label": {
         "name": "Vo",
         "position": { "x": 70, "y": 70 }
