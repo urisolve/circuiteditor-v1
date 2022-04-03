@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid'
 import lodash from 'lodash';
 
-import { generateNodesString, generateVirtualNode } from '../../util';
+import { generateNodeLabel, generateVirtualNode } from '../../util';
 import { isConnected, isConnectionRedundant, moveConnection } from '../../util';
 
 // TODO: Add more info to the header (author, date, ...)
@@ -130,31 +130,73 @@ function withVirtualNodes(schematic) {
   }
 }
 
-function buildNetlist(schematic) {
-  let netlist = netlistHeader;
-
-  // Normalize the schematic's data model
-  splitPorts(schematic);
-  condenseNodes(schematic);
-  applyGround(schematic);
-  withVirtualNodes(schematic);
-
-  // Add each component to the netlist
-  for (const component of schematic.components) {
-    if (component.type === 'gnd') continue;
-    const nodesStr = generateNodesString(component, schematic);
-    netlist += `${component.type}:${component.label?.name} ${nodesStr}\n`;
-  }
-
-  return netlist;
+function generateNameString({ type, label: { name } }) {
+  return `${type}:${name}`;
 }
 
-export function useNetlist(schematic) {
+function generateNodesString(component, schematic) {
+  let nodeStr = '';
+
+  for (const port of component.ports) {
+    const conn = schematic.connections.find((conn) => isConnected(port, conn));
+
+    if (!conn)
+      throw new Error(
+        `Component with ID "${component.id}" is not fully connected. Make sure all ports of the component are connected somewhere.`,
+      );
+
+    // Search for the node (virtual or real) that is connected to the port
+    const node = schematic.nodes.find((node) => isConnected(node, conn));
+
+    // Generate a name if the node doesn't have one
+    if (!node.label) {
+      node.label = { name: generateNodeLabel(schematic) };
+    } else if (!node.label.name) {
+      node.label.name = generateNodeLabel(schematic);
+    }
+
+    // Convert it into string
+    nodeStr += node?.label.name + ' ';
+  }
+
+  // Trim the last space and return
+  return lodash.trimEnd(nodeStr);
+}
+
+function generateValueString({ type, label: { value = '', unit = '' } }) {
+  if (!value) return '';
+
+  const formattedValue = value.replace(/(?<=\d)[^\d.,]$/gm, ' $&').trim();
+  return `${type}="${formattedValue}${unit}"`;
+}
+
+export function useNetlist(sch) {
   return useMemo(() => {
     // Clone the schematic to not change the circuit itself
-    const sch = lodash.cloneDeep(schematic);
+    const schematic = lodash.cloneDeep(sch);
 
-    // Build the netlist
-    return buildNetlist(sch);
-  }, [schematic]);
+    // Normalize the schematic's data model
+    splitPorts(schematic);
+    condenseNodes(schematic);
+    applyGround(schematic);
+    withVirtualNodes(schematic);
+
+    // Add each component to the netlist
+    let netlist = netlistHeader;
+    for (const component of schematic.components) {
+      if (component.type === 'gnd') continue;
+
+      try {
+        const nameStr = generateNameString(component);
+        const nodesStr = generateNodesString(component, schematic);
+        const valueStr = generateValueString(component);
+
+        netlist += `${nameStr} ${nodesStr} ${valueStr}\n`;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    return netlist;
+  }, [sch]);
 };
