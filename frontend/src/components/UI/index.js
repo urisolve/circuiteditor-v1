@@ -9,6 +9,7 @@ export * from './Footer';
 export * from './FormInput';
 export * from './Hero';
 export * from './HowTo';
+export * from './LabelForm';
 export * from './Login';
 export * from './MenuHeader';
 export * from './Navbar';

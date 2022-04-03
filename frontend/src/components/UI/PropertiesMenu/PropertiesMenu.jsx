@@ -1,18 +1,14 @@
-import lodash from 'lodash';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Modal,
-  Stack,
-  Tab,
-  Tabs,
-} from '@mui/material';
+import { Box, Button, Modal, Stack, Tab, Tabs } from '@mui/material';
 
 import { MenuHeader, Property, TabPanel } from '..';
-import { usePropertiesActions, usePropertiesForm } from '../../../hooks';
+import { LabelForm } from '../LabelForm';
+import { SchematicContext } from '../../../contexts';
+import { useContext } from 'react';
+import { labelValueRegex } from '../../../util';
 
 const modalStyle = {
   // Positioning
@@ -29,15 +25,39 @@ const modalStyle = {
   width: 360,
 };
 
-const defaultLabel = { name: '', value: '' };
-const specialLabelProps = {
-  omit: ['position', 'isHidden'],
-  disabled: ['unit'],
-};
+// TODO: Improve the schema's validation
+const schema = yup.object({
+  label: yup.object({
+    name: yup.string().trim(),
+    value: yup.string().trim().matches(labelValueRegex, 'Insert a valid value'),
+    unit: yup.string().trim(),
+    isHidden: yup.boolean(),
+  }),
+  properties: yup.object({}),
+});
 
 export function PropertiesMenu({ menu, id, label, properties }) {
-  const form = usePropertiesForm(label, properties, menu.isOpen);
-  const actions = usePropertiesActions(id, menu, form);
+  const { data: schematic, editById } = useContext(SchematicContext);
+
+  const form = useForm({
+    defaultValues: { label, properties },
+    mode: 'onBlur',
+    resolver: yupResolver(schema),
+  });
+
+  const actions = {
+    ok: (data) => {
+      editById(id, data, schematic);
+      menu.close();
+    },
+    cancel: () => {
+      menu.close();
+      form.reset();
+    },
+    apply: (data) => {
+      editById(id, data, schematic);
+    },
+  };
 
   return (
     <Modal
@@ -64,41 +84,18 @@ export function PropertiesMenu({ menu, id, label, properties }) {
 
         {/* Properties */}
         <TabPanel value={menu.selectedTab} index={0}>
-          <Property name='ID' value={id} disabled />
-          {Object.entries(properties ?? {}).map(([name, value], idx) => (
-            <Property key={idx} name={name} value={value} />
-          ))}
+          <Property label='ID' value={id} disabled />
         </TabPanel>
 
         {/* Label */}
         <TabPanel value={menu.selectedTab} index={1}>
-          {Object.keys({
-            ...defaultLabel,
-            ...lodash.omit(label, specialLabelProps.omit),
-          }).map((key) => (
-            <Property
-              key={key}
-              name={lodash.capitalize(key)}
-              value={form.newComp.label?.[key] ?? ''}
-              onChange={(e) => form.updateNewLabel(key, e.target.value)}
-              disabled={specialLabelProps.disabled.includes(key)}
-            />
-          ))}
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={form.newComp.label.isHidden}
-                onChange={form.toggleLabel}
-              />
-            }
-            label='Hide Label'
-          />
+          <LabelForm {...form} />
         </TabPanel>
 
         <Stack direction='row' justifyContent='flex-end'>
-          <Button onClick={actions.ok}>OK</Button>
+          <Button onClick={form.handleSubmit(actions.ok)}>OK</Button>
           <Button onClick={actions.cancel}>Cancel</Button>
-          <Button onClick={actions.apply}>Apply</Button>
+          <Button onClick={form.handleSubmit(actions.apply)}>Apply</Button>
         </Stack>
       </Box>
     </Modal>
