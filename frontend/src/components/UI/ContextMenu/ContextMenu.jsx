@@ -22,7 +22,7 @@ export function ContextMenu({ id, isOpen, close, position }) {
 
   const rotateSelection = useCallback(
     (amount) => {
-      editById([id, ...selectedItems], (elem) => {
+      editById([...new Set([id, ...selectedItems])], (elem) => {
         elem.position.angle = (elem.position.angle ?? 0) + amount;
         return elem;
       });
