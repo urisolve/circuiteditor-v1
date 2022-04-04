@@ -25,24 +25,36 @@ const modalStyle = {
   width: 360,
 };
 
-// TODO: Improve the schema's validation
-const schema = yup.object({
-  label: yup.object({
-    name: yup.string().trim(),
-    value: yup.string().trim().matches(labelValueRegex, 'Insert a valid value'),
-    unit: yup.string().trim(),
-    isHidden: yup.boolean(),
-  }),
-  properties: yup.object({}),
-});
-
-export function PropertiesMenu({ menu, id, label, properties }) {
+export function PropertiesMenu({ menu, id, label, properties, unitDisabled }) {
   const { data: schematic, editById } = useContext(SchematicContext);
 
   const form = useForm({
     defaultValues: { label, properties },
     mode: 'onBlur',
-    resolver: yupResolver(schema),
+    resolver: yupResolver(
+      yup.object({
+        label: yup.object({
+          name: yup
+            .string()
+            .trim()
+            .test(
+              'repeat',
+              'That name is already taken',
+              (name, context) =>
+                !schematic.nodes.find(
+                  (node) => node.id !== id && node?.label?.name === name,
+                ),
+            ),
+          value: yup.string().trim().matches(labelValueRegex, {
+            excludeEmptyString: true,
+            message: 'Insert a valid value',
+          }),
+          unit: yup.string().trim(),
+          isHidden: yup.boolean(),
+        }),
+        properties: yup.object({}),
+      }),
+    ),
   });
 
   const actions = {
@@ -89,7 +101,7 @@ export function PropertiesMenu({ menu, id, label, properties }) {
 
         {/* Label */}
         <TabPanel value={menu.selectedTab} index={1}>
-          <LabelForm {...form} />
+          <LabelForm unitDisabled={unitDisabled} {...form} />
         </TabPanel>
 
         <Stack direction='row' justifyContent='flex-end'>
