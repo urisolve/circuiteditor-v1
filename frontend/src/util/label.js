@@ -20,3 +20,12 @@ export function formatLabel({ name = '', value = '', unit = '' }) {
 
   return label;
 }
+
+export function isNameTaken(name, id, schematic) {
+  return Object.values(schematic).reduce(
+    (isTaken, group) =>
+      isTaken ||
+      !!group.find((elem) => elem?.id !== id && elem?.label?.name === name),
+    false,
+  );
+}

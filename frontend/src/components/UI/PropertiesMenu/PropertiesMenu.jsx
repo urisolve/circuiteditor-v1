@@ -8,7 +8,7 @@ import { MenuHeader, Property, TabPanel } from '..';
 import { LabelForm } from '../LabelForm';
 import { SchematicContext } from '../../../contexts';
 import { useContext } from 'react';
-import { labelValueRegex } from '../../../util';
+import { isNameTaken, labelValueRegex } from '../../../util';
 
 const modalStyle = {
   // Positioning
@@ -40,10 +40,7 @@ export function PropertiesMenu({ menu, id, label, properties, unitDisabled }) {
             .test(
               'repeat',
               'That name is already taken',
-              (name, context) =>
-                !schematic.nodes.find(
-                  (node) => node.id !== id && node?.label?.name === name,
-                ),
+              (name) => !isNameTaken(name, id, schematic),
             ),
           value: yup.string().trim().matches(labelValueRegex, {
             excludeEmptyString: true,
