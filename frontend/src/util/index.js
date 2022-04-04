@@ -6,4 +6,3 @@ export * from './label';
 export * from './math';
 export * from './nodes';
 export * from './schematicTypes';
-export * from './string';

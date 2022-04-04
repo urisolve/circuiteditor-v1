@@ -2,8 +2,14 @@ import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid'
 import lodash from 'lodash';
 
-import { generateNodeLabel, generateVirtualNode } from '../../util';
-import { isConnected, isConnectionRedundant, moveConnection } from '../../util';
+import {
+  generateUniqueName,
+  generateVirtualNode,
+  isConnected,
+  isConnectionRedundant,
+  LabelOptions,
+  moveConnection,
+} from '../../util';
 
 // TODO: Add more info to the header (author, date, ...)
 const version = process.env.REACT_APP_VERSION ?? '1.0.0';
@@ -140,20 +146,23 @@ function generateNodesString(component, schematic) {
   for (const port of component.ports) {
     const conn = schematic.connections.find((conn) => isConnected(port, conn));
 
-    if (!conn)
+    if (!conn) {
       throw new Error(
         `Component with ID "${component.id}" is not fully connected. Make sure all ports of the component are connected somewhere.`,
       );
+    }
 
     // Search for the node (virtual or real) that is connected to the port
     const node = schematic.nodes.find((node) => isConnected(node, conn));
 
     // Generate a name if the node doesn't have one
-    if (!node.label) {
-      node.label = { name: generateNodeLabel(schematic) };
-    } else if (!node.label.name) {
-      node.label.name = generateNodeLabel(schematic);
-    }
+    const uniqueName = generateUniqueName(
+      schematic.nodes,
+      LabelOptions.NUMERIC,
+      '_net',
+    );
+    if (!node.label) node.label = { name: uniqueName };
+    else if (!node.label.name) node.label.name = uniqueName;
 
     // Convert it into string
     nodeStr += node?.label.name + ' ';

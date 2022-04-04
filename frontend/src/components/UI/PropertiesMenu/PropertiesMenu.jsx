@@ -25,7 +25,14 @@ const modalStyle = {
   width: 360,
 };
 
-export function PropertiesMenu({ menu, id, label, properties, unitDisabled }) {
+export function PropertiesMenu({
+  contextKey,
+  menu,
+  id,
+  label,
+  properties,
+  unitDisabled,
+}) {
   const { data: schematic, editById } = useContext(SchematicContext);
 
   const form = useForm({
@@ -40,7 +47,7 @@ export function PropertiesMenu({ menu, id, label, properties, unitDisabled }) {
             .test(
               'repeat',
               'That name is already taken',
-              (name) => !isNameTaken(name, id, schematic),
+              (name) => !isNameTaken(schematic[contextKey], name, id),
             ),
           value: yup.string().trim().matches(labelValueRegex, {
             excludeEmptyString: true,

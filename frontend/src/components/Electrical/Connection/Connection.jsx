@@ -62,6 +62,7 @@ export function Connection({
       />
       <ContextMenu id={id} {...contextMenu} />
       <PropertiesMenu
+        contextKey='connections'
         id={id}
         label={label}
         properties={properties}

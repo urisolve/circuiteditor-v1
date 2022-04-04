@@ -55,6 +55,7 @@ export function Node({
 
       <ContextMenu id={id} {...contextMenu} />
       <PropertiesMenu
+        contextKey='nodes'
         id={id}
         label={label}
         properties={properties}

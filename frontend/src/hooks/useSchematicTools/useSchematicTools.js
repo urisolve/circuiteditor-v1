@@ -3,10 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 import lodash from 'lodash';
 
 import {
+  generateUniqueName,
   isComponent,
   isConnection,
   isNode,
   isSchematic,
+  LabelOptions,
   snapPosToGrid,
 } from '../../util';
 
@@ -43,6 +45,18 @@ export function useSchematicTools(setSchematic, history, gridSize) {
                   ...port,
                 })),
               }),
+
+              label: {
+                ...element.label,
+                name: generateUniqueName(
+                  newSchematic[key],
+                  isNode(element)
+                    ? LabelOptions.ALPHABETIC
+                    : LabelOptions.NUMERIC,
+                  element?.label?.name,
+                ),
+                isHidden: !isComponent(element),
+              },
             })),
           );
         });

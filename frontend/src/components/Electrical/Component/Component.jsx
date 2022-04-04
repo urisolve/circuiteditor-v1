@@ -93,6 +93,7 @@ export function Component({
 
       <ContextMenu id={id} {...contextMenu} />
       <PropertiesMenu
+        contextKey='components'
         id={id}
         label={label}
         properties={properties}
