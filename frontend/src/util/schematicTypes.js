@@ -29,6 +29,10 @@ export function isPort(element) {
   return Object.prototype.hasOwnProperty.call(element, 'owner');
 }
 
+export function isGround(element) {
+  return element.type === 'gnd';
+}
+
 export function hasLabel(element) {
   return Object.prototype.hasOwnProperty.call(element, 'label');
 }

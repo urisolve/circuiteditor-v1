@@ -106,11 +106,13 @@
   "nodes": [
     {
       "id": "bfc8216e-74b3-4a2b-9fcd-ee26ab327c7a",
-      "position": { "x": 350, "y": 230 }
+      "position": { "x": 350, "y": 230 },
+      "label": { "name": "A", "position": { "x": 10, "y":0 } }
     },
     {
       "id": "9900d06a-9dbc-488c-b21b-4ab603a87f9b",
-      "position": { "x": 350, "y": 390 }
+      "position": { "x": 350, "y": 390 },
+      "label": { "name": "B", "position": { "x": 10, "y":0 } }
     }
   ],
   "connections": [

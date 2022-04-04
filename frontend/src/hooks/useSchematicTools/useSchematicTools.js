@@ -6,6 +6,7 @@ import {
   generateUniqueName,
   isComponent,
   isConnection,
+  isGround,
   isNode,
   isSchematic,
   LabelOptions,
@@ -28,8 +29,8 @@ export function useSchematicTools(setSchematic, history, gridSize) {
         Object.entries(schema).forEach(([key, elementArr]) => {
           if (!['components', 'nodes', 'connections'].includes(key)) return;
 
-          newSchematic[key] = newSchematic[key].concat(
-            elementArr.map((element) => ({
+          elementArr.forEach((element) => {
+            newSchematic[key].push({
               id: uuidv4(),
               ...element,
 
@@ -48,17 +49,20 @@ export function useSchematicTools(setSchematic, history, gridSize) {
 
               label: {
                 ...element.label,
-                name: generateUniqueName(
-                  newSchematic[key],
-                  isNode(element)
-                    ? LabelOptions.ALPHABETIC
-                    : LabelOptions.NUMERIC,
-                  element?.label?.name,
-                ),
-                isHidden: !isComponent(element),
+                isHidden: isConnection(element) || isGround(element),
+                name: isGround(element)
+                  ? 'gnd'
+                  : generateUniqueName(
+                      newSchematic[key],
+                      isComponent(element)
+                        ? LabelOptions.NUMERIC
+                        : LabelOptions.ALPHABETIC,
+                      element?.label?.name ?? element?.type,
+                    ),
+                position: { x: 10, y: 0, ...element.label?.position },
               },
-            })),
-          );
+            });
+          });
         });
 
         // If the changes are valid, save the old schematic
