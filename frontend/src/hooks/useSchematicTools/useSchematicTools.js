@@ -65,8 +65,6 @@ export function useSchematicTools(setSchematic, history, gridSize) {
         if (!lodash.isEqual(oldSchematic, newSchematic))
           history.save(oldSchematic);
 
-        console.log(oldSchematic, newSchematic);
-
         return newSchematic;
       });
     },

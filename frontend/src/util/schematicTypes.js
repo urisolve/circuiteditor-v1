@@ -7,7 +7,7 @@ export function isSchematic(element) {
 }
 
 export function isConnected(element, connection) {
-  return element.id === connection.start || element.id === connection.end;
+  return element.id === connection?.start || element.id === connection?.end;
 }
 
 export function isComponent(element) {
@@ -22,7 +22,7 @@ export function isConnection(element) {
 }
 
 export function isNode(element) {
-  return Object.prototype.hasOwnProperty.call(element, 'connections');
+  return !isComponent(element) && !isConnected(element);
 }
 
 export function isPort(element) {

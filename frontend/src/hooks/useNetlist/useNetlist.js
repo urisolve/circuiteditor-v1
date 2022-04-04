@@ -201,9 +201,7 @@ export function useNetlist(sch) {
         const valueStr = generateValueString(component);
 
         netlist += `${nameStr} ${nodesStr} ${valueStr}\n`;
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
     }
 
     return netlist;
