@@ -11,6 +11,7 @@ import {
   moveConnection,
   numberPattern,
 } from '../../util';
+import { components } from '../../configs/components.config';
 
 // TODO: Add more info to the header (author, date, ...)
 const version = process.env.REACT_APP_VERSION ?? '1.0.0';
@@ -173,12 +174,13 @@ function generateNodesString(component, schematic) {
   return lodash.trimEnd(nodeStr);
 }
 
-function generateValueString({ type, label: { value = '', unit = '' } }) {
+function generateValueString({ fullName, label: { value = '', unit = '' } }) {
   if (!value) return '';
 
-  const pattern = new RegExp(numberPattern);
-  const formattedValue = value.replace(pattern, '$& ');
-  return `${type}="${formattedValue}${unit}"`;
+  const defaultName = components[fullName]?.label?.name;
+  const formattedValue = value.replace(new RegExp(numberPattern), '$& ');
+
+  return `${defaultName}="${formattedValue}${unit}"`;
 }
 
 export function useNetlist(sch) {
