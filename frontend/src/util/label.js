@@ -3,8 +3,10 @@ export const LabelOptions = Object.freeze({
   ALPHABETIC: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 });
 
+const prefixes = 'pnumkMGT';
+
 export const numberPattern = '[+-]?([0-9]+[.,]{1}[0-9]+|[0-9]+)';
-export const unitPrefixPattern = '[pnumkMGT]?';
+export const unitPrefixPattern = `( [${prefixes}]|[${prefixes}])?`;
 export const labelValueRegex = new RegExp(
   `^${numberPattern}${unitPrefixPattern}$`,
 );
@@ -16,7 +18,7 @@ export function validateLabelValue(value = '') {
 export function formatLabel({ name = '', value = '', unit = '' }) {
   // Insert space between value and unit prefix
   const pattern = new RegExp(numberPattern);
-  const formattedValue = value.replace(pattern, '$& ').trim();
+  const formattedValue = value.replace(pattern, '$& ');
 
   let label = name;
   if (name && value) label += ' = ';

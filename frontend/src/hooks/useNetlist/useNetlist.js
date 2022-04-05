@@ -9,6 +9,7 @@ import {
   isConnectionRedundant,
   LabelOptions,
   moveConnection,
+  numberPattern,
 } from '../../util';
 
 // TODO: Add more info to the header (author, date, ...)
@@ -175,7 +176,8 @@ function generateNodesString(component, schematic) {
 function generateValueString({ type, label: { value = '', unit = '' } }) {
   if (!value) return '';
 
-  const formattedValue = value.replace(/(?<=\d)[^\d.,]$/gm, ' $&').trim();
+  const pattern = new RegExp(numberPattern);
+  const formattedValue = value.replace(pattern, '$& ');
   return `${type}="${formattedValue}${unit}"`;
 }
 
