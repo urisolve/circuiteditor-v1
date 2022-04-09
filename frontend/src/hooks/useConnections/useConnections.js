@@ -58,8 +58,14 @@ export function useConnections(schematic, setSchematic, items) {
               elemPattern,
             );
 
-          // If the element is a port that is already connected, do nothing
-          if (isPort(overlaidElem) && overlaidElem.connection) return schematic;
+          // Don't connect if:
+          // - The element is a port that is already connected
+          // - The element is a port and the node has multiple connections
+          if (
+            isPort(overlaidElem) &&
+            (overlaidElem.connection || node.connections.length > 1)
+          )
+            return schematic;
 
           // Move connections from that node to the overlaid element
           for (const conn of schematic.connections) {
