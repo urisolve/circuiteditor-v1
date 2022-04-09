@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import lodash from 'lodash';
+import lodash, { cloneDeep, isEqual } from 'lodash';
 
 import { isConnected } from '../../util';
 import { components } from '../../configs';
@@ -27,6 +27,8 @@ function normalizePorts(schematic) {
 }
 
 export function parseSchematic(schematic) {
+  const initialSchematic = cloneDeep(schematic);
+
   // Apply default properties to incomplete components
   schematic.components = schematic.components.map((comp) =>
     lodash.defaultsDeep(comp, components[comp?.fullName]),
@@ -35,7 +37,7 @@ export function parseSchematic(schematic) {
   normalizeNodes(schematic);
   normalizePorts(schematic);
 
-  return schematic;
+  return isEqual(initialSchematic, schematic) ? schematic : { ...schematic };
 }
 
 export function useSchematicParser(schematic, setSchematic) {

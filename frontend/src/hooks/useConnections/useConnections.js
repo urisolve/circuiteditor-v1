@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import lodash from 'lodash';
+import lodash, { cloneDeep, isEqual } from 'lodash';
 
 import { useGlobalRefMap } from '..';
 import { isPort, rotateCoords } from '../../util';
@@ -26,8 +26,8 @@ function buildPortsMap(schematic, refMap) {
       };
 
       // Add it to the hash map
-      const positionString = JSON.stringify(realPos);
-      seenPositions.set(positionString, port.id);
+      const positionHash = JSON.stringify(realPos);
+      seenPositions.set(positionHash, port.id);
     }
   }
 
@@ -40,16 +40,17 @@ export function useConnections(schematic, setSchematic, items) {
   // Handle the connections' main logic.
   useEffect(() => {
     setSchematic((schematic) => {
+      const initialSchematic = cloneDeep(schematic);
       const seenPositions = buildPortsMap(schematic, refMap);
 
       // Check if nodes overlay ports or other nodes
       for (const node of schematic.nodes) {
-        const positionString = JSON.stringify(node.position);
+        const positionHash = JSON.stringify(node.position);
 
         // If the node doesn't overlay any of the already seen ones,
-        if (seenPositions.has(positionString)) {
+        if (seenPositions.has(positionHash)) {
           // Find what is being overlaid
-          const elemPattern = { id: seenPositions.get(positionString) };
+          const elemPattern = { id: seenPositions.get(positionHash) };
           const overlaidElem =
             lodash.find(items, elemPattern) ??
             lodash.find(
@@ -71,10 +72,12 @@ export function useConnections(schematic, setSchematic, items) {
         }
 
         // Mark position as seen
-        else seenPositions.set(positionString, node.id);
+        else seenPositions.set(positionHash, node.id);
       }
 
-      return schematic;
+      return isEqual(initialSchematic, schematic)
+        ? schematic
+        : { ...schematic }; // Force a re-render
     });
   }, [setSchematic, schematic, items, refMap]);
 }
