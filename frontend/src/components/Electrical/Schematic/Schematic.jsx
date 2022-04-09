@@ -8,6 +8,8 @@ import { SelectionArea, Component, Connection, Node } from '../index';
 import { snapValueToGrid } from '../../../util';
 import { SchematicContext } from '../../../contexts';
 
+const canvasRelativeSize = '70%';
+
 export function Schematic({
   selection,
   width,
@@ -49,8 +51,8 @@ export function Schematic({
       elevation={3}
       onContextMenu={(e) => e.preventDefault()}
       sx={{
-        width: '80%',
-        height: '80%',
+        width: canvasRelativeSize,
+        height: canvasRelativeSize,
         position: 'relative',
         zIndex: 0,
 
