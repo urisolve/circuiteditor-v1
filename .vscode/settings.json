@@ -3,6 +3,7 @@
     "bgcolor",
     "circuiteditor",
     "draggable",
+    "hookform",
     "ISEP",
     "Netlist",
     "Swipeable",

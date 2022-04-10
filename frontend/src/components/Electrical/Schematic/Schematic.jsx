@@ -68,13 +68,6 @@ export function Schematic({
     >
       {children}
 
-      <SelectionArea
-        parentRef={canvasRef}
-        selectableItems={schematic.items}
-        setSelectedItems={selection?.setSelectedItems}
-        disabled={readOnly}
-      />
-
       {schematic?.data?.components?.map((comp) => (
         <Component
           {...comp}
@@ -110,6 +103,13 @@ export function Schematic({
             />
           ),
       )}
+
+      <SelectionArea
+        parentRef={canvasRef}
+        selectableItems={schematic.items}
+        setSelectedItems={selection?.setSelectedItems}
+        disabled={readOnly}
+      />
     </Paper>
   );
 }

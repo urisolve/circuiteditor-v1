@@ -22,7 +22,7 @@ export function ConnectionPoint({ id, sx, ...rest }) {
       {...rest}
     >
       <Box
-        ref={refMap.set(id)}
+        ref={refMap.get(id)}
         sx={{
           position: 'absolute',
           left: 'calc(50% - 1px)',

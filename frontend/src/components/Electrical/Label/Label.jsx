@@ -46,7 +46,7 @@ export function Label({
       <Typography
         onDoubleClick={onDoubleClick}
         noWrap
-        ref={refMap.set(labelID)}
+        ref={refMap.get(labelID)}
         sx={{
           fontWeight: 'bold',
           padding: '5px',

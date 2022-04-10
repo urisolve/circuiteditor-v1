@@ -48,7 +48,7 @@ export function Component({
       {...rest}
     >
       <Avatar
-        ref={refMap.set(id)}
+        ref={refMap.get(id)}
         src={symbols[fullName]}
         alt={type}
         variant='square'

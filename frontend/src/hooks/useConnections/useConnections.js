@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import lodash, { cloneDeep, isEqual } from 'lodash';
 
 import { useGlobalRefMap } from '..';
@@ -13,7 +13,7 @@ function buildPortsMap(schematic, refMap) {
     for (const port of component.ports) {
       // Calculate component's width and height
       const compRef = refMap.get(component.id).current;
-      const { width, height } = compRef.getBoundingClientRect();
+      const { width, height } = compRef?.getBoundingClientRect() ?? {};
 
       // Calculate port's real position
       const rotatedCoords = rotateCoords(
@@ -38,7 +38,7 @@ export function useConnections(schematic, setSchematic, items) {
   const refMap = useGlobalRefMap();
 
   // Handle the connections' main logic.
-  useEffect(() => {
+  useLayoutEffect(() => {
     setSchematic((schematic) => {
       const initialSchematic = cloneDeep(schematic);
       const seenPositions = buildPortsMap(schematic, refMap);

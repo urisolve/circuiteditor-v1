@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export function useOnline() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-  const setOnline = () => setIsOnline(true);
-  const setOffline = () => setIsOnline(false);
+  const setOnline = useCallback(() => setIsOnline(true), []);
+  const setOffline = useCallback(() => setIsOnline(false), []);
 
   useEffect(() => {
     window.addEventListener('online', setOnline);
@@ -14,7 +14,7 @@ export function useOnline() {
       window.removeEventListener('online', setOnline);
       window.removeEventListener('offline', setOffline);
     };
-  }, []);
+  }, [setOnline, setOffline]);
 
   return isOnline;
-};
+}

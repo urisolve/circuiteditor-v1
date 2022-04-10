@@ -1,4 +1,10 @@
-import { useRef, useEffect, useCallback, useMemo } from 'react';
+import {
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+  useLayoutEffect,
+} from 'react';
 import lodash from 'lodash';
 
 // Material-UI
@@ -32,9 +38,9 @@ export function SelectionArea({
   /**
    * Calculate the areas of the elements
    */
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Calculate the bounding area of the parent element
-    const rect = parentRef.current.getBoundingClientRect();
+    const rect = parentRef.current?.getBoundingClientRect() ?? {};
     parentRect.current = {
       left: rect.left,
       top: rect.top,
