@@ -22,8 +22,11 @@
     "dev:client": "cd frontend && yarn dev",
     "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
     "build": "echo \"Command not yet available\" && exit 1",
+    "serve": "echo \"Command not yet available\" && exit 1",
+    "prod": "yarn build && yarn serve",
     "test": "snyk test --all-projects",
-    "monitor": "snyk monitor --all-projects"
+    "monitor": "snyk monitor --all-projects",
+    "ci": "yarn install --frozen-lockfile"
   },
   "devDependencies": {
     "eslint": "^8.12.0",
