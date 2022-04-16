@@ -29,7 +29,7 @@ This package uses [Yarn](https://yarnpkg.com/) as its package manager instead of
   yarn ci
   ```
 
-1. You can now **serve** the app in:
+3. You can now **serve** the app in:
 
   - **Development**
 
