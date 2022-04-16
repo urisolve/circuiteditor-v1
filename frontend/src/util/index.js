@@ -1,6 +1,7 @@
 export * from './areas';
 export * from './connections';
 export * from './coordinates';
+export * from './download';
 export * from './grid';
 export * from './label';
 export * from './math';

@@ -1,3 +1,4 @@
+import { toPng } from 'html-to-image';
 import { useCallback, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -8,13 +9,17 @@ import RedoIcon from '@mui/icons-material/Redo';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import CodeIcon from '@mui/icons-material/Code';
 import SaveIcon from '@mui/icons-material/Save';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import ShareIcon from '@mui/icons-material/Share';
 
 import { useBoolean } from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
 import { QuickAction } from '../QuickAction';
+import { download } from '../../../util';
 
 export function QuickActionMenu({
+  canvasRef,
+  circuitName,
   offset,
   children,
   duration,
@@ -83,6 +88,14 @@ export function QuickActionMenu({
           name: 'Save',
           icon: <SaveIcon />,
           onClick: saveCircuit,
+        },
+        {
+          name: 'Screenshot',
+          icon: <CameraAltIcon />,
+          onClick: () =>
+            toPng(canvasRef.current)
+              .then((imageUrl) => download(imageUrl, `${circuitName}.png`))
+              .catch(console.error),
         },
         {
           name: 'Share',

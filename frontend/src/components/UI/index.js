@@ -3,7 +3,6 @@ export * from './Comp';
 export * from './CompLib';
 export * from './Contact';
 export * from './ContextMenu';
-export * from './DownloadButton';
 export * from './Drawer';
 export * from './Footer';
 export * from './FormInput';
