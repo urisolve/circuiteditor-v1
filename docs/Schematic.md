@@ -114,7 +114,7 @@ interface Label {
 
 It can hold a `name`, `value` and `unit`. For example, a **resistor** with the label "R1 = 10 kΩ" should have a label as follows:
 
-```json
+```js
 {
   ...
   "name": "R1",
@@ -126,9 +126,9 @@ It can hold a `name`, `value` and `unit`. For example, a **resistor** with the l
 
 The label can have some variations:
 
-- No `value` = **"R1 (Ω)"**
-- No `unit` = **"R1 = 10 k"**
-- No `value` and no `unit` = **"R1"**
+- No `value`: **"R1 (Ω)"**
+- No `unit`: **"R1 = 10 k"**
+- No `value` and no `unit`: **"R1"**
 
 It can also contain a reference to its owner and a flag that controls if the label should be displayed in the schematic or not.
 
