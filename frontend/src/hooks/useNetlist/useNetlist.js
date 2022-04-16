@@ -142,10 +142,10 @@ function generateNodesString(component, schematic) {
   return lodash.trimEnd(nodeStr);
 }
 
-function generateValueString({ fullName, label: { value = '', unit = '' } }) {
+function generateValueString({ type, label: { value = '', unit = '' } }) {
   if (!value) return '';
 
-  const defaultName = components[fullName]?.label?.name;
+  const defaultName = components[type]?.label?.name;
   const formattedValue = value.replace(new RegExp(numberPattern), '$& ');
 
   return `${defaultName}="${formattedValue}${unit}"`;

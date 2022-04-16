@@ -1,30 +1,20 @@
-import { components } from '.';
+import { components as comps } from '.';
 
 export const library = [
   {
     title: 'Connectors',
-    elements: [components.Ground, components.Wire, components.Marker],
+    elements: [comps.gnd, comps.Marker, comps.Wire],
   },
   {
     title: 'Passive',
-    elements: [
-      components.Capacitor,
-      components.Inductor,
-      components.Reactance,
-      components.Resistor,
-    ],
+    elements: [comps.C, comps.L, comps.R, comps.Z],
   },
   {
     title: 'Probes',
-    elements: [components.Ammeter, components.Voltmeter],
+    elements: [comps.IProbe, comps.VProbe],
   },
   {
     title: 'Sources',
-    elements: [
-      components.ACCurrentSource,
-      components.ACVoltageSource,
-      components.DCCurrentSource,
-      components.DCVoltageSource,
-    ],
+    elements: [comps.Iac, comps.Idc, comps.Vac, comps.Vdc],
   },
 ];

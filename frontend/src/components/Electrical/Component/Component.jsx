@@ -16,7 +16,6 @@ export function Component({
   canvasRef,
   id,
   type,
-  fullName,
   position,
   ports,
   label,
@@ -49,7 +48,7 @@ export function Component({
     >
       <Avatar
         ref={refMap.get(id)}
-        src={symbols[fullName]}
+        src={symbols[type]}
         alt={type}
         variant='square'
         className='component-handle'

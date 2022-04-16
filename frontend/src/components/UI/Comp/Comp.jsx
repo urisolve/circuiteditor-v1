@@ -1,15 +1,10 @@
-import { useMemo } from 'react';
-import lodash from 'lodash';
-
 // Material-UI
 import { Avatar, Stack, Tooltip, Typography } from '@mui/material';
 
 // Custom config
 import { symbols } from '../../../configs';
 
-export function Comp({ fullName, action, ...rest }) {
-  const name = useMemo(() => lodash.startCase(fullName), [fullName]);
-
+export function Comp({ type, fullName, action, ...rest }) {
   return (
     <Stack
       direction='column'
@@ -23,16 +18,21 @@ export function Comp({ fullName, action, ...rest }) {
       }}
     >
       <Avatar
-        src={symbols[fullName]}
-        alt={name}
+        src={symbols[type]}
+        alt={fullName}
         onDoubleClick={action}
         variant='square'
         sx={{ width: '100%', height: '100%' }}
         {...rest}
       />
-      <Tooltip enterDelay={500} enterNextDelay={500} title={name} arrow>
+      <Tooltip
+        enterDelay={500}
+        enterNextDelay={500}
+        title={fullName ?? type}
+        arrow
+      >
         <Typography align='center' noWrap sx={{ width: '100%' }}>
-          {name}
+          {fullName}
         </Typography>
       </Tooltip>
     </Stack>

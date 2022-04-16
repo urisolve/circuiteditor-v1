@@ -31,7 +31,7 @@ export function parseSchematic(schematic) {
 
   // Apply default properties to incomplete components
   schematic.components = schematic.components.map((comp) =>
-    lodash.defaultsDeep(comp, components[comp?.fullName]),
+    lodash.defaultsDeep(comp, components[comp?.type]),
   );
 
   normalizeNodes(schematic);

@@ -4,9 +4,9 @@ const WIRE_CENTER_OFFSET = 50;
 const WIRE_DEFAULT_CENTER = { x: WIRE_CENTER_OFFSET, y: WIRE_CENTER_OFFSET };
 
 export const components = Object.freeze({
-  ACCurrentSource: {
+  Iac: {
     type: 'Iac',
-    fullName: 'ACCurrentSource',
+    fullName: 'AC Current Source',
     label: {
       name: 'i',
       value: '2',
@@ -15,9 +15,9 @@ export const components = Object.freeze({
     },
     ports: [{ position: { x: 0.5, y: 0 } }, { position: { x: 0.5, y: 1 } }],
   },
-  ACVoltageSource: {
+  Vac: {
     type: 'Vac',
-    fullName: 'ACVoltageSource',
+    fullName: 'AC Voltage Source',
     label: {
       name: 'u',
       value: '230',
@@ -26,7 +26,7 @@ export const components = Object.freeze({
     },
     ports: [{ position: { x: 0.5, y: 0 } }, { position: { x: 0.5, y: 1 } }],
   },
-  Ammeter: {
+  IProbe: {
     type: 'IProbe',
     fullName: 'Ammeter',
     label: {
@@ -35,7 +35,7 @@ export const components = Object.freeze({
     },
     ports: [{ position: { x: 0, y: 0.5 } }, { position: { x: 1, y: 0.5 } }],
   },
-  Capacitor: {
+  C: {
     type: 'C',
     fullName: 'Capacitor',
     label: {
@@ -46,9 +46,9 @@ export const components = Object.freeze({
     },
     ports: [{ position: { x: 0, y: 0.5 } }, { position: { x: 1, y: 0.5 } }],
   },
-  DCCurrentSource: {
+  Idc: {
     type: 'Idc',
-    fullName: 'DCCurrentSource',
+    fullName: 'DC Current Source',
     label: {
       name: 'I',
       value: '200m',
@@ -57,9 +57,9 @@ export const components = Object.freeze({
     },
     ports: [{ position: { x: 0.5, y: 0 } }, { position: { x: 0.5, y: 1 } }],
   },
-  DCVoltageSource: {
+  Vdc: {
     type: 'Vdc',
-    fullName: 'DCVoltageSource',
+    fullName: 'DC Voltage Source',
     label: {
       name: 'U',
       value: '10',
@@ -68,12 +68,12 @@ export const components = Object.freeze({
     },
     ports: [{ position: { x: 0.5, y: 0 } }, { position: { x: 0.5, y: 1 } }],
   },
-  Ground: {
+  gnd: {
     type: 'gnd',
     fullName: 'Ground',
     ports: [{ position: { x: 0.5, y: 0 } }],
   },
-  Inductor: {
+  L: {
     type: 'L',
     fullName: 'Inductor',
     label: {
@@ -84,7 +84,7 @@ export const components = Object.freeze({
     },
     ports: [{ position: { x: 0, y: 0.5 } }, { position: { x: 1, y: 0.5 } }],
   },
-  Reactance: {
+  Z: {
     type: 'Z',
     fullName: 'Reactance',
     label: {
@@ -95,7 +95,7 @@ export const components = Object.freeze({
     },
     ports: [{ position: { x: 0, y: 0.5 } }, { position: { x: 1, y: 0.5 } }],
   },
-  Resistor: {
+  R: {
     type: 'R',
     fullName: 'Resistor',
     label: {
@@ -106,7 +106,7 @@ export const components = Object.freeze({
     },
     ports: [{ position: { x: 0, y: 0.5 } }, { position: { x: 1, y: 0.5 } }],
   },
-  Voltmeter: {
+  VProbe: {
     type: 'VProbe',
     fullName: 'Voltmeter',
     label: {
@@ -119,7 +119,7 @@ export const components = Object.freeze({
     const [id1, id2] = [uuidv4(), uuidv4()];
 
     return {
-      fullName: 'Wire',
+      type: 'Wire',
       components: [],
       connections: [{ start: id1, end: id2, gridBreak: '50%' }],
       nodes: [
@@ -141,7 +141,7 @@ export const components = Object.freeze({
     };
   },
   Marker: (position) => ({
-    fullName: 'Marker',
+    type: 'Marker',
     components: [],
     connections: [],
     nodes: [{ id: uuidv4(), position }],
