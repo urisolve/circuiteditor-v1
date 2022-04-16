@@ -1,16 +1,17 @@
-import { useCallback, useContext, useRef } from 'react';
+import { useCallback, useContext } from 'react';
 
 // Material-UI
 import { Paper } from '@mui/material';
 
 // Custom libraries
-import { SelectionArea, Component, Connection, Node } from '../index';
+import { SelectionArea, Component, Connection, Node } from '..';
 import { snapValueToGrid } from '../../../util';
 import { SchematicContext } from '../../../contexts';
 
 const canvasRelativeSize = '70%';
 
 export function Schematic({
+  canvasRef,
   selection,
   width,
   height,
@@ -20,7 +21,6 @@ export function Schematic({
   children,
   ...rest
 }) {
-  const canvasRef = useRef();
   const schematic = useContext(SchematicContext);
 
   const updatePosition = useCallback(

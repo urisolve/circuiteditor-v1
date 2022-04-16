@@ -5,16 +5,18 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  IconButton,
   Stack,
   Typography,
 } from '@mui/material';
 import CodeIcon from '@mui/icons-material/Code';
+import DownloadIcon from '@mui/icons-material/Download';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import { download, getHref } from '../../../util';
+import { Drawer } from '../Drawer';
 import { MenuHeader } from '..';
 import { SchematicContext } from '../../../contexts';
-import { Drawer } from '../Drawer';
-import { DownloadButton } from '../DownloadButton';
 
 export function SourceView({ circuitName, controller, ...rest }) {
   const { data: json, netlist } = useContext(SchematicContext);
@@ -24,15 +26,18 @@ export function SourceView({ circuitName, controller, ...rest }) {
       code: netlist,
       fileName: `${circuitName}.txt`,
       title: 'Netlist',
-      type: 'plain',
+      type: 'text/plain',
     },
     {
       code: JSON.stringify(json, null, 2),
       fileName: `${circuitName}.json`,
       title: 'JSON',
-      type: 'plain',
+      type: 'text/json',
     },
   ];
+
+  const downloadCode = (code, type, fileName) => () =>
+    download(getHref(code, type), fileName);
 
   return (
     <Drawer anchor='right' controller={controller} {...rest}>
@@ -45,11 +50,9 @@ export function SourceView({ circuitName, controller, ...rest }) {
           <Accordion key={title} disabled={disabled} variant='outlined'>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Stack direction='row' alignItems='center'>
-                <DownloadButton
-                  content={code}
-                  fileName={fileName}
-                  type={type}
-                />
+                <IconButton onClick={downloadCode(code, type, fileName)}>
+                  <DownloadIcon />
+                </IconButton>
                 <Typography>{title}</Typography>
               </Stack>
             </AccordionSummary>

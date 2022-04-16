@@ -4,6 +4,7 @@ import { Schematic } from '../../components/Electrical';
 import { SchematicContext } from '../../contexts';
 
 import { Stack } from '@mui/material';
+import { useRef } from 'react';
 
 const canvasSize = { width: 2560, height: 1440 }; // 16:9 resolution (1440p)
 
@@ -11,6 +12,7 @@ const defaultCircuit = require('../../circuits/voltageDivider.json');
 
 export function Editor({ circuit, ...rest }) {
   const schematic = useSchematic(defaultCircuit);
+  const canvasRef = useRef();
 
   const compLib = useBoolean(true);
   const sourceView = useBoolean(false);
@@ -25,11 +27,21 @@ export function Editor({ circuit, ...rest }) {
           background: 'radial-gradient(#fff, #eee)',
         }}
       >
-        <Schematic selection={schematic.selection} {...rest} />
+        <Schematic
+          canvasRef={canvasRef}
+          selection={schematic.selection}
+          {...rest}
+        />
 
-        <QuickActionMenu compLib={compLib} sourceView={sourceView} />
+        <QuickActionMenu
+          canvasRef={canvasRef}
+          circuitName={circuit?.name ?? 'untitled'}
+          compLib={compLib}
+          sourceView={sourceView}
+        />
 
         <CompLib controller={compLib} />
+
         <SourceView
           circuitName={circuit?.name ?? 'untitled'}
           controller={sourceView}
