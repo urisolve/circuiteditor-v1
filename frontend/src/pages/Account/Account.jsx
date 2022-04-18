@@ -1,10 +1,11 @@
-import { useEffect, useContext, useCallback } from 'react';
+import { useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 import axios from 'axios';
 
 import { UserContext } from '../../contexts';
 import { useGravatar } from '../../hooks';
-import { FormInput } from '../../components/UI';
+import { FormField } from '../../components/UI';
 
 // Material-UI
 import {
@@ -19,117 +20,132 @@ import {
   Avatar,
   Typography,
 } from '@mui/material';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const schema = yup.object({
+  email: yup.string().email().required(),
+  firstName: yup.string().trim().required(),
+  institution: yup.string().trim().required(),
+  lastName: yup.string().trim().required(),
+  mechNumber: yup
+    .number()
+    .integer()
+    .positive()
+    .typeError('Must be a number')
+    .required(),
+});
 
 export function Account() {
   const { user } = useContext(UserContext);
   const gravatar = useGravatar(user?.email);
 
-  const { register, errors, reset } = useForm({ mode: 'onBlur' });
-  useEffect(() => reset(user), [reset, user]);
+  const form = useForm({ defaultValues: user, resolver: yupResolver(schema) });
 
-  // Send new account information to database
-  const onSubmit = useCallback(
-    async (data) => {
-      try {
-        await axios.patch('api/account/info', data);
-      } catch (err) {
-        console.error(err);
-      }
+  useEffect(() => form.reset(user), [form, user]);
 
-      reset();
-    },
-    [reset],
-  );
+  async function onSubmit(data) {
+    try {
+      await axios.patch('api/account/info', data);
+    } catch (err) {
+      console.error(err);
+    }
+
+    form.reset();
+  }
 
   return (
-    <Container>
-      <Card variant='outlined' sx={{ mt: 2 }}>
-        <Container>
-          <CardHeader
-            title='Account'
-            subheader='We promise to never share your personal information with any third party services.'
-          />
+    <form onSubmit={form.handleSubmit(onSubmit)}>
+      <Container>
+        <Card variant='outlined' sx={{ mt: 2 }}>
+          <Container>
+            <CardHeader
+              title='Account'
+              subheader='We promise to never share your personal information with any third party services.'
+            />
 
-          <CardContent>
-            <Grid spacing={5} container>
-              <Grid item>
-                <Grid direction='row' alignItems='center' spacing={3} container>
-                  <Grid item xs={3}>
-                    <Avatar
-                      alt={`${user.firstName} ${user.lastName}`}
-                      src={gravatar}
-                      sx={{
-                        width: 1,
-                        height: 1,
-                      }}
-                    />
+            <CardContent>
+              <Grid spacing={5} container>
+                <Grid item>
+                  <Grid
+                    direction='row'
+                    alignItems='center'
+                    spacing={3}
+                    container
+                  >
+                    <Grid item xs={3}>
+                      <Avatar
+                        alt={`${user.firstName} ${user.lastName}`}
+                        src={gravatar}
+                        sx={{
+                          width: 1,
+                          height: 1,
+                        }}
+                      />
+                    </Grid>
+
+                    <Grid item>
+                      <Typography variant='h5' gutterBottom>
+                        Profile picture
+                      </Typography>
+
+                      <Typography variant='body2' color='textSecondary'>
+                        We use <a href='https://gravatar.com/'>Gravatar</a> for
+                        the profile pictures.
+                      </Typography>
+                    </Grid>
                   </Grid>
+                </Grid>
 
-                  <Grid item>
-                    <Typography variant='h5' gutterBottom>
-                      Profile picture
-                    </Typography>
-                    <Typography variant='body2' color='textSecondary'>
-                      We use <a href='https://gravatar.com/'>Gravatar</a> for
-                      the profile pictures.
-                    </Typography>
+                <Grid item>
+                  <Divider />
+                </Grid>
+
+                <Grid item>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <FormField label='Email' name='email' {...form} />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <FormField
+                        label='First Name'
+                        name='firstName'
+                        {...form}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <FormField label='Last Name' name='lastName' {...form} />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <FormField
+                        label='Mechanographic Nr.'
+                        name='mechNumber'
+                        {...form}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <FormField
+                        label='Institution'
+                        name='institution'
+                        {...form}
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
+            </CardContent>
 
-              <Grid item>
-                <Divider />
-              </Grid>
-
-              <Grid item>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <FormInput
-                      name='email'
-                      errors={errors}
-                      validationFunc={register}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormInput
-                      name='mechNumber'
-                      errors={errors}
-                      validationFunc={register}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormInput
-                      name='firstName'
-                      errors={errors}
-                      validationFunc={register}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormInput
-                      name='lastName'
-                      errors={errors}
-                      validationFunc={register}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FormInput
-                      name='institution'
-                      errors={errors}
-                      validationFunc={register}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </CardContent>
-
-          <CardActions>
-            <Button onClick={onSubmit} color='primary' variant='contained'>
-              Save Changes
-            </Button>
-          </CardActions>
-        </Container>
-      </Card>
-    </Container>
+            <CardActions>
+              <Button type='submit' color='primary' variant='contained'>
+                Save Changes
+              </Button>
+            </CardActions>
+          </Container>
+        </Card>
+      </Container>
+    </form>
   );
-};
+}

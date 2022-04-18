@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Box, Button, Modal, Stack, Tab, Tabs } from '@mui/material';
+import { Box, Button, Modal, Stack, Tab, Tabs, TextField } from '@mui/material';
 
-import { MenuHeader, Property, TabPanel } from '..';
+import { MenuHeader, TabPanel } from '..';
 import { LabelForm } from '../LabelForm';
 import { SchematicContext } from '../../../contexts';
 import { isNameTaken, labelValueRegex } from '../../../util';
@@ -25,6 +25,28 @@ const modalStyle = {
   width: 360,
 };
 
+const getSchema = (schematic, contextKey, id) =>
+  yup.object({
+    label: yup.object({
+      name: yup
+        .string()
+        .trim()
+        .test(
+          'not_unique',
+          'That name is already taken',
+          (name) => !isNameTaken(schematic?.[contextKey], name, id),
+        ),
+      value: yup.string().trim().matches(labelValueRegex, {
+        excludeEmptyString: true,
+        message: 'Insert a valid value',
+      }),
+      unit: yup.string().trim(),
+      isHidden: yup.bool(),
+      isValueHidden: yup.bool(),
+    }),
+    properties: yup.object({}),
+  });
+
 export function PropertiesMenu({
   contextKey,
   menu,
@@ -37,29 +59,7 @@ export function PropertiesMenu({
 
   const form = useForm({
     defaultValues: { label, properties },
-    mode: 'onBlur',
-    resolver: yupResolver(
-      yup.object({
-        label: yup.object({
-          name: yup
-            .string()
-            .trim()
-            .test(
-              'not_unique',
-              'That name is already taken',
-              (name) => !isNameTaken(schematic[contextKey], name, id),
-            ),
-          value: yup.string().trim().matches(labelValueRegex, {
-            excludeEmptyString: true,
-            message: 'Insert a valid value',
-          }),
-          unit: yup.string().trim(),
-          isHidden: yup.bool(),
-          isValueHidden: yup.bool(),
-        }),
-        properties: yup.object({}),
-      }),
-    ),
+    resolver: yupResolver(getSchema(schematic, contextKey, id)),
   });
 
   const actions = {
@@ -83,38 +83,40 @@ export function PropertiesMenu({
       aria-labelledby='Property Editor Menu'
       aria-describedby={`Properties for component ${id}`}
     >
-      <Box sx={modalStyle}>
-        <MenuHeader sx={{ mb: 2 }} onClose={menu.close}>
-          Properties Editor
-        </MenuHeader>
+      <form onSubmit={form.handleSubmit(actions.ok)}>
+        <Box sx={modalStyle}>
+          <MenuHeader sx={{ mb: 2 }} onClose={menu.close}>
+            Properties Editor
+          </MenuHeader>
 
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={menu.selectedTab}
-            onChange={menu.changeTab}
-            variant='fullWidth'
-          >
-            <Tab label='Properties' />
-            <Tab label='Label' />
-          </Tabs>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs
+              value={menu.selectedTab}
+              onChange={menu.changeTab}
+              variant='fullWidth'
+            >
+              <Tab label='Properties' />
+              <Tab label='Label' />
+            </Tabs>
+          </Box>
+
+          {/* Properties */}
+          <TabPanel value={menu.selectedTab} index={0}>
+            <TextField fullWidth label='ID' value={id} disabled />
+          </TabPanel>
+
+          {/* Label */}
+          <TabPanel value={menu.selectedTab} index={1}>
+            <LabelForm form={form} unitDisabled={unitDisabled} />
+          </TabPanel>
+
+          <Stack direction='row' justifyContent='flex-end'>
+            <Button type='submit'>OK</Button>
+            <Button onClick={actions.cancel}>Cancel</Button>
+            <Button onClick={form.handleSubmit(actions.apply)}>Apply</Button>
+          </Stack>
         </Box>
-
-        {/* Properties */}
-        <TabPanel value={menu.selectedTab} index={0}>
-          <Property label='ID' value={id} disabled />
-        </TabPanel>
-
-        {/* Label */}
-        <TabPanel value={menu.selectedTab} index={1}>
-          <LabelForm label={label} unitDisabled={unitDisabled} {...form} />
-        </TabPanel>
-
-        <Stack direction='row' justifyContent='flex-end'>
-          <Button onClick={form.handleSubmit(actions.ok)}>OK</Button>
-          <Button onClick={actions.cancel}>Cancel</Button>
-          <Button onClick={form.handleSubmit(actions.apply)}>Apply</Button>
-        </Stack>
-      </Box>
+      </form>
     </Modal>
   );
 }

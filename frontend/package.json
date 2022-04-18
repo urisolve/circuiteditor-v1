@@ -31,7 +31,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.0",
     "react-xarrows": "^2.0.2",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "yup-password": "^0.2.2"
   },
   "eslintConfig": {
     "extends": [

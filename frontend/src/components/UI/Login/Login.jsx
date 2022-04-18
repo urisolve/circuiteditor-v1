@@ -1,16 +1,15 @@
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import axios from 'axios';
 
-// Material-UI
 import {
   Card,
   CardHeader,
   CardContent,
   CardActions,
-  TextField,
   Grid,
-  FormHelperText,
   Button,
   IconButton,
   Tooltip,
@@ -18,77 +17,58 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-// Custom hook
 import { useBoolean } from '../../../hooks';
+import { FormField } from '../FormField';
+import { validations } from '../../../validations';
+
+const schema = yup.object({
+  email: validations.user.email,
+  password: validations.user.password,
+});
 
 export function Login({ setUser, ...rest }) {
   const history = useHistory();
-  const { register, handleSubmit, errors, reset } = useForm({ mode: 'onBlur' });
-
-  // Password visibility
   const showPassword = useBoolean(false);
 
-  // Send the auth info to the server and grab the authenticated user
-  const onSubmit = async (formData) => {
+  const form = useForm({ resolver: yupResolver(schema) });
+
+  async function onSubmit(formData) {
     try {
-      const { data } = await axios.post('api/auth/login', formData);
-      await setUser(data);
+      const { data: user } = await axios.post('api/auth/login', formData);
+
       history.push('/circuits');
+
+      await setUser(user);
     } catch (err) {
       console.error(err);
     }
-
-    reset();
-  };
+  }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Card variant='outlined' {...rest}>
+    <Card variant='outlined' {...rest}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader title='Login' subheader='Welcome back.' />
 
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                variant='outlined'
-                name='email'
-                label='E-mail'
-                placeholder='1210000@isep.ipp.pt'
+              <FormField
                 autoComplete='email'
-                error={errors.email}
-                inputRef={register({
-                  required: 'This field is required.',
-                  pattern: {
-                    value: /^\S+@\S+$/i,
-                    message: 'Please enter a valid e-mail address.',
-                  },
-                })}
-                fullWidth
+                label='E-mail'
+                name='email'
+                placeholder='1234567@isep.ipp.pt'
+                {...form}
               />
-              <FormHelperText>
-                {errors.email && errors.email?.message}
-              </FormHelperText>
             </Grid>
+
             <Grid item xs={12}>
-              <TextField
-                variant='outlined'
-                name='password'
-                label='Password'
-                type={showPassword.value ? 'text' : 'password'}
+              <FormField
                 autoComplete='current-password'
-                error={errors.password}
-                inputRef={register({
-                  required: 'This field is required.',
-                  minLength: {
-                    value: 8,
-                    message: 'Password must have at least 8 characters.',
-                  },
-                })}
-                fullWidth
+                label='Password'
+                name='password'
+                type={showPassword.value ? 'text' : 'password'}
+                {...form}
               />
-              <FormHelperText>
-                {errors.password && errors.password?.message}
-              </FormHelperText>
             </Grid>
           </Grid>
         </CardContent>
@@ -97,16 +77,17 @@ export function Login({ setUser, ...rest }) {
           <Button type='submit' variant='contained' color='primary'>
             Login
           </Button>
+
           <Tooltip
-            title={showPassword.value ? 'Hide password' : 'Show password'}
             arrow
+            title={showPassword.value ? 'Hide password' : 'Show password'}
           >
             <IconButton onClick={showPassword.toggle}>
               {showPassword.value ? <VisibilityOffIcon /> : <VisibilityIcon />}
             </IconButton>
           </Tooltip>
         </CardActions>
-      </Card>
-    </form>
+      </form>
+    </Card>
   );
 }
