@@ -1,3 +1,4 @@
+export * from './Checkbox';
 export * from './CircuitCard';
 export * from './Comp';
 export * from './CompLib';

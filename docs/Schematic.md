@@ -108,6 +108,7 @@ interface Label {
   unit: string;
   position: RelativePosition;
   isHidden?: boolean;
+  isValueHidden?: boolean;
   owner?: ID;
 }
 ```
@@ -130,7 +131,7 @@ The label can have some variations:
 - No `unit`: **"R1 = 10 k"**
 - No `value` and no `unit`: **"R1"**
 
-It can also contain a reference to its owner and a flag that controls if the label should be displayed in the schematic or not.
+It can also contain a reference to its `owner`, a flag that controls if the label should be hidden (`isHidden`), and a flag that controls if only the `name` should be displayed (`isValueHidden`).
 
 ## Main types
 

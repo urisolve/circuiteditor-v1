@@ -18,6 +18,7 @@ export function Label({
   unit,
   onDoubleClick,
   isHidden,
+  isValueHidden,
   ...rest
 }) {
   const labelID = useMemo(() => `${owner}-label`, [owner]);
@@ -58,7 +59,7 @@ export function Label({
           },
         }}
       >
-        {formattedLabel}
+        {isValueHidden ? name : formattedLabel}
       </Typography>
     </DraggableComponent>
   );

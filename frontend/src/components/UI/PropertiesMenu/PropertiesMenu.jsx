@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -7,7 +8,6 @@ import { Box, Button, Modal, Stack, Tab, Tabs } from '@mui/material';
 import { MenuHeader, Property, TabPanel } from '..';
 import { LabelForm } from '../LabelForm';
 import { SchematicContext } from '../../../contexts';
-import { useContext } from 'react';
 import { isNameTaken, labelValueRegex } from '../../../util';
 
 const modalStyle = {
@@ -45,7 +45,7 @@ export function PropertiesMenu({
             .string()
             .trim()
             .test(
-              'repeat',
+              'not_unique',
               'That name is already taken',
               (name) => !isNameTaken(schematic[contextKey], name, id),
             ),
@@ -54,7 +54,8 @@ export function PropertiesMenu({
             message: 'Insert a valid value',
           }),
           unit: yup.string().trim(),
-          isHidden: yup.boolean(),
+          isHidden: yup.bool(),
+          isValueHidden: yup.bool(),
         }),
         properties: yup.object({}),
       }),
@@ -105,7 +106,7 @@ export function PropertiesMenu({
 
         {/* Label */}
         <TabPanel value={menu.selectedTab} index={1}>
-          <LabelForm unitDisabled={unitDisabled} {...form} />
+          <LabelForm label={label} unitDisabled={unitDisabled} {...form} />
         </TabPanel>
 
         <Stack direction='row' justifyContent='flex-end'>
