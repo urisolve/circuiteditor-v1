@@ -17,6 +17,11 @@ import { components } from '../../configs/components.config';
 const version = process.env.REACT_APP_VERSION ?? '1.0.0';
 const netlistHeader = `# CircuitEditor v${version}\n\n`;
 
+const replacePairs = Object.freeze([
+  ['Ω', 'Ohm'],
+  ['µ', 'u'],
+]);
+
 function applyGround(schematic) {
   for (const component of schematic.components) {
     // Ignore non-ground components
@@ -151,6 +156,36 @@ function generateValueString({ type, label: { value = '', unit = '' } }) {
   return `${defaultName}="${formattedValue}${unit}"`;
 }
 
+function buildNetlist(schematic) {
+  let netlist = netlistHeader;
+
+  // Add each component to the netlist
+  for (const component of schematic.components) {
+    if (component.type === 'gnd') continue;
+
+    try {
+      const nameStr = generateNameString(component);
+      const nodesStr = generateNodesString(component, schematic);
+      const valueStr = generateValueString(component);
+
+      netlist += `${nameStr} ${nodesStr} ${valueStr}\n`;
+    } catch (error) {
+      if (process.env.REACT_APP_NETLIST_DEBUG) {
+        console.error(error);
+      }
+    }
+  }
+
+  return replaceChars(netlist);
+}
+
+const replaceChars = (netlist) => {
+  return replacePairs.reduce(
+    (netlist, [pattern, replacer]) => netlist.replace(pattern, replacer),
+    netlist,
+  );
+};
+
 export function useNetlist(sch) {
   return useMemo(() => {
     // Clone the schematic to not change the circuit itself
@@ -161,24 +196,7 @@ export function useNetlist(sch) {
     applyGround(schematic);
     withVirtualNodes(schematic);
 
-    // Add each component to the netlist
-    let netlist = netlistHeader;
-    for (const component of schematic.components) {
-      if (component.type === 'gnd') continue;
-
-      try {
-        const nameStr = generateNameString(component);
-        const nodesStr = generateNodesString(component, schematic);
-        const valueStr = generateValueString(component);
-
-        netlist += `${nameStr} ${nodesStr} ${valueStr}\n`;
-      } catch (error) {
-        if (process.env.REACT_APP_NETLIST_DEBUG) {
-          console.error(error);
-        }
-      }
-    }
-
-    return netlist;
+    // Build the netlist
+    return buildNetlist(schematic);
   }, [sch]);
 };

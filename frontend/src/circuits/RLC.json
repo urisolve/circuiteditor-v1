@@ -34,7 +34,7 @@
       "label": {
         "name": "R",
         "value": "10k",
-        "unit": "Ohm",
+        "unit": "Ω",
         "position": { "x": 10, "y": 0 }
       },
       "ports": [

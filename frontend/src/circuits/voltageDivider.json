@@ -34,7 +34,7 @@
       "label": {
         "name": "R1",
         "value": "10k",
-        "unit": "Ohm",
+        "unit": "Ω",
         "position": { "x": 70, "y": 30 }
       },
       "ports": [
@@ -60,7 +60,7 @@
       "label": {
         "name": "R2",
         "value": "10k",
-        "unit": "Ohm",
+        "unit": "Ω",
         "position": { "x": 70, "y": 30 }
       },
       "ports": [
