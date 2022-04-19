@@ -45,11 +45,11 @@ export function Label({
     >
       <Typography
         onDoubleClick={onDoubleClick}
-        noWrap
         ref={refMap.get(labelID)}
         sx={{
           fontWeight: 'bold',
           padding: '5px',
+          whiteSpace: 'nowrap',
 
           '&:hover': {
             transform: `scale(${
