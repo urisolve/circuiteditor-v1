@@ -1,51 +1,54 @@
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import axios from 'axios';
 
-// Material-UI
 import {
   Card,
   CardHeader,
   CardContent,
   CardActions,
-  FormHelperText,
   Grid,
-  TextField,
   Button,
   IconButton,
   Tooltip,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 import { useBoolean } from '../../../hooks';
+import { FormField } from '../FormField';
+import { validations } from '../../../validations';
+
+const schema = yup.object({
+  confirmPassword: validations.user.confirmPassword,
+  email: validations.user.email,
+  firstName: validations.user.name,
+  institution: validations.user.institution,
+  lastName: validations.user.name,
+  mechNumber: validations.user.mechNumber,
+  password: validations.user.password,
+});
 
 export function Signup({ ...rest }) {
-  // Password visibility
+  const history = useHistory();
   const showPassword = useBoolean(false);
 
-  // Form validation hook
-  const { register, handleSubmit, errors, watch, reset } = useForm({
-    mode: 'onBlur',
-  });
+  const form = useForm({ resolver: yupResolver(schema) });
 
-  // Route history
-  const history = useHistory();
-
-  // Send the new user info to the server and reset the form
-  const onSubmit = async (formData) => {
+  async function onSubmit(formData) {
     try {
       await axios.post('api/auth/signup', formData);
       history.push('/circuits');
     } catch (err) {
       console.error(err);
     }
-
-    reset();
-  };
+  }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Card variant='outlined' {...rest}>
+    <Card variant='outlined' {...rest}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader
           title='Signup'
           subheader='Create an account to be able to save the circuits you create. We promise to never share your personal information with any third party services.'
@@ -54,141 +57,67 @@ export function Signup({ ...rest }) {
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                name='email'
-                label='E-mail'
-                placeholder='1210000@isep.ipp.pt'
+              <FormField
                 autoComplete='email'
-                variant='outlined'
-                error={errors.email}
-                inputRef={register({
-                  required: 'This field is required.',
-                  pattern: {
-                    value: /^\S+@\S+$/i,
-                    message: 'Please enter a valid e-mail address.',
-                  },
-                })}
-                fullWidth
+                label='E-mail'
+                name='email'
+                placeholder='1210000@isep.ipp.pt'
+                {...form}
               />
-              <FormHelperText>
-                {errors.email && errors.email?.message}
-              </FormHelperText>
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField
-                name='firstName'
-                label='First Name'
-                placeholder='John'
+              <FormField
                 autoComplete='given-name'
-                variant='outlined'
-                error={errors.firstName}
-                inputRef={register({
-                  required: 'This field is required.',
-                  maxLength: {
-                    value: 20,
-                    message: 'Cannot exceed 20 characters.',
-                  },
-                })}
-                fullWidth
+                label='First Name'
+                name='firstName'
+                placeholder='John'
+                {...form}
               />
-              <FormHelperText>
-                {errors.firstName && errors.firstName?.message}
-              </FormHelperText>
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField
-                name='lastName'
-                label='Last Name'
-                placeholder='Smith'
+              <FormField
                 autoComplete='family-name'
-                variant='outlined'
-                error={errors.lastName}
-                inputRef={register({
-                  required: 'This field is required.',
-                  maxLength: {
-                    value: 20,
-                    message: 'Cannot exceed 20 characters.',
-                  },
-                })}
-                fullWidth
+                label='Last Name'
+                name='lastName'
+                placeholder='Smith'
+                {...form}
               />
-              <FormHelperText>
-                {errors.lastName && errors.lastName?.message}
-              </FormHelperText>
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                name='number'
-                label='Mechanographic Nr.'
-                placeholder='1210000'
+              <FormField
                 autoComplete='nickname'
-                variant='outlined'
-                error={errors.number}
-                inputRef={register({
-                  required: 'This field is required.',
-                  validate: (value) => Number.isInteger(parseInt(value)),
-                })}
-                fullWidth
+                label='Mechanographic Nr.'
+                name='mechNumber'
+                placeholder='1210000'
+                {...form}
               />
-              <FormHelperText>
-                {errors.number && errors.number?.message}
-              </FormHelperText>
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                name='institution'
-                label='Institution'
-                placeholder='Instituto Superior de Engenharia do Porto'
+              <FormField
                 autoComplete='organization'
-                variant='outlined'
-                error={errors.institution}
-                inputRef={register({
-                  required: 'This field is required.',
-                })}
-                fullWidth
+                label='Institution'
+                name='institution'
+                placeholder='Instituto Superior de Engenharia do Porto'
+                {...form}
               />
-              <FormHelperText>
-                {errors.institution && errors.institution?.message}
-              </FormHelperText>
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField
-                name='password'
+              <FormField
+                autoComplete='new-password'
                 label='Password'
+                name='password'
                 type={showPassword.value ? 'text' : 'password'}
-                autoComplete='new-password'
-                variant='outlined'
-                error={errors.password}
-                inputRef={register({
-                  required: 'This field is required.',
-                  minLength: {
-                    value: 8,
-                    message: 'Password must have at least 8 characters.',
-                  },
-                })}
-                fullWidth
+                {...form}
               />
-              <FormHelperText>
-                {errors.password && errors.password?.message}
-              </FormHelperText>
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField
-                name='confirmPassword'
-                label='Confirm password'
-                type={showPassword.value ? 'text' : 'password'}
+              <FormField
                 autoComplete='new-password'
-                variant='outlined'
-                error={errors.confirmPassword}
-                inputRef={register({
-                  required: 'This field is required.',
-                  validate: (value) => value === watch('password'),
-                })}
-                fullWidth
+                label='Confirm password'
+                name='confirmPassword'
+                type={showPassword.value ? 'text' : 'password'}
+                {...form}
               />
-              <FormHelperText>
-                {errors.confirmPassword && errors.confirmPassword?.message}
-              </FormHelperText>
             </Grid>
           </Grid>
         </CardContent>
@@ -207,7 +136,7 @@ export function Signup({ ...rest }) {
             </IconButton>
           </Tooltip>
         </CardActions>
-      </Card>
-    </form>
+      </form>
+    </Card>
   );
 }

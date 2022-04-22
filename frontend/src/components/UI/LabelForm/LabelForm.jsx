@@ -1,35 +1,29 @@
 import { Stack } from '@mui/material';
 
 import { Checkbox } from '../Checkbox';
-import { Property } from '../Property';
+import { FormField } from '../FormField';
 
-export function LabelForm({
-  control,
-  label,
-  formState: { errors },
-  register,
-  unitDisabled,
-}) {
+export function LabelForm({ form, unitDisabled }) {
   return (
     <>
-      <Property errors={errors} label='Name' {...register('label.name')} />
-      <Property errors={errors} label='Value' {...register('label.value')} />
-      <Property
+      <FormField label='Name' name='label.name' {...form} />
+      <FormField label='Value' name='label.value' {...form} />
+      <FormField
         disabled={!!unitDisabled}
-        errors={errors}
         label='Unit'
-        {...register('label.unit')}
+        name='label.unit'
+        {...form}
       />
 
       <Stack direction='row'>
         <Checkbox
-          control={control}
+          control={form.control}
           label='Hide Label'
           name='label.isHidden'
           sx={{ flexGrow: 1 }}
         />
         <Checkbox
-          control={control}
+          control={form.control}
           label='Hide Value'
           name='label.isValueHidden'
           sx={{ flexGrow: 1 }}
