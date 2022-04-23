@@ -1,9 +1,14 @@
 import { useContext, useState } from 'react';
 
-import { ConnectionPoint, DraggableComponent, Label } from '..';
+import {
+  ContextMenu,
+  PropertiesMenu,
+  ConnectionPoint,
+  DraggableComponent,
+  Label,
+} from '..';
 import { useContextMenu, usePropertiesMenu } from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
-import { ContextMenu, PropertiesMenu } from '../../UI';
 
 export function Node({
   id,

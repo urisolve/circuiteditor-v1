@@ -9,8 +9,7 @@ import {
   useGlobalRefMap,
   usePropertiesMenu,
 } from '../../../hooks';
-import { Label } from '..';
-import { ContextMenu, PropertiesMenu } from '../../UI';
+import { ContextMenu, Label, PropertiesMenu } from '..';
 import { SchematicContext } from '../../../contexts';
 
 export function Connection({

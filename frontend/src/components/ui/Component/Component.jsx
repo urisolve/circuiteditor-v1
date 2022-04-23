@@ -2,15 +2,20 @@ import { useContext, useState } from 'react';
 
 import { Avatar } from '@mui/material';
 
-import { DraggableComponent, Label, Port } from '..';
+import {
+  ContextMenu,
+  DraggableComponent,
+  Label,
+  Port,
+  PropertiesMenu,
+} from '..';
 import {
   useContextMenu,
   useGlobalRefMap,
   usePropertiesMenu,
 } from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
-import { symbols } from '../../../configs';
-import { ContextMenu, PropertiesMenu } from '../../UI';
+import { symbols } from '../../../assets/electrical';
 
 export function Component({
   canvasRef,

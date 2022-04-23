@@ -15,7 +15,7 @@ import {
   Editor,
   Settings,
 } from './pages';
-import { Navbar, OfflineBanner } from './components/UI';
+import { Navbar, OfflineBanner } from './components/ui';
 import { useOnline } from './hooks';
 import { UserContext } from './contexts';
 

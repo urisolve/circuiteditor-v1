@@ -11,7 +11,7 @@ import {
   moveConnection,
   numberPattern,
 } from '../../util';
-import { components } from '../../configs/components.config';
+import { components } from '../../components/electrical';
 
 // TODO: Add more info to the header (author, date, ...)
 const version = process.env.REACT_APP_VERSION ?? '1.0.0';

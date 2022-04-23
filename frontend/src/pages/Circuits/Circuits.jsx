@@ -3,7 +3,7 @@ import lodash from 'lodash';
 import axios from 'axios';
 
 // Custom components/hooks
-import { CircuitCard, SortingMenu } from '../../components/UI';
+import { CircuitCard, SortingMenu } from '../../components/ui';
 import { useBoolean, useSortAndOrder } from '../../hooks';
 
 // Material-UI

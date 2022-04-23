@@ -8,7 +8,7 @@ import {
   Hero,
   HowTo,
   ScrollToTopButton,
-} from '../../components/UI';
+} from '../../components/ui';
 
 const sectionPadding = { py: 0, px: 2 };
 

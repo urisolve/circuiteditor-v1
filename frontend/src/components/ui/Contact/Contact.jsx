@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 
 import { teamMembers } from './teamMembers';
-import { TeamMember } from '../';
+import { TeamMember } from '..';
 
 export function Contact({ padding, ...rest }) {
   return (

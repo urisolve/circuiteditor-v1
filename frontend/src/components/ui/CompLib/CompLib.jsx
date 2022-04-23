@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 
 import { MenuHeader } from '..';
-import { library } from '../../../configs';
+import { library } from './library';
 import { SchematicContext } from '../../../contexts';
 import { Drawer } from '../Drawer';
 

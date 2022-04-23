@@ -120,6 +120,7 @@ export const components = Object.freeze({
 
     return {
       type: 'Wire',
+      fullName: 'Wire',
       components: [],
       connections: [{ start: id1, end: id2, gridBreak: '50%' }],
       nodes: [
@@ -142,6 +143,7 @@ export const components = Object.freeze({
   },
   Marker: (position) => ({
     type: 'Marker',
+    fullName: 'Marker',
     components: [],
     connections: [],
     nodes: [{ id: uuidv4(), position }],

@@ -1,4 +1,4 @@
-import { components as comps } from '.';
+import { components as comps } from '../../electrical';
 
 export const library = [
   {

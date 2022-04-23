@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import lodash, { cloneDeep, isEqual } from 'lodash';
 
 import { isConnected } from '../../util';
-import { components } from '../../configs';
+import { components } from '../../components/electrical';
 
 function normalizeNodes(schematic) {
   for (const node of schematic.nodes) {

@@ -1,6 +1,10 @@
 import { useBoolean, useSchematic } from '../../hooks';
-import { CompLib, QuickActionMenu, SourceView } from '../../components/UI';
-import { Schematic } from '../../components/Electrical';
+import {
+  CompLib,
+  QuickActionMenu,
+  Schematic,
+  SourceView,
+} from '../../components/ui';
 import { SchematicContext } from '../../contexts';
 
 import { Stack } from '@mui/material';

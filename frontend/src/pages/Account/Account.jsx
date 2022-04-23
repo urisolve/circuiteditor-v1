@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { UserContext } from '../../contexts';
 import { useGravatar } from '../../hooks';
-import { FormField } from '../../components/UI';
+import { FormField } from '../../components/ui';
 
 // Material-UI
 import {
