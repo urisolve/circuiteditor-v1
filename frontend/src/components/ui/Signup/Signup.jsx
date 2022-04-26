@@ -55,7 +55,7 @@ export function Signup({ ...rest }) {
         />
 
         <CardContent>
-          <Grid container spacing={2}>
+          <Grid container columnSpacing={2}>
             <Grid item xs={12}>
               <FormField
                 autoComplete='email'

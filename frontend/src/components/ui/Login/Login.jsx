@@ -50,7 +50,7 @@ export function Login({ setUser, ...rest }) {
         <CardHeader title='Login' subheader='Welcome back.' />
 
         <CardContent>
-          <Grid container spacing={2}>
+          <Grid container>
             <Grid item xs={12}>
               <FormField
                 autoComplete='email'
