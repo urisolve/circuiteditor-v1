@@ -107,7 +107,7 @@ interface Label {
   value: string;
   unit: string;
   position: RelativePosition;
-  isHidden?: boolean;
+  isNameHidden?: boolean;
   isValueHidden?: boolean;
   owner?: ID;
 }
@@ -131,7 +131,7 @@ The label can have some variations:
 - No `unit`: **"R1 = 10 k"**
 - No `value` and no `unit`: **"R1"**
 
-It can also contain a reference to its `owner`, a flag that controls if the label should be hidden (`isHidden`), and a flag that controls if only the `name` should be displayed (`isValueHidden`).
+It can also contain a reference to its `owner`, and flags that controls if some parts of the label should be hidden, `isNameHidden` and `isValueHidden` respectively.
 
 ## Main types
 

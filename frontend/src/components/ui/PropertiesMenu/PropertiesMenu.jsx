@@ -41,7 +41,7 @@ const getSchema = (schematic, contextKey, id) =>
         message: 'Insert a valid value',
       }),
       unit: yup.string().trim(),
-      isHidden: yup.bool(),
+      isNameHidden: yup.bool(),
       isValueHidden: yup.bool(),
     }),
     properties: yup.object({}),

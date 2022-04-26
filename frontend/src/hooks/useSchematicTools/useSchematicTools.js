@@ -49,7 +49,7 @@ export function useSchematicTools(setSchematic, history, gridSize) {
 
               label: {
                 ...element.label,
-                isHidden: isConnection(element) || isGround(element),
+                isNameHidden: isConnection(element) || isGround(element),
                 name: isGround(element)
                   ? 'gnd'
                   : generateUniqueName(

@@ -17,7 +17,7 @@ export function Label({
   value,
   unit,
   onDoubleClick,
-  isHidden,
+  isNameHidden,
   isValueHidden,
   ...rest
 }) {
@@ -27,14 +27,19 @@ export function Label({
   const { data: schematic } = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
 
-  const formattedLabel = useMemo(
-    () => formatLabel({ name, value, unit }),
-    [name, value, unit],
-  );
+  const formattedLabel = useMemo(() => {
+    let labelArgs = { name, value, unit };
 
-  if (isHidden) {
-    return null;
-  }
+    if (isNameHidden) {
+      labelArgs = { ...labelArgs, name: '' };
+    }
+
+    if (isValueHidden) {
+      labelArgs = { ...labelArgs, value: '', unit: '' };
+    }
+
+    return formatLabel(labelArgs);
+  }, [isNameHidden, isValueHidden, name, value, unit]);
 
   return (
     <DraggableComponent
@@ -59,7 +64,7 @@ export function Label({
           },
         }}
       >
-        {isValueHidden ? name : formattedLabel}
+        {formattedLabel}
       </Typography>
     </DraggableComponent>
   );
