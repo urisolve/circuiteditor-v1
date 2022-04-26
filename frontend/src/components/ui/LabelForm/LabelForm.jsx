@@ -3,7 +3,7 @@ import { Stack } from '@mui/material';
 import { Checkbox } from '../Checkbox';
 import { FormField } from '../FormField';
 
-export function LabelForm({ form, unitDisabled }) {
+export function LabelForm({ form, unit }) {
   return (
     <>
       <Stack direction='row' spacing={1}>
@@ -23,7 +23,7 @@ export function LabelForm({ form, unitDisabled }) {
         justifyContent='center'
         spacing={1}
       >
-        <FormField label='Value' name='label.value' {...form} />
+        <FormField label='Value' name='label.value' suffix={unit} {...form} />
 
         <Checkbox
           control={form.control}
@@ -32,13 +32,6 @@ export function LabelForm({ form, unitDisabled }) {
           sx={{ flexGrow: 1 }}
         />
       </Stack>
-
-      <FormField
-        disabled={!!unitDisabled}
-        label='Unit'
-        name='label.unit'
-        {...form}
-      />
     </>
   );
 }

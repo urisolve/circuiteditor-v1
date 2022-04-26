@@ -18,11 +18,19 @@ export const Wire = ({ x, y } = WIRE_DEFAULT_CENTER) => {
         start: id1,
         end: id2,
         gridBreak: '50%',
+        label: {
+          unit: 'A',
+          isValueHidden: true,
+        },
       },
     ],
     nodes: [
       {
         id: id1,
+        label: {
+          unit: 'V',
+          isValueHidden: true,
+        },
         position: {
           x: x - WIRE_CENTER_OFFSET,
           y: y - WIRE_CENTER_OFFSET,
@@ -30,6 +38,10 @@ export const Wire = ({ x, y } = WIRE_DEFAULT_CENTER) => {
       },
       {
         id: id2,
+        label: {
+          unit: 'V',
+          isValueHidden: true,
+        },
         position: {
           x: x + WIRE_CENTER_OFFSET,
           y: y + WIRE_CENTER_OFFSET,

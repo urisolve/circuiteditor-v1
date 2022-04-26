@@ -47,14 +47,7 @@ const getSchema = (schematic, contextKey, id) =>
     properties: yup.object({}),
   });
 
-export function PropertiesMenu({
-  contextKey,
-  menu,
-  id,
-  label,
-  properties,
-  unitDisabled,
-}) {
+export function PropertiesMenu({ contextKey, menu, id, label, properties }) {
   const { data: schematic, editById } = useContext(SchematicContext);
 
   const form = useForm({
@@ -107,7 +100,7 @@ export function PropertiesMenu({
 
           {/* Label */}
           <TabPanel value={menu.selectedTab} index={1}>
-            <LabelForm form={form} unitDisabled={unitDisabled} />
+            <LabelForm form={form} {...label} />
           </TabPanel>
 
           <Stack direction='row' justifyContent='flex-end'>

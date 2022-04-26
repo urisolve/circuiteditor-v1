@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { TextField } from '@mui/material';
+import { InputAdornment, TextField } from '@mui/material';
 
 export const FormField = forwardRef(
   (
@@ -10,7 +10,9 @@ export const FormField = forwardRef(
       label,
       name,
       placeholder,
+      prefix,
       register,
+      suffix,
       type,
       sx,
     },
@@ -23,6 +25,14 @@ export const FormField = forwardRef(
         error={!!formState?.errors?.[name]}
         fullWidth
         helperText={formState?.errors?.[name]?.message}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position='end'>{suffix}</InputAdornment>
+          ),
+          startAdornment: (
+            <InputAdornment position='start'>{prefix}</InputAdornment>
+          ),
+        }}
         label={label}
         margin='normal'
         name={name}

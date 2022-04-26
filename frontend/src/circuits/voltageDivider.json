@@ -107,39 +107,69 @@
     {
       "id": "bfc8216e-74b3-4a2b-9fcd-ee26ab327c7a",
       "position": { "x": 350, "y": 230 },
-      "label": { "name": "A", "position": { "x": 10, "y":0 } }
+      "label": {
+        "name": "A",
+        "unit": "V",
+        "position": { "x": 10, "y":0 },
+        "isValueHidden": true
+      }
     },
     {
       "id": "9900d06a-9dbc-488c-b21b-4ab603a87f9b",
       "position": { "x": 350, "y": 390 },
-      "label": { "name": "B", "position": { "x": 10, "y":0 } }
+      "label": {
+        "name": "B",
+        "unit": "V",
+        "position": { "x": 10, "y":0 },
+        "isValueHidden": true
+      }
     }
   ],
   "connections": [
     {
       "id": "59c13370-2901-4ced-8d4b-cdc239c04bda",
       "start": "7ed2507f-14fe-45e2-9246-9ee1d36eb442",
-      "end": "ddd6efab-f8f2-4565-8010-1270556f1d00"
+      "end": "ddd6efab-f8f2-4565-8010-1270556f1d00",
+      "label": {
+        "unit": "A",
+        "isValueHidden": true
+      }
     },
     {
       "id": "8fb25576-a918-4179-960b-18917de1b1ea",
       "start": "1f7b8784-184b-4733-ae81-53c74b62462c",
-      "end": "bfc8216e-74b3-4a2b-9fcd-ee26ab327c7a"
+      "end": "bfc8216e-74b3-4a2b-9fcd-ee26ab327c7a",
+      "label": {
+        "unit": "A",
+        "isValueHidden": true
+      }
     },
     {
       "id": "bf58328d-be5a-43cb-9759-598e461f1b06",
       "start": "bfc8216e-74b3-4a2b-9fcd-ee26ab327c7a",
-      "end": "6ab8738d-c2d6-4cfb-a399-00c92d1ff497"
+      "end": "6ab8738d-c2d6-4cfb-a399-00c92d1ff497",
+      "label": {
+        "unit": "A",
+        "isValueHidden": true
+      }
     },
     {
       "id": "8641afff-606c-4f4c-86fd-5de9509f9dd1",
       "start": "bfc8216e-74b3-4a2b-9fcd-ee26ab327c7a",
-      "end": "dc54f032-592a-4c89-90d6-0727add0908f"
+      "end": "dc54f032-592a-4c89-90d6-0727add0908f",
+      "label": {
+        "unit": "A",
+        "isValueHidden": true
+      }
     },
     {
       "id": "d9098b0d-9d74-4647-9ca3-2ad7e6bb6c28",
       "start": "c990e78e-2bc5-4afb-92ee-b8a6d1faab0f",
       "end": "9900d06a-9dbc-488c-b21b-4ab603a87f9b",
+      "label": {
+        "unit": "A",
+        "isValueHidden": true
+      },
       "properties": {
         "gridBreak": "0%"
       }
@@ -147,12 +177,20 @@
     {
       "id": "ced28b76-3977-45fc-823a-629dd0c87b46",
       "start": "9900d06a-9dbc-488c-b21b-4ab603a87f9b",
-      "end": "b4c2c42a-24d8-4230-8ee7-f8330926205f"
+      "end": "b4c2c42a-24d8-4230-8ee7-f8330926205f",
+      "label": {
+        "unit": "A",
+        "isValueHidden": true
+      }
     },
     {
       "id": "a2033680-df9e-4157-b534-9e396653185e",
       "start": "a5e84b5d-caeb-40bd-892b-96a958166b28",
-      "end": "9900d06a-9dbc-488c-b21b-4ab603a87f9b"
+      "end": "9900d06a-9dbc-488c-b21b-4ab603a87f9b",
+      "label": {
+        "unit": "A",
+        "isValueHidden": true
+      }
     }
   ]
 }

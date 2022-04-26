@@ -102,7 +102,6 @@ export function Component({
         label={label}
         properties={properties}
         menu={propertiesMenu}
-        unitDisabled
       />
     </DraggableComponent>
   );

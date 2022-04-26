@@ -8,6 +8,10 @@ export const Marker = (position) => ({
   nodes: [
     {
       id: uuidv4(),
+      label: {
+        unit: 'V',
+        isValueHidden: true,
+      },
       position,
     },
   ],
