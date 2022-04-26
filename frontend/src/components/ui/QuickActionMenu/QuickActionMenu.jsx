@@ -10,7 +10,7 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import CodeIcon from '@mui/icons-material/Code';
 import SaveIcon from '@mui/icons-material/Save';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import ShareIcon from '@mui/icons-material/Share';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 import { useBoolean } from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
@@ -29,7 +29,7 @@ export function QuickActionMenu({
   sx,
   ...rest
 }) {
-  const schematic = useContext(SchematicContext);
+  const { data: schematic, history, netlist } = useContext(SchematicContext);
   const { circuitID } = useParams();
   const isAccountAlertOpen = useBoolean(false);
 
@@ -40,13 +40,22 @@ export function QuickActionMenu({
     }
 
     try {
-      await axios.patch(`/api/circuits?id=${circuitID}`, {
-        schematic: schematic.data,
-      });
+      await axios.patch(`/api/circuits?id=${circuitID}`, { schematic });
     } catch (err) {
       console.error(err);
     }
   }, [circuitID, schematic, isAccountAlertOpen]);
+
+  const upload = useCallback(async () => {
+    try {
+      const image = await toPng(canvasRef.current);
+      const circuit = { image, netlist, schematic };
+
+      await axios.post('https://urisolve.pt/app/circuit/load', circuit);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [canvasRef, netlist, schematic]);
 
   const actionGroups = [
     {
@@ -55,14 +64,14 @@ export function QuickActionMenu({
         {
           name: 'Undo',
           icon: <UndoIcon />,
-          onClick: schematic.history.undo,
-          disabled: !schematic.history.canUndo,
+          onClick: history.undo,
+          disabled: !history.canUndo,
         },
         {
           name: 'Redo',
           icon: <RedoIcon />,
-          onClick: schematic.history.redo,
-          disabled: !schematic.history.canRedo,
+          onClick: history.redo,
+          disabled: !history.canRedo,
         },
       ],
     },
@@ -98,11 +107,9 @@ export function QuickActionMenu({
               .catch(console.error),
         },
         {
-          name: 'Share',
-          icon: <ShareIcon />,
-          href: 'https://urisolve.pt/app/',
-          target: '_blank',
-          rel: 'noopener',
+          name: 'Export to URIsolve',
+          icon: <FileUploadIcon />,
+          onClick: upload,
         },
       ],
     },
