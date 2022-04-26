@@ -40,11 +40,16 @@ export function QuickActionMenu({
     }
 
     try {
-      await axios.patch(`/api/circuits?id=${circuitID}`, { schematic });
+      const thumbnail = await toPng(canvasRef.current);
+
+      await axios.patch(`/api/circuits?id=${circuitID}`, {
+        schematic,
+        thumbnail,
+      });
     } catch (err) {
       console.error(err);
     }
-  }, [circuitID, schematic, isAccountAlertOpen]);
+  }, [circuitID, isAccountAlertOpen, canvasRef, schematic]);
 
   const upload = useCallback(async () => {
     try {
