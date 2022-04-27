@@ -59,7 +59,9 @@ export function Connection({
         }
         {...rest}
       />
+
       <ContextMenu id={id} {...contextMenu} />
+
       <PropertiesMenu
         contextKey='connections'
         id={id}

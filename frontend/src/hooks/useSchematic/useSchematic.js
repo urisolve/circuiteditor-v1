@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import {
+  useArea,
   useConnections,
   useHistory,
   useNetlist,
@@ -16,19 +17,20 @@ export function useSchematic(
   gridSize = 10,
   maxHistoryLength = 20,
 ) {
-  const [schematic, setSchematic] = useState({
-    ...emptySchematic,
-    ...initialSchematic,
-  });
+  const sch = { ...emptySchematic, ...initialSchematic };
+  const [schematic, setSchematic] = useState(sch);
 
-  useSchematicParser(schematic, setSchematic);
-
-  const { items, itemsMap } = useSchematicItems(schematic);
-  useConnections(schematic, setSchematic, items);
-  const netlist = useNetlist(schematic);
   const history = useHistory(setSchematic, maxHistoryLength);
   const tools = useSchematicTools(setSchematic, history, gridSize);
+
+  useSchematicParser(schematic, setSchematic);
+  const { items, itemsMap } = useSchematicItems(schematic);
   const [selectedItems, setSelectedItems] = useState(new Set());
+
+  useConnections(schematic, setSchematic, items);
+  const netlist = useNetlist(schematic);
+
+  const area = useArea(items);
 
   return {
     data: schematic,
@@ -38,6 +40,7 @@ export function useSchematic(
     ...tools,
     history,
     netlist,
+    area,
 
     selection: {
       selectedItems,
