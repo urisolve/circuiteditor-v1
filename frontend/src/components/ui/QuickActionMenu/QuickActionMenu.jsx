@@ -1,5 +1,4 @@
-import { toPng } from 'html-to-image';
-import { useCallback, useContext } from 'react';
+import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -15,7 +14,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { useBoolean } from '../../../hooks';
 import { SchematicContext } from '../../../contexts';
 import { QuickAction } from '../QuickAction';
-import { download } from '../../../util';
+import { download, screenshot } from '../../../util';
 
 export function QuickActionMenu({
   canvasRef,
@@ -29,18 +28,25 @@ export function QuickActionMenu({
   sx,
   ...rest
 }) {
-  const { data: schematic, history, netlist } = useContext(SchematicContext);
+  const {
+    area,
+    data: schematic,
+    history,
+    netlist,
+  } = useContext(SchematicContext);
   const { circuitID } = useParams();
   const isAccountAlertOpen = useBoolean(false);
 
-  const saveCircuit = useCallback(async () => {
+  const getImage = () => screenshot(canvasRef.current, area);
+
+  async function saveCircuit() {
     if (!circuitID) {
       isAccountAlertOpen.on();
       return;
     }
 
     try {
-      const thumbnail = await toPng(canvasRef.current);
+      const thumbnail = await getImage();
 
       await axios.patch(`/api/circuits?id=${circuitID}`, {
         schematic,
@@ -49,18 +55,27 @@ export function QuickActionMenu({
     } catch (err) {
       console.error(err);
     }
-  }, [circuitID, isAccountAlertOpen, canvasRef, schematic]);
+  }
 
-  const upload = useCallback(async () => {
+  async function saveScreenshot() {
     try {
-      const image = await toPng(canvasRef.current);
+      const image = await getImage();
+      download(image, `${circuitName}.png`);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function uploadToURIsolve() {
+    try {
+      const image = await getImage();
       const circuit = { image, netlist, schematic };
 
       await axios.post('https://urisolve.pt/app/circuit/load', circuit);
     } catch (err) {
       console.error(err);
     }
-  }, [canvasRef, netlist, schematic]);
+  }
 
   const actionGroups = [
     {
@@ -106,15 +121,13 @@ export function QuickActionMenu({
         {
           name: 'Screenshot',
           icon: <CameraAltIcon />,
-          onClick: () =>
-            toPng(canvasRef.current)
-              .then((imageUrl) => download(imageUrl, `${circuitName}.png`))
-              .catch(console.error),
+          onClick: saveScreenshot,
         },
         {
+          disabled: true,
           name: 'Export to URIsolve',
           icon: <FileUploadIcon />,
-          onClick: upload,
+          onClick: uploadToURIsolve,
         },
       ],
     },

@@ -1,3 +1,4 @@
+export * from './useArea';
 export * from './useBoolean';
 export * from './useConnectionAnchors';
 export * from './useConnections';

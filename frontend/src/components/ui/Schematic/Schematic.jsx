@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react';
 
 // Material-UI
-import { Paper } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 
 // Custom libraries
 import { SelectionArea, Component, Connection, Node } from '..';
@@ -25,6 +25,8 @@ export function Schematic({
 
   const updatePosition = useCallback(
     (id, { x, y }, startSch = null, isLabel = false) => {
+      if (readOnly) return;
+
       // Snap the values to the grid
       x = snapValueToGrid(x ?? 0, gridSize ?? 10);
       y = snapValueToGrid(y ?? 0, gridSize ?? 10);
@@ -41,13 +43,12 @@ export function Schematic({
         startSch,
       );
     },
-    [schematic, gridSize],
+    [gridSize, readOnly, schematic],
   );
 
   return (
     <Paper
       className='schematic'
-      ref={canvasRef}
       elevation={3}
       onContextMenu={(e) => e.preventDefault()}
       sx={{
@@ -66,50 +67,52 @@ export function Schematic({
       }}
       {...rest}
     >
-      {children}
+      <Box ref={canvasRef} sx={{ width: 1, height: 1 }}>
+        {children}
 
-      {schematic?.data?.components?.map((comp) => (
-        <Component
-          {...comp}
-          key={comp.id}
-          canvasRef={canvasRef}
-          gridSize={gridSize}
-          updatePosition={updatePosition}
-          isSelected={selection?.selectedItems.has(comp.id)}
+        {schematic?.data?.components?.map((comp) => (
+          <Component
+            {...comp}
+            key={comp.id}
+            canvasRef={canvasRef}
+            gridSize={gridSize}
+            updatePosition={updatePosition}
+            isSelected={selection?.selectedItems.has(comp.id)}
+          />
+        ))}
+
+        {schematic?.data?.nodes?.map((node) => (
+          <Node
+            {...node}
+            key={node.id}
+            canvasRef={canvasRef}
+            gridSize={gridSize}
+            updatePosition={updatePosition}
+            isSelected={selection?.selectedItems.has(node.id)}
+          />
+        ))}
+
+        {schematic?.data?.connections?.map(
+          (conn) =>
+            conn.start &&
+            conn.end && (
+              <Connection
+                {...conn}
+                key={conn.id}
+                canvasRef={canvasRef}
+                updatePosition={updatePosition}
+                isSelected={selection?.selectedItems.has(conn.id)}
+              />
+            ),
+        )}
+
+        <SelectionArea
+          parentRef={canvasRef}
+          selectableItems={schematic.items}
+          setSelectedItems={selection?.setSelectedItems}
+          disabled={readOnly}
         />
-      ))}
-
-      {schematic?.data?.nodes?.map((node) => (
-        <Node
-          {...node}
-          key={node.id}
-          canvasRef={canvasRef}
-          gridSize={gridSize}
-          updatePosition={updatePosition}
-          isSelected={selection?.selectedItems.has(node.id)}
-        />
-      ))}
-
-      {schematic?.data?.connections?.map(
-        (conn) =>
-          conn.start &&
-          conn.end && (
-            <Connection
-              {...conn}
-              key={conn.id}
-              canvasRef={canvasRef}
-              updatePosition={updatePosition}
-              isSelected={selection?.selectedItems.has(conn.id)}
-            />
-          ),
-      )}
-
-      <SelectionArea
-        parentRef={canvasRef}
-        selectableItems={schematic.items}
-        setSelectedItems={selection?.setSelectedItems}
-        disabled={readOnly}
-      />
+      </Box>
     </Paper>
   );
 }
