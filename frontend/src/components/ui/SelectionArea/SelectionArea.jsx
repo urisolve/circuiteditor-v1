@@ -90,8 +90,8 @@ export function SelectionArea({
 
         // Calculate the current position of mouse
         const endPoint = {
-          left: event.pageX - parentRect.current.left,
-          top: event.pageY - parentRect.current.top,
+          left: event.clientX - parentRect.current.left,
+          top: event.clientY - parentRect.current.top,
         };
 
         // Calculate the selection area
@@ -156,8 +156,8 @@ export function SelectionArea({
 
       // Calculate click point
       const clickPoint = {
-        left: event.pageX - parentRect.current.left,
-        top: event.pageY - parentRect.current.top,
+        left: event.clientX - parentRect.current.left,
+        top: event.clientY - parentRect.current.top,
       };
 
       // Ignore click if it was on an item marked to ignore
