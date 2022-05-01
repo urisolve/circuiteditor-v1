@@ -1,4 +1,5 @@
 import { useContext, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import { Typography } from '@mui/material';
 
@@ -41,7 +42,7 @@ export function Label({
     return formatLabel(labelArgs);
   }, [isNameHidden, isValueHidden, name, value, unit]);
 
-  return (
+  const markup = (
     <DraggableComponent
       position={position}
       onStart={() => setStartSch(schematic)}
@@ -68,4 +69,10 @@ export function Label({
       </Typography>
     </DraggableComponent>
   );
+
+  if (!canvasRef.current) {
+    return null;
+  }
+
+  return createPortal(markup, canvasRef.current);
 }
