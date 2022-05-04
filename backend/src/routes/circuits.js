@@ -6,6 +6,8 @@ require('dotenv').config();
 
 const isAuth = require('./authMiddleware').isAuth;
 
+const constants = require('../constants/constants');
+
 function hasCircuitID(req, res, next) {
   if (req.query.id) next();
   else res.status(400).send("The circuit's ID was not provided");
@@ -28,10 +30,10 @@ router.get('/', isAuth, async (req, res) => {
  * Add a new circuit to the user's collection
  */
 router.post('/', isAuth, async (req, res) => {
-  if (req.user.circuits.length >= process.env.MAX_CIRCUITS)
+  if (req.user.circuits.length >= constants.MAX_CIRCUITS)
     return res
       .status(405)
-      .send(`The limit of ${process.env.MAX_CIRCUITS} has been reached`);
+      .send(`The limit of ${constants.MAX_CIRCUITS} has been reached`);
 
   req.user.circuits.push(req.body);
   req.user.save();

@@ -9,14 +9,15 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 
 const cors = require('cors');
-require('dotenv').config();
+require('dotenv-flow').config();
 
 // Initialize the server
 const app = express();
 const port = process.env.PORT || 5000;
 
 // Connect to the MongoDB database.
-mongoose.connect(process.env.MONGODB_URI, {
+const mongoUrl = `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASS}@${process.env.DATABASE_CLUSTER}`;
+mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
@@ -38,10 +39,7 @@ app.use(
     secret: process.env.SESSION_SECRET, // Random Hash
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI,
-      dbName: 'circuit-editor',
-    }),
+    store: MongoStore.create({ mongoUrl, dbName: 'circuit-editor' }),
     cookie: {
       maxAge: 24 * 3600 * 1000, // 24 hours
     },
