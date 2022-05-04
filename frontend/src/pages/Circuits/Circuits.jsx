@@ -24,6 +24,7 @@ import ChevronDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AddIcon from '@mui/icons-material/Add';
 import UploadIcon from '@mui/icons-material/Publish';
 import SortIcon from '@mui/icons-material/Sort';
+import { downloadCode } from '../../util';
 
 export function Circuits() {
   const [circuits, setCircuits] = useState([]);
@@ -35,13 +36,11 @@ export function Circuits() {
   const sortMenuOpen = useBoolean(false);
   const [sortedCircuits, params, setters] = useSortAndOrder(circuits);
 
-  // Filters the stared circuits
   const staredCircuits = useMemo(
     () => sortedCircuits.filter((circuit) => circuit.isStared),
     [sortedCircuits],
   );
 
-  // Fetch all the circuits
   const fetchCircuits = useCallback(async () => {
     isLoading.on();
 
@@ -55,61 +54,58 @@ export function Circuits() {
     isLoading.off();
   }, [setCircuits, isLoading]);
 
-  // Let the user upload a new circuit schematic
-  const uploadCircuit = useCallback(
-    async (circuit) => {
-      try {
-        await axios.post('api/circuits', circuit);
-        fetchCircuits();
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    [fetchCircuits],
-  );
-
-  // Adds a new circuit ot the database
-  const createCircuit = useCallback(async () => {
+  async function uploadCircuit(circuit) {
     try {
-      await axios.post('api/circuits');
+      await axios.post('api/circuits', circuit);
+
       fetchCircuits();
     } catch (err) {
       console.error(err);
     }
-  }, [fetchCircuits]);
+  }
 
-  // Deletes a circuit from the database
-  const deleteCircuit = useCallback(
-    async (id) => {
-      try {
-        await axios.delete(`/api/circuits?id=${id}`);
-        fetchCircuits();
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    [fetchCircuits],
-  );
+  async function createCircuit() {
+    try {
+      await axios.post('api/circuits');
 
-  // Adds a circuit to the favorites
-  const starCircuit = useCallback(
-    async (id) => {
-      const circuit = lodash.find(circuits, { _id: id });
+      fetchCircuits();
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
-      try {
-        await axios.patch(`/api/circuits?id=${id}`, {
-          isStared: !circuit.isStared,
-          timestamps: false,
-        });
-        fetchCircuits();
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    [fetchCircuits, circuits],
-  );
+  async function deleteCircuit(id) {
+    try {
+      await axios.delete(`/api/circuits?id=${id}`);
 
-  // Fetch all circuits when the page loads
+      fetchCircuits();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  function downloadCircuit(id) {
+    const { name, schematic } = lodash.find(circuits, { _id: id });
+    const code = JSON.stringify(schematic, null, 2);
+
+    downloadCode(code, 'text/json', `${name}.json`);
+  }
+
+  async function starCircuit(id) {
+    const circuit = lodash.find(circuits, { _id: id });
+
+    try {
+      await axios.patch(`/api/circuits?id=${id}`, {
+        isStared: !circuit.isStared,
+        timestamps: false,
+      });
+
+      fetchCircuits();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   useEffect(() => {
     fetchCircuits();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -200,6 +196,7 @@ export function Circuits() {
                       <CircuitCard
                         circuit={circuit}
                         onDelete={() => deleteCircuit(circuit._id)}
+                        onDownload={() => downloadCircuit(circuit._id)}
                         onStar={() => starCircuit(circuit._id)}
                       />
                     </Grid>

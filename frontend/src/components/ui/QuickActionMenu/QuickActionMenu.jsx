@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useContext, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import { Box, Paper, Stack } from '@mui/material';
@@ -34,13 +34,19 @@ export function QuickActionMenu({
     history,
     netlist,
   } = useContext(SchematicContext);
-  const { circuitID } = useParams();
+
+  const location = useLocation();
+  const circuitId = useMemo(
+    () => location.pathname.split('/').at(-1),
+    [location],
+  );
+
   const isAccountAlertOpen = useBoolean(false);
 
   const getImage = () => screenshot(canvasRef.current, area);
 
   async function saveCircuit() {
-    if (!circuitID) {
+    if (!circuitId) {
       isAccountAlertOpen.on();
       return;
     }
@@ -48,7 +54,7 @@ export function QuickActionMenu({
     try {
       const thumbnail = await getImage();
 
-      await axios.patch(`/api/circuits?id=${circuitID}`, {
+      await axios.patch(`/api/circuits?id=${circuitId}`, {
         schematic,
         thumbnail,
       });
@@ -57,7 +63,7 @@ export function QuickActionMenu({
     }
   }
 
-  async function saveScreenshot() {
+  async function downloadScreenshot() {
     try {
       const image = await getImage();
       download(image, `${circuitName}.png`);
@@ -121,7 +127,7 @@ export function QuickActionMenu({
         {
           name: 'Screenshot',
           icon: <CameraAltIcon />,
-          onClick: saveScreenshot,
+          onClick: downloadScreenshot,
         },
         {
           disabled: true,

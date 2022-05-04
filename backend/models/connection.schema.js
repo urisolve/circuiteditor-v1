@@ -1,20 +1,14 @@
 const mongoose = require('mongoose');
 
+const labelSchema = require('./label.schema');
+
 const connectionSchema = new mongoose.Schema(
   {
     id: { type: String, required: true },
     start: { type: String, required: true },
     end: { type: String, required: true },
     type: { type: String, default: 'grid' },
-    label: {
-      name: String,
-      value: String,
-      unit: String,
-      position: {
-        x: Number,
-        y: Number,
-      },
-    },
+    label: labelSchema,
     properties: {
       color: String,
       stroke: Number,

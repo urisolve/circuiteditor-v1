@@ -18,3 +18,8 @@ export function download(url, fileName = 'download') {
   // Clean up
   document.body.removeChild(link);
 }
+
+export function downloadCode(code, type, fileName) {
+  const href = getHref(code, type);
+  download(href, fileName);
+}

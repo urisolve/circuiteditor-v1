@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-// Material-UI
 import {
   Box,
   Button,
@@ -22,15 +21,13 @@ import GetAppIcon from '@mui/icons-material/GetApp';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
-// Custom hook
 import { useBoolean, useTimeSince } from '../../../hooks';
 
 const cardWidth = 300;
 const cardHeight = 300;
 
-export function CircuitCard({ circuit, onDelete, onStar }) {
-  const timeSince = useTimeSince(circuit.data.updatedAt);
-
+export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
+  const timeSince = useTimeSince(circuit.updatedAt);
   const dialog = useBoolean(false);
 
   return (
@@ -50,6 +47,7 @@ export function CircuitCard({ circuit, onDelete, onStar }) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
+            justifyContent: 'center',
           }}
         >
           <CardMedia
@@ -60,6 +58,7 @@ export function CircuitCard({ circuit, onDelete, onStar }) {
               width: cardWidth,
               height: cardHeight / 2,
               backgroundColor: 'gray',
+              objectPosition: '50% 50%',
             }}
           />
           <CardHeader
@@ -69,8 +68,8 @@ export function CircuitCard({ circuit, onDelete, onStar }) {
           />
         </CardActionArea>
         <CardActions>
-          <Tooltip title='Export' arrow>
-            <IconButton href={null} download={`${circuit.name}.json`} disabled>
+          <Tooltip title='Download' arrow>
+            <IconButton onClick={onDownload}>
               <GetAppIcon />
             </IconButton>
           </Tooltip>

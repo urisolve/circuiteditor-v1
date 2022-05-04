@@ -1,4 +1,7 @@
-import { useBoolean, useSchematic } from '../../hooks';
+import { useRef } from 'react';
+
+import { Stack } from '@mui/material';
+
 import {
   CompLib,
   QuickActionMenu,
@@ -6,16 +9,14 @@ import {
   SourceView,
 } from '../../components/ui';
 import { SchematicContext } from '../../contexts';
-
-import { Stack } from '@mui/material';
-import { useRef } from 'react';
+import { useBoolean, useCircuit, useSchematic } from '../../hooks';
 
 const canvasSize = { width: 2560, height: 1440 }; // 16:9 resolution (1440p)
 
-const defaultCircuit = require('../../circuits/voltageDivider.json');
+export function Editor({ ...rest }) {
+  const circuit = useCircuit();
 
-export function Editor({ circuit, ...rest }) {
-  const schematic = useSchematic(defaultCircuit);
+  const schematic = useSchematic(circuit?.schematic);
   const canvasRef = useRef();
 
   const compLib = useBoolean(true);

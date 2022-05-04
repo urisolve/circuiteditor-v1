@@ -1,56 +1,23 @@
 const mongoose = require('mongoose');
 
+const labelSchema = require('./label.schema');
+const portSchema = require('./port.schema');
+
+const Mixed = mongoose.Schema.Types.Mixed;
+
 const componentSchema = new mongoose.Schema(
   {
     id: { type: String, required: true },
     type: String,
-    ports: [
-      {
-        id: { type: String, requited: true },
-        connection: String,
-        type: String,
-        position: {
-          x: Number,
-          y: Number,
-        },
-      },
-    ],
+    fullName: String,
+    ports: [portSchema],
     position: {
       x: Number,
       y: Number,
       angle: Number,
     },
-    label: {
-      name: String,
-      value: String,
-      unit: String,
-      position: {
-        x: Number,
-        y: Number,
-      },
-    },
-    frequency: {
-      unit: String,
-      value: Number,
-    },
-    phase: {
-      unit: String,
-      value: Number,
-    },
-    properties: {
-      impedance: {
-        unit: String,
-        value: Number,
-      },
-      temperature: {
-        unit: String,
-        value: Number,
-      },
-      initial_value: {
-        unit: String,
-        value: Number,
-      },
-    },
+    label: labelSchema,
+    properties: Mixed,
   },
   { _id: false },
 );

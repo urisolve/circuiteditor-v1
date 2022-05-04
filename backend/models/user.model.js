@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
     },
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
-    number: { type: Number, required: true },
+    mechNumber: { type: Number, required: true },
     institution: { type: String, required: true, trim: true },
     password: { type: String, required: true },
     settings: settingsSchema,

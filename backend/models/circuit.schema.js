@@ -9,7 +9,7 @@ const circuitSchema = new mongoose.Schema(
     name: { type: String, default: 'Untitled Circuit' },
     description: { type: String, default: '' },
     isStared: { type: Boolean, default: false },
-    thumbnail: Buffer,
+    thumbnail: String,
   },
   { timestamps: true },
 );

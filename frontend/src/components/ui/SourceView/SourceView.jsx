@@ -13,7 +13,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import DownloadIcon from '@mui/icons-material/Download';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import { download, getHref } from '../../../util';
+import { downloadCode } from '../../../util';
 import { Drawer } from '../Drawer';
 import { MenuHeader } from '..';
 import { SchematicContext } from '../../../contexts';
@@ -36,9 +36,6 @@ export function SourceView({ circuitName, controller, ...rest }) {
     },
   ];
 
-  const downloadCode = (code, type, fileName) => () =>
-    download(getHref(code, type), fileName);
-
   return (
     <Drawer anchor='right' controller={controller} {...rest}>
       <MenuHeader icon={<CodeIcon />} onClose={controller.off}>
@@ -50,7 +47,7 @@ export function SourceView({ circuitName, controller, ...rest }) {
           <Accordion key={title} disabled={disabled} variant='outlined'>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Stack direction='row' alignItems='center'>
-                <IconButton onClick={downloadCode(code, type, fileName)}>
+                <IconButton onClick={() => downloadCode(code, type, fileName)}>
                   <DownloadIcon />
                 </IconButton>
                 <Typography>{title}</Typography>
