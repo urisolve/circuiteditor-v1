@@ -108,7 +108,13 @@ export function SelectionArea({
           if (areasIntersect(area, selectionArea.current)) items.add(area.id);
 
         // Apply the selection
-        setSelectedItems?.((selected) => new Set([...selected, ...items]));
+        setSelectedItems((selected) => {
+          const totalSelection = event.ctrlKey
+            ? [...selected, ...items]
+            : items;
+
+          return new Set(totalSelection);
+        });
 
         event.preventDefault();
       }, 1000 / (fps ?? 30)),
@@ -140,7 +146,7 @@ export function SelectionArea({
       if (event.which !== MOUSE.LEFT) return;
 
       // Check if CTRL was pressed
-      if (!event.ctrlKey) setSelectedItems?.(new Set());
+      if (!event.ctrlKey) setSelectedItems(new Set());
 
       // Calculate click point
       const clickPoint = {
@@ -159,7 +165,7 @@ export function SelectionArea({
       // Single click on selectable items
       for (const area of selectableAreas.current) {
         if (areasIntersect(clickPoint, area)) {
-          setSelectedItems?.((items) => {
+          setSelectedItems((items) => {
             if (items.has(area.id)) items.delete(area.id);
             else items.add(area.id);
             return items;
