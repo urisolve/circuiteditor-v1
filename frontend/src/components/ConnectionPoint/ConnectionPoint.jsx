@@ -11,6 +11,7 @@ export function ConnectionPoint({ id, sx, ...rest }) {
       sx={{
         position: 'absolute',
         borderRadius: '50%',
+        pointerEvents: 'auto',
 
         '&:hover': {
           transform: `scale(${constants.SCHEMATIC_HOVER_SCALE})`,

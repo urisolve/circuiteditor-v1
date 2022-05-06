@@ -17,7 +17,7 @@ import { QuickAction } from '../QuickAction';
 import { download, screenshot } from '../../util';
 
 export function QuickActionMenu({
-  canvasRef,
+  schematicRef,
   circuitName,
   offset,
   children,
@@ -37,7 +37,7 @@ export function QuickActionMenu({
 
   const isAccountAlertOpen = useBoolean(false);
 
-  const getImage = () => screenshot(canvasRef.current, area);
+  const getImage = () => screenshot(schematicRef.current, area);
 
   async function saveCircuit() {
     if (!user) {

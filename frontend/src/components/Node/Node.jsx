@@ -18,7 +18,7 @@ export function Node({
   gridSize,
   updatePosition,
   isSelected,
-  canvasRef,
+  schematicRef,
   ...rest
 }) {
   const schematic = useContext(SchematicContext);
@@ -51,7 +51,7 @@ export function Node({
       {label && (
         <Label
           owner={id}
-          canvasRef={canvasRef}
+          schematicRef={schematicRef}
           updatePosition={updatePosition}
           onDoubleClick={() => propertiesMenu.openTab(1)}
           {...label}

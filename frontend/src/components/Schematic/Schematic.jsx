@@ -12,6 +12,7 @@ const canvasRelativeSize = '70%';
 
 export function Schematic({
   canvasRef,
+  schematicRef,
   selection,
   width,
   height,
@@ -51,6 +52,7 @@ export function Schematic({
       className='schematic'
       elevation={3}
       onContextMenu={(e) => e.preventDefault()}
+      ref={canvasRef}
       sx={{
         width: canvasRelativeSize,
         height: canvasRelativeSize,
@@ -67,14 +69,17 @@ export function Schematic({
       }}
       {...rest}
     >
-      <Box ref={canvasRef} sx={{ width: 1, height: 1, pointerEvents: 'none' }}>
+      <Box
+        ref={schematicRef}
+        sx={{ width: 1, height: 1, pointerEvents: 'none' }}
+      >
         {children}
 
         {schematic?.data?.components?.map((comp) => (
           <Component
             {...comp}
             key={comp.id}
-            canvasRef={canvasRef}
+            schematicRef={schematicRef}
             gridSize={gridSize}
             updatePosition={updatePosition}
             isSelected={selection?.selectedItems.has(comp.id)}
@@ -85,7 +90,7 @@ export function Schematic({
           <Node
             {...node}
             key={node.id}
-            canvasRef={canvasRef}
+            schematicRef={schematicRef}
             gridSize={gridSize}
             updatePosition={updatePosition}
             isSelected={selection?.selectedItems.has(node.id)}
@@ -99,7 +104,7 @@ export function Schematic({
               <Connection
                 {...conn}
                 key={conn.id}
-                canvasRef={canvasRef}
+                schematicRef={schematicRef}
                 updatePosition={updatePosition}
                 isSelected={selection?.selectedItems.has(conn.id)}
               />

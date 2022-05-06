@@ -26,18 +26,15 @@ export function SelectionArea({
   disabled,
   ...rest
 }) {
+  const refMap = useGlobalRefMap();
   const showArea = useBoolean(false);
+
   const selectionArea = useRef({ left: 0, top: 0, width: 0, height: 0 });
   const ignoreAreas = useRef([]);
   const selectableAreas = useRef([]);
   const parentRect = useRef(null);
   const startPoint = useRef(null);
 
-  const refMap = useGlobalRefMap();
-
-  /**
-   * Calculate the areas of the elements
-   */
   useLayoutEffect(() => {
     // Calculate the bounding area of the parent element
     const rect = parentRef.current?.getBoundingClientRect() ?? {};
@@ -79,9 +76,6 @@ export function SelectionArea({
     }
   }, [refMap, ignoreItems, selectableItems, parentRef]);
 
-  /**
-   * Handler for moving the mouse.
-   */
   const onMouseMove = useMemo(
     () =>
       lodash.throttle((event) => {
@@ -121,9 +115,6 @@ export function SelectionArea({
     [setSelectedItems, startPoint, fps, showArea],
   );
 
-  /**
-   * Handler for letting go of mouse1.
-   */
   const onMouseUp = useCallback(
     (event) => {
       // Stop dragging
@@ -141,9 +132,6 @@ export function SelectionArea({
     [onMouseMove, parentRef, showArea],
   );
 
-  /**
-   * Handler for pressing left mouse button.
-   */
   const onMouseDown = useCallback(
     (event) => {
       if (disabled) return;
@@ -199,9 +187,6 @@ export function SelectionArea({
     [setSelectedItems, disabled, parentRef, onMouseUp, onMouseMove],
   );
 
-  /**
-   * Apply the event listener for clicking the mouse.
-   */
   useEffect(() => {
     const cleanup = parentRef;
     parentRef.current.addEventListener('mousedown', onMouseDown);

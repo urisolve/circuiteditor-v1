@@ -21,10 +21,12 @@ export function Editor({ ...rest }) {
   const circuit = user?.circuits.find((circuit) => circuit._id === circuitId);
 
   const schematic = useSchematic(circuit?.schematic);
-  const canvasRef = useRef();
 
   const compLib = useBoolean(true);
   const sourceView = useBoolean(false);
+
+  const canvasRef = useRef();
+  const schematicRef = useRef();
 
   return (
     <SchematicContext.Provider value={schematic}>
@@ -38,12 +40,13 @@ export function Editor({ ...rest }) {
       >
         <Schematic
           canvasRef={canvasRef}
+          schematicRef={schematicRef}
           selection={schematic.selection}
           {...rest}
         />
 
         <QuickActionMenu
-          canvasRef={canvasRef}
+          schematicRef={schematicRef}
           circuitName={circuit?.name ?? 'untitled'}
           compLib={compLib}
           sourceView={sourceView}

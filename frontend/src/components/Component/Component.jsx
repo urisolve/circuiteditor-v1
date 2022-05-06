@@ -19,7 +19,7 @@ import { symbols } from '../../assets/electrical';
 import { constants } from '../../constants';
 
 export function Component({
-  canvasRef,
+  schematicRef,
   id,
   type,
   position,
@@ -64,6 +64,7 @@ export function Component({
           width: width ?? 100,
           height: height ?? 100,
           filter: isSelected && `drop-shadow(3px 2px 0px #888)`,
+          pointerEvents: 'auto',
 
           transform: rotationTransform,
           '&:hover': {
@@ -87,7 +88,7 @@ export function Component({
       {label && (
         <Label
           owner={id}
-          canvasRef={canvasRef}
+          schematicRef={schematicRef}
           updatePosition={updatePosition}
           onDoubleClick={() => propertiesMenu.openTab(1)}
           {...label}

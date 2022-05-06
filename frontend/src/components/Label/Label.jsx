@@ -10,7 +10,7 @@ import { constants } from '../../constants';
 
 export function Label({
   owner,
-  canvasRef,
+  schematicRef,
   position,
   gridSize,
   updatePosition,
@@ -57,6 +57,7 @@ export function Label({
           fontWeight: 'bold',
           padding: '5px',
           whiteSpace: 'nowrap',
+          pointerEvents: 'auto',
 
           '&:hover': {
             transform: `scale(${constants.SCHEMATIC_HOVER_SCALE})`,

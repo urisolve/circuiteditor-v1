@@ -19,7 +19,7 @@ export function Connection({
   label,
   properties,
   isSelected,
-  canvasRef,
+  schematicRef,
   updatePosition,
   ...rest
 }) {
@@ -51,7 +51,7 @@ export function Connection({
         labels={
           <Label
             owner={id}
-            canvasRef={canvasRef}
+            schematicRef={schematicRef}
             updatePosition={updatePosition}
             onDoubleClick={() => propertiesMenu.openTab(1)}
             {...label}
