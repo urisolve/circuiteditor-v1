@@ -7,7 +7,7 @@ import {
   QuickActionMenu,
   Schematic,
   SourceView,
-} from '../../components/ui';
+} from '../../components';
 import { SchematicContext } from '../../contexts';
 import { useBoolean, useCircuit, useSchematic } from '../../hooks';
 
