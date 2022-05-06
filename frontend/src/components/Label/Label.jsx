@@ -6,6 +6,7 @@ import { DraggableComponent } from '..';
 import { SchematicContext } from '../../contexts';
 import { useGlobalRefMap } from '../../hooks';
 import { formatLabel } from '../../util';
+import { constants } from '../../constants';
 
 export function Label({
   owner,
@@ -58,9 +59,7 @@ export function Label({
           whiteSpace: 'nowrap',
 
           '&:hover': {
-            transform: `scale(${
-              process.env.REACT_APP_SCHEMATIC_HOVER_SCALE ?? 1
-            })`,
+            transform: `scale(${constants.SCHEMATIC_HOVER_SCALE})`,
           },
         }}
       >

@@ -22,9 +22,7 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 import { useBoolean, useTimeSince } from '../../hooks';
-
-const cardWidth = 300;
-const cardHeight = 300;
+import { constants } from '../../constants';
 
 export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
   const timeSince = useTimeSince(circuit.updatedAt);
@@ -35,8 +33,8 @@ export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
       <Card
         variant='outlined'
         sx={{
-          width: cardWidth,
-          height: cardHeight,
+          width: constants.CARD_WIDTH,
+          height: constants.CARD_HEIGHT,
           backgroundColor: 'grey.50',
         }}
       >
@@ -55,8 +53,8 @@ export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
             src={circuit.name}
             sx={{
               flexGrow: 1,
-              width: cardWidth,
-              height: cardHeight / 2,
+              width: constants.CARD_WIDTH,
+              height: constants.CARD_HEIGHT / 2,
               backgroundColor: 'gray',
               objectPosition: '50% 50%',
             }}

@@ -16,6 +16,7 @@ import {
 } from '../../hooks';
 import { SchematicContext } from '../../contexts';
 import { symbols } from '../../assets/electrical';
+import { constants } from '../../constants';
 
 export function Component({
   canvasRef,
@@ -66,9 +67,7 @@ export function Component({
 
           transform: rotationTransform,
           '&:hover': {
-            transform: `${rotationTransform} scale(${
-              process.env.REACT_APP_SCHEMATIC_HOVER_SCALE ?? 1
-            })`,
+            transform: `${rotationTransform} scale(${constants.SCHEMATIC_HOVER_SCALE})`,
           },
         }}
       />

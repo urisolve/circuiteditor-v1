@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { useRouteMatch } from 'react-router-dom';
 
 import { Stack } from '@mui/material';
 
@@ -10,17 +11,14 @@ import {
 } from '../../components';
 import { SchematicContext } from '../../contexts';
 import { useBoolean, useSchematic, useUser } from '../../hooks';
-import { useRouteMatch } from 'react-router-dom';
-
-const canvasSize = { width: 2560, height: 1440 }; // 16:9 resolution (1440p)
+import { constants } from '../../constants';
 
 export function Editor({ ...rest }) {
   const { user } = useUser();
   const match = useRouteMatch();
 
-  const circuit = user?.circuits.find(
-    (circuit) => circuit._id === match.params.circuitId,
-  );
+  const circuitId = match.params.circuitId;
+  const circuit = user?.circuits.find((circuit) => circuit._id === circuitId);
 
   const schematic = useSchematic(circuit?.schematic);
   const canvasRef = useRef();
@@ -34,7 +32,7 @@ export function Editor({ ...rest }) {
         alignItems='center'
         justifyContent='center'
         sx={{
-          ...canvasSize,
+          ...constants.CANVAS_SIZE,
           background: 'radial-gradient(#fff, #eee)',
         }}
       >

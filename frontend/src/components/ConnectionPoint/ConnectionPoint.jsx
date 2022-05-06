@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 
 import { useGlobalRefMap } from '../../hooks';
+import { constants } from '../../constants';
 
 export function ConnectionPoint({ id, sx, ...rest }) {
   const refMap = useGlobalRefMap(id);
@@ -12,9 +13,7 @@ export function ConnectionPoint({ id, sx, ...rest }) {
         borderRadius: '50%',
 
         '&:hover': {
-          transform: `scale(${
-            process.env.REACT_APP_SCHEMATIC_HOVER_SCALE ?? 1
-          })`,
+          transform: `scale(${constants.SCHEMATIC_HOVER_SCALE})`,
         },
 
         ...sx,

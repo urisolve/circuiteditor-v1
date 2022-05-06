@@ -1,12 +1,10 @@
 import { Stack, SwipeableDrawer } from '@mui/material';
+import { constants } from '../../constants';
 
-const toolbarSize = 8;
-
-const drawerWidth = 300;
 const drawerStyle = {
-  width: drawerWidth,
+  width: constants.DRAWER_SIZE,
   '& .MuiBox-root': {
-    width: drawerWidth,
+    width: constants.DRAWER_SIZE,
   },
 };
 
@@ -21,7 +19,10 @@ export function Drawer({ controller, children, sx, ...rest }) {
       sx={{ ...drawerStyle, ...sx }}
       {...rest}
     >
-      <Stack spacing={4} sx={{ mt: toolbarSize, overflow: 'auto', p: 2 }}>
+      <Stack
+        spacing={4}
+        sx={{ mt: constants.TOOLBAR_SIZE, overflow: 'auto', p: 2 }}
+      >
         {children}
       </Stack>
     </SwipeableDrawer>

@@ -9,6 +9,7 @@ import DuplicateIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { SchematicContext } from '../../contexts';
+import { constants } from '../../constants';
 
 export function ContextMenu({ id, isOpen, close, position }) {
   const {
@@ -17,8 +18,6 @@ export function ContextMenu({ id, isOpen, close, position }) {
     editById,
     selection: { selectedItems },
   } = useContext(SchematicContext);
-
-  const rotationIncrement = process.env.REACT_APP_ROTATION_INCREMENT ?? 45;
 
   const rotateSelection = useCallback(
     (amount) => {
@@ -63,12 +62,12 @@ export function ContextMenu({ id, isOpen, close, position }) {
         {
           icon: <RotateLeftIcon />,
           name: 'Rotate Left',
-          onClick: () => rotateSelection(-rotationIncrement),
+          onClick: () => rotateSelection(-constants.ROTATION_INCREMENT),
         },
         {
           icon: <RotateRightIcon />,
           name: 'Rotate Right',
-          onClick: () => rotateSelection(+rotationIncrement),
+          onClick: () => rotateSelection(+constants.ROTATION_INCREMENT),
         },
       ],
     },
