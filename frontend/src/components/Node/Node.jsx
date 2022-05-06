@@ -7,7 +7,7 @@ import {
   DraggableComponent,
   Label,
 } from '..';
-import { useContextMenu, usePropertiesMenu } from '../../hooks';
+import { useBoolean, useContextMenu, usePropertiesMenu } from '../../hooks';
 import { SchematicContext } from '../../contexts';
 
 export function Node({
@@ -27,13 +27,27 @@ export function Node({
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
 
+  const isDragging = useBoolean(false);
+
+  const handlers = {
+    onDrag: (_e, { x, y }) => {
+      updatePosition(id, { x, y });
+    },
+    onStart: () => {
+      isDragging.on();
+      setStartSch(schematic);
+    },
+    onStop: (_e, { x, y }) => {
+      isDragging.off();
+      updatePosition(id, { x, y }, startSch.data);
+    },
+  };
+
   return (
     <DraggableComponent
       handle='.node-handle'
       position={position}
-      onStart={() => setStartSch(schematic)}
-      onDrag={(_e, { x, y }) => updatePosition(id, { x, y })}
-      onStop={(_e, { x, y }) => updatePosition(id, { x, y }, startSch.data)}
+      {...handlers}
       {...rest}
     >
       <ConnectionPoint
@@ -41,6 +55,7 @@ export function Node({
         className='node-handle'
         onContextMenu={contextMenu.open}
         onDoubleClick={() => propertiesMenu.openTab(0)}
+        isDragging={isDragging.value}
         sx={{
           width: (properties?.radius ?? 5) * 2,
           height: (properties?.radius ?? 5) * 2,

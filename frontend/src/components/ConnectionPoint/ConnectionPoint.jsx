@@ -1,22 +1,17 @@
 import { Box } from '@mui/material';
 
 import { useGlobalRefMap } from '../../hooks';
-import { constants } from '../../constants';
 
-export function ConnectionPoint({ id, sx, ...rest }) {
+export function ConnectionPoint({ id, isDragging, sx, ...rest }) {
   const refMap = useGlobalRefMap(id);
 
   return (
     <Box
       sx={{
-        position: 'absolute',
         borderRadius: '50%',
+        cursor: isDragging ? 'grabbing' : 'grab',
+        position: 'absolute',
         pointerEvents: 'auto',
-
-        '&:hover': {
-          transform: `scale(${constants.SCHEMATIC_HOVER_SCALE})`,
-        },
-
         ...sx,
       }}
       {...rest}

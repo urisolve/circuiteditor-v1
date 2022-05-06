@@ -18,6 +18,7 @@ export function Port({
 
   return (
     <ConnectionPoint
+      id={id}
       sx={{
         // Given properties
         width: (properties?.radius ?? 6) * 2,
@@ -28,7 +29,6 @@ export function Port({
         left: realPos.x * (bounds?.width ?? 100) - (properties?.radius ?? 6),
         top: realPos.y * (bounds?.height ?? 100) - (properties?.radius ?? 6),
       }}
-      id={id}
       {...rest}
     />
   );

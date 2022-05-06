@@ -10,13 +10,13 @@ import {
   PropertiesMenu,
 } from '..';
 import {
+  useBoolean,
   useContextMenu,
   useGlobalRefMap,
   usePropertiesMenu,
 } from '../../hooks';
 import { SchematicContext } from '../../contexts';
 import { symbols } from '../../assets/electrical';
-import { constants } from '../../constants';
 
 export function Component({
   schematicRef,
@@ -40,16 +40,28 @@ export function Component({
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
 
-  const rotationTransform = `rotate(${position?.angle ?? 0}deg)`;
+  const isDragging = useBoolean(false);
+
+  const handlers = {
+    onDrag: (_e, { x, y }) => {
+      updatePosition(id, { x, y });
+    },
+    onStart: () => {
+      isDragging.on();
+      setStartSch(schematic);
+    },
+    onStop: (_e, { x, y }) => {
+      isDragging.off();
+      updatePosition(id, { x, y }, startSch.data);
+    },
+  };
 
   return (
     <DraggableComponent
       handle='.component-handle'
       position={position}
       positionOffset={{ x: 5, y: 5 }}
-      onStart={() => setStartSch(schematic)}
-      onDrag={(_e, { x, y }) => updatePosition(id, { x, y })}
-      onStop={(_e, { x, y }) => updatePosition(id, { x, y }, startSch.data)}
+      {...handlers}
       {...rest}
     >
       <Avatar
@@ -61,15 +73,12 @@ export function Component({
         onContextMenu={contextMenu.open}
         onDoubleClick={() => propertiesMenu.openTab(0)}
         sx={{
-          width: width ?? 100,
-          height: height ?? 100,
+          cursor: isDragging.value ? 'grabbing' : 'grab',
           filter: isSelected && `drop-shadow(3px 2px 0px #888)`,
+          height: height ?? 100,
           pointerEvents: 'auto',
-
-          transform: rotationTransform,
-          '&:hover': {
-            transform: `${rotationTransform} scale(${constants.SCHEMATIC_HOVER_SCALE})`,
-          },
+          transform: `rotate(${position?.angle ?? 0}deg)`,
+          width: width ?? 100,
         }}
       />
 

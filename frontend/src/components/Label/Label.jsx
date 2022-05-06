@@ -4,9 +4,8 @@ import { Typography } from '@mui/material';
 
 import { DraggableComponent } from '..';
 import { SchematicContext } from '../../contexts';
-import { useGlobalRefMap } from '../../hooks';
+import { useBoolean, useGlobalRefMap } from '../../hooks';
 import { formatLabel } from '../../util';
-import { constants } from '../../constants';
 
 export function Label({
   owner,
@@ -28,6 +27,8 @@ export function Label({
   const { data: schematic } = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
 
+  const isDragging = useBoolean(false);
+
   const formattedLabel = useMemo(() => {
     let labelArgs = { name, value, unit };
 
@@ -42,26 +43,31 @@ export function Label({
     return formatLabel(labelArgs);
   }, [isNameHidden, isValueHidden, name, value, unit]);
 
+  const handlers = {
+    onDrag: (_e, { x, y }) => {
+      updatePosition(owner, { x, y }, null, true);
+    },
+    onStart: () => {
+      isDragging.on();
+      setStartSch(schematic);
+    },
+    onStop: (_e, { x, y }) => {
+      isDragging.off();
+      updatePosition(owner, { x, y }, startSch, true);
+    },
+  };
+
   return (
-    <DraggableComponent
-      position={position}
-      onStart={() => setStartSch(schematic)}
-      onDrag={(_e, { x, y }) => updatePosition(owner, { x, y }, null, true)}
-      onStop={(_e, { x, y }) => updatePosition(owner, { x, y }, startSch, true)}
-      {...rest}
-    >
+    <DraggableComponent position={position} {...handlers} {...rest}>
       <Typography
         onDoubleClick={onDoubleClick}
         ref={refMap.get(labelID)}
         sx={{
+          cursor: isDragging.value ? 'grabbing' : 'grab',
           fontWeight: 'bold',
           padding: '5px',
-          whiteSpace: 'nowrap',
           pointerEvents: 'auto',
-
-          '&:hover': {
-            transform: `scale(${constants.SCHEMATIC_HOVER_SCALE})`,
-          },
+          whiteSpace: 'nowrap',
         }}
       >
         {formattedLabel}

@@ -8,5 +8,4 @@ export const constants = Object.freeze({
 
   // Schematic
   ROTATION_INCREMENT: 45,
-  SCHEMATIC_HOVER_SCALE: 1.1,
 });
