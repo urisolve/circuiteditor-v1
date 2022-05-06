@@ -67,7 +67,7 @@ export function Schematic({
       }}
       {...rest}
     >
-      <Box ref={canvasRef} sx={{ width: 1, height: 1 }}>
+      <Box ref={canvasRef} sx={{ width: 1, height: 1, pointerEvents: 'none' }}>
         {children}
 
         {schematic?.data?.components?.map((comp) => (

@@ -46,7 +46,7 @@ export function Connection({
         }}
         passProps={{
           onContextMenu: contextMenu.open,
-          onDoubleClick: () => propertiesMenu.openTab(1),
+          onDoubleClick: () => propertiesMenu.openTab(0),
         }}
         labels={
           <Label
