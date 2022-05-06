@@ -45,7 +45,7 @@ This package uses [Yarn](https://yarnpkg.com/) as its package manager instead of
 
 ## Documentation
 
-All of the documentation can be found inside the [`docs` directory](./docs/README.md).
+All of the documentation can be found inside the [`docs` directory](./docs).
 
 ## Authors
 
