@@ -47,24 +47,31 @@ export function App() {
             <Route exact path='/'>
               <Home />
             </Route>
+
             <Route exact path='/auth'>
               {user ? <Redirect to='/circuits' /> : <Auth />}
             </Route>
+
             <Route exact path='/account'>
-              {user ? <Account /> : <Redirect to='/' />}
+              {user ? <Account /> : <Redirect to='/auth' />}
             </Route>
+
             <Route exact path='/settings'>
-              {user ? <Settings /> : <Redirect to='/' />}
+              {user ? <Settings /> : <Redirect to='/auth' />}
             </Route>
+
             <Route exact path='/circuits'>
-              {user ? <Circuits /> : <Redirect to='/' />}
+              {user ? <Circuits /> : <Redirect to='/auth' />}
             </Route>
-            <Route path='/editor/:id'>
-              {user ? <Editor /> : <Redirect to='/editor' />}
+
+            <Route path='/editor/:circuitId'>
+              {user ? <Editor /> : <Redirect to='/auth' />}
             </Route>
+
             <Route exact path='/editor'>
               <Editor />
             </Route>
+
             <Route path='*'>
               <NotFound />
             </Route>

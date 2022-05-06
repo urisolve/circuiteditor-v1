@@ -1,12 +1,10 @@
-import { useContext } from 'react';
-
-import { UserContext } from '../../contexts';
 import { Login, Signup } from '../../components';
+import { useUser } from '../../hooks';
 
 import { Container, Grid } from '@mui/material';
 
 export function Auth() {
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUser();
 
   return (
     <Container>
@@ -28,4 +26,4 @@ export function Auth() {
       </Grid>
     </Container>
   );
-};
+}

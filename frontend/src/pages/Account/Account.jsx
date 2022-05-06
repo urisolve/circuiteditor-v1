@@ -1,10 +1,9 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import axios from 'axios';
 
-import { UserContext } from '../../contexts';
-import { useGravatar } from '../../hooks';
+import { useGravatar, useUser } from '../../hooks';
 import { FormField } from '../../components';
 
 // Material-UI
@@ -36,7 +35,7 @@ const schema = yup.object({
 });
 
 export function Account() {
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
   const gravatar = useGravatar(user?.email);
 
   const form = useForm({ defaultValues: user, resolver: yupResolver(schema) });

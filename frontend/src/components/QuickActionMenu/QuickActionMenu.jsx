@@ -1,5 +1,5 @@
-import { useContext, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useContext } from 'react';
+import { useRouteMatch } from 'react-router-dom';
 import axios from 'axios';
 
 import { Box, Paper, Stack } from '@mui/material';
@@ -11,7 +11,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 
-import { useBoolean } from '../../hooks';
+import { useBoolean, useUser } from '../../hooks';
 import { SchematicContext } from '../../contexts';
 import { QuickAction } from '../QuickAction';
 import { download, screenshot } from '../../util';
@@ -28,25 +28,19 @@ export function QuickActionMenu({
   sx,
   ...rest
 }) {
-  const {
-    area,
-    data: schematic,
-    history,
-    netlist,
-  } = useContext(SchematicContext);
+  const { user } = useUser();
+  const match = useRouteMatch();
+  const { circuitId } = match.params;
 
-  const location = useLocation();
-  const circuitId = useMemo(
-    () => location.pathname.split('/').at(-1),
-    [location],
-  );
+  const sch = useContext(SchematicContext);
+  const { area, data: schematic, history, netlist } = sch;
 
   const isAccountAlertOpen = useBoolean(false);
 
   const getImage = () => screenshot(canvasRef.current, area);
 
   async function saveCircuit() {
-    if (!circuitId) {
+    if (!user) {
       isAccountAlertOpen.on();
       return;
     }

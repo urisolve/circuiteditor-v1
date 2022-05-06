@@ -1,15 +1,13 @@
-import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-// Material-UI
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-import { UserContext } from '../../contexts';
 import iPhoneMockups from '../../assets/mockups/iPhoneMockups.png';
+import { useUser } from '../../hooks';
 
 export function Hero({ padding, ...rest }) {
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
   const history = useHistory();
 
   return (

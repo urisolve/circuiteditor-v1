@@ -9,12 +9,18 @@ import {
   SourceView,
 } from '../../components';
 import { SchematicContext } from '../../contexts';
-import { useBoolean, useCircuit, useSchematic } from '../../hooks';
+import { useBoolean, useSchematic, useUser } from '../../hooks';
+import { useRouteMatch } from 'react-router-dom';
 
 const canvasSize = { width: 2560, height: 1440 }; // 16:9 resolution (1440p)
 
 export function Editor({ ...rest }) {
-  const circuit = useCircuit();
+  const { user } = useUser();
+  const match = useRouteMatch();
+
+  const circuit = user?.circuits.find(
+    (circuit) => circuit._id === match.params.circuitId,
+  );
 
   const schematic = useSchematic(circuit?.schematic);
   const canvasRef = useRef();

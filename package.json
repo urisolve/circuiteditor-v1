@@ -20,7 +20,7 @@
   "scripts": {
     "dev:server": "cd backend && yarn dev",
     "dev:client": "cd frontend && yarn dev",
-    "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
+    "dev": "concurrently --kill-others \"yarn dev:server\" \"yarn dev:client\"",
     "build": "echo \"Command not yet available\" && exit 1",
     "serve": "echo \"Command not yet available\" && exit 1",
     "prod": "yarn build && yarn serve",

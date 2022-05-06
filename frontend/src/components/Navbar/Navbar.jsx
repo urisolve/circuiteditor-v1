@@ -1,9 +1,8 @@
-import { useRef, useCallback, useContext } from 'react';
+import { useRef, useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-import { UserContext } from '../../contexts';
-import { useBoolean, useGravatar } from '../../hooks';
+import { useBoolean, useGravatar, useUser } from '../../hooks';
 import { ReactComponent as Logo } from '../../assets/brand/logo.svg';
 
 // Material-UI
@@ -33,7 +32,7 @@ const menuLink = {
 };
 
 export function Navbar({ ...rest }) {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useUser();
   const gravatar = useGravatar(user?.email);
 
   // User menu

@@ -1,6 +1,5 @@
 export * from './useArea';
 export * from './useBoolean';
-export * from './useCircuit';
 export * from './useConnectionAnchors';
 export * from './useConnections';
 export * from './useContextMenu';
@@ -17,3 +16,4 @@ export * from './useSchematicParser';
 export * from './useSchematicTools';
 export * from './useSortAndOrder';
 export * from './useTimeSince';
+export * from './useUser';
