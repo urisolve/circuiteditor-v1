@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
-import lodash, { cloneDeep, isEqual } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 
 import { isConnected } from '../../util';
-import { components } from '../../electrical';
 
 function normalizeNodes(schematic) {
   for (const node of schematic.nodes) {
@@ -17,7 +16,6 @@ function normalizeNodes(schematic) {
 function normalizePorts(schematic) {
   for (const component of schematic.components) {
     for (const port of component.ports) {
-      port.owner = component.id;
       port.connection =
         schematic.connections.find((connection) =>
           isConnected(port, connection),
@@ -27,17 +25,13 @@ function normalizePorts(schematic) {
 }
 
 export function parseSchematic(schematic) {
-  const initialSchematic = cloneDeep(schematic);
-
-  // Apply default properties to incomplete components
-  schematic.components = schematic.components.map((comp) =>
-    lodash.defaultsDeep(comp, components[comp?.type]),
-  );
+  const original = cloneDeep(schematic);
 
   normalizeNodes(schematic);
   normalizePorts(schematic);
 
-  return isEqual(initialSchematic, schematic) ? schematic : { ...schematic };
+  // Force reload if changes were made
+  return isEqual(original, schematic) ? schematic : { ...schematic };
 }
 
 export function useSchematicParser(schematic, setSchematic) {

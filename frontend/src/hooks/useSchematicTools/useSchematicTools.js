@@ -43,12 +43,14 @@ export function useSchematicTools(setSchematic, history, gridSize) {
               ...(isComponent(element) && {
                 ports: element.ports?.map((port) => ({
                   id: uuidv4(),
+                  owner: element.id,
                   ...port,
                 })),
               }),
 
               label: {
                 ...element.label,
+                id: uuidv4(),
                 isNameHidden: isConnection(element) || isGround(element),
                 name: isGround(element)
                   ? 'gnd'

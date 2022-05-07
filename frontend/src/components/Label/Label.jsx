@@ -9,6 +9,7 @@ import { formatLabel } from '../../util';
 
 export function Label({
   owner,
+  id,
   schematicRef,
   position,
   gridSize,
@@ -21,8 +22,7 @@ export function Label({
   isValueHidden,
   ...rest
 }) {
-  const labelID = useMemo(() => `${owner}-label`, [owner]);
-  const refMap = useGlobalRefMap(labelID);
+  const refMap = useGlobalRefMap(id);
 
   const { data: schematic } = useContext(SchematicContext);
   const [startSch, setStartSch] = useState(schematic);
@@ -61,7 +61,7 @@ export function Label({
     <DraggableComponent position={position} {...handlers} {...rest}>
       <Typography
         onDoubleClick={onDoubleClick}
-        ref={refMap.get(labelID)}
+        ref={refMap.get(id)}
         sx={{
           cursor: isDragging.value ? 'grabbing' : 'grab',
           fontWeight: 'bold',
