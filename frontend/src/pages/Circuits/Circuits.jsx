@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useEffect, useCallback, useMemo, useRef } from 'react';
 import lodash from 'lodash';
 import axios from 'axios';
 
 // Custom components/hooks
 import { CircuitCard, SortingMenu } from '../../components';
-import { useBoolean, useSortAndOrder } from '../../hooks';
+import { useBoolean, useSortAndOrder, useUser } from '../../hooks';
 
 // Material-UI
 import {
@@ -27,14 +27,14 @@ import SortIcon from '@mui/icons-material/Sort';
 import { downloadCode } from '../../util';
 
 export function Circuits() {
-  const [circuits, setCircuits] = useState([]);
+  const { user, setUser } = useUser();
   const isLoading = useBoolean(false);
 
   const showStared = useBoolean(false);
 
   const sortButton = useRef();
   const sortMenuOpen = useBoolean(false);
-  const [sortedCircuits, params, setters] = useSortAndOrder(circuits);
+  const [sortedCircuits, params, setters] = useSortAndOrder(user?.circuits);
 
   const staredCircuits = useMemo(
     () => sortedCircuits.filter((circuit) => circuit.isStared),
@@ -45,14 +45,15 @@ export function Circuits() {
     isLoading.on();
 
     try {
-      const { data } = await axios.get('api/circuits');
-      setCircuits(data);
+      const { data: circuits } = await axios.get('api/circuits');
+
+      setUser((user) => ({ ...user, circuits }));
     } catch (err) {
       console.error(err);
     }
 
     isLoading.off();
-  }, [setCircuits, isLoading]);
+  }, [isLoading, setUser]);
 
   async function uploadCircuit(circuit) {
     try {
@@ -85,14 +86,14 @@ export function Circuits() {
   }
 
   function downloadCircuit(id) {
-    const { name, schematic } = lodash.find(circuits, { _id: id });
+    const { name, schematic } = lodash.find(user?.circuits, { _id: id });
     const code = JSON.stringify(schematic, null, 2);
 
     downloadCode(code, 'text/json', `${name}.json`);
   }
 
   async function starCircuit(id) {
-    const circuit = lodash.find(circuits, { _id: id });
+    const circuit = lodash.find(user?.circuits, { _id: id });
 
     try {
       await axios.patch(`/api/circuits?id=${id}`, {
@@ -217,4 +218,4 @@ export function Circuits() {
       />
     </Container>
   );
-};
+}
