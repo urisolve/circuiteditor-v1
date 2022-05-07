@@ -1,4 +1,5 @@
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
+import Vector from 'victor';
 
 import { Avatar } from '@mui/material';
 
@@ -30,29 +31,64 @@ export function Component({
   height,
   updatePosition,
   isSelected,
+  selectedItems,
   ...rest
 }) {
   const refMap = useGlobalRefMap(id);
 
-  const schematic = useContext(SchematicContext);
-  const [startSch, setStartSch] = useState(schematic);
+  const { data: schematic, items } = useContext(SchematicContext);
+  const [startSchematic, setStartSchematic] = useState(schematic);
+  const [startItems, setStartItems] = useState(items);
 
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
 
   const isDragging = useBoolean(false);
+  const [originalPosition, setOriginalPosition] = useState(new Vector());
+  const [dragDirection, setDragDirection] = useState(new Vector());
+
+  const selectedIds = useMemo(
+    () => [...new Set([id, ...selectedItems])],
+    [id, selectedItems],
+  );
+
+  function moveSelection(direction, save = false) {
+    selectedIds.forEach((selectedId) => {
+      const selectedElement = startItems.find(({ id }) => id === selectedId);
+      const originalPosition = Vector.fromObject(selectedElement.position);
+      const newPosition = originalPosition.add(direction);
+
+      updatePosition(
+        selectedId,
+        newPosition.toObject(),
+        save ? startSchematic : null,
+      );
+    });
+  }
 
   const handlers = {
     onDrag: (_e, { x, y }) => {
-      updatePosition(id, { x, y });
+      const dragPosition = new Vector(x, y);
+      const dragDirection = dragPosition.subtract(originalPosition);
+
+      moveSelection(dragDirection);
+      setDragDirection(dragDirection);
     },
+
     onStart: () => {
       isDragging.on();
-      setStartSch(schematic);
+
+      setStartSchematic(schematic);
+      setStartItems(items);
+
+      const dragElement = items.find((item) => item.id === id);
+      const originalPosition = Vector.fromObject(dragElement.position);
+      setOriginalPosition(originalPosition);
     },
-    onStop: (_e, { x, y }) => {
+
+    onStop: () => {
       isDragging.off();
-      updatePosition(id, { x, y }, startSch.data);
+      moveSelection(dragDirection);
     },
   };
 

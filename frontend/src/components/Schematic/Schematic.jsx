@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { useContext } from 'react';
 
 // Material-UI
 import { Box, Paper } from '@mui/material';
@@ -22,30 +22,30 @@ export function Schematic({
   children,
   ...rest
 }) {
-  const schematic = useContext(SchematicContext);
+  const {
+    data: schematic,
+    editById,
+    items,
+    selection: { selectedItems },
+  } = useContext(SchematicContext);
 
-  const updatePosition = useCallback(
-    (id, { x, y }, startSch = null, isLabel = false) => {
-      if (readOnly) return;
+  function updatePosition(id, { x, y }, startSch = null, isLabel = false) {
+    if (readOnly) return;
 
-      // Snap the values to the grid
-      x = snapValueToGrid(x ?? 0, gridSize ?? 10);
-      y = snapValueToGrid(y ?? 0, gridSize ?? 10);
+    x = snapValueToGrid(x ?? 0, gridSize ?? 10);
+    y = snapValueToGrid(y ?? 0, gridSize ?? 10);
 
-      // Apply the new position
-      schematic.editById(
-        id,
-        (elem) => {
-          if (!isLabel) elem.position = { ...elem.position, x, y };
-          else elem.label.position = { ...elem.label.position, x, y };
+    editById(
+      id,
+      (elem) => {
+        if (!isLabel) elem.position = { ...elem.position, x, y };
+        else elem.label.position = { ...elem.label.position, x, y };
 
-          return elem;
-        },
-        startSch,
-      );
-    },
-    [gridSize, readOnly, schematic],
-  );
+        return elem;
+      },
+      startSch,
+    );
+  }
 
   return (
     <Paper
@@ -75,7 +75,7 @@ export function Schematic({
       >
         {children}
 
-        {schematic?.data?.components?.map((comp) => (
+        {schematic?.components?.map((comp) => (
           <Component
             {...comp}
             key={comp.id}
@@ -83,10 +83,11 @@ export function Schematic({
             gridSize={gridSize}
             updatePosition={updatePosition}
             isSelected={selection?.selectedItems.has(comp.id)}
+            selectedItems={selectedItems}
           />
         ))}
 
-        {schematic?.data?.nodes?.map((node) => (
+        {schematic?.nodes?.map((node) => (
           <Node
             {...node}
             key={node.id}
@@ -94,10 +95,11 @@ export function Schematic({
             gridSize={gridSize}
             updatePosition={updatePosition}
             isSelected={selection?.selectedItems.has(node.id)}
+            selectedItems={selectedItems}
           />
         ))}
 
-        {schematic?.data?.connections?.map(
+        {schematic?.connections?.map(
           (conn) =>
             conn.start &&
             conn.end && (
@@ -113,7 +115,7 @@ export function Schematic({
 
         <SelectionArea
           parentRef={canvasRef}
-          selectableItems={schematic.items}
+          selectableItems={items}
           setSelectedItems={selection?.setSelectedItems}
           disabled={readOnly}
         />

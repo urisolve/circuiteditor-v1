@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 
 import { Box, Divider, Menu, MenuItem } from '@mui/material';
 import PasteIcon from '@mui/icons-material/ContentPaste';
@@ -19,15 +19,12 @@ export function ContextMenu({ id, isOpen, close, position }) {
     selection: { selectedItems },
   } = useContext(SchematicContext);
 
-  const rotateSelection = useCallback(
-    (amount) => {
-      editById([...new Set([id, ...selectedItems])], (elem) => {
-        elem.position.angle = (elem.position.angle ?? 0) + amount;
-        return elem;
-      });
-    },
-    [id, editById, selectedItems],
-  );
+  function rotateSelection(amount) {
+    editById([...new Set([id, ...selectedItems])], (elem) => {
+      elem.position.angle = (elem.position.angle ?? 0) + amount;
+      return elem;
+    });
+  }
 
   const isClickingOnComponent = useMemo(
     () => !!schematic.components.find((comp) => comp.id === id),

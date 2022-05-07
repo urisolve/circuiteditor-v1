@@ -11,7 +11,6 @@ export function ConnectionPoint({ id, isDragging, sx, ...rest }) {
         borderRadius: '50%',
         cursor: isDragging ? 'grabbing' : 'grab',
         position: 'absolute',
-        pointerEvents: 'auto',
         ...sx,
       }}
       {...rest}
