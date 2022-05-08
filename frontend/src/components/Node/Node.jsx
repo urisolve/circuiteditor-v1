@@ -10,6 +10,7 @@ import {
 } from '..';
 import { useBoolean, useContextMenu, usePropertiesMenu } from '../../hooks';
 import { SchematicContext } from '../../contexts';
+import { constants } from '../../constants';
 
 export function Node({
   id,
@@ -93,8 +94,8 @@ export function Node({
         onDoubleClick={() => propertiesMenu.openTab(0)}
         isDragging={isDragging.value}
         sx={{
-          width: (properties?.radius ?? 5) * 2,
-          height: (properties?.radius ?? 5) * 2,
+          width: (properties?.radius ?? constants.DEFAULT_NODE_RADIUS) * 2,
+          height: (properties?.radius ?? constants.DEFAULT_NODE_RADIUS) * 2,
           backgroundColor: isSelected ? '#3475FF' : '#6495ED',
           pointerEvents: 'auto',
         }}

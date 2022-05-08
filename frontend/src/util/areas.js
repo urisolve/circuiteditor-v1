@@ -9,9 +9,9 @@
  */
 export function areasIntersect(a, b) {
   return (
-    a.left < b.left + (b.width ?? 0) &&
-    a.left + (a.width ?? 0) > b.left &&
-    a.top < b.top + (b.height ?? 0) &&
-    a.top + (a.height ?? 0) > b.top
+    a.left < b.left + b.width &&
+    a.left + a.width > b.left &&
+    a.top < b.top + b.height &&
+    a.top + a.height > b.top
   );
 }

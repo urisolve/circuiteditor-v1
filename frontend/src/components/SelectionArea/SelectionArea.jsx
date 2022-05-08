@@ -1,20 +1,20 @@
 import {
-  useRef,
   useEffect,
   useCallback,
   useMemo,
   useLayoutEffect,
+  useRef,
 } from 'react';
 import lodash from 'lodash';
+import Vector from 'victor';
 
-// Material-UI
 import { Box } from '@mui/material';
 
-// Utility
 import { useBoolean, useGlobalRefMap } from '../../hooks';
-import { areasIntersect } from '../../util';
+import { areasIntersect, isNode } from '../../util';
+import { constants } from '../../constants';
 
-// An ENUM of the different types of mouse-clicks
+const DEFAULT_AREA = { left: 0, top: 0, width: 0, height: 0 };
 const MOUSE = Object.freeze({ NONE: 0, LEFT: 1, MIDDLE: 2, RIGHT: 3 });
 
 export function SelectionArea({
@@ -29,51 +29,39 @@ export function SelectionArea({
   const refMap = useGlobalRefMap();
   const showArea = useBoolean(false);
 
-  const selectionArea = useRef({ left: 0, top: 0, width: 0, height: 0 });
+  const parentArea = useRef(null);
   const ignoreAreas = useRef([]);
   const selectableAreas = useRef([]);
-  const parentRect = useRef(null);
-  const startPoint = useRef(null);
+
+  const startPoint = useRef(new Vector());
+  const selectionArea = useRef(DEFAULT_AREA);
 
   useLayoutEffect(() => {
-    // Calculate the bounding area of the parent element
-    const rect = parentRef.current?.getBoundingClientRect() ?? {};
-    parentRect.current = {
-      left: rect.left,
-      top: rect.top,
-      width: rect.width,
-      height: rect.height,
-    };
+    if (!parentRef.current) return;
+    parentArea.current = parentRef.current.getBoundingClientRect();
 
-    // Calculate the bounding areas of the items marked to ignore
-    ignoreAreas.current = [];
-    for (const elem of ignoreItems ?? []) {
-      const elemArea = refMap.get(elem.id).current.getBoundingClientRect();
-      ignoreAreas.current.push({
-        id: elem.id,
-        left: elemArea.left - parentRect.current.left,
-        top: elemArea.top - parentRect.current.top,
-        width: elemArea.width,
-        height: elemArea.height,
-      });
+    function calculateAreas(items = []) {
+      return items.reduce((areas, item) => {
+        const id = isNode(item) ? item.id : item.id;
+        const elem = refMap.get(id).current;
+        const area = elem?.getBoundingClientRect();
+
+        if (elem) {
+          areas.push({
+            id: item.id,
+            left: area.left - parentArea.current.left,
+            top: area.top - parentArea.current.top,
+            width: area.width,
+            height: area.height,
+          });
+        }
+
+        return areas;
+      }, []);
     }
 
-    // Calculate the bounding areas of the items
-    selectableAreas.current = [];
-    for (const elem of selectableItems ?? []) {
-      try {
-        const elemArea = refMap.get(elem.id).current.getBoundingClientRect();
-        selectableAreas.current.push({
-          id: elem.id,
-          left: elemArea.left - parentRect.current.left,
-          top: elemArea.top - parentRect.current.top,
-          width: elemArea.width,
-          height: elemArea.height,
-        });
-      } catch {
-        continue;
-      }
-    }
+    ignoreAreas.current = calculateAreas(ignoreItems);
+    selectableAreas.current = calculateAreas(selectableItems);
   }, [refMap, ignoreItems, selectableItems, parentRef]);
 
   const onMouseMove = useMemo(
@@ -83,29 +71,27 @@ export function SelectionArea({
         showArea.on();
 
         // Calculate the current position of mouse
-        const endPoint = {
-          left: event.clientX - parentRect.current.left,
-          top: event.clientY - parentRect.current.top,
-        };
+        const endPoint = new Vector(
+          event.clientX - parentArea.current.left,
+          event.clientY - parentArea.current.top,
+        );
 
         // Calculate the selection area
         selectionArea.current = {
-          height: Math.abs(endPoint.top - startPoint.current.top),
-          width: Math.abs(endPoint.left - startPoint.current.left),
-          top:
-            endPoint.top - startPoint.current.top > 0
-              ? startPoint.current.top
-              : endPoint.top,
-          left:
-            endPoint.left - startPoint.current.left > 0
-              ? startPoint.current.left
-              : endPoint.left,
+          width: endPoint.absDistanceX(startPoint.current),
+          height: endPoint.absDistanceY(startPoint.current),
+          left: Math.min(startPoint.current.x, endPoint.x),
+          top: Math.min(startPoint.current.y, endPoint.y),
         };
 
         // Calculate which elements are being selected
-        const items = new Set();
-        for (const area of selectableAreas.current)
-          if (areasIntersect(area, selectionArea.current)) items.add(area.id);
+        const items = selectableAreas.current.reduce((items, area) => {
+          if (areasIntersect(area, selectionArea.current)) {
+            items.add(area.id);
+          }
+
+          return items;
+        }, new Set());
 
         // Apply the selection
         setSelectedItems((selected) => {
@@ -117,41 +103,32 @@ export function SelectionArea({
         });
 
         event.preventDefault();
-      }, 1000 / (fps ?? 30)),
-    [setSelectedItems, startPoint, fps, showArea],
+      }, 1000 / (fps ?? constants.SELECTION_FPS)),
+    [fps, showArea, setSelectedItems],
   );
 
   const onMouseUp = useCallback(
     (event) => {
-      // Stop dragging
+      event.preventDefault();
+      onMouseMove.cancel();
       showArea.off();
 
-      // Cancel throttled function calls
-      onMouseMove.cancel();
-
-      // Remove event listeners while not being used
       parentRef.current.removeEventListener('mousemove', onMouseMove);
       parentRef.current.removeEventListener('mouseup', onMouseUp);
-
-      event.preventDefault();
     },
     [onMouseMove, parentRef, showArea],
   );
 
   const onMouseDown = useCallback(
     (event) => {
-      if (disabled) return;
-
-      // Only allow left clicks
-      if (event.which !== MOUSE.LEFT) return;
-
-      // Check if CTRL was pressed
+      if (disabled || event.which !== MOUSE.LEFT) return;
       if (!event.ctrlKey) setSelectedItems(new Set());
 
-      // Calculate click point
       const clickPoint = {
-        left: event.clientX - parentRect.current.left,
-        top: event.clientY - parentRect.current.top,
+        left: event.clientX - parentArea.current.left,
+        top: event.clientY - parentArea.current.top,
+        width: 0,
+        height: 0,
       };
 
       // Ignore click if it was on an item marked to ignore
@@ -176,13 +153,8 @@ export function SelectionArea({
         }
       }
 
-      // Initialize the selection area
-      startPoint.current = clickPoint;
-      selectionArea.current = {
-        ...startPoint.current,
-        width: 0,
-        height: 0,
-      };
+      startPoint.current = new Vector(clickPoint.left, clickPoint.top);
+      selectionArea.current = { ...clickPoint, width: 0, height: 0 };
 
       // Enable event listeners for drag
       parentRef.current.addEventListener('mousemove', onMouseMove);
@@ -190,7 +162,7 @@ export function SelectionArea({
 
       event.preventDefault();
     },
-    [setSelectedItems, disabled, parentRef, onMouseUp, onMouseMove],
+    [disabled, setSelectedItems, parentRef, onMouseMove, onMouseUp],
   );
 
   useEffect(() => {
@@ -212,7 +184,10 @@ export function SelectionArea({
         display: showArea.value ? 'inline-block' : 'none',
         width: selectionArea.current.width,
         height: selectionArea.current.height,
-        transform: `translate(${selectionArea.current.left}px, ${selectionArea.current.top}px)`,
+        transform: `translate(
+          ${selectionArea.current.left}px,
+          ${selectionArea.current.top}px
+        )`,
 
         // Customizable
         backgroundColor: 'rgba(100, 149, 237, 0.25)',

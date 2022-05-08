@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { ConnectionPoint } from '..';
+import { constants } from '../../constants';
 import { rotateCoords } from '../../util';
 
 export function Port({
@@ -21,8 +22,8 @@ export function Port({
       id={id}
       sx={{
         // Given properties
-        width: (properties?.radius ?? 6) * 2,
-        height: (properties?.radius ?? 6) * 2,
+        width: (properties?.radius ?? constants.DEFAULT_PORT_RADIUS) * 2,
+        height: (properties?.radius ?? constants.DEFAULT_PORT_RADIUS) * 2,
         backgroundColor: properties?.color ?? '#bbb',
 
         // Positioning
