@@ -1,14 +1,11 @@
 import { useContext } from 'react';
 
-// Material-UI
 import { Box, Paper } from '@mui/material';
 
-// Custom libraries
 import { SelectionArea, Component, Connection, Node } from '..';
 import { snapValueToGrid } from '../../util';
 import { SchematicContext } from '../../contexts';
-
-const canvasRelativeSize = '70%';
+import { constants } from '../../constants';
 
 export function Schematic({
   canvasRef,
@@ -54,8 +51,8 @@ export function Schematic({
       onContextMenu={(e) => e.preventDefault()}
       ref={canvasRef}
       sx={{
-        width: canvasRelativeSize,
-        height: canvasRelativeSize,
+        width: constants.CANVAS_RELATIVE_SIZE,
+        height: constants.CANVAS_RELATIVE_SIZE,
         position: 'relative',
         zIndex: 0,
 

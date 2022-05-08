@@ -67,16 +67,13 @@ export function SelectionArea({
   const onMouseMove = useMemo(
     () =>
       lodash.throttle((event) => {
-        // Start dragging
         showArea.on();
 
-        // Calculate the current position of mouse
         const endPoint = new Vector(
           event.clientX - parentArea.current.left,
           event.clientY - parentArea.current.top,
         );
 
-        // Calculate the selection area
         selectionArea.current = {
           width: endPoint.absDistanceX(startPoint.current),
           height: endPoint.absDistanceY(startPoint.current),
@@ -84,17 +81,15 @@ export function SelectionArea({
           top: Math.min(startPoint.current.y, endPoint.y),
         };
 
-        // Calculate which elements are being selected
-        const items = selectableAreas.current.reduce((items, area) => {
-          if (areasIntersect(area, selectionArea.current)) {
-            items.add(area.id);
-          }
-
-          return items;
-        }, new Set());
-
-        // Apply the selection
         setSelectedItems((selected) => {
+          const items = selectableAreas.current.reduce((items, area) => {
+            if (areasIntersect(area, selectionArea.current)) {
+              items.add(area.id);
+            }
+
+            return items;
+          }, new Set());
+
           const totalSelection = event.ctrlKey
             ? [...selected, ...items]
             : items;

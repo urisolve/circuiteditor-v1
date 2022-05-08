@@ -45,16 +45,12 @@ function calcPointAnchor(itemsMap, pointId) {
   return calcRealPortDirection(point, comp);
 }
 
-function getConnectionAnchors({ itemsMap }, { start, end }) {
-  return {
-    startAnchor: calcPointAnchor(itemsMap, start),
-    endAnchor: calcPointAnchor(itemsMap, end),
-  };
-}
-
-export function useConnectionAnchors(schematic, connection) {
+export function useConnectionAnchors({ itemsMap }, { start, end }) {
   return useMemo(
-    () => getConnectionAnchors(schematic, connection),
-    [schematic, connection],
+    () => ({
+      startAnchor: calcPointAnchor(itemsMap, start),
+      endAnchor: calcPointAnchor(itemsMap, end),
+    }),
+    [itemsMap, start, end],
   );
 }

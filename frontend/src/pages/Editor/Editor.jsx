@@ -34,7 +34,8 @@ export function Editor({ ...rest }) {
         alignItems='center'
         justifyContent='center'
         sx={{
-          ...constants.CANVAS_SIZE,
+          width: constants.CANVAS_WIDTH,
+          height: constants.CANVAS_HEIGHT,
           background: 'radial-gradient(#fff, #eee)',
         }}
       >
