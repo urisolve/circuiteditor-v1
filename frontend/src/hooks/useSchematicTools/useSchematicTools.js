@@ -29,9 +29,11 @@ export function useSchematicTools(setSchematic, history, gridSize) {
         Object.entries(schema).forEach(([key, elementArr]) => {
           if (!['components', 'nodes', 'connections'].includes(key)) return;
 
+          const elementId = uuidv4();
+
           elementArr.forEach((element) => {
             newSchematic[key].push({
-              id: uuidv4(),
+              id: elementId,
               ...element,
 
               // Add a position that is snapped to the grid
@@ -43,7 +45,7 @@ export function useSchematicTools(setSchematic, history, gridSize) {
               ...(isComponent(element) && {
                 ports: element.ports?.map((port) => ({
                   id: uuidv4(),
-                  owner: element.id,
+                  owner: element.id ?? elementId,
                   ...port,
                 })),
               }),
@@ -64,6 +66,8 @@ export function useSchematicTools(setSchematic, history, gridSize) {
                 position: { x: 10, y: 0, ...element.label?.position },
               },
             });
+
+            console.log(newSchematic[key].at(-1));
           });
         });
 

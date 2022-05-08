@@ -20,9 +20,9 @@ const directionOrder = [
 
 function getDefaultPortDirection({ position: { x, y } }) {
   if (y === 0) return anchorPoints.TOP;
+  if (x === 1) return anchorPoints.RIGHT;
   if (y === 1) return anchorPoints.BOTTOM;
   if (x === 0) return anchorPoints.LEFT;
-  if (x === 1) return anchorPoints.RIGHT;
   return anchorPoints.MIDDLE;
 }
 
@@ -38,10 +38,10 @@ function calcRealPortDirection(port, comp) {
 }
 
 function calcPointAnchor(itemsMap, pointId) {
-  const point = itemsMap.get(pointId);
+  const point = itemsMap[pointId];
   if (!isPort(point)) return anchorPoints.MIDDLE;
 
-  const comp = itemsMap.get(point.owner);
+  const comp = itemsMap[point.owner];
   return calcRealPortDirection(point, comp);
 }
 
