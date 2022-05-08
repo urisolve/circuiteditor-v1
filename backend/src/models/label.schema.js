@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const labelSchema = new mongoose.Schema(
   {
     id: String,
+    owner: String,
     name: String,
     value: String,
     unit: String,
@@ -12,7 +13,6 @@ const labelSchema = new mongoose.Schema(
     },
     isValueHidden: Boolean,
     isNameHidden: Boolean,
-    owner: String,
   },
   { _id: false },
 );

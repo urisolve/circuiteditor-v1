@@ -39,7 +39,7 @@ export function Node({
     [id, selectedItems],
   );
 
-  function moveSelection(direction, save = false) {
+  function moveSelection(direction, { save = false } = {}) {
     selectedIds.forEach((selectedId) => {
       const selectedElement = startItems.find(({ id }) => id === selectedId);
       const originalPosition = Vector.fromObject(selectedElement.position);
@@ -75,7 +75,7 @@ export function Node({
 
     onStop: () => {
       isDragging.off();
-      moveSelection(dragDirection);
+      moveSelection(dragDirection, { save: true });
     },
   };
 

@@ -142,6 +142,7 @@ export function useSchematicTools(setSchematic, history, gridSize) {
           for (const type in newSchematic) {
             newSchematic[type] = newSchematic[type].map((elem) => {
               if (elem.id !== id) return elem;
+
               return lodash.isFunction(edits)
                 ? edits(elem)
                 : { ...elem, ...edits };

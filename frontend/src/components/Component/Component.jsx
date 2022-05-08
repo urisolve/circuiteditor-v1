@@ -52,7 +52,7 @@ export function Component({
     [id, selectedItems],
   );
 
-  function moveSelection(direction, save = false) {
+  function moveSelection(direction, { save = false } = {}) {
     selectedIds.forEach((selectedId) => {
       const selectedElement = startItems.find(({ id }) => id === selectedId);
       const originalPosition = Vector.fromObject(selectedElement.position);
@@ -88,7 +88,7 @@ export function Component({
 
     onStop: () => {
       isDragging.off();
-      moveSelection(dragDirection);
+      moveSelection(dragDirection, { save: true });
     },
   };
 
@@ -140,6 +140,7 @@ export function Component({
       )}
 
       <ContextMenu id={id} {...contextMenu} />
+
       <PropertiesMenu
         contextKey='components'
         id={id}

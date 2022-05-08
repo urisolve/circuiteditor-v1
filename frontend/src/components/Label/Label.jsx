@@ -24,7 +24,7 @@ export function Label({
   const refMap = useGlobalRefMap(id);
 
   const { data: schematic } = useContext(SchematicContext);
-  const [startSch, setStartSch] = useState(schematic);
+  const [startSchematic, setStartSchematic] = useState(schematic);
 
   const isDragging = useBoolean(false);
 
@@ -48,11 +48,11 @@ export function Label({
     },
     onStart: () => {
       isDragging.on();
-      setStartSch(schematic);
+      setStartSchematic(schematic);
     },
     onStop: (_e, { x, y }) => {
       isDragging.off();
-      updatePosition(owner, { x, y }, startSch, true);
+      updatePosition(owner, { x, y }, startSchematic, true);
     },
   };
 

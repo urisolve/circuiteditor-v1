@@ -31,14 +31,17 @@ export function Schematic({
     if (readOnly) return;
 
     const grid = gridSize ?? constants.DEFAULT_GRID_SIZE;
-    const x = snapValueToGrid(position.x ?? 0, grid);
-    const y = snapValueToGrid(position.y ?? 0, grid);
+    const x = snapValueToGrid(position.x, grid);
+    const y = snapValueToGrid(position.y, grid);
 
     editById(
       id,
       (elem) => {
-        if (!isLabel) elem.position = { ...elem.position, x, y };
-        else elem.label.position = { ...elem.label.position, x, y };
+        if (isLabel) {
+          elem.label.position = { ...elem.label.position, x, y };
+        } else {
+          elem.position = { ...elem.position, x, y };
+        }
 
         return elem;
       },

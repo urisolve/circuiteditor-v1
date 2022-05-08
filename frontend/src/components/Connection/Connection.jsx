@@ -32,7 +32,7 @@ export function Connection({
   const anchors = useConnectionAnchors(schematic, { start, end });
 
   return (
-    <Box>
+    <Box sx={{ pointerEvents: 'none' }}>
       <XArrow
         start={refMap.get(start)}
         end={refMap.get(end)}
@@ -41,8 +41,9 @@ export function Connection({
         gridBreak={properties?.gridBreak ?? '100%'}
         showHead={false}
         divContainerStyle={{
-          zIndex: -1,
           opacity: properties?.opacity ?? 1,
+          pointerEvents: 'none',
+          zIndex: -1,
         }}
         passProps={{
           onContextMenu: contextMenu.open,
