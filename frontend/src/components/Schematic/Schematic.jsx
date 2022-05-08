@@ -22,6 +22,7 @@ export function Schematic({
   const {
     data: schematic,
     editById,
+    labels,
     items,
     selection: { selectedItems },
   } = useContext(SchematicContext);
@@ -113,10 +114,11 @@ export function Schematic({
         )}
 
         <SelectionArea
+          disabled={readOnly}
+          ignoreItems={labels}
           parentRef={canvasRef}
           selectableItems={items}
           setSelectedItems={selection?.setSelectedItems}
-          disabled={readOnly}
         />
       </Box>
     </Paper>

@@ -25,5 +25,7 @@ export function useSchematicItems(schematic) {
     [items],
   );
 
-  return { items, itemsMap };
+  const labels = useMemo(() => items.map((item) => item.label), [items]);
+
+  return { items, itemsMap, labels };
 }

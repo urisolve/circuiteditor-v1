@@ -25,7 +25,7 @@ export function useSchematic(
   const tools = useSchematicTools(setSchematic, history, gridSize);
 
   useSchematicParser(schematic, setSchematic);
-  const { items, itemsMap } = useSchematicItems(schematic);
+  const { items, itemsMap, labels } = useSchematicItems(schematic);
   const [selectedItems, setSelectedItems] = useState(new Set());
 
   useConnections(schematic, setSchematic, items);
@@ -37,6 +37,7 @@ export function useSchematic(
     data: schematic,
     items,
     itemsMap,
+    labels,
 
     ...tools,
     history,
