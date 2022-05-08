@@ -9,12 +9,13 @@ import {
   useSchematicTools,
   useSchematicItems,
 } from '../';
+import { constants } from '../../constants';
 
 const emptySchematic = { components: [], nodes: [], connections: [] };
 
 export function useSchematic(
   initialSchematic = {},
-  gridSize = 10,
+  gridSize = constants.DEFAULT_GRID_SIZE,
   maxHistoryLength = 20,
 ) {
   const sch = { ...emptySchematic, ...initialSchematic };

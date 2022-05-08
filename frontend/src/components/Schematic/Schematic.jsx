@@ -26,11 +26,12 @@ export function Schematic({
     selection: { selectedItems },
   } = useContext(SchematicContext);
 
-  function updatePosition(id, { x, y }, startSch = null, isLabel = false) {
+  function updatePosition(id, position, startSch = null, isLabel = false) {
     if (readOnly) return;
 
-    x = snapValueToGrid(x ?? 0, gridSize ?? 10);
-    y = snapValueToGrid(y ?? 0, gridSize ?? 10);
+    const grid = gridSize ?? constants.DEFAULT_GRID_SIZE;
+    const x = snapValueToGrid(position.x ?? 0, grid);
+    const y = snapValueToGrid(position.y ?? 0, grid);
 
     editById(
       id,
@@ -57,12 +58,15 @@ export function Schematic({
         zIndex: 0,
 
         // Grid pattern
-        backgroundSize: `${gridSize ?? 10}px ${gridSize ?? 10}px`,
+        backgroundSize: `
+          ${gridSize ?? constants.DEFAULT_GRID_SIZE}px
+          ${gridSize ?? constants.DEFAULT_GRID_SIZE}px
+        `,
         backgroundImage: `radial-gradient(circle, #0007 1px, transparent 1px)`,
 
         // Border styling
         boxShadow: '0px 0px 8px #0003',
-        borderRadius: `${2 * (gridSize ?? 10)}px`,
+        borderRadius: `${2 * (gridSize ?? constants.DEFAULT_GRID_SIZE)}px`,
       }}
       {...rest}
     >
@@ -77,7 +81,6 @@ export function Schematic({
             {...comp}
             key={comp.id}
             schematicRef={schematicRef}
-            gridSize={gridSize}
             updatePosition={updatePosition}
             isSelected={selection?.selectedItems.has(comp.id)}
             selectedItems={selectedItems}
@@ -89,7 +92,6 @@ export function Schematic({
             {...node}
             key={node.id}
             schematicRef={schematicRef}
-            gridSize={gridSize}
             updatePosition={updatePosition}
             isSelected={selection?.selectedItems.has(node.id)}
             selectedItems={selectedItems}

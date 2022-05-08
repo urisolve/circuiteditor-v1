@@ -17,7 +17,6 @@ export function Node({
   position,
   label,
   properties,
-  gridSize,
   updatePosition,
   isSelected,
   schematicRef,

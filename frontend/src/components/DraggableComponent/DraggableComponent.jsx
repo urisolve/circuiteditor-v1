@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import Draggable from 'react-draggable';
 
 import { Box } from '@mui/material';
+import { constants } from '../../constants';
 
 export function DraggableComponent({
   bounds,
@@ -19,7 +20,10 @@ export function DraggableComponent({
       nodeRef={draggableRef}
       bounds={bounds ?? '.schematic'}
       handle={handle}
-      grid={[gridSize ?? 10, gridSize ?? 10]}
+      grid={[
+        gridSize ?? constants.DEFAULT_GRID_SIZE,
+        gridSize ?? constants.DEFAULT_GRID_SIZE,
+      ]}
       {...rest}
     >
       <Box

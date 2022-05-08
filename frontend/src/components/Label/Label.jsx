@@ -12,7 +12,6 @@ export function Label({
   id,
   schematicRef,
   position,
-  gridSize,
   updatePosition,
   name,
   value,
