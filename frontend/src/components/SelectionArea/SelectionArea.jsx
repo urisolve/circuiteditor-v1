@@ -11,7 +11,7 @@ import Vector from 'victor';
 import { Box } from '@mui/material';
 
 import { useBoolean, useGlobalRefMap } from '../../hooks';
-import { areasIntersect, isNode } from '../../util';
+import { areasIntersect, getDragHandleId } from '../../util';
 import { constants } from '../../constants';
 
 const DEFAULT_AREA = { left: 0, top: 0, width: 0, height: 0 };
@@ -41,9 +41,15 @@ export function SelectionArea({
     parentArea.current = parentRef.current.getBoundingClientRect();
 
     function calculateAreas(items = []) {
-      return items.reduce((areas, item) => {
-        const id = isNode(item) ? item.id : item.id;
-        const elem = refMap.get(id).current;
+      const electricalItems = items.map(({ id }) => ({ handle: id, id }));
+      const dragHandlers = items.map(({ id }) => {
+        return { handle: getDragHandleId(id), id };
+      });
+
+      const fullItems = electricalItems.concat(dragHandlers);
+
+      return fullItems.reduce((areas, item) => {
+        const elem = refMap.get(item.handle)?.current;
         const area = elem?.getBoundingClientRect();
 
         if (elem) {
@@ -119,16 +125,21 @@ export function SelectionArea({
       if (disabled || event.which !== MOUSE.LEFT) return;
       if (!event.ctrlKey) setSelectedItems(new Set());
 
-      const clickPoint = {
-        left: event.clientX - parentArea.current.left,
-        top: event.clientY - parentArea.current.top,
+      startPoint.current = new Vector(
+        event.clientX - parentArea.current.left,
+        event.clientY - parentArea.current.top,
+      );
+
+      selectionArea.current = {
+        left: startPoint.current.x,
+        top: startPoint.current.y,
         width: 0,
         height: 0,
       };
 
       // Ignore click if it was on an item marked to ignore
       for (const area of ignoreAreas.current) {
-        if (areasIntersect(clickPoint, area)) {
+        if (areasIntersect(selectionArea.current, area)) {
           event.preventDefault();
           return;
         }
@@ -136,7 +147,7 @@ export function SelectionArea({
 
       // Single click on selectable items
       for (const area of selectableAreas.current) {
-        if (areasIntersect(clickPoint, area)) {
+        if (areasIntersect(selectionArea.current, area)) {
           setSelectedItems((items) => {
             if (items.has(area.id)) items.delete(area.id);
             else items.add(area.id);
@@ -147,9 +158,6 @@ export function SelectionArea({
           return;
         }
       }
-
-      startPoint.current = new Vector(clickPoint.left, clickPoint.top);
-      selectionArea.current = { ...clickPoint, width: 0, height: 0 };
 
       // Enable event listeners for drag
       parentRef.current.addEventListener('mousemove', onMouseMove);

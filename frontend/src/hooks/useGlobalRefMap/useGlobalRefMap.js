@@ -3,7 +3,7 @@ import { createRef, useEffect } from 'react';
 const map = new Map();
 
 function set(key) {
-  if (!key) throw new Error(`The ref key must be valid (key: "${key}")`);
+  if (!key) return;
 
   // If the Ref already exists
   if (map.has(key)) return map.get(key);

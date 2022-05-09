@@ -2,6 +2,7 @@ export * from './areas';
 export * from './connections';
 export * from './coordinates';
 export * from './download';
+export * from './drag';
 export * from './grid';
 export * from './image';
 export * from './label';
