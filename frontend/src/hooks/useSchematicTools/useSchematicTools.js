@@ -66,8 +66,6 @@ export function useSchematicTools(setSchematic, history, gridSize) {
                 position: { x: 10, y: 0, ...element.label?.position },
               },
             });
-
-            console.log(newSchematic[key].at(-1));
           });
         });
 
