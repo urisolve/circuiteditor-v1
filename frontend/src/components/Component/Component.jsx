@@ -123,7 +123,7 @@ export function Component({
           <Port
             key={port.id}
             bounds={{ width: width ?? 100, height: height ?? 100 }}
-            compRotation={position?.angle ?? 0}
+            rotation={position?.angle ?? 0}
             {...port}
             {...rest}
           />

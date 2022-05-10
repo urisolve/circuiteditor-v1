@@ -1,8 +1,11 @@
 import { useLayoutEffect } from 'react';
-import lodash, { cloneDeep, isEqual } from 'lodash';
+import { cloneDeep, find, isEqual } from 'lodash';
 
 import { useGlobalRefMap } from '..';
 import { isPort, rotateCoords } from '../../util';
+
+const hash = JSON.stringify;
+// const unHash = JSON.parse;
 
 function buildPortsMap(schematic, refMap) {
   // Map of (position string) -> (element id)
@@ -21,12 +24,12 @@ function buildPortsMap(schematic, refMap) {
         component.position.angle,
       );
       const realPos = {
-        x: component.position.x + rotatedCoords.x * width,
-        y: component.position.y + rotatedCoords.y * height,
+        x: Math.round(component.position.x + rotatedCoords.x * width),
+        y: Math.round(component.position.y + rotatedCoords.y * height),
       };
 
       // Add it to the hash map
-      const positionHash = JSON.stringify(realPos);
+      const positionHash = hash(realPos);
       seenPositions.set(positionHash, port.id);
     }
   }
@@ -45,40 +48,36 @@ export function useConnections(schematic, setSchematic, items) {
 
       // Check if nodes overlay ports or other nodes
       for (const node of schematic.nodes) {
-        const positionHash = JSON.stringify(node.position);
+        const positionHash = hash(node.position);
 
-        // If the node doesn't overlay any of the already seen ones,
-        if (seenPositions.has(positionHash)) {
-          // Find what is being overlaid
-          const elemPattern = { id: seenPositions.get(positionHash) };
-          const overlaidElem =
-            lodash.find(items, elemPattern) ??
-            lodash.find(
-              lodash.find(items, { ports: [elemPattern] }).ports,
-              elemPattern,
-            );
-
-          // Don't connect if:
-          // - The element is a port that is already connected
-          // - The element is a port and the node has multiple connections
-          if (
-            isPort(overlaidElem) &&
-            (overlaidElem.connection || node.connections.length > 1)
-          )
-            return schematic;
-
-          // Move connections from that node to the overlaid element
-          for (const conn of schematic.connections) {
-            if (conn.start === node.id) conn.start = overlaidElem.id;
-            if (conn.end === node.id) conn.end = overlaidElem.id;
-          }
-
-          // Delete the useless node
-          schematic.nodes = schematic.nodes.filter((n) => n.id !== node.id);
+        if (!seenPositions.has(positionHash)) {
+          seenPositions.set(positionHash, node.id);
+          continue;
         }
 
-        // Mark position as seen
-        else seenPositions.set(positionHash, node.id);
+        // Find what is being overlaid
+        const elemPattern = { id: seenPositions.get(positionHash) };
+        const overlaidElem =
+          find(items, elemPattern) ??
+          find(find(items, { ports: [elemPattern] }).ports, elemPattern);
+
+        // Don't connect if:
+        // - The element is a port that is already connected
+        // - The element is a port and the node has multiple connections
+        if (
+          isPort(overlaidElem) &&
+          (overlaidElem.connection || node.connections.length > 1)
+        )
+          return schematic;
+
+        // Move connections from that node to the overlaid element
+        for (const conn of schematic.connections) {
+          if (conn.start === node.id) conn.start = overlaidElem.id;
+          if (conn.end === node.id) conn.end = overlaidElem.id;
+        }
+
+        // Delete the useless node
+        schematic.nodes = schematic.nodes.filter((n) => n.id !== node.id);
       }
 
       return isEqual(initialSchematic, schematic)
