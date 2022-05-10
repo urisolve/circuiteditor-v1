@@ -43,13 +43,15 @@ export function Label({
   }, [isNameHidden, isValueHidden, name, value, unit]);
 
   const handlers = {
-    onDrag: (_e, { x, y }) => {
-      updatePosition(owner, { x, y }, null, true);
-    },
     onStart: () => {
       isDragging.on();
       setStartSchematic(schematic);
     },
+
+    onDrag: (_e, { x, y }) => {
+      updatePosition(owner, { x, y }, null, true);
+    },
+
     onStop: (_e, { x, y }) => {
       isDragging.off();
       updatePosition(owner, { x, y }, startSchematic, true);

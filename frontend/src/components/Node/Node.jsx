@@ -54,14 +54,6 @@ export function Node({
   }
 
   const handlers = {
-    onDrag: (_e, { x, y }) => {
-      const dragPosition = new Vector(x, y);
-      const dragDirection = dragPosition.subtract(originalPosition);
-
-      moveSelection(dragDirection);
-      setDragDirection(dragDirection);
-    },
-
     onStart: () => {
       isDragging.on();
 
@@ -71,6 +63,14 @@ export function Node({
       const dragElement = items.find((item) => item.id === id);
       const originalPosition = Vector.fromObject(dragElement.position);
       setOriginalPosition(originalPosition);
+    },
+
+    onDrag: (_e, { x, y }) => {
+      const dragPosition = new Vector(x, y);
+      const dragDirection = dragPosition.subtract(originalPosition);
+
+      moveSelection(dragDirection);
+      setDragDirection(dragDirection);
     },
 
     onStop: () => {
