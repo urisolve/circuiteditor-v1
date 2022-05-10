@@ -53,6 +53,8 @@ export function Component({
   );
 
   function moveSelection(direction, { save = false } = {}) {
+    console.log('moveeeeeeeeee');
+
     selectedIds.forEach((selectedId) => {
       const selectedElement = startItems.find(({ id }) => id === selectedId);
       const originalPosition = Vector.fromObject(selectedElement.position);
@@ -70,6 +72,7 @@ export function Component({
     onStart: () => {
       isDragging.on();
 
+      setDragDirection(new Vector());
       setStartSchematic(schematic);
       setStartItems(items);
 

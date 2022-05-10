@@ -57,6 +57,7 @@ export function Node({
     onStart: () => {
       isDragging.on();
 
+      setDragDirection(new Vector());
       setStartSchematic(schematic);
       setStartItems(items);
 
