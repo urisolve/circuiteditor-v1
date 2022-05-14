@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import axios from 'axios';
 
@@ -37,7 +37,22 @@ export function QuickActionMenu({
 
   const isAccountAlertOpen = useBoolean(false);
 
-  const getImage = () => screenshot(schematicRef.current, area);
+  const getThumbnail = useCallback(
+    () => screenshot(schematicRef.current, area),
+    [area, schematicRef],
+  );
+
+  const updateThumbnail = useCallback(async () => {
+    if (!user) return;
+
+    try {
+      const thumbnail = await getThumbnail();
+
+      await axios.patch(`/api/circuits?id=${circuitId}`, { thumbnail });
+    } catch (err) {
+      console.error(err);
+    }
+  }, [circuitId, getThumbnail, user]);
 
   async function saveCircuit() {
     if (!user) {
@@ -46,12 +61,10 @@ export function QuickActionMenu({
     }
 
     try {
-      const thumbnail = await getImage();
+      const thumbnail = await getThumbnail();
+      const circuit = { schematic, thumbnail };
 
-      await axios.patch(`/api/circuits?id=${circuitId}`, {
-        schematic,
-        thumbnail,
-      });
+      await axios.patch(`/api/circuits?id=${circuitId}`, circuit);
     } catch (err) {
       console.error(err);
     }
@@ -59,7 +72,7 @@ export function QuickActionMenu({
 
   async function downloadScreenshot() {
     try {
-      const image = await getImage();
+      const image = await getThumbnail();
       download(image, `${circuitName}.png`);
     } catch (err) {
       console.error(err);
@@ -68,7 +81,7 @@ export function QuickActionMenu({
 
   async function uploadToURIsolve() {
     try {
-      const image = await getImage();
+      const image = await getThumbnail();
       const circuit = { image, netlist, schematic };
 
       await axios.post('https://urisolve.pt/app/circuit/load', circuit);
@@ -76,6 +89,12 @@ export function QuickActionMenu({
       console.error(err);
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      updateThumbnail();
+    }
+  }, [updateThumbnail, user]);
 
   const actionGroups = [
     {

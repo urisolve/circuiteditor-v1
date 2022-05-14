@@ -3,27 +3,11 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Box, Button, Modal, Stack, Tab, Tabs, TextField } from '@mui/material';
+import { Box, Button, Stack, Tab, Tabs, TextField } from '@mui/material';
 
-import { MenuHeader, TabPanel } from '..';
-import { LabelForm } from '../LabelForm';
+import { CenterModal, LabelForm, MenuHeader, TabPanel } from '..';
 import { SchematicContext } from '../../contexts';
 import { isNameTaken, labelValueRegex } from '../../util';
-
-const modalStyle = {
-  // Positioning
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-
-  // Styling
-  bgcolor: 'background.paper',
-  borderRadius: 2,
-  boxShadow: 24,
-  p: 2,
-  width: 360,
-};
 
 const getSchema = (schematic, contextKey, id) =>
   yup.object({
@@ -70,46 +54,43 @@ export function PropertiesMenu({ contextKey, menu, id, label, properties }) {
   };
 
   return (
-    <Modal
+    <CenterModal
       open={menu.isOpen}
       onClose={menu.close}
-      aria-labelledby='Property Editor Menu'
-      aria-describedby={`Properties for component ${id}`}
+      aria-labelledby='modal-title'
     >
       <form onSubmit={form.handleSubmit(actions.ok)}>
-        <Box sx={modalStyle}>
-          <MenuHeader sx={{ mb: 2 }} onClose={menu.close}>
-            Properties Editor
-          </MenuHeader>
+        <MenuHeader id='modal-title' sx={{ mb: 2 }} onClose={menu.close}>
+          Properties Editor
+        </MenuHeader>
 
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs
-              value={menu.selectedTab}
-              onChange={menu.changeTab}
-              variant='fullWidth'
-            >
-              <Tab label='Properties' />
-              <Tab label='Label' />
-            </Tabs>
-          </Box>
-
-          {/* Properties */}
-          <TabPanel value={menu.selectedTab} index={0}>
-            <TextField fullWidth label='ID' value={id} disabled />
-          </TabPanel>
-
-          {/* Label */}
-          <TabPanel value={menu.selectedTab} index={1}>
-            <LabelForm form={form} {...label} />
-          </TabPanel>
-
-          <Stack direction='row' justifyContent='flex-end'>
-            <Button type='submit'>OK</Button>
-            <Button onClick={actions.cancel}>Cancel</Button>
-            <Button onClick={form.handleSubmit(actions.apply)}>Apply</Button>
-          </Stack>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs
+            value={menu.selectedTab}
+            onChange={menu.changeTab}
+            variant='fullWidth'
+          >
+            <Tab label='Properties' />
+            <Tab label='Label' />
+          </Tabs>
         </Box>
+
+        {/* Properties */}
+        <TabPanel value={menu.selectedTab} index={0}>
+          <TextField fullWidth label='ID' value={id} disabled />
+        </TabPanel>
+
+        {/* Label */}
+        <TabPanel value={menu.selectedTab} index={1}>
+          <LabelForm form={form} {...label} />
+        </TabPanel>
+
+        <Stack direction='row' justifyContent='flex-end'>
+          <Button type='submit'>OK</Button>
+          <Button onClick={actions.cancel}>Cancel</Button>
+          <Button onClick={form.handleSubmit(actions.apply)}>Apply</Button>
+        </Stack>
       </form>
-    </Modal>
+    </CenterModal>
   );
 }

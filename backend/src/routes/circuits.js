@@ -33,10 +33,11 @@ router.post('/', isAuth, async (req, res) => {
   if (req.user.circuits.length >= constants.MAX_CIRCUITS)
     return res
       .status(405)
-      .send(`The limit of ${constants.MAX_CIRCUITS} has been reached`);
+      .send(`The limit of ${constants.MAX_CIRCUITS} circuits has been reached`);
 
   req.user.circuits.push(req.body);
   req.user.save();
+
   res.status(201).send('Circuit created');
 });
 

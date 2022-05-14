@@ -7,5 +7,19 @@ export function useBoolean(initialValue) {
   const off = () => setValue(false);
   const toggle = () => setValue((oldValue) => !oldValue);
 
-  return { value, set: setValue, on, off, toggle };
+  return {
+    // useState logic
+    value,
+    set: setValue,
+
+    // Boolean logic
+    on,
+    off,
+    toggle,
+
+    // Aliases for Modals
+    open: on,
+    close: off,
+    isOpen: value,
+  };
 }

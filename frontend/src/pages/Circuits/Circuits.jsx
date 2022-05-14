@@ -2,7 +2,7 @@ import { useEffect, useCallback, useRef, useState } from 'react';
 import lodash, { startCase } from 'lodash';
 import axios from 'axios';
 
-import { CircuitCard, SortingMenu } from '../../components';
+import { CircuitCard, SortingMenu, UploadFileInput } from '../../components';
 import { useBoolean, useCollectionSort, useUser } from '../../hooks';
 import { downloadCode } from '../../util';
 
@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SortIcon from '@mui/icons-material/Sort';
+import { readJsonFileAsync } from '../../util/file';
 
 const FilterBy = Object.freeze({
   none: '_id',
@@ -46,8 +47,8 @@ export function Circuits() {
   const { user, setUser } = useUser();
   const isLoading = useBoolean(false);
 
+  const sortMenu = useBoolean(false);
   const sortButton = useRef();
-  const sortMenuOpen = useBoolean(false);
 
   const [filterBy, setFilterBy] = useState(FilterBy.none);
   const [orderBy, setOrderBy] = useState(OrderBy.ascending);
@@ -90,9 +91,20 @@ export function Circuits() {
     isLoading.off();
   }, [isLoading, setUser]);
 
-  async function createCircuit(circuit) {
+  async function createCircuit() {
     try {
-      await axios.post('api/circuits', circuit);
+      await axios.post('api/circuits');
+
+      fetchCircuits();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function uploadCircuit(file) {
+    try {
+      const schematic = await readJsonFileAsync(file);
+      await axios.post('api/circuits', { schematic });
 
       fetchCircuits();
     } catch (err) {
@@ -146,13 +158,22 @@ export function Circuits() {
           action={
             <>
               <Tooltip title='Sort by' arrow>
-                <IconButton onClick={sortMenuOpen.on} ref={sortButton}>
+                <IconButton onClick={sortMenu.open} ref={sortButton}>
                   <SortIcon fontSize='large' />
                 </IconButton>
               </Tooltip>
 
-              <Tooltip title='Create New Circuit' arrow>
-                <IconButton onClick={() => createCircuit()}>
+              <Tooltip title='Upload schematic' arrow>
+                <UploadFileInput
+                  accept='application/json'
+                  aria-label='Upload schematic'
+                  iconProps={{ fontSize: 'large' }}
+                  onUpload={uploadCircuit}
+                />
+              </Tooltip>
+
+              <Tooltip title='New circuit' arrow>
+                <IconButton onClick={createCircuit}>
                   <AddIcon fontSize='large' />
                 </IconButton>
               </Tooltip>
@@ -195,8 +216,8 @@ export function Circuits() {
       </Card>
 
       <SortingMenu
-        open={sortMenuOpen.value}
-        onClose={sortMenuOpen.off}
+        open={sortMenu.value}
+        onClose={sortMenu.close}
         anchorEl={sortButton.current}
         categories={sortCategories}
       />
