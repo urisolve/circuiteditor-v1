@@ -41,8 +41,8 @@ export function Signup({ ...rest }) {
     try {
       await axios.post('api/auth/signup', formData);
       history.push('/circuits');
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 

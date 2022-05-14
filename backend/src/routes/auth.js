@@ -52,7 +52,7 @@ router.post('/signup', passport.authenticate('local-signup'), (req, res) => {
  * Logout
  */
 router.get('/logout', (req, res) => {
-  req.session.destroy(function (err) {
+  req.session.destroy(function (error) {
     res.clearCookie('connect.sid');
     res.redirect('/');
   });

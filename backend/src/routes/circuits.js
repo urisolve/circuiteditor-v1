@@ -63,7 +63,7 @@ router.patch('/', isAuth, hasCircuitID, async (req, res) => {
     },
   )
     .then(() => res.status(200).send('Circuit updated'))
-    .catch((err) => res.status(400).send(err));
+    .catch((error) => res.status(400).send(error));
 });
 
 /**

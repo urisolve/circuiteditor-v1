@@ -49,8 +49,8 @@ export function QuickActionMenu({
       const thumbnail = await getThumbnail();
 
       await axios.patch(`/api/circuits?id=${circuitId}`, { thumbnail });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }, [circuitId, getThumbnail, user]);
 
@@ -65,8 +65,8 @@ export function QuickActionMenu({
       const circuit = { schematic, thumbnail };
 
       await axios.patch(`/api/circuits?id=${circuitId}`, circuit);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -74,8 +74,8 @@ export function QuickActionMenu({
     try {
       const image = await getThumbnail();
       download(image, `${circuitName}.png`);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -85,8 +85,8 @@ export function QuickActionMenu({
       const circuit = { image, netlist, schematic };
 
       await axios.post('https://urisolve.pt/app/circuit/load', circuit);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 

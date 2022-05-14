@@ -84,8 +84,8 @@ export function Circuits() {
       const { data: circuits } = await axios.get('api/circuits');
 
       setUser((user) => ({ ...user, circuits }));
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
 
     isLoading.off();
@@ -96,8 +96,8 @@ export function Circuits() {
       await axios.post('api/circuits');
 
       fetchCircuits();
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -107,8 +107,8 @@ export function Circuits() {
       await axios.post('api/circuits', { schematic });
 
       fetchCircuits();
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -117,8 +117,8 @@ export function Circuits() {
       await axios.delete(`/api/circuits?id=${id}`);
 
       fetchCircuits();
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -139,8 +139,8 @@ export function Circuits() {
       });
 
       fetchCircuits();
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 

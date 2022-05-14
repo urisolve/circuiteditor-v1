@@ -45,8 +45,8 @@ export function Account() {
   async function onSubmit(data) {
     try {
       await axios.patch('api/account/info', data);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
 
     form.reset();

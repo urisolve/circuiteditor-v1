@@ -39,8 +39,8 @@ export function Login({ setUser, ...rest }) {
       history.push('/circuits');
 
       await setUser(user);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 

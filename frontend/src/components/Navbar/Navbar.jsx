@@ -46,8 +46,8 @@ export function Navbar({ ...rest }) {
       await axios.get('api/auth/logout');
       await setUser(null);
       history.push('/');
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }, [setUser, history]);
 

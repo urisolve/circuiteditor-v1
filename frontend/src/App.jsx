@@ -28,8 +28,8 @@ export function App() {
       try {
         const { data } = await axios.get('api/auth');
         setUser(data);
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        console.log(error);
       }
     }
 
