@@ -27,9 +27,9 @@ export function App() {
   useEffect(() => {
     async function grabUser() {
       try {
-        const { data } = await axios.get('api/auth');
+        const { data: user } = await axios.get('api/auth');
 
-        setUser(data);
+        setUser(user);
       } catch ({ response: { status, statusText } }) {
         if (status !== HttpStatusCodes.UNAUTHORIZED) {
           enqueueSnackbar(statusText, { variant: 'error' });
