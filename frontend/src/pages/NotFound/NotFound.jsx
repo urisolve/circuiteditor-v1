@@ -1,6 +1,5 @@
 import { ReactComponent as NotFoundSVG } from '../../assets/undraw/not-found.svg';
 
-// Material-UI
 import { Container, Grid, Typography } from '@mui/material';
 
 export function NotFound() {

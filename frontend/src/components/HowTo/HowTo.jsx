@@ -1,7 +1,5 @@
-// Material-UI
 import { Box, Container, Grid, Typography } from '@mui/material';
 
-// Wave Dividers
 import { BottomWaveSVG, TopWaveSVG } from '../../assets/waves';
 
 import { ReactComponent as StepsSVG } from '../../assets/undraw/steps.svg';

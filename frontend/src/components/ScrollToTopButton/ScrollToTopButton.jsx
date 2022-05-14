@@ -1,10 +1,8 @@
 import { useEffect, useCallback } from 'react';
 
-// Material-UI
 import { Fab, Slide, Tooltip } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
-// Custom hook
 import { useBoolean } from '../../hooks';
 
 export function ScrollToTopButton({ threshold }) {

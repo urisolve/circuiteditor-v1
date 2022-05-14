@@ -1,7 +1,5 @@
-// Material-UI
 import { Stack } from '@mui/material';
 
-// Page Sections
 import {
   Contact,
   Footer,

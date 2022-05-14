@@ -16,7 +16,6 @@ export function validateLabelValue(value = '') {
 }
 
 export function formatLabel({ name = '', value = '', unit = '' }) {
-  // Insert space between value and unit prefix
   const pattern = new RegExp(numberPattern);
   const formattedValue = value.replace(pattern, '$& ');
 

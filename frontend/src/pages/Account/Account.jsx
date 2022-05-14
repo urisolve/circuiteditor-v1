@@ -8,7 +8,6 @@ import axios from 'axios';
 import { useGravatar, useUser } from '../../hooks';
 import { FormField } from '../../components';
 
-// Material-UI
 import {
   Container,
   Button,

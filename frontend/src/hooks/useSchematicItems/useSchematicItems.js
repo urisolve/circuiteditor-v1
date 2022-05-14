@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import lodash from 'lodash';
 
 export function useSchematicItems(schematic) {
-  // Squish all items into a single array
   const items = useMemo(
     () =>
       Object.freeze(
@@ -15,7 +14,6 @@ export function useSchematicItems(schematic) {
     [schematic],
   );
 
-  // Create an "[id]: item" map for easy access to all items
   const itemsMap = useMemo(
     () =>
       Object.freeze(

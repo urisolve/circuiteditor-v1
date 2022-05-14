@@ -1,17 +1,14 @@
 import { Box, Modal } from '@mui/material';
 
 const modalStyle = {
-  // Positioning
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-
-  // Styling
   bgcolor: 'background.paper',
   borderRadius: 2,
   boxShadow: 24,
+  left: '50%',
   p: 2,
+  position: 'absolute',
+  top: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 360,
 };
 

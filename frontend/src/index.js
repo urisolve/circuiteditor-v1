@@ -3,16 +3,13 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 
-// MUI
 import { Global } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 
-// App
 import { App } from './App.jsx';
 import { globalStyles, theme } from './styles';
 
-// PWA
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 ReactDOM.render(

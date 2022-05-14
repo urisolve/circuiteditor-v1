@@ -4,10 +4,8 @@ import { useSnackbar } from 'notistack';
 import axios from 'axios';
 import HttpStatusCodes from 'http-status-enum';
 
-// Material-UI
 import { Stack } from '@mui/material';
 
-// Custom components, contexts, and hooks
 import {
   NotFound,
   Home,

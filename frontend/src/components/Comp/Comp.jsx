@@ -1,7 +1,5 @@
-// Material-UI
 import { Avatar, Stack, Tooltip, Typography } from '@mui/material';
 
-// Custom config
 import { symbols } from '../../assets/electrical';
 
 export function Comp({ type, fullName, action, ...rest }) {
