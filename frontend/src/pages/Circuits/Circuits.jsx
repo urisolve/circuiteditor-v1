@@ -1,12 +1,11 @@
-import { useEffect, useCallback, useMemo, useRef } from 'react';
-import lodash from 'lodash';
+import { useEffect, useCallback, useRef, useState } from 'react';
+import lodash, { startCase } from 'lodash';
 import axios from 'axios';
 
-// Custom components/hooks
 import { CircuitCard, SortingMenu } from '../../components';
-import { useBoolean, useSortAndOrder, useUser } from '../../hooks';
+import { useBoolean, useCollectionSort, useUser } from '../../hooks';
+import { downloadCode } from '../../util';
 
-// Material-UI
 import {
   Grid,
   Container,
@@ -15,31 +14,67 @@ import {
   CardContent,
   IconButton,
   Tooltip,
-  Collapse,
   CircularProgress,
   Box,
 } from '@mui/material';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ChevronDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AddIcon from '@mui/icons-material/Add';
-import UploadIcon from '@mui/icons-material/Publish';
 import SortIcon from '@mui/icons-material/Sort';
-import { downloadCode } from '../../util';
+
+const FilterBy = Object.freeze({
+  none: '_id',
+  stared: 'isStared',
+});
+
+const OrderBy = Object.freeze({
+  ascending: +1,
+  descending: -1,
+});
+
+const SortBy = Object.freeze({
+  alphabetically: 'name',
+  created: 'createdAt',
+  modified: 'updatedAt',
+});
+
+const getMenuItems = (enumObject) =>
+  Object.entries(enumObject).map(([key, value]) => ({
+    name: startCase(key),
+    value,
+  }));
 
 export function Circuits() {
   const { user, setUser } = useUser();
   const isLoading = useBoolean(false);
 
-  const showStared = useBoolean(false);
-
   const sortButton = useRef();
   const sortMenuOpen = useBoolean(false);
-  const [sortedCircuits, params, setters] = useSortAndOrder(user?.circuits);
 
-  const staredCircuits = useMemo(
-    () => sortedCircuits.filter((circuit) => circuit.isStared),
-    [sortedCircuits],
-  );
+  const [filterBy, setFilterBy] = useState(FilterBy.none);
+  const [orderBy, setOrderBy] = useState(OrderBy.ascending);
+  const [sortBy, setSortBy] = useState(SortBy.modified);
+  const sortParams = { filterBy, orderBy, sortBy };
+  const circuits = useCollectionSort(user?.circuits, sortParams);
+
+  const sortCategories = [
+    {
+      title: 'Filter By',
+      items: getMenuItems(FilterBy),
+      selected: filterBy,
+      selector: setFilterBy,
+    },
+    {
+      title: 'Order by',
+      items: getMenuItems(OrderBy),
+      selected: orderBy,
+      selector: setOrderBy,
+    },
+    {
+      title: 'Sort by',
+      items: getMenuItems(SortBy),
+      selected: sortBy,
+      selector: setSortBy,
+    },
+  ];
 
   const fetchCircuits = useCallback(async () => {
     isLoading.on();
@@ -55,19 +90,9 @@ export function Circuits() {
     isLoading.off();
   }, [isLoading, setUser]);
 
-  async function uploadCircuit(circuit) {
+  async function createCircuit(circuit) {
     try {
       await axios.post('api/circuits', circuit);
-
-      fetchCircuits();
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async function createCircuit() {
-    try {
-      await axios.post('api/circuits');
 
       fetchCircuits();
     } catch (err) {
@@ -112,109 +137,68 @@ export function Circuits() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Data to build the menus
-  const menus = [
-    {
-      title: 'Favorite Circuits',
-      subheader: 'Star a circuit for it to appear here',
-      iterable: staredCircuits,
-      action: (
-        <Tooltip
-          title={showStared.value ? 'Hide favorites' : 'Show favorites'}
-          arrow
-        >
-          <IconButton onClick={showStared.toggle}>
-            {showStared.value ? (
-              <ChevronDownIcon fontSize='large' />
-            ) : (
-              <ChevronRightIcon fontSize='large' />
-            )}
-          </IconButton>
-        </Tooltip>
-      ),
-      collapse: showStared.value,
-    },
-    {
-      title: 'All Circuits',
-      subheader: 'Here are all of the circuits that you have saved',
-      iterable: sortedCircuits,
-      action: (
-        <>
-          <Tooltip title='Sort' arrow>
-            <IconButton onClick={sortMenuOpen.on} ref={sortButton}>
-              <SortIcon fontSize='large' />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title='Upload circuit' arrow>
-            <span>
-              <IconButton onClick={uploadCircuit} disabled>
-                <UploadIcon fontSize='large' />
-              </IconButton>
-            </span>
-          </Tooltip>
-          <Tooltip title='Create new circuit' arrow>
-            <IconButton onClick={createCircuit}>
-              <AddIcon fontSize='large' />
-            </IconButton>
-          </Tooltip>
-        </>
-      ),
-    },
-  ];
-
   return (
     <Container sx={{ mt: 2 }}>
-      {menus.map((menu) => (
-        <Card key={menu.title} variant='outlined' sx={{ mb: 2 }}>
-          <CardHeader
-            title={menu.title}
-            subheader={menu.subheader}
-            action={menu.action}
-          />
+      <Card variant='outlined' sx={{ mb: 2 }}>
+        <CardHeader
+          title='My Circuits'
+          subheader='Here are all of the circuits that you have saved'
+          action={
+            <>
+              <Tooltip title='Sort by' arrow>
+                <IconButton onClick={sortMenuOpen.on} ref={sortButton}>
+                  <SortIcon fontSize='large' />
+                </IconButton>
+              </Tooltip>
 
-          <Collapse in={menu?.collapse ?? true} timeout='auto' unmountOnExit>
-            <CardContent>
-              {isLoading.value ? (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '100%',
-                  }}
-                >
-                  <CircularProgress />
-                </Box>
-              ) : (
-                <Grid
-                  container
-                  spacing={2}
-                  justifyContent='flex-start'
-                  alignItems='flex-start'
-                >
-                  {menu.iterable.map((circuit) => (
-                    <Grid key={circuit._id} item>
-                      <CircuitCard
-                        circuit={circuit}
-                        onDelete={() => deleteCircuit(circuit._id)}
-                        onDownload={() => downloadCircuit(circuit._id)}
-                        onStar={() => starCircuit(circuit._id)}
-                      />
-                    </Grid>
-                  ))}
+              <Tooltip title='Create New Circuit' arrow>
+                <IconButton onClick={() => createCircuit()}>
+                  <AddIcon fontSize='large' />
+                </IconButton>
+              </Tooltip>
+            </>
+          }
+        />
+
+        <CardContent>
+          {isLoading.value ? (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Grid
+              container
+              spacing={2}
+              justifyContent='flex-start'
+              alignItems='flex-start'
+            >
+              {circuits.map((circuit) => (
+                <Grid key={circuit._id} item>
+                  <CircuitCard
+                    circuit={circuit}
+                    onDelete={() => deleteCircuit(circuit._id)}
+                    onDownload={() => downloadCircuit(circuit._id)}
+                    onStar={() => starCircuit(circuit._id)}
+                  />
                 </Grid>
-              )}
-            </CardContent>
-          </Collapse>
-        </Card>
-      ))}
+              ))}
+            </Grid>
+          )}
+        </CardContent>
+      </Card>
 
       <SortingMenu
         open={sortMenuOpen.value}
         onClose={sortMenuOpen.off}
         anchorEl={sortButton.current}
-        params={params}
-        setters={setters}
+        categories={sortCategories}
       />
     </Container>
   );
