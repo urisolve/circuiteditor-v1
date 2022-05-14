@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import axios from 'axios';
+import HttpStatusCodes from 'http-status-enum';
 
 // Material-UI
 import { Stack } from '@mui/material';
@@ -21,20 +23,24 @@ import { UserContext } from './contexts';
 
 export function App() {
   const [user, setUser] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
   const isOnline = useOnline();
 
   useEffect(() => {
     async function grabUser() {
       try {
         const { data } = await axios.get('api/auth');
+
         setUser(data);
-      } catch (error) {
-        console.log(error);
+      } catch ({ response: { status, statusText } }) {
+        if (status !== HttpStatusCodes.UNAUTHORIZED) {
+          enqueueSnackbar(statusText, { variant: 'error' });
+        }
       }
     }
 
     grabUser();
-  }, []);
+  }, [enqueueSnackbar]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSnackbar } from 'notistack';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
 
@@ -19,7 +21,6 @@ import {
   Avatar,
   Typography,
 } from '@mui/material';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -37,6 +38,7 @@ const schema = yup.object({
 export function Account() {
   const { user } = useUser();
   const gravatar = useGravatar(user?.email);
+  const { enqueueSnackbar } = useSnackbar();
 
   const form = useForm({ defaultValues: user, resolver: yupResolver(schema) });
 
@@ -45,8 +47,12 @@ export function Account() {
   async function onSubmit(data) {
     try {
       await axios.patch('api/account/info', data);
-    } catch (error) {
-      console.error(error);
+
+      enqueueSnackbar('Your personal information has been updated!', {
+        variant: 'success',
+      });
+    } catch ({ response: { statusText } }) {
+      enqueueSnackbar(statusText, { variant: 'error' });
     }
 
     form.reset();

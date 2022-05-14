@@ -1,5 +1,6 @@
-import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -29,6 +30,7 @@ const schema = yup.object({
 export function Login({ setUser, ...rest }) {
   const history = useHistory();
   const showPassword = useBoolean(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const form = useForm({ resolver: yupResolver(schema) });
 
@@ -37,10 +39,9 @@ export function Login({ setUser, ...rest }) {
       const { data: user } = await axios.post('api/auth/login', formData);
 
       history.push('/circuits');
-
-      await setUser(user);
-    } catch (error) {
-      console.error(error);
+      setUser(user);
+    } catch {
+      enqueueSnackbar('Could not log in', { variant: 'error' });
     }
   }
 

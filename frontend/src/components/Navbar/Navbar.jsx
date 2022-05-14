@@ -1,11 +1,11 @@
 import { useRef, useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import axios from 'axios';
 
 import { useBoolean, useGravatar, useUser } from '../../hooks';
 import { ReactComponent as Logo } from '../../assets/brand/logo.svg';
 
-// Material-UI
 import {
   AppBar,
   Toolbar,
@@ -35,21 +35,22 @@ export function Navbar({ ...rest }) {
   const { user, setUser } = useUser();
   const gravatar = useGravatar(user?.email);
 
-  // User menu
   const anchorEl = useRef();
   const isMenuOpen = useBoolean(false);
 
-  // Logout
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
+
   const logOut = useCallback(async () => {
     try {
       await axios.get('api/auth/logout');
-      await setUser(null);
+
       history.push('/');
-    } catch (error) {
-      console.error(error);
+      setUser(null);
+    } catch ({ response: { statusText } }) {
+      enqueueSnackbar(statusText, { variant: 'error' });
     }
-  }, [setUser, history]);
+  }, [history, setUser, enqueueSnackbar]);
 
   const sm = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 

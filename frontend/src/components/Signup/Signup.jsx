@@ -1,5 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useSnackbar } from 'notistack';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -34,6 +35,7 @@ const schema = yup.object({
 export function Signup({ ...rest }) {
   const history = useHistory();
   const showPassword = useBoolean(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const form = useForm({ resolver: yupResolver(schema) });
 
@@ -41,8 +43,8 @@ export function Signup({ ...rest }) {
     try {
       await axios.post('api/auth/signup', formData);
       history.push('/circuits');
-    } catch (error) {
-      console.error(error);
+    } catch {
+      enqueueSnackbar('Could not sign up', { variant: 'error' });
     }
   }
 

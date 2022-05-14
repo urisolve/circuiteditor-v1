@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 
 // MUI
 import { Global } from '@emotion/react';
@@ -18,9 +19,11 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Global styles={globalStyles} />
-        <App />
+        <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+          <CssBaseline />
+          <Global styles={globalStyles} />
+          <App />
+        </SnackbarProvider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,

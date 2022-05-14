@@ -1,5 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import axios from 'axios';
 
 import { Box, Paper, Stack } from '@mui/material';
@@ -36,6 +37,7 @@ export function QuickActionMenu({
   const { area, data: schematic, history, netlist } = sch;
 
   const isAccountAlertOpen = useBoolean(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const getThumbnail = useCallback(
     () => screenshot(schematicRef.current, area),
@@ -49,10 +51,10 @@ export function QuickActionMenu({
       const thumbnail = await getThumbnail();
 
       await axios.patch(`/api/circuits?id=${circuitId}`, { thumbnail });
-    } catch (error) {
-      console.error(error);
+    } catch ({ response: { statusText } }) {
+      enqueueSnackbar(statusText, { variant: 'error' });
     }
-  }, [circuitId, getThumbnail, user]);
+  }, [circuitId, enqueueSnackbar, getThumbnail, user]);
 
   async function saveCircuit() {
     if (!user) {
@@ -65,17 +67,20 @@ export function QuickActionMenu({
       const circuit = { schematic, thumbnail };
 
       await axios.patch(`/api/circuits?id=${circuitId}`, circuit);
-    } catch (error) {
-      console.error(error);
+
+      enqueueSnackbar('The circuit has been saved!', { variant: 'success' });
+    } catch ({ response: { statusText } }) {
+      enqueueSnackbar(statusText, { variant: 'error' });
     }
   }
 
   async function downloadScreenshot() {
     try {
       const image = await getThumbnail();
+
       download(image, `${circuitName}.png`);
-    } catch (error) {
-      console.error(error);
+    } catch ({ response: { statusText } }) {
+      enqueueSnackbar(statusText, { variant: 'error' });
     }
   }
 
@@ -85,8 +90,10 @@ export function QuickActionMenu({
       const circuit = { image, netlist, schematic };
 
       await axios.post('https://urisolve.pt/app/circuit/load', circuit);
-    } catch (error) {
-      console.error(error);
+
+      enqueueSnackbar('The circuit has been uploaded!', { variant: 'success' });
+    } catch ({ response: { statusText } }) {
+      enqueueSnackbar(statusText, { variant: 'error' });
     }
   }
 

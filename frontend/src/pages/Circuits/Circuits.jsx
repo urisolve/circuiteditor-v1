@@ -1,5 +1,6 @@
 import { useEffect, useCallback, useRef, useState } from 'react';
-import lodash, { startCase } from 'lodash';
+import { useSnackbar } from 'notistack';
+import { find, startCase } from 'lodash';
 import axios from 'axios';
 
 import { CircuitCard, SortingMenu, UploadFileInput } from '../../components';
@@ -45,6 +46,7 @@ const getMenuItems = (enumObject) =>
 
 export function Circuits() {
   const { user, setUser } = useUser();
+  const { enqueueSnackbar } = useSnackbar();
   const isLoading = useBoolean(false);
 
   const sortMenu = useBoolean(false);
@@ -84,31 +86,34 @@ export function Circuits() {
       const { data: circuits } = await axios.get('api/circuits');
 
       setUser((user) => ({ ...user, circuits }));
-    } catch (error) {
-      console.error(error);
+    } catch ({ response: { statusText } }) {
+      enqueueSnackbar(statusText, { variant: 'error' });
     }
 
     isLoading.off();
-  }, [isLoading, setUser]);
+  }, [enqueueSnackbar, isLoading, setUser]);
 
   async function createCircuit() {
     try {
       await axios.post('api/circuits');
 
+      enqueueSnackbar('The circuit has been created!', { variant: 'success' });
       fetchCircuits();
-    } catch (error) {
-      console.error(error);
+    } catch ({ response: { statusText } }) {
+      enqueueSnackbar(statusText, { variant: 'error' });
     }
   }
 
   async function uploadCircuit(file) {
     try {
       const schematic = await readJsonFileAsync(file);
+
       await axios.post('api/circuits', { schematic });
 
+      enqueueSnackbar('The circuit has been uploaded!', { variant: 'success' });
       fetchCircuits();
-    } catch (error) {
-      console.error(error);
+    } catch ({ response: { statusText } }) {
+      enqueueSnackbar(statusText, { variant: 'error' });
     }
   }
 
@@ -116,21 +121,22 @@ export function Circuits() {
     try {
       await axios.delete(`/api/circuits?id=${id}`);
 
+      enqueueSnackbar('The circuit has been deleted!', { variant: 'success' });
       fetchCircuits();
-    } catch (error) {
-      console.error(error);
+    } catch ({ response: { statusText } }) {
+      enqueueSnackbar(statusText, { variant: 'error' });
     }
   }
 
   function downloadCircuit(id) {
-    const { name, schematic } = lodash.find(user?.circuits, { _id: id });
+    const { name, schematic } = find(user?.circuits, { _id: id });
     const code = JSON.stringify(schematic, null, 2);
 
     downloadCode(code, 'text/json', `${name}.json`);
   }
 
   async function starCircuit(id) {
-    const circuit = lodash.find(user?.circuits, { _id: id });
+    const circuit = find(user?.circuits, { _id: id });
 
     try {
       await axios.patch(`/api/circuits?id=${id}`, {
@@ -138,9 +144,10 @@ export function Circuits() {
         timestamps: false,
       });
 
+      enqueueSnackbar('The circuit has been stared!', { variant: 'success' });
       fetchCircuits();
-    } catch (error) {
-      console.error(error);
+    } catch ({ response: { statusText } }) {
+      enqueueSnackbar(statusText, { variant: 'error' });
     }
   }
 
