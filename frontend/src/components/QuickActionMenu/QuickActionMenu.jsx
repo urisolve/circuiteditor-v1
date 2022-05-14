@@ -87,10 +87,14 @@ export function QuickActionMenu({
   async function uploadToURIsolve() {
     try {
       const image = await getThumbnail();
-      const circuit = { image, netlist, schematic };
+      const circuit = { email: user.email, image, netlist, schematic };
 
-      await axios.post('https://urisolve.pt/app/circuit/load', circuit);
+      const { data: uploadURL } = await axios.post(
+        'https://urisolve.pt/app/circuit/load',
+        circuit,
+      );
 
+      window.open(uploadURL, '_blank');
       enqueueSnackbar('The circuit has been uploaded!', { variant: 'success' });
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
@@ -150,7 +154,6 @@ export function QuickActionMenu({
           onClick: downloadScreenshot,
         },
         {
-          disabled: true,
           name: 'Export to URIsolve',
           icon: <FileUploadIcon />,
           onClick: uploadToURIsolve,
