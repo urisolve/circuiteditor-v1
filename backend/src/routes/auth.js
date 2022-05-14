@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const isAuth = require('./authMiddleware').isAuth;
+const HttpStatusCodes = require('http-status-enum').default;
 
 /**
  * Simplifies the user object.
@@ -31,21 +32,21 @@ function simplifyUser(req) {
  * Grab user from cookie
  */
 router.get('/', isAuth, (req, res) => {
-  res.status(200).send(simplifyUser(req));
+  res.status(HttpStatusCodes.OK).send(simplifyUser(req));
 });
 
 /**
  * LogIn
  */
 router.post('/login', passport.authenticate('local-login'), (req, res) => {
-  res.status(200).send(simplifyUser(req));
+  res.status(HttpStatusCodes.OK).send(simplifyUser(req));
 });
 
 /**
  * SignUp
  */
 router.post('/signup', passport.authenticate('local-signup'), (req, res) => {
-  res.status(201).send('User created successfully');
+  res.status(HttpStatusCodes.CREATED).send('User created successfully');
 });
 
 /**

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const mongoose = require('mongoose');
+const HttpStatusCodes = require('http-status-enum').default;
 const User = require('../models/user.model');
 require('dotenv').config();
 
@@ -10,7 +11,10 @@ const constants = require('../constants/constants');
 
 function hasCircuitID(req, res, next) {
   if (req.query.id) next();
-  else res.status(400).send("The circuit's ID was not provided");
+  else
+    res
+      .status(HttpStatusCodes.BAD_REQUEST)
+      .send("The circuit's ID was not provided");
 }
 
 /**
@@ -18,9 +22,9 @@ function hasCircuitID(req, res, next) {
  * Name, Thumbnail, Timestamps, and ID
  */
 router.get('/', isAuth, async (req, res) => {
-  res.status(200).json(
+  res.status(HttpStatusCodes.OK).json(
     req.user._doc.circuits.map((circuit) => {
-      // delete circuit.data;
+      delete circuit.schematic;
       return circuit;
     }),
   );
@@ -32,13 +36,13 @@ router.get('/', isAuth, async (req, res) => {
 router.post('/', isAuth, async (req, res) => {
   if (req.user.circuits.length >= constants.MAX_CIRCUITS)
     return res
-      .status(405)
+      .status(HttpStatusCodes.FORBIDDEN)
       .send(`The limit of ${constants.MAX_CIRCUITS} circuits has been reached`);
 
   req.user.circuits.push(req.body);
   req.user.save();
 
-  res.status(201).send('Circuit created');
+  res.status(HttpStatusCodes.CREATED).send('Circuit created');
 });
 
 /**
@@ -62,8 +66,8 @@ router.patch('/', isAuth, hasCircuitID, async (req, res) => {
         req.body.timestamps !== undefined ? req.body.timestamps : true,
     },
   )
-    .then(() => res.status(200).send('Circuit updated'))
-    .catch((error) => res.status(400).send(error));
+    .then(() => res.status(HttpStatusCodes.OK).send('Circuit updated'))
+    .catch((error) => res.status(HttpStatusCodes.BAD_REQUEST).send(error));
 });
 
 /**
@@ -72,7 +76,7 @@ router.patch('/', isAuth, hasCircuitID, async (req, res) => {
 router.delete('/', isAuth, hasCircuitID, async (req, res) => {
   req.user.circuits.pull(req.query.id);
   req.user.save();
-  res.status(200).send('Circuit deleted (if it existed)');
+  res.status(HttpStatusCodes.OK).send('Circuit deleted (if it existed)');
 });
 
 module.exports = router;
