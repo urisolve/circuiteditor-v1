@@ -53,15 +53,17 @@ export function Component({
   );
 
   function moveSelection(direction, { save = false } = {}) {
-    selectedIds.forEach((selectedId) => {
+    selectedIds.forEach((selectedId, idx) => {
       const selectedElement = startItems.find(({ id }) => id === selectedId);
       const originalPosition = Vector.fromObject(selectedElement.position);
       const newPosition = originalPosition.add(direction);
 
+      const isLastOfSelection = idx === selectedIds.length - 1;
+
       updatePosition(
         selectedId,
         newPosition.toObject(),
-        save ? startSchematic : null,
+        save && isLastOfSelection ? startSchematic : null,
       );
     });
   }
@@ -89,6 +91,7 @@ export function Component({
 
     onStop: () => {
       isDragging.off();
+
       moveSelection(dragDirection, { save: true });
     },
   };
