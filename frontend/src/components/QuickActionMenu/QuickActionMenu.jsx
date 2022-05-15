@@ -96,8 +96,14 @@ export function QuickActionMenu({
 
       window.open(uploadURL, '_blank');
       enqueueSnackbar('The circuit has been uploaded!', { variant: 'success' });
-    } catch ({ response: { statusText } }) {
-      enqueueSnackbar(statusText, { variant: 'error' });
+    } catch ({ message, request, response }) {
+      if (response) {
+        enqueueSnackbar(response.statusText, { variant: 'error' });
+      } else if (request) {
+        enqueueSnackbar(request, { variant: 'error' });
+      } else {
+        enqueueSnackbar(message, { variant: 'error' });
+      }
     }
   }
 
