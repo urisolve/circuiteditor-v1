@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
@@ -39,22 +39,7 @@ export function QuickActionMenu({
   const isAccountAlertOpen = useBoolean(false);
   const { enqueueSnackbar } = useSnackbar();
 
-  const getThumbnail = useCallback(
-    () => screenshot(schematicRef.current, area),
-    [area, schematicRef],
-  );
-
-  const updateThumbnail = useCallback(async () => {
-    if (!user) return;
-
-    try {
-      const thumbnail = await getThumbnail();
-
-      await axios.patch(`/api/circuits?id=${circuitId}`, { thumbnail });
-    } catch ({ response: { statusText } }) {
-      enqueueSnackbar(statusText, { variant: 'error' });
-    }
-  }, [circuitId, enqueueSnackbar, getThumbnail, user]);
+  const getThumbnail = () => screenshot(schematicRef.current, area);
 
   async function saveCircuit() {
     if (!user) {
@@ -108,10 +93,21 @@ export function QuickActionMenu({
   }
 
   useEffect(() => {
-    if (user) {
-      updateThumbnail();
+    async function updateThumbnail() {
+      if (!user) return;
+
+      try {
+        const thumbnail = await getThumbnail();
+
+        await axios.patch(`/api/circuits?id=${circuitId}`, { thumbnail });
+      } catch ({ response: { statusText } }) {
+        enqueueSnackbar(statusText, { variant: 'error' });
+      }
     }
-  }, [updateThumbnail, user]);
+
+    updateThumbnail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const actionGroups = [
     {
