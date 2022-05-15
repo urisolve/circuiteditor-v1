@@ -1,8 +1,22 @@
-const mongoose = require('mongoose');
-const circuitSchema = require('./circuit.schema');
-const settingsSchema = require('./settings.schema');
+import { model, Schema } from 'mongoose';
+import { circuitSchema, ICircuit, ISettings, settingsSchema } from '.';
 
-const userSchema = new mongoose.Schema(
+export interface Document<T> {
+  _doc: T;
+}
+
+export interface IUser extends Document<IUser> {
+  email: string;
+  firstName: string;
+  lastName: string;
+  mechNumber: number;
+  institution: string;
+  password: string;
+  settings: ISettings;
+  circuits: ICircuit[];
+}
+
+const userSchema = new Schema<IUser>(
   {
     email: {
       type: String,
@@ -22,4 +36,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-module.exports = mongoose.model('User', userSchema);
+export const User = model<IUser>('User', userSchema);

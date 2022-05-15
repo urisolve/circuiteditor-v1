@@ -1,9 +1,11 @@
-const mongoose = require('mongoose');
+import { Schema } from 'mongoose';
 
-/**
- * Subject to change
- */
-const settingsSchema = new mongoose.Schema(
+export interface ISettings {
+  darkMode: boolean;
+}
+
+// TODO: Update this schema
+export const settingsSchema = new Schema<ISettings>(
   {
     darkMode: { type: Boolean, default: false },
     /*
@@ -19,5 +21,3 @@ const settingsSchema = new mongoose.Schema(
   },
   { _id: false },
 );
-
-module.exports = settingsSchema;

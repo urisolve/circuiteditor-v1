@@ -1,23 +1,30 @@
-const LocalStrategy = require('passport-local');
-const passport = require('passport');
-const bcrypt = require('bcrypt');
-const User = require('../models/user.model');
+import passport from 'passport';
+import bcrypt from 'bcrypt';
+import { IUser, User } from '../models';
+import { IVerifyOptions, Strategy as LocalStrategy } from 'passport-local';
+import { Request } from 'express';
+import { HydratedDocument } from 'mongoose';
 
-/**
- * Serialize and Deserialize the user from the session store
- */
-passport.serializeUser((user, done) => {
+type PassportMiddlewareDone = (
+  error: any,
+  user?: any,
+  options?: IVerifyOptions,
+) => void;
+
+passport.serializeUser((user: HydratedDocument<IUser>, done) => {
   done(null, user._id);
 });
+
 passport.deserializeUser(async (id, done) => {
-  await User.findById(id)
-    .then((user) => done(null, user))
-    .catch((error) => done(error));
+  try {
+    const user = await User.findById(id);
+
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
 });
 
-/**
- * LogIn
- */
 passport.use(
   'local-login',
   new LocalStrategy(
@@ -25,9 +32,9 @@ passport.use(
       usernameField: 'email',
       passwordField: 'password',
     },
-    async (email, password, done) => {
+    async (email: string, password: string, done: PassportMiddlewareDone) => {
       await User.findOne({ email: email })
-        .then(async (user) => {
+        .then(async (user: HydratedDocument<IUser>) => {
           // Validate email
           if (!user)
             return done(null, {
@@ -51,9 +58,6 @@ passport.use(
   ),
 );
 
-/**
- * SignUp
- */
 passport.use(
   'local-signup',
   new LocalStrategy(
@@ -62,9 +66,9 @@ passport.use(
       passwordField: 'password',
       passReqToCallback: true,
     },
-    async (req, email, password, done) => {
+    async (req: Request, email: string, password: string, done) => {
       await User.findOne({ email: email })
-        .then(async (user) => {
+        .then(async (user: HydratedDocument<IUser>) => {
           // If the user already exists
           if (user) {
             return done(null, {
