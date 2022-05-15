@@ -4,6 +4,7 @@ export * from './useCollectionSort';
 export * from './useConnectionAnchors';
 export * from './useConnections';
 export * from './useContextMenu';
+export * from './useForceUpdate';
 export * from './useGlobalRefMap';
 export * from './useGravatar';
 export * from './useHistory';

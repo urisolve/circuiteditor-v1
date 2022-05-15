@@ -1,10 +1,10 @@
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
-import { Typography } from '@mui/material';
+import { Portal, Typography } from '@mui/material';
 
 import { DraggableComponent } from '..';
 import { SchematicContext } from '../../contexts';
-import { useBoolean, useGlobalRefMap } from '../../hooks';
+import { useBoolean, useForceUpdate, useGlobalRefMap } from '../../hooks';
 import { formatLabel } from '../../util';
 
 export function Label({
@@ -27,6 +27,7 @@ export function Label({
   const [startSchematic, setStartSchematic] = useState(schematic);
 
   const isDragging = useBoolean(false);
+  const forceUpdate = useForceUpdate();
 
   const formattedLabel = useMemo(() => {
     let labelArgs = { name, value, unit };
@@ -58,21 +59,32 @@ export function Label({
     },
   };
 
+  useEffect(() => {
+    forceUpdate();
+  }, [forceUpdate]);
+
   return (
-    <DraggableComponent position={position} {...handlers} {...rest}>
-      <Typography
-        onDoubleClick={onDoubleClick}
-        ref={refMap.get(id)}
-        sx={{
-          cursor: isDragging.value ? 'grabbing' : 'grab',
-          fontWeight: 'bold',
-          padding: '5px',
-          pointerEvents: 'auto',
-          whiteSpace: 'nowrap',
-        }}
+    <Portal container={schematicRef.current}>
+      <DraggableComponent
+        position={position}
+        positionOffset={{ x: 5, y: 5 }}
+        {...handlers}
+        {...rest}
       >
-        {formattedLabel}
-      </Typography>
-    </DraggableComponent>
+        <Typography
+          onDoubleClick={onDoubleClick}
+          ref={refMap.get(id)}
+          sx={{
+            cursor: isDragging.value ? 'grabbing' : 'grab',
+            fontWeight: 'bold',
+            lineHeight: '70%',
+            pointerEvents: 'auto',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {formattedLabel}
+        </Typography>
+      </DraggableComponent>
+    </Portal>
   );
 }

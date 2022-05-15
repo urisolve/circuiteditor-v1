@@ -40,6 +40,12 @@ export function Schematic({
         if (isLabel) {
           elem.label.position = { ...elem.label.position, x, y };
         } else {
+          elem.label.position = {
+            ...elem.label.position,
+            x: elem.label.position.x + x - elem.position.x,
+            y: elem.label.position.y + y - elem.position.y,
+          };
+
           elem.position = { ...elem.position, x, y };
         }
 
@@ -62,11 +68,11 @@ export function Schematic({
         zIndex: 0,
 
         // Grid pattern
+        backgroundImage: `radial-gradient(circle, #0007 1px, transparent 1px)`,
         backgroundSize: `
           ${gridSize ?? constants.DEFAULT_GRID_SIZE}px
           ${gridSize ?? constants.DEFAULT_GRID_SIZE}px
         `,
-        backgroundImage: `radial-gradient(circle, #0007 1px, transparent 1px)`,
 
         // Border styling
         boxShadow: '0px 0px 8px #0003',

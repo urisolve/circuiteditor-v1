@@ -59,7 +59,7 @@ Each element must have a position so that it can be placed in the schematic. The
 
 - Global: The position relative to the origin of the schematic/canvas.
 
-- Relative: The position relative to the origin of its parent element.
+- Relative: The position relative to the origin of its parent element. Ranges from 0 to 1.
 
 ```ts
 interface Position {
@@ -106,7 +106,7 @@ interface Label {
   name: string;
   value: string;
   unit: string;
-  position: RelativePosition;
+  position: Position;
   isNameHidden?: boolean;
   isValueHidden?: boolean;
   owner?: ID;
