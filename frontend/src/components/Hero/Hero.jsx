@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-import iPhoneMockups from '../../assets/mockups/iPhoneMockups.png';
+import mockup from '../../assets/mockups/mockup.webp';
 import { useUser } from '../../hooks';
 
 export function Hero({ padding, ...rest }) {
@@ -11,12 +11,15 @@ export function Hero({ padding, ...rest }) {
   const history = useHistory();
 
   return (
-    <Container id='intro' component='section' sx={padding} {...rest}>
-      <Stack direction={{ xs: 'column', md: 'row' }} alignItems='center'>
+    <Container component='section' id='intro' sx={padding} {...rest}>
+      <Stack
+        alignItems='center'
+        direction={{ xs: 'column-reverse', md: 'row' }}
+      >
         <Stack
           alignItems={{ xs: 'center', md: 'flex-start' }}
           justifyContent='center'
-          sx={{ maxWidth: { xs: 1, md: 1 / 2 } }}
+          sx={{ maxWidth: { xs: 1, md: '40%' } }}
         >
           <Typography
             component='h2'
@@ -29,30 +32,21 @@ export function Hero({ padding, ...rest }) {
           >
             Create <b>circuit schematics</b> and get their analytical models
           </Typography>
+
           <Button
-            size='large'
-            sx={{ fontSize: 20, mt: 5 }}
-            variant='contained'
             color='primary'
             endIcon={<ChevronRightIcon />}
             onClick={() => history.push(user ? '/circuits' : '/editor')}
+            size='large'
+            sx={{ fontSize: 20, mt: 5 }}
+            variant='contained'
           >
             Get Started
           </Button>
         </Stack>
 
-        <Box
-          sx={{
-            height: 1,
-            width: { xs: 1, md: 1 / 2 },
-            pt: { xs: 10, md: 0 },
-          }}
-        >
-          <img
-            src={iPhoneMockups}
-            alt='iPhone Mockups'
-            style={{ width: '100%' }}
-          />
+        <Box sx={{ height: 1, width: { xs: 1, md: '60%' }, py: 4 }}>
+          <img alt='iPhone Mockups' src={mockup} style={{ width: '100%' }} />
         </Box>
       </Stack>
     </Container>
