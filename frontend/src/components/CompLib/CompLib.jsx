@@ -69,7 +69,11 @@ export function CompLib({ controller, ...rest }) {
           </Accordion>
         ))}
 
-        {filteredLib.length === 0 && (
+        {!!filteredLib.length ? (
+          <Typography align='center' variant='body2' sx={{ pt: 4 }}>
+            <b>Tip:</b> Double click a component to add it to schematic
+          </Typography>
+        ) : (
           <>
             <Typography variant='h6' align='center' gutterBottom>
               Nothing found
