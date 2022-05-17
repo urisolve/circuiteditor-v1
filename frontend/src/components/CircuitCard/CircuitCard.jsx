@@ -25,7 +25,7 @@ import { useBoolean, useTimeSince } from '../../hooks';
 import { constants } from '../../constants';
 
 export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
-  const timeSince = useTimeSince(circuit.updatedAt);
+  const timeSince = useTimeSince(circuit.createdAt);
   const dialog = useBoolean(false);
 
   return (
@@ -59,18 +59,21 @@ export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
               objectPosition: '50% 50%',
             }}
           />
+
           <CardHeader
             title={circuit.name}
             titleTypographyProps={{ noWrap: true }}
-            subheader={'Edited ' + timeSince}
+            subheader={'Created ' + timeSince}
           />
         </CardActionArea>
+
         <CardActions>
           <Tooltip title='Download' arrow>
             <IconButton onClick={onDownload}>
               <GetAppIcon />
             </IconButton>
           </Tooltip>
+
           <Tooltip title='Delete' arrow>
             <IconButton onClick={dialog.on}>
               <DeleteIcon />
@@ -94,6 +97,7 @@ export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
 
       <Dialog open={dialog.value} onClose={dialog.off}>
         <DialogTitle>Are you sure?</DialogTitle>
+
         <DialogContent>
           <DialogContentText>
             Are you sure you want to delete this circuit?
@@ -101,6 +105,7 @@ export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
             It will be lost forever.
           </DialogContentText>
         </DialogContent>
+
         <DialogActions>
           <Button onClick={dialog.off} color='primary'>
             Cancel
