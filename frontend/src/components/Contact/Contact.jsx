@@ -10,8 +10,15 @@ import {
 import { teamMembers } from './teamMembers';
 import { TeamMember } from '..';
 import { constants } from '../../constants';
+import { useSnackbar } from 'notistack';
 
 export function Contact({ ...rest }) {
+  const { enqueueSnackbar } = useSnackbar();
+
+  function onContact(data) {
+    enqueueSnackbar('Not yet implemented!', { variant: 'error' });
+  }
+
   return (
     <Container
       component='section'
@@ -31,6 +38,7 @@ export function Contact({ ...rest }) {
         <Grid item>
           <Typography variant='h2'>Contact</Typography>
         </Grid>
+
         <Grid
           item
           sx={{
@@ -44,8 +52,9 @@ export function Contact({ ...rest }) {
             <TeamMember member={member} key={member.name} />
           ))}
         </Grid>
+
         <Grid item xs={12}>
-          <form sx={{ maxWidth: 800 }}>
+          <form onSubmit={onContact} sx={{ maxWidth: 800 }}>
             <Grid container spacing={5}>
               <Grid item xs={12}>
                 <TextField
@@ -58,6 +67,7 @@ export function Contact({ ...rest }) {
                   fullWidth
                 />
               </Grid>
+
               <Grid item xs={12} md={6}>
                 <TextField
                   name='name'
@@ -68,6 +78,7 @@ export function Contact({ ...rest }) {
                   fullWidth
                 />
               </Grid>
+
               <Grid item xs={12} md={6}>
                 <TextField
                   name='email'
@@ -77,16 +88,23 @@ export function Contact({ ...rest }) {
                   variant='outlined'
                   fullWidth
                 />
+
                 <FormHelperText>
                   We promise to not share your e-mail with third party services.
                 </FormHelperText>
               </Grid>
+
               <Grid
                 sx={{ display: 'flex', justifyContent: 'center' }}
                 item
                 xs={12}
               >
-                <Button color='primary' variant='outlined' size='large'>
+                <Button
+                  color='primary'
+                  size='large'
+                  type='submit'
+                  variant='outlined'
+                >
                   Send
                 </Button>
               </Grid>

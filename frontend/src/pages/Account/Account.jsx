@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import axios from 'axios';
+/* import axios from 'axios'; */
 
 import { useGravatar, useUser } from '../../hooks';
 import { FormField } from '../../components';
@@ -44,7 +44,9 @@ export function Account() {
   useEffect(() => form.reset(user), [form, user]);
 
   async function onSubmit(data) {
-    try {
+    enqueueSnackbar('Not yet implemented!', { variant: 'error' });
+
+    /* try {
       await axios.patch('api/account/info', data);
 
       enqueueSnackbar('Your personal information has been updated!', {
@@ -52,7 +54,7 @@ export function Account() {
       });
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
-    }
+    } */
 
     form.reset();
   }
