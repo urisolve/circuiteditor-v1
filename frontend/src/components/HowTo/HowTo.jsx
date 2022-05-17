@@ -3,6 +3,7 @@ import { Box, Container, Grid, Typography } from '@mui/material';
 import { BottomWaveSVG, TopWaveSVG } from '../../assets/waves';
 
 import { ReactComponent as StepsSVG } from '../../assets/undraw/steps.svg';
+import { constants } from '../../constants';
 
 const instructions = [
   'Create the schematic of the circuit.',
@@ -10,7 +11,7 @@ const instructions = [
   'Done!',
 ];
 
-export function HowTo({ padding, ...rest }) {
+export function HowTo({ ...rest }) {
   return (
     <>
       <TopWaveSVG />
@@ -25,7 +26,12 @@ export function HowTo({ padding, ...rest }) {
           color: 'white',
         }}
       >
-        <Container id='instructions' component='section' sx={padding} {...rest}>
+        <Container
+          component='section'
+          id='instructions'
+          sx={{ ...constants.SECTION_PADDING }}
+          {...rest}
+        >
           <Grid container spacing={10} alignItems='center'>
             <Grid item xs={12} md={6}>
               <StepsSVG />

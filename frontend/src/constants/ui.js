@@ -5,5 +5,6 @@ export const ui = {
   CARD_HEIGHT: 300,
   CARD_WIDTH: 300,
   DRAWER_SIZE: 300,
+  SECTION_PADDING: { py: 0, px: 2 },
   TOOLBAR_SIZE: 8,
 };

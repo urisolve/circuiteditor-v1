@@ -9,13 +9,14 @@ import {
 
 import { teamMembers } from './teamMembers';
 import { TeamMember } from '..';
+import { constants } from '../../constants';
 
-export function Contact({ padding, ...rest }) {
+export function Contact({ ...rest }) {
   return (
     <Container
-      id='contact'
       component='section'
-      sx={padding}
+      id='contact'
+      sx={{ ...constants.SECTION_PADDING }}
       classes={{
         root: {
           display: 'flex',

@@ -8,15 +8,14 @@ import {
   ScrollToTopButton,
 } from '../../components';
 
-const sectionPadding = { py: 0, px: 2 };
-
 export function Home() {
   return (
     <Stack sx={{ mt: { xs: 2, md: 5 } }}>
-      <Hero padding={sectionPadding} />
-      <HowTo padding={sectionPadding} />
-      <Contact padding={sectionPadding} />
+      <Hero />
+      <HowTo />
+      <Contact />
       <Footer />
+
       <ScrollToTopButton />
     </Stack>
   );

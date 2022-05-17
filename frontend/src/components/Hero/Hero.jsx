@@ -5,13 +5,19 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import mockup from '../../assets/mockups/mockup.webp';
 import { useUser } from '../../hooks';
+import { constants } from '../../constants';
 
-export function Hero({ padding, ...rest }) {
+export function Hero({ ...rest }) {
   const { user } = useUser();
   const history = useHistory();
 
   return (
-    <Container component='section' id='intro' sx={padding} {...rest}>
+    <Container
+      component='section'
+      id='intro'
+      sx={{ ...constants.SECTION_PADDING }}
+      {...rest}
+    >
       <Stack
         alignItems='center'
         direction={{ xs: 'column-reverse', md: 'row' }}
