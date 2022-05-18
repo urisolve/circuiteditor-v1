@@ -8,6 +8,7 @@ export * from './useForceUpdate';
 export * from './useGlobalRefMap';
 export * from './useGravatar';
 export * from './useHistory';
+export * from './useHoldTouch';
 export * from './useMousePosition';
 export * from './useNetlist';
 export * from './useOnline';

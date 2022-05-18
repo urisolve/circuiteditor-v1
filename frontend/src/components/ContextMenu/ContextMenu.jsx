@@ -7,11 +7,12 @@ import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import RotateRightIcon from '@mui/icons-material/RotateRight';
 import DuplicateIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
+import LaunchIcon from '@mui/icons-material/Launch';
 
 import { SchematicContext } from '../../contexts';
 import { constants } from '../../constants';
 
-export function ContextMenu({ id, isOpen, close, position }) {
+export function ContextMenu({ id, isOpen, close, openProperties, position }) {
   const {
     data: schematic,
     deleteById,
@@ -76,6 +77,16 @@ export function ContextMenu({ id, isOpen, close, position }) {
           icon: <DeleteIcon />,
           name: 'Delete',
           onClick: () => deleteById([id, ...selectedItems]),
+        },
+      ],
+    },
+    {
+      name: 'Properties',
+      actions: [
+        {
+          icon: <LaunchIcon />,
+          name: 'Properties',
+          onClick: openProperties,
         },
       ],
     },

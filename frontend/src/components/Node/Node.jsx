@@ -8,7 +8,12 @@ import {
   DraggableComponent,
   Label,
 } from '..';
-import { useBoolean, useContextMenu, usePropertiesMenu } from '../../hooks';
+import {
+  useBoolean,
+  useContextMenu,
+  useHoldTouch,
+  usePropertiesMenu,
+} from '../../hooks';
 import { SchematicContext } from '../../contexts';
 import { constants } from '../../constants';
 
@@ -29,6 +34,7 @@ export function Node({
 
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
+  const holdHandlers = useHoldTouch(contextMenu.open);
 
   const isDragging = useBoolean(false);
   const [originalPosition, setOriginalPosition] = useState(new Vector());
@@ -91,11 +97,12 @@ export function Node({
       {...rest}
     >
       <ConnectionPoint
-        id={id}
         className='node-handle'
+        id={id}
+        isDragging={isDragging.value}
+        {...holdHandlers}
         onContextMenu={contextMenu.open}
         onDoubleClick={() => propertiesMenu.openTab(0)}
-        isDragging={isDragging.value}
         sx={{
           width: (properties?.radius ?? constants.DEFAULT_NODE_RADIUS) * 2,
           height: (properties?.radius ?? constants.DEFAULT_NODE_RADIUS) * 2,
@@ -113,7 +120,11 @@ export function Node({
         />
       )}
 
-      <ContextMenu id={id} {...contextMenu} />
+      <ContextMenu
+        id={id}
+        openProperties={() => propertiesMenu.openTab(0)}
+        {...contextMenu}
+      />
 
       <PropertiesMenu
         contextKey='nodes'

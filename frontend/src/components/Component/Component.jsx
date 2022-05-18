@@ -14,6 +14,7 @@ import {
   useBoolean,
   useContextMenu,
   useGlobalRefMap,
+  useHoldTouch,
   usePropertiesMenu,
 } from '../../hooks';
 import { SchematicContext } from '../../contexts';
@@ -42,6 +43,7 @@ export function Component({
 
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
+  const holdHandlers = useHoldTouch(contextMenu.open);
 
   const isDragging = useBoolean(false);
   const [originalPosition, setOriginalPosition] = useState(new Vector());
@@ -105,13 +107,13 @@ export function Component({
       {...rest}
     >
       <Avatar
-        ref={refMap.get(id)}
-        src={symbols[type]}
         alt={type}
-        variant='square'
         className='component-handle'
+        {...holdHandlers}
         onContextMenu={contextMenu.open}
         onDoubleClick={() => propertiesMenu.openTab(0)}
+        ref={refMap.get(id)}
+        src={symbols[type]}
         sx={{
           cursor: isDragging.value ? 'grabbing' : 'grab',
           filter: isSelected && `drop-shadow(3px 2px 0px #888)`,
@@ -120,6 +122,7 @@ export function Component({
           transform: `rotate(${position?.angle ?? 0}deg)`,
           width: width ?? 100,
         }}
+        variant='square'
       />
 
       {ports?.map((port) => {
@@ -143,7 +146,11 @@ export function Component({
         />
       )}
 
-      <ContextMenu id={id} {...contextMenu} />
+      <ContextMenu
+        id={id}
+        openProperties={() => propertiesMenu.openTab(0)}
+        {...contextMenu}
+      />
 
       <PropertiesMenu
         contextKey='components'
