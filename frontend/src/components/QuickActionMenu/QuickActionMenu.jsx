@@ -158,12 +158,9 @@ export function QuickActionMenu({
       }}
       {...rest}
     >
-      <Stack direction='row' {...rest}>
+      <Stack direction='row' spacing={3} {...rest}>
         {actionGroups.map((group, groupIdx) => (
-          <Box
-            key={groupIdx}
-            sx={{ mr: groupIdx !== actionGroups.length - 1 ? 2 : 0 }}
-          >
+          <Box key={groupIdx}>
             {group.actions.map((action, actionIdx) => (
               <QuickAction key={actionIdx} {...action} />
             ))}
