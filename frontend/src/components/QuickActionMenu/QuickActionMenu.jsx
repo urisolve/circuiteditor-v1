@@ -84,8 +84,6 @@ export function QuickActionMenu({
     } catch ({ message, request, response }) {
       if (response) {
         enqueueSnackbar(response.statusText, { variant: 'error' });
-      } else if (request) {
-        enqueueSnackbar(request, { variant: 'error' });
       } else {
         enqueueSnackbar(message, { variant: 'error' });
       }
