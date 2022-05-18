@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
@@ -91,23 +91,6 @@ export function QuickActionMenu({
       }
     }
   }
-
-  useEffect(() => {
-    async function updateThumbnail() {
-      if (!user) return;
-
-      try {
-        const thumbnail = await getThumbnail();
-
-        await axios.patch(`/api/circuits?id=${circuitId}`, { thumbnail });
-      } catch ({ response: { statusText } }) {
-        enqueueSnackbar(statusText, { variant: 'error' });
-      }
-    }
-
-    updateThumbnail();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const actionGroups = [
     {
