@@ -1,11 +1,19 @@
 import { useState } from 'react';
 
+const isTouchEvent = (event) => event.hasOwnProperty('touches');
+
 export function useContextMenu() {
   const [position, setPosition] = useState(null);
 
-  function open(e) {
-    e.preventDefault();
-    setPosition({ left: e.clientX, top: e.clientY });
+  function open(event) {
+    if (isTouchEvent(event)) {
+      const [touch] = event.touches;
+      setPosition({ left: touch.clientX, top: touch.clientY });
+    } else {
+      setPosition({ left: event.clientX, top: event.clientY });
+    }
+
+    event.preventDefault();
   }
 
   function close() {
