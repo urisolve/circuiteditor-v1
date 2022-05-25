@@ -14,7 +14,7 @@ import {
   useBoolean,
   useContextMenu,
   useGlobalRefMap,
-  useHoldTouch,
+  useDoubleTap,
   usePropertiesMenu,
 } from '../../hooks';
 import { SchematicContext } from '../../contexts';
@@ -43,7 +43,7 @@ export function Component({
 
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
-  const holdHandlers = useHoldTouch(contextMenu.open);
+  const holdHandlers = useDoubleTap(contextMenu.open);
 
   const isDragging = useBoolean(false);
   const [originalPosition, setOriginalPosition] = useState(new Vector());
