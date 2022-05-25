@@ -1,4 +1,5 @@
 export * from './areas';
+export * from './color';
 export * from './connections';
 export * from './coordinates';
 export * from './download';

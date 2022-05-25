@@ -36,11 +36,29 @@ export function Connection({
   return (
     <Box sx={{ pointerEvents: 'none' }}>
       <XArrow
-        start={refMap.get(start)}
-        end={refMap.get(end)}
         {...anchors}
+        {...properties}
+        dashness={
+          properties?.dashed
+            ? { animation: properties?.dashedAnimationSpeed }
+            : false
+        }
+        gridBreak={`${
+          properties?.dashedAnimationSpeed >= 0
+            ? properties?.gridBreak
+            : 100 - properties?.gridBreak
+        }%`}
+        start={
+          properties?.dashedAnimationSpeed >= 0
+            ? refMap.get(start)
+            : refMap.get(end)
+        }
+        end={
+          properties?.dashedAnimationSpeed >= 0
+            ? refMap.get(end)
+            : refMap.get(start)
+        }
         path='grid'
-        gridBreak={properties?.gridBreak ?? '100%'}
         showHead={false}
         divContainerStyle={{
           opacity: properties?.opacity ?? 1,

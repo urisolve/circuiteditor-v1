@@ -12,6 +12,7 @@ import {
   LabelOptions,
   snapPosToGrid,
 } from '../../util';
+import { constants } from '../../constants';
 
 export function useSchematicTools(setSchematic, history, gridSize) {
   const add = useCallback(
@@ -63,7 +64,31 @@ export function useSchematicTools(setSchematic, history, gridSize) {
                         : LabelOptions.ALPHABETIC,
                       element?.label?.name ?? element?.type,
                     ),
-                position: { x: 10, y: 0, ...element.label?.position },
+                position: {
+                  x:
+                    (element?.position?.x ?? 0) +
+                    constants.LABEL_POSITION_OFFSET.x,
+                  y:
+                    (element?.position?.y ?? 0) +
+                    constants.LABEL_POSITION_OFFSET.y,
+                  ...element.label?.position,
+                },
+              },
+
+              properties: {
+                ...(isConnection(element) && {
+                  dashedAnimationSpeed:
+                    constants.DEFAULT_DASHED_ANIMATION_SPEED,
+                  color: constants.DEFAULT_WIRE_COLOR,
+                  dashed: false,
+                  gridBreak: constants.DEFAULT_GRID_BREAK,
+                  strokeWidth: constants.DEFAULT_STROKE_WIDTH,
+                }),
+                ...(isNode(element) && {
+                  color: constants.DEFAULT_WIRE_COLOR,
+                  radius: constants.DEFAULT_NODE_RADIUS,
+                }),
+                ...element.properties,
               },
             });
           });

@@ -3,11 +3,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Box, Button, Stack, Tab, Tabs, TextField } from '@mui/material';
+import { Box, Button, Stack, Tab, Tabs } from '@mui/material';
 
-import { CenterModal, LabelForm, MenuHeader, TabPanel } from '..';
+import { CenterModal, MenuHeader, TabPanel } from '..';
 import { SchematicContext } from '../../contexts';
 import { isNameTaken, labelValueRegex } from '../../util';
+import { LabelForm, PropertiesForm } from '../../forms';
 
 const getSchema = (schematic, contextKey, id) =>
   yup.object({
@@ -77,7 +78,7 @@ export function PropertiesMenu({ contextKey, menu, id, label, properties }) {
 
         {/* Properties */}
         <TabPanel value={menu.selectedTab} index={0}>
-          <TextField fullWidth label='ID' value={id} disabled />
+          <PropertiesForm form={form} id={id} {...properties} />
         </TabPanel>
 
         {/* Label */}

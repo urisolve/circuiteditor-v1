@@ -15,7 +15,7 @@ import {
   usePropertiesMenu,
 } from '../../hooks';
 import { SchematicContext } from '../../contexts';
-import { constants } from '../../constants';
+import { shadeColor } from '../../util';
 
 export function Node({
   id,
@@ -104,9 +104,11 @@ export function Node({
         onContextMenu={contextMenu.open}
         onDoubleClick={() => propertiesMenu.openTab(0)}
         sx={{
-          width: (properties?.radius ?? constants.DEFAULT_NODE_RADIUS) * 2,
-          height: (properties?.radius ?? constants.DEFAULT_NODE_RADIUS) * 2,
-          backgroundColor: isSelected ? '#3475FF' : '#6495ED',
+          width: properties?.radius * 2,
+          height: properties?.radius * 2,
+          backgroundColor: isSelected
+            ? shadeColor(properties?.color, -40)
+            : properties?.color,
           pointerEvents: 'auto',
         }}
       />
