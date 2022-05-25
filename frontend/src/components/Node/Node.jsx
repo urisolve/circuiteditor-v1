@@ -11,7 +11,7 @@ import {
 import {
   useBoolean,
   useContextMenu,
-  useHoldTouch,
+  useDoubleTap,
   usePropertiesMenu,
 } from '../../hooks';
 import { SchematicContext } from '../../contexts';
@@ -34,7 +34,7 @@ export function Node({
 
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
-  const holdHandlers = useHoldTouch(contextMenu.open);
+  const doubleTapHandlers = useDoubleTap(contextMenu.open);
 
   const isDragging = useBoolean(false);
   const [originalPosition, setOriginalPosition] = useState(new Vector());
@@ -100,7 +100,7 @@ export function Node({
         className='node-handle'
         id={id}
         isDragging={isDragging.value}
-        {...holdHandlers}
+        {...doubleTapHandlers}
         onContextMenu={contextMenu.open}
         onDoubleClick={() => propertiesMenu.openTab(0)}
         sx={{

@@ -14,7 +14,7 @@ import {
   useBoolean,
   useContextMenu,
   useGlobalRefMap,
-  useHoldTouch,
+  useDoubleTap,
   usePropertiesMenu,
 } from '../../hooks';
 import { SchematicContext } from '../../contexts';
@@ -43,7 +43,7 @@ export function Component({
 
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
-  const holdHandlers = useHoldTouch(contextMenu.open);
+  const doubleTapHandlers = useDoubleTap(contextMenu.open);
 
   const isDragging = useBoolean(false);
   const [originalPosition, setOriginalPosition] = useState(new Vector());
@@ -109,7 +109,7 @@ export function Component({
       <Avatar
         alt={type}
         className='component-handle'
-        {...holdHandlers}
+        {...doubleTapHandlers}
         onContextMenu={contextMenu.open}
         onDoubleClick={() => propertiesMenu.openTab(0)}
         ref={refMap.get(id)}
