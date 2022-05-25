@@ -1,7 +1,5 @@
 import { Stack } from '@mui/material';
-
-import { Checkbox } from '../Checkbox';
-import { FormField } from '../FormField';
+import { Checkbox, FormField } from '../../components';
 
 export function LabelForm({ form, unit }) {
   return (

@@ -17,8 +17,12 @@ export function Port({ id, position, bounds, properties, rotation, ...rest }) {
         backgroundColor: properties?.color ?? '#bbb',
         height: (properties?.radius ?? constants.DEFAULT_PORT_RADIUS) * 2,
         width: (properties?.radius ?? constants.DEFAULT_PORT_RADIUS) * 2,
-        left: realPos.x * bounds?.width - (properties?.radius ?? 6),
-        top: realPos.y * bounds?.height - (properties?.radius ?? 6),
+        left:
+          realPos.x * bounds?.width -
+          (properties?.radius ?? constants.DEFAULT_PORT_RADIUS),
+        top:
+          realPos.y * bounds?.height -
+          (properties?.radius ?? constants.DEFAULT_PORT_RADIUS),
       }}
       {...rest}
     />

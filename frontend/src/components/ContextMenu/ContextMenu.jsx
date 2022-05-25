@@ -34,7 +34,6 @@ export function ContextMenu({ id, isOpen, close, openProperties, position }) {
 
   const actionGroups = [
     {
-      name: 'Edit',
       actions: [
         {
           disabled: true,
@@ -54,7 +53,6 @@ export function ContextMenu({ id, isOpen, close, openProperties, position }) {
       ],
     },
     {
-      name: 'Rotate',
       hidden: !isClickingOnComponent,
       actions: [
         {
@@ -70,7 +68,6 @@ export function ContextMenu({ id, isOpen, close, openProperties, position }) {
       ],
     },
     {
-      name: 'Delete',
       actions: [
         {
           color: 'IndianRed',
@@ -81,7 +78,6 @@ export function ContextMenu({ id, isOpen, close, openProperties, position }) {
       ],
     },
     {
-      name: 'Properties',
       actions: [
         {
           icon: <LaunchIcon />,
