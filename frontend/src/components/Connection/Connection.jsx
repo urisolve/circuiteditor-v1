@@ -7,7 +7,7 @@ import {
   useConnectionAnchors,
   useContextMenu,
   useGlobalRefMap,
-  useHoldTouch,
+  useDoubleTap,
   usePropertiesMenu,
 } from '../../hooks';
 import { ContextMenu, Label, PropertiesMenu } from '..';
@@ -28,7 +28,7 @@ export function Connection({
 
   const contextMenu = useContextMenu();
   const propertiesMenu = usePropertiesMenu();
-  const holdHandlers = useHoldTouch(contextMenu.open);
+  const holdHandlers = useDoubleTap(contextMenu.open);
 
   const schematic = useContext(SchematicContext);
   const anchors = useConnectionAnchors(schematic, { start, end });
