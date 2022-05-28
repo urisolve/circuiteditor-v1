@@ -11,11 +11,10 @@ const connectionSchema = new mongoose.Schema(
     label: labelSchema,
     properties: {
       color: String,
-      stroke: Number,
-      decoration: {
-        startPoint: String,
-        endPoint: String,
-      },
+      dashed: Boolean,
+      dashedAnimationSpeed: Number,
+      gridBreak: Number,
+      strokeWidth: Number,
     },
   },
   { _id: false },

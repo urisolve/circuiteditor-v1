@@ -17,9 +17,7 @@ export const Wire = ({ x, y } = WIRE_DEFAULT_CENTER) => {
       {
         start: id1,
         end: id2,
-        gridBreak: '50%',
         label: {
-          unit: 'A',
           isValueHidden: true,
         },
       },
