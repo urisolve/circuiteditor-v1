@@ -1,21 +1,29 @@
+import { useTranslation } from 'react-i18next';
+
 import { Checkbox, FormField, Slider } from '../../components';
 import { constants } from '../../constants';
 
 export function ConnectionPropertiesForm({ form }) {
+  const { t } = useTranslation();
   const isDashed = form.watch('properties.dashed');
 
   return (
     <>
-      <FormField label='Color' name='properties.color' {...form} />
+      <FormField
+        label={t('form.label.color')}
+        name='properties.color'
+        placeholder={t('form.placeholder.color')}
+        {...form}
+      />
 
       <Slider
         control={form.control}
-        label='Grid Break'
         inputProps={{
           min: 0,
           max: 100,
           marks: [{ value: constants.DEFAULT_GRID_BREAK }],
         }}
+        label={t('form.label.gridBreak')}
         name='properties.gridBreak'
       />
 
@@ -26,7 +34,7 @@ export function ConnectionPropertiesForm({ form }) {
           max: 10,
           marks: [{ value: constants.DEFAULT_STROKE_WIDTH }],
         }}
-        label='Stroke Width'
+        label={t('form.label.strokeWidth')}
         name='properties.strokeWidth'
       />
 
@@ -38,13 +46,13 @@ export function ConnectionPropertiesForm({ form }) {
           marks: [{ value: constants.DEFAULT_DASHED_ANIMATION_SPEED }],
           disabled: !isDashed,
         }}
-        label='Dashed Animation Speed'
+        label={t('form.label.dashedAnimationSpeed')}
         name='properties.dashedAnimationSpeed'
       />
 
       <Checkbox
         control={form.control}
-        label='Dashed'
+        label={t('form.label.dashed')}
         name='properties.dashed'
         sx={{ flexGrow: 1 }}
       />

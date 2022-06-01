@@ -1,0 +1,225 @@
+{
+  "banner": {
+    "offline": "Rede indisponível"
+  },
+  "common": {
+    "components": "Componentes",
+    "createNew": "Criar Novo",
+    "delete": "Apagar",
+    "download": "Baixar",
+    "filterBy": "Filtrar por",
+    "label": "Etiqueta",
+    "load": "Carregar",
+    "fullName": "{{ given }} {{ family }}",
+    "hide": "Esconder",
+    "login": "Entrar",
+    "logout": "Sair",
+    "orderBy": "Ordenar por",
+    "properties": "Propriedades",
+    "restore": "Restaurar",
+    "save": "Guardar",
+    "search": "Pesquisar",
+    "show": "Mostrar",
+    "signup": "Criar conta",
+    "sortBy": "Organizar por",
+    "tip": "Dica",
+    "untitled": "Sem Título"
+  },
+  "dialog": {
+    "deleteCircuit": {
+      "title": "Tens a certeza?",
+      "description": "O circuito será perdido para sempre."
+    }
+  },
+  "feedback": {
+    "auth": {
+      "noLogin": "Não foi possível entrar",
+      "noSignup": "Não foi possível criar a conta"
+    },
+    "circuit": {
+      "created": "O circuito foi criado!",
+      "deleted": "O circuito foi apagado!",
+      "saved": "O circuito foi guardado!",
+      "starred": "O circuito foi adicionado aos favoritos!",
+      "uploaded": "O circuito foi enviado!"
+    },
+    "notImplemented": "Ainda não foi implementado!"
+  },
+  "filter": {
+    "alphabetically": "Alfabeticamente",
+    "ascending": "Crescente",
+    "createdAt": "Criado em",
+    "descending": "Descendente",
+    "favorites": "Favoritos",
+    "modifiedAt": "Modificado em",
+    "none": "Nenhum"
+  },
+  "form": {
+    "action": {
+      "apply": "Aplicar",
+      "cancel": "Cancelar",
+      "delete": "Apagar",
+      "ok": "Ok",
+      "save": "Guardar",
+      "send": "Enviar"
+    },
+    "error": {
+      "email": "Deve ser um email válido",
+      "number": {
+        "integer": "Deve ser um número inteiro",
+        "positive": "Deve ser um número positivo",
+        "type": "Deve ser um número"
+      },
+      "password": {
+        "match": "As senhas têm que coincidir",
+        "min": "Deve ter no mínimo {{ amount }} caracteres",
+        "minLowercase": "Deve ter no mínimo {{ amount }} letras minúsculas",
+        "minNumbers": "Deve ter no mínimo {{ amount }} números",
+        "minUppercase": "Deve ter no mínimo {{ amount }} letras maiúsculas"
+      },
+      "required": "Este campo é obrigatório",
+      "string": {
+        "max": "Deve ter no máximo {{ amount }} caracteres",
+        "min": "Deve ter no mínimo {{ amount }} caracteres"
+      }
+    },
+    "label": {
+      "color": "Cor",
+      "confirmPassword": "Confirme a Senha",
+      "dashed": "Tracejado",
+      "dashedAnimationSpeed": "Velocidade da Animação do Tracejado",
+      "email": "Email",
+      "firstName": "Primeiro Nome",
+      "gridBreak": "Quebra da Grelha",
+      "hide": "Esconder",
+      "id": "ID",
+      "institution": "Instituição",
+      "lastName": "Último Nome",
+      "mechNumber": "Nº Mecanográfico",
+      "message": "Mensagem",
+      "name": "Nome",
+      "password": "Senha",
+      "radius": "Raio",
+      "value": "Valor",
+      "strokeWidth": "Largura da Linha"
+    },
+    "message": {
+      "password": {
+        "hide": "Esconder senha",
+        "show": "Mostrar senha"
+      },
+      "shareEmail": "Prometemos não partilhar o seu email com serviços terceirizados."
+    },
+    "placeholder": {
+      "color": "#FFFFFF",
+      "confirmPassword": "********",
+      "email": "1210000@isep.ipp.pt",
+      "firstName": "João",
+      "institution": "Instituto Superior de Engenharia do Porto",
+      "itemName": "R1",
+      "lastName": "Silva",
+      "mechNumber": "1180000",
+      "message": "Descreve o problema o melhor possível...",
+      "name": "João Silva",
+      "password": "********",
+      "value": "10k"
+    }
+  },
+  "library": {
+    "component": {
+      "acCurrentSource": "Fonte de Corrente AC",
+      "acVoltageSource": "Fonte de Tensão AC",
+      "ammeter": "Amperímetro",
+      "capacitor": "Condensador",
+      "dcCurrentSource": "Fonte de Corrente DC",
+      "dcVoltageSource": "Fonte de Tensão DC",
+      "ground": "Massa",
+      "inductor": "Bobina",
+      "marker": "Marcador",
+      "reactance": "Reactância",
+      "resistor": "Resistência",
+      "voltmeter": "Voltímetro",
+      "wire": "Fio"
+    },
+    "emptySearch": {
+      "title": "Nada encontrado",
+      "subtitle": "Não existem componentes que correspondam a esse nome"
+    }
+  },
+  "link": {
+    "account": "Conta",
+    "circuits": "Circuitos",
+    "settings": "Opções"
+  },
+  "page": {
+    "account": {
+      "avatar": {
+        "title": "Imagem de perfil",
+        "subtitle": "Utilizamos <1>Gravatar</1> para imagens de perfil."
+      },
+      "title": "Conta",
+      "subtitle": "Prometemos não partilhar a tua informação pessoal com serviços terceirizados"
+    },
+    "auth": {
+      "login": {
+        "subtitle": "Bem vindo de volta.",
+        "title": "Entrar"
+      },
+      "signup": {
+        "subtitle": "Cria um conta para poderes guardar os circuitos que criares. Prometemos não partilhar a tua informação pessoal com serviços terceirizados.",
+        "title": "Criar conta"
+      }
+    },
+    "circuits": {
+      "action": {
+        "favorite": "Adicionar aos favoritos",
+        "unfavorite": "Remover dos favoritos"
+      },
+      "title": "Circuitos",
+      "subtitle": "Aqui estão todos os circuitos que criaste"
+    },
+    "editor": {
+      "action": {
+        "compLib": "{{ action }} Biblioteca de componentes",
+        "exportUrisolve": "Exportar para o URIsolve",
+        "redo": "Refazer",
+        "saveImage": "Guardar Imagem",
+        "sourceView": "{{ action }} Visualização de Código",
+        "undo": "Desfazer"
+      },
+      "propertyEditor": "Editor de Propriedades"
+    },
+    "home": {
+      "contact": {
+        "title": "Contacto"
+      },
+      "footer": {
+        "copyright": "Copyright © 2021 <2>URIsolve</2>. Todos os direitos reservados.",
+        "createdAt": "Criado, com orgulho, no <2>ISEP</2>."
+      },
+      "hero": {
+        "cta": "Começar",
+        "message": "Cria <1>esquemáticos de circuitos</1> e recebo os seus modelos analíticos"
+      },
+      "howTo": {
+        "title": "Instruções",
+        "step": {
+          "1": "Cria o esquemático do circuito",
+          "2": "Escolhe o protocolo",
+          "3": "Exporta!"
+        }
+      }
+    },
+    "notFound": {
+      "title": "Erro 404:",
+      "subtitle": "Esta página não existe"
+    },
+    "settings": {
+      "title": "Opções",
+      "subtitle": "Aqui podes gerir todas as opções da tua conta"
+    }
+  },
+  "tips": {
+    "tip_0": "Faz duplo clique para adicionar o componente á planilha"
+  }
+}

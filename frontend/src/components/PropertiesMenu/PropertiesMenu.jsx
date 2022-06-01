@@ -9,6 +9,7 @@ import { CenterModal, MenuHeader, TabPanel } from '..';
 import { SchematicContext } from '../../contexts';
 import { isNameTaken, labelValueRegex } from '../../util';
 import { LabelForm, PropertiesForm } from '../../forms';
+import { useTranslation } from 'react-i18next';
 
 const getSchema = (schematic, contextKey, id) =>
   yup.object({
@@ -33,6 +34,7 @@ const getSchema = (schematic, contextKey, id) =>
   });
 
 export function PropertiesMenu({ contextKey, menu, id, label, properties }) {
+  const { t } = useTranslation();
   const { data: schematic, editById } = useContext(SchematicContext);
 
   const form = useForm({
@@ -62,7 +64,7 @@ export function PropertiesMenu({ contextKey, menu, id, label, properties }) {
     >
       <form onSubmit={form.handleSubmit(actions.ok)}>
         <MenuHeader id='modal-title' sx={{ mb: 2 }} onClose={menu.close}>
-          Properties Editor
+          {t('page.editor.propertyEditor')}
         </MenuHeader>
 
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -71,8 +73,8 @@ export function PropertiesMenu({ contextKey, menu, id, label, properties }) {
             onChange={menu.changeTab}
             variant='fullWidth'
           >
-            <Tab label='Properties' />
-            <Tab label='Label' />
+            <Tab label={t('common.properties')} />
+            <Tab label={t('common.label')} />
           </Tabs>
         </Box>
 
@@ -87,9 +89,11 @@ export function PropertiesMenu({ contextKey, menu, id, label, properties }) {
         </TabPanel>
 
         <Stack direction='row' justifyContent='flex-end'>
-          <Button type='submit'>OK</Button>
-          <Button onClick={actions.cancel}>Cancel</Button>
-          <Button onClick={form.handleSubmit(actions.apply)}>Apply</Button>
+          <Button type='submit'>{t('form.action.ok')}</Button>
+          <Button onClick={actions.cancel}>{t('form.action.cancel')}</Button>
+          <Button onClick={form.handleSubmit(actions.apply)}>
+            {t('form.action.apply')}
+          </Button>
         </Stack>
       </form>
     </CenterModal>

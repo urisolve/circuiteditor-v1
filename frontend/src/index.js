@@ -12,6 +12,8 @@ import { globalStyles, theme } from './styles';
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
+import './i18n';
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

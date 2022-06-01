@@ -1,4 +1,5 @@
 import { useState, useMemo, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import lodash from 'lodash';
 
 import { Comp } from '../Comp';
@@ -11,6 +12,7 @@ import {
   AccordionDetails,
   Box,
   Grid,
+  Stack,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ListAltIcon from '@mui/icons-material/ListAlt';
@@ -21,6 +23,8 @@ import { SchematicContext } from '../../contexts';
 import { Drawer } from '../Drawer';
 
 export function CompLib({ controller, ...rest }) {
+  const { t } = useTranslation();
+
   const { add: addToSchematic } = useContext(SchematicContext);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -38,52 +42,65 @@ export function CompLib({ controller, ...rest }) {
 
   return (
     <Drawer controller={controller} {...rest}>
-      <Box>
-        <MenuHeader icon={<ListAltIcon />} onClose={controller.off}>
-          Components
-        </MenuHeader>
+      <Stack spacing={4}>
+        <Box>
+          <MenuHeader icon={<ListAltIcon />} onClose={controller.off}>
+            {t('common.components')}
+          </MenuHeader>
 
-        <SearchBar value={searchQuery} setValue={setSearchQuery} />
-      </Box>
+          <SearchBar value={searchQuery} setValue={setSearchQuery} />
+        </Box>
 
-      <Box>
-        {filteredLib.map((group) => (
-          <Accordion variant='outlined' key={group.title}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>{group.title}</Typography>
-            </AccordionSummary>
+        {!!filteredLib.length && (
+          <Box>
+            {filteredLib.map((group) => (
+              <Accordion variant='outlined' key={group.title}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>{group.title}</Typography>
+                </AccordionSummary>
 
-            <AccordionDetails>
-              <Grid container>
-                {group.elements.map((element, idx) => {
-                  const comp = lodash.isFunction(element) ? element() : element;
+                <AccordionDetails>
+                  <Grid container>
+                    {group.elements.map((element, idx) => {
+                      const comp = lodash.isFunction(element)
+                        ? element()
+                        : element;
 
-                  return (
-                    <Grid key={idx} xs={4} item>
-                      <Comp action={() => addToSchematic(comp)} {...comp} />
-                    </Grid>
-                  );
-                })}
-              </Grid>
-            </AccordionDetails>
-          </Accordion>
-        ))}
+                      return (
+                        <Grid key={idx} xs={4} item>
+                          <Comp action={() => addToSchematic(comp)} {...comp} />
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </Box>
+        )}
 
         {!!filteredLib.length ? (
-          <Typography align='center' variant='body2' sx={{ pt: 4 }}>
-            <b>Tip:</b> Double click a component to add it to schematic
-          </Typography>
+          <Box>
+            <Typography align='center' gutterBottom variant='h6'>
+              {t('common.tip')}:
+            </Typography>
+
+            <Typography align='center' variant='body1'>
+              {t('tips.tip_0')}
+            </Typography>
+          </Box>
         ) : (
-          <>
-            <Typography variant='h6' align='center' gutterBottom>
-              Nothing found
+          <Box>
+            <Typography align='center' gutterBottom variant='h6'>
+              {t('library.emptySearch.title')}
             </Typography>
-            <Typography variant='body1' align='center'>
-              There are no components that match that name
+
+            <Typography align='center' variant='body1'>
+              {t('library.emptySearch.subtitle')}
             </Typography>
-          </>
+          </Box>
         )}
-      </Box>
+      </Stack>
     </Drawer>
   );
 }

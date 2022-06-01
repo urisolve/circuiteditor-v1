@@ -48,17 +48,14 @@ export function Editor({ ...rest }) {
 
         <QuickActionMenu
           schematicRef={schematicRef}
-          circuitName={circuit?.name ?? 'untitled'}
+          circuitName={circuit?.name}
           compLib={compLib}
           sourceView={sourceView}
         />
 
         <CompLib controller={compLib} />
 
-        <SourceView
-          circuitName={circuit?.name ?? 'untitled'}
-          controller={sourceView}
-        />
+        <SourceView circuitName={circuit?.name} controller={sourceView} />
       </Stack>
     </SchematicContext.Provider>
   );

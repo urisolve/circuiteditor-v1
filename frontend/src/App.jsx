@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
@@ -41,47 +41,50 @@ export function App() {
   }, [enqueueSnackbar]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
-      <Stack sx={{ height: '100vh' }}>
-        <Navbar />
-        <OfflineBanner isOffline={!isOnline} />
+    <Suspense fallback=''>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Stack sx={{ minHeight: '100vh' }}>
+          <Navbar />
 
-        <Stack component='main' flexGrow={1}>
-          <Switch>
-            <Route exact path='/'>
-              <Home />
-            </Route>
+          <OfflineBanner isOffline={!isOnline} />
 
-            <Route exact path='/auth'>
-              {user ? <Redirect to='/circuits' /> : <Auth />}
-            </Route>
+          <Stack component='main' flexGrow={1}>
+            <Switch>
+              <Route exact path='/'>
+                <Home />
+              </Route>
 
-            <Route exact path='/account'>
-              {user ? <Account /> : <Redirect to='/auth' />}
-            </Route>
+              <Route exact path='/auth'>
+                {user ? <Redirect to='/circuits' /> : <Auth />}
+              </Route>
 
-            <Route exact path='/settings'>
-              {user ? <Settings /> : <Redirect to='/auth' />}
-            </Route>
+              <Route exact path='/account'>
+                {user ? <Account /> : <Redirect to='/auth' />}
+              </Route>
 
-            <Route exact path='/circuits'>
-              {user ? <Circuits /> : <Redirect to='/auth' />}
-            </Route>
+              <Route exact path='/settings'>
+                {user ? <Settings /> : <Redirect to='/auth' />}
+              </Route>
 
-            <Route path='/editor/:circuitId'>
-              {user ? <Editor /> : <Redirect to='/auth' />}
-            </Route>
+              <Route exact path='/circuits'>
+                {user ? <Circuits /> : <Redirect to='/auth' />}
+              </Route>
 
-            <Route exact path='/editor'>
-              <Editor />
-            </Route>
+              <Route path='/editor/:circuitId'>
+                {user ? <Editor /> : <Redirect to='/auth' />}
+              </Route>
 
-            <Route path='*'>
-              <NotFound />
-            </Route>
-          </Switch>
+              <Route exact path='/editor'>
+                <Editor />
+              </Route>
+
+              <Route path='*'>
+                <NotFound />
+              </Route>
+            </Switch>
+          </Stack>
         </Stack>
-      </Stack>
-    </UserContext.Provider>
+      </UserContext.Provider>
+    </Suspense>
   );
-};
+}

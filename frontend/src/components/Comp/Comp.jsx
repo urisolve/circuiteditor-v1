@@ -1,12 +1,18 @@
 import { Avatar, Stack, Tooltip, Typography } from '@mui/material';
+import { camelCase } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 import { symbols } from '../../assets/electrical';
 
 export function Comp({ type, fullName, action, ...rest }) {
+  const { t } = useTranslation();
+
+  const name = t(`library.component.${camelCase(fullName)}`);
+
   return (
     <Stack
-      direction='column'
       alignItems='center'
+      direction='column'
       spacing={1}
       sx={{
         p: 1,
@@ -16,21 +22,17 @@ export function Comp({ type, fullName, action, ...rest }) {
       }}
     >
       <Avatar
-        src={symbols[type]}
         alt={fullName}
         onDoubleClick={action}
-        variant='square'
+        src={symbols[type]}
         sx={{ width: '100%', height: '100%' }}
+        variant='square'
         {...rest}
       />
-      <Tooltip
-        enterDelay={500}
-        enterNextDelay={500}
-        title={fullName ?? type}
-        arrow
-      >
+
+      <Tooltip arrow enterDelay={500} enterNextDelay={500} title={name}>
         <Typography align='center' noWrap sx={{ width: '100%' }}>
-          {fullName}
+          {name}
         </Typography>
       </Tooltip>
     </Stack>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import {
   Box,
@@ -25,6 +26,7 @@ import { useBoolean, useTimeSince } from '../../hooks';
 import { constants } from '../../constants';
 
 export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
+  const { t } = useTranslation();
   const timeSince = useTimeSince(circuit.createdAt);
   const dialog = useBoolean(false);
 
@@ -68,13 +70,13 @@ export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
         </CardActionArea>
 
         <CardActions>
-          <Tooltip title='Download' arrow>
+          <Tooltip title={t('common.download')} arrow>
             <IconButton onClick={onDownload}>
               <GetAppIcon />
             </IconButton>
           </Tooltip>
 
-          <Tooltip title='Delete' arrow>
+          <Tooltip title={t('common.delete')} arrow>
             <IconButton onClick={dialog.on}>
               <DeleteIcon />
             </IconButton>
@@ -84,7 +86,9 @@ export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
 
           <Tooltip
             title={
-              circuit.isStared ? 'Remove from favorites' : 'Add to favorites'
+              circuit.isStared
+                ? t('page.circuits.action.unfavorite')
+                : t('page.circuits.action.favorite')
             }
             arrow
           >
@@ -96,22 +100,20 @@ export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
       </Card>
 
       <Dialog open={dialog.value} onClose={dialog.off}>
-        <DialogTitle>Are you sure?</DialogTitle>
+        <DialogTitle>{t('dialog.deleteCircuit.title')}</DialogTitle>
 
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete this circuit?
-            <br />
-            It will be lost forever.
+            {t('dialog.deleteCircuit.description')}
           </DialogContentText>
         </DialogContent>
 
         <DialogActions>
           <Button onClick={dialog.off} color='primary'>
-            Cancel
+            {t('form.action.cancel')}
           </Button>
           <Button onClick={onDelete} color='primary'>
-            Delete
+            {t('form.action.delete')}
           </Button>
         </DialogActions>
       </Dialog>

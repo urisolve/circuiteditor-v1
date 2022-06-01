@@ -1,6 +1,7 @@
+import { find } from 'lodash';
 import { useEffect, useCallback, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { find, startCase } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
 import { CircuitCard, SortingMenu, UploadFileInput } from '../../components';
@@ -24,7 +25,7 @@ import { readJsonFileAsync } from '../../util/file';
 
 const FilterBy = Object.freeze({
   none: '_id',
-  stared: 'isStared',
+  favorites: 'isStared',
 });
 
 const OrderBy = Object.freeze({
@@ -34,17 +35,13 @@ const OrderBy = Object.freeze({
 
 const SortBy = Object.freeze({
   alphabetically: 'name',
-  created: 'createdAt',
-  modified: 'updatedAt',
+  createdAt: 'createdAt',
+  modifiedAt: 'updatedAt',
 });
 
-const getMenuItems = (enumObject) =>
-  Object.entries(enumObject).map(([key, value]) => ({
-    name: startCase(key),
-    value,
-  }));
-
 export function Circuits() {
+  const { t } = useTranslation();
+
   const { user, setUser } = useUser();
   const { enqueueSnackbar } = useSnackbar();
   const isLoading = useBoolean(false);
@@ -54,26 +51,26 @@ export function Circuits() {
 
   const [filterBy, setFilterBy] = useState(FilterBy.none);
   const [orderBy, setOrderBy] = useState(OrderBy.ascending);
-  const [sortBy, setSortBy] = useState(SortBy.modified);
+  const [sortBy, setSortBy] = useState(SortBy.modifiedAt);
   const sortParams = { filterBy, orderBy, sortBy };
   const circuits = useCollectionSort(user?.circuits, sortParams);
 
   const sortCategories = [
     {
-      title: 'Filter By',
-      items: getMenuItems(FilterBy),
+      title: t('common.filterBy'),
+      items: FilterBy,
       selected: filterBy,
       selector: setFilterBy,
     },
     {
-      title: 'Order by',
-      items: getMenuItems(OrderBy),
+      title: t('common.orderBy'),
+      items: OrderBy,
       selected: orderBy,
       selector: setOrderBy,
     },
     {
-      title: 'Sort by',
-      items: getMenuItems(SortBy),
+      title: t('common.sortBy'),
+      items: SortBy,
       selected: sortBy,
       selector: setSortBy,
     },
@@ -97,20 +94,23 @@ export function Circuits() {
     try {
       await axios.post('api/circuits');
 
-      enqueueSnackbar('The circuit has been created!', { variant: 'success' });
+      enqueueSnackbar(t('feedback.created'), { variant: 'success' });
       fetchCircuits();
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
     }
   }
 
-  async function uploadCircuit(file) {
+  async function loadCircuit(file) {
     try {
       const schematic = await readJsonFileAsync(file);
 
-      await axios.post('api/circuits', { schematic });
+      await axios.post('api/circuits', {
+        name: t('common.untitled'),
+        schematic,
+      });
 
-      enqueueSnackbar('The circuit has been uploaded!', { variant: 'success' });
+      enqueueSnackbar(t('feedback.uploaded'), { variant: 'success' });
       fetchCircuits();
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
@@ -121,7 +121,7 @@ export function Circuits() {
     try {
       await axios.delete(`/api/circuits?id=${id}`);
 
-      enqueueSnackbar('The circuit has been deleted!', { variant: 'success' });
+      enqueueSnackbar(t('feedback.deleted'), { variant: 'success' });
       fetchCircuits();
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
@@ -144,7 +144,7 @@ export function Circuits() {
         timestamps: false,
       });
 
-      enqueueSnackbar('The circuit has been stared!', { variant: 'success' });
+      enqueueSnackbar(t('feedback.starred'), { variant: 'success' });
       fetchCircuits();
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
@@ -160,26 +160,25 @@ export function Circuits() {
     <Container sx={{ mt: 2 }}>
       <Card variant='outlined' sx={{ mb: 2 }}>
         <CardHeader
-          title='My Circuits'
-          subheader='Here are all of the circuits that you have saved'
+          title={t('page.circuits.title')}
+          subheader={t('page.circuits.subtitle')}
           action={
             <>
-              <Tooltip title='Sort by' arrow>
+              <Tooltip title={t('common.sortBy')} arrow>
                 <IconButton onClick={sortMenu.open} ref={sortButton}>
                   <SortIcon fontSize='large' />
                 </IconButton>
               </Tooltip>
 
-              <Tooltip title='Upload schematic' arrow>
+              <Tooltip title={t('common.load')} arrow>
                 <UploadFileInput
                   accept='application/json'
-                  aria-label='Upload schematic'
                   iconProps={{ fontSize: 'large' }}
-                  onUpload={uploadCircuit}
+                  onUpload={loadCircuit}
                 />
               </Tooltip>
 
-              <Tooltip title='New circuit' arrow>
+              <Tooltip title={t('common.createNew')} arrow>
                 <IconButton onClick={createCircuit}>
                   <AddIcon fontSize='large' />
                 </IconButton>

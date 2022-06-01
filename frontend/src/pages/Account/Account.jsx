@@ -1,3 +1,4 @@
+import { Trans, useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
@@ -7,6 +8,7 @@ import * as yup from 'yup';
 
 import { useGravatar, useUser } from '../../hooks';
 import { FormField } from '../../components';
+import { validations } from '../../validations';
 
 import {
   Container,
@@ -22,19 +24,16 @@ import {
 } from '@mui/material';
 
 const schema = yup.object({
-  email: yup.string().email().required(),
-  firstName: yup.string().trim().required(),
-  institution: yup.string().trim().required(),
-  lastName: yup.string().trim().required(),
-  mechNumber: yup
-    .number()
-    .integer()
-    .positive()
-    .typeError('Must be a number')
-    .required(),
+  email: validations.user.email,
+  firstName: validations.user.firstName,
+  institution: validations.user.institution,
+  lastName: validations.user.lastName,
+  mechNumber: validations.user.mechNumber,
 });
 
 export function Account() {
+  const { t } = useTranslation();
+
   const { user } = useUser();
   const gravatar = useGravatar(user?.email);
   const { enqueueSnackbar } = useSnackbar();
@@ -44,12 +43,12 @@ export function Account() {
   useEffect(() => form.reset(user), [form, user]);
 
   async function onSubmit(data) {
-    enqueueSnackbar('Not yet implemented!', { variant: 'error' });
+    enqueueSnackbar(t('feedback.notImplemented'), { variant: 'error' });
 
     /* try {
       await axios.patch('api/account/info', data);
 
-      enqueueSnackbar('Your personal information has been updated!', {
+      enqueueSnackbar('...', {
         variant: 'success',
       });
     } catch ({ response: { statusText } }) {
@@ -65,8 +64,8 @@ export function Account() {
         <Card variant='outlined' sx={{ mt: 2 }}>
           <Container>
             <CardHeader
-              title='Account'
-              subheader='We promise to never share your personal information with any third party services.'
+              title={t('page.account.title')}
+              subheader={t('page.account.subtitle')}
             />
 
             <CardContent>
@@ -80,7 +79,10 @@ export function Account() {
                   >
                     <Grid item xs={3}>
                       <Avatar
-                        alt={`${user.firstName} ${user.lastName}`}
+                        alt={t('common.fullName', {
+                          given: user.firstName,
+                          family: user.lastName,
+                        })}
                         src={gravatar}
                         sx={{
                           width: 1,
@@ -91,12 +93,14 @@ export function Account() {
 
                     <Grid item>
                       <Typography variant='h5' gutterBottom>
-                        Profile picture
+                        {t('page.account.avatar.title')}
                       </Typography>
 
                       <Typography variant='body2' color='textSecondary'>
-                        We use <a href='https://gravatar.com/'>Gravatar</a> for
-                        the profile pictures.
+                        <Trans i18nKey='page.account.avatar.subtitle'>
+                          We use <a href='https://gravatar.com/'>Gravatar</a>
+                          for the profile pictures.
+                        </Trans>
                       </Typography>
                     </Grid>
                   </Grid>
@@ -109,33 +113,46 @@ export function Account() {
                 <Grid item>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
-                      <FormField label='Email' name='email' {...form} />
-                    </Grid>
-
-                    <Grid item xs={12} sm={6}>
                       <FormField
-                        label='First Name'
-                        name='firstName'
+                        label={t('form.label.email')}
+                        name='email'
+                        placeholder={t('form.placeholder.email')}
                         {...form}
                       />
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
-                      <FormField label='Last Name' name='lastName' {...form} />
+                      <FormField
+                        label={t('form.label.firstName')}
+                        name='firstName'
+                        placeholder={t('form.placeholder.firstName')}
+                        {...form}
+                      />
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
                       <FormField
-                        label='Mechanographic Nr.'
+                        label={t('form.label.lastName')}
+                        name='lastName'
+                        placeholder={t('form.placeholder.lastName')}
+                        {...form}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <FormField
+                        label={t('form.label.mechNumber')}
                         name='mechNumber'
+                        placeholder={t('form.placeholder.mechNumber')}
                         {...form}
                       />
                     </Grid>
 
                     <Grid item xs={12}>
                       <FormField
-                        label='Institution'
+                        label={t('form.label.institution')}
                         name='institution'
+                        placeholder={t('form.placeholder.institution')}
                         {...form}
                       />
                     </Grid>
@@ -146,7 +163,7 @@ export function Account() {
 
             <CardActions>
               <Button type='submit' color='primary' variant='contained'>
-                Save Changes
+                {t('form.action.save')}
               </Button>
             </CardActions>
           </Container>

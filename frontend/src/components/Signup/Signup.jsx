@@ -1,6 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -33,6 +34,8 @@ const schema = yup.object({
 });
 
 export function Signup({ ...rest }) {
+  const { t } = useTranslation();
+
   const history = useHistory();
   const showPassword = useBoolean(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -44,7 +47,7 @@ export function Signup({ ...rest }) {
       await axios.post('api/auth/signup', formData);
       history.push('/circuits');
     } catch {
-      enqueueSnackbar('Could not sign up', { variant: 'error' });
+      enqueueSnackbar(t('feedback.auth.noSignup'), { variant: 'error' });
     }
   }
 
@@ -52,8 +55,8 @@ export function Signup({ ...rest }) {
     <Card variant='outlined' {...rest}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <CardHeader
-          title='Signup'
-          subheader='Create an account to be able to save the circuits you create. We promise to never share your personal information with any third party services.'
+          title={t('page.auth.signup.title')}
+          subheader={t('page.auth.signup.subtitle')}
         />
 
         <CardContent>
@@ -61,62 +64,70 @@ export function Signup({ ...rest }) {
             <Grid item xs={12}>
               <FormField
                 autoComplete='email'
-                label='E-mail'
+                label={t('form.label.email')}
                 name='email'
-                placeholder='1210000@isep.ipp.pt'
+                placeholder={t('form.placeholder.email')}
                 {...form}
               />
             </Grid>
+
             <Grid item xs={12} md={6}>
               <FormField
                 autoComplete='given-name'
-                label='First Name'
+                label={t('form.label.firstName')}
                 name='firstName'
-                placeholder='John'
+                placeholder={t('form.placeholder.firstName')}
                 {...form}
               />
             </Grid>
+
             <Grid item xs={12} md={6}>
               <FormField
                 autoComplete='family-name'
-                label='Last Name'
+                label={t('form.label.lastName')}
                 name='lastName'
-                placeholder='Smith'
+                placeholder={t('form.placeholder.lastName')}
                 {...form}
               />
             </Grid>
+
             <Grid item xs={12}>
               <FormField
                 autoComplete='nickname'
-                label='Mechanographic Nr.'
+                label={t('form.label.mechNumber')}
                 name='mechNumber'
-                placeholder='1210000'
+                placeholder={t('form.placeholder.mechNumber')}
                 {...form}
               />
             </Grid>
+
             <Grid item xs={12}>
               <FormField
                 autoComplete='organization'
-                label='Institution'
+                label={t('form.label.institution')}
                 name='institution'
-                placeholder='Instituto Superior de Engenharia do Porto'
+                placeholder={t('form.placeholder.institution')}
                 {...form}
               />
             </Grid>
+
             <Grid item xs={12} md={6}>
               <FormField
                 autoComplete='new-password'
-                label='Password'
+                label={t('form.label.password')}
                 name='password'
+                placeholder={t('form.placeholder.password')}
                 type={showPassword.value ? 'text' : 'password'}
                 {...form}
               />
             </Grid>
+
             <Grid item xs={12} md={6}>
               <FormField
                 autoComplete='new-password'
-                label='Confirm password'
+                label={t('form.label.confirmPassword')}
                 name='confirmPassword'
+                placeholder={t('form.placeholder.confirmPassword')}
                 type={showPassword.value ? 'text' : 'password'}
                 {...form}
               />
@@ -126,11 +137,15 @@ export function Signup({ ...rest }) {
 
         <CardActions>
           <Button type='submit' variant='contained' color='primary'>
-            Signup
+            {t('common.signup')}
           </Button>
 
           <Tooltip
-            title={showPassword.value ? 'Hide password' : 'Show password'}
+            title={
+              showPassword.value
+                ? t('form.message.password.hide')
+                : t('form.message.password.show')
+            }
             arrow
           >
             <IconButton onClick={showPassword.toggle}>
