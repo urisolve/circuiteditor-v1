@@ -1,0 +1,30 @@
+version: "2"
+
+networks:
+  network:
+    driver: bridge
+
+services:
+  frontend:
+    build: ./frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/frontend/src
+      - /frontend/node_modules
+    links:
+      - backend
+    networks:
+      - network
+
+  backend:
+    build: ./backend
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/backend/src
+      - /backend/node_modules
+    networks:
+      - network
