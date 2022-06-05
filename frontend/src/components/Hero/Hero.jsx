@@ -1,3 +1,4 @@
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
@@ -8,6 +9,7 @@ import { useUser } from '../../hooks';
 import { constants } from '../../constants';
 
 export function Hero({ ...rest }) {
+  const { t } = useTranslation();
   const { user } = useUser();
   const history = useHistory();
 
@@ -36,7 +38,9 @@ export function Hero({ ...rest }) {
               fontSize: { xs: 36, md: 52 },
             }}
           >
-            Create <b>circuit schematics</b> and get their analytical models
+            <Trans i18nKey='page.home.hero.message'>
+              Create <b>circuit schematics</b> and get their analytical models
+            </Trans>
           </Typography>
 
           <Button
@@ -47,7 +51,7 @@ export function Hero({ ...rest }) {
             sx={{ fontSize: 20, mt: 5 }}
             variant='contained'
           >
-            Get Started
+            {t('page.home.hero.cta')}
           </Button>
         </Stack>
 

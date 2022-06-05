@@ -1,0 +1,225 @@
+{
+  "banner": {
+    "offline": "Network is unavailable"
+  },
+  "common": {
+    "components": "Components",
+    "createNew": "Create new",
+    "delete": "Delete",
+    "download": "Download",
+    "filterBy": "Filter by",
+    "label": "Label",
+    "load": "Load",
+    "fullName": "{{ given }} {{ family }}",
+    "hide": "Hide",
+    "login": "Login",
+    "logout": "Logout",
+    "orderBy": "Order by",
+    "properties": "Properties",
+    "restore": "Restore",
+    "save": "Save",
+    "search": "Search",
+    "show": "Show",
+    "signup": "Signup",
+    "sortBy": "Sort by",
+    "tip": "Tip",
+    "untitled": "Untitled"
+  },
+  "dialog": {
+    "deleteCircuit": {
+      "title": "Are you sure?",
+      "description": "The circuit will be lost forever."
+    }
+  },
+  "feedback": {
+    "auth": {
+      "noLogin": "Could not log in",
+      "noSignup": "Could not sign up"
+    },
+    "circuit": {
+      "created": "The circuit has been created!",
+      "deleted": "The circuit has been deleted!",
+      "saved": "The circuit has been saved!",
+      "starred": "The circuit has been added to favorites!",
+      "uploaded": "The circuit has been uploaded!"
+    },
+    "notImplemented": "Not yet implemented!"
+  },
+  "filter": {
+    "alphabetically": "Alphabetically",
+    "ascending": "Ascending",
+    "createdAt": "Created at",
+    "descending": "Descending",
+    "favorites": "Favorites",
+    "modifiedAt": "Modified at",
+    "none": "None"
+  },
+  "form": {
+    "action": {
+      "apply": "Apply",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "ok": "Ok",
+      "save": "Save",
+      "send": "Send"
+    },
+    "error": {
+      "email": "Must be a valid email",
+      "number": {
+        "integer": "Must be an integer",
+        "positive": "Must be a positive number",
+        "type": "Must be a number"
+      },
+      "password": {
+        "match": "Passwords must match",
+        "min": "Must have at least {{ amount }} characters",
+        "minLowercase": "Must have at least {{ amount }} lowercase letter",
+        "minNumbers": "Must have at least {{ amount }} number",
+        "minUppercase": "Must have at least {{ amount }} uppercase letter"
+      },
+      "required": "This field is required",
+      "string": {
+        "max": "Must have less than {{ amount }} characters",
+        "min": "Must have a least {{ amount }} characters"
+      }
+    },
+    "label": {
+      "color": "Color",
+      "confirmPassword": "Confirm Password",
+      "dashed": "Dashed",
+      "dashedAnimationSpeed": "Dashed Animation Speed",
+      "email": "Email",
+      "firstName": "First Name",
+      "gridBreak": "Grid Break",
+      "hide": "Hide",
+      "id": "ID",
+      "institution": "Institution",
+      "lastName": "Last Name",
+      "mechNumber": "Mechanographic Nr.",
+      "message": "Message",
+      "name": "Name",
+      "password": "Password",
+      "radius": "Radius",
+      "value": "Value",
+      "strokeWidth": "Stroke Width"
+    },
+    "message": {
+      "password": {
+        "hide": "Hide password",
+        "show": "Show password"
+      },
+      "shareEmail": "We promise to not share your e-mail with third party services."
+    },
+    "placeholder": {
+      "color": "#FFFFFF",
+      "confirmPassword": "********",
+      "email": "1210000@isep.ipp.pt",
+      "firstName": "John",
+      "institution": "Instituto Superior de Engenharia do Porto",
+      "itemName": "R1",
+      "lastName": "Smith",
+      "mechNumber": "1180000",
+      "message": "Describe the problem as well as you can...",
+      "name": "John Smith",
+      "password": "********",
+      "value": "10k"
+    }
+  },
+  "library": {
+    "component": {
+      "acCurrentSource": "AC Current Source",
+      "acVoltageSource": "AC Voltage Source",
+      "ammeter": "Ammeter",
+      "capacitor": "Capacitor",
+      "dcCurrentSource": "DC Current Source",
+      "dcVoltageSource": "DC Voltage Source",
+      "ground": "Ground",
+      "inductor": "Inductor",
+      "marker": "Marker",
+      "reactance": "Reactance",
+      "resistor": "Resistor",
+      "voltmeter": "Voltmeter",
+      "wire": "Wire"
+    },
+    "emptySearch": {
+      "title": "Nothing found",
+      "subtitle": "There are no components that match that name"
+    }
+  },
+  "link": {
+    "account": "Account",
+    "circuits": "My Circuits",
+    "settings": "Settings"
+  },
+  "page": {
+    "account": {
+      "avatar": {
+        "title": "Profile picture",
+        "subtitle": "We use <1>Gravatar</1> for the profile pictures."
+      },
+      "title": "Account",
+      "subtitle": "We promise to never share your personal information with any third party services."
+    },
+    "auth": {
+      "login": {
+        "subtitle": "Welcome back.",
+        "title": "Log In"
+      },
+      "signup": {
+        "subtitle": "Create an account to be able to save the circuits you create. We promise to never share your personal information with any third party services.",
+        "title": "Sign Up"
+      }
+    },
+    "circuits": {
+      "action": {
+        "favorite": "Add to favorites",
+        "unfavorite": "Remove from favorites"
+      },
+      "title": "My Circuits",
+      "subtitle": "Here are all of the circuits that you have saved"
+    },
+    "editor": {
+      "action": {
+        "compLib": "{{ action }} Component Library",
+        "exportUrisolve": "Export to URIsolve",
+        "redo": "Redo",
+        "saveImage": "Save Image",
+        "sourceView": "{{ action }} Source View",
+        "undo": "Undo"
+      },
+      "propertyEditor": "Property Editor"
+    },
+    "home": {
+      "contact": {
+        "title": "Contact"
+      },
+      "footer": {
+        "copyright": "Copyright © 2021 <2>URIsolve</2>. All rights reserved.",
+        "createdAt": "Proudly created at <2>ISEP</2>."
+      },
+      "hero": {
+        "cta": "Get Started",
+        "message": "Create <1>circuit schematics</1> and get their analytical models"
+      },
+      "howTo": {
+        "title": "How To",
+        "step": {
+          "1": "Create the schematic of the circuit",
+          "2": "Choose the protocol",
+          "3": "Export!"
+        }
+      }
+    },
+    "notFound": {
+      "title": "Error 404:",
+      "subtitle": "This page does not exist"
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Here you can manage the settings of your account"
+    }
+  },
+  "tips": {
+    "tip_0": "Double click a component to add it to schematic"
+  }
+}

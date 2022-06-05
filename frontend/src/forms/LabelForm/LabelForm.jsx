@@ -1,15 +1,24 @@
 import { Stack } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+
 import { Checkbox, FormField } from '../../components';
 
 export function LabelForm({ form, unit }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <Stack direction='row' spacing={1}>
-        <FormField label='Name' name='label.name' {...form} />
+        <FormField
+          label={t('form.label.name')}
+          name='label.name'
+          placeholder={t('form.placeholder.itemName')}
+          {...form}
+        />
 
         <Checkbox
           control={form.control}
-          label='Hide'
+          label={t('form.label.hide')}
           name='label.isNameHidden'
           sx={{ flexGrow: 1 }}
         />
@@ -21,11 +30,17 @@ export function LabelForm({ form, unit }) {
         justifyContent='center'
         spacing={1}
       >
-        <FormField label='Value' name='label.value' suffix={unit} {...form} />
+        <FormField
+          label={t('form.label.value')}
+          name='label.value'
+          placeholder={t('form.placeholder.value')}
+          suffix={unit}
+          {...form}
+        />
 
         <Checkbox
           control={form.control}
-          label='Hide'
+          label={t('form.label.hide')}
           name='label.isValueHidden'
           sx={{ flexGrow: 1 }}
         />

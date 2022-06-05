@@ -1,6 +1,7 @@
-import { useRef, useCallback } from 'react';
+import { useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
 import { useBoolean, useGravatar, useUser } from '../../hooks';
@@ -24,6 +25,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import TranslateIcon from '@mui/icons-material/Translate';
+import CheckIcon from '@mui/icons-material/Check';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const menuLink = {
@@ -31,17 +34,29 @@ const menuLink = {
   textDecoration: 'none',
 };
 
+const languages = [
+  { code: 'en', nativeName: 'English' },
+  { code: 'pt', nativeName: 'Português' },
+];
+
 export function Navbar({ ...rest }) {
+  const { i18n, t } = useTranslation();
+
   const { user, setUser } = useUser();
   const gravatar = useGravatar(user?.email);
 
-  const anchorEl = useRef();
-  const isMenuOpen = useBoolean(false);
+  const translationMenuAnchorEl = useRef();
+  const isTranslationMenuOpen = useBoolean(false);
+
+  const userMenuAnchorEl = useRef();
+  const isUserMenuOpen = useBoolean(false);
 
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
-  const logOut = useCallback(async () => {
+  const sm = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+
+  async function logOut() {
     try {
       await axios.get('api/auth/logout');
 
@@ -50,9 +65,12 @@ export function Navbar({ ...rest }) {
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
     }
-  }, [history, setUser, enqueueSnackbar]);
+  }
 
-  const sm = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+  function handleChangeLanguage(language) {
+    i18n.changeLanguage(language);
+    isTranslationMenuOpen.off();
+  }
 
   return (
     <>
@@ -88,14 +106,24 @@ export function Navbar({ ...rest }) {
 
             <Box sx={{ flexGrow: 1 }} />
 
+            <IconButton
+              ref={translationMenuAnchorEl}
+              onClick={isTranslationMenuOpen.on}
+            >
+              <TranslateIcon />
+            </IconButton>
+
             {user ? (
               sm ? (
                 <Button
-                  ref={anchorEl}
-                  onClick={isMenuOpen.on}
+                  ref={userMenuAnchorEl}
+                  onClick={isUserMenuOpen.on}
                   startIcon={
                     <Avatar
-                      alt={`${user.firstName} ${user.lastName}`}
+                      alt={t('common.fullName', {
+                        given: user.firstName,
+                        family: user.lastName,
+                      })}
                       src={gravatar}
                     />
                   }
@@ -105,12 +133,18 @@ export function Navbar({ ...rest }) {
                   disableFocusRipple
                   style={{ backgroundColor: 'transparent' }}
                 >
-                  {`${user.firstName} ${user.lastName}`}
+                  {t('common.fullName', {
+                    given: user.firstName,
+                    family: user.lastName,
+                  })}
                 </Button>
               ) : (
-                <IconButton ref={anchorEl} onClick={isMenuOpen.on}>
+                <IconButton ref={userMenuAnchorEl} onClick={isUserMenuOpen.on}>
                   <Avatar
-                    alt={`${user.firstName} ${user.lastName}`}
+                    alt={t('common.fullName', {
+                      given: user.firstName,
+                      family: user.lastName,
+                    })}
                     src={gravatar}
                   />
                 </IconButton>
@@ -123,14 +157,14 @@ export function Navbar({ ...rest }) {
                 color='inherit'
                 variant='outlined'
               >
-                Login
+                {t('common.login')}
               </Button>
             )}
           </Toolbar>
         </Container>
 
         <Menu
-          anchorEl={anchorEl.current}
+          anchorEl={userMenuAnchorEl.current}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'right',
@@ -139,50 +173,88 @@ export function Navbar({ ...rest }) {
             vertical: 'top',
             horizontal: 'right',
           }}
-          open={isMenuOpen.value}
-          onClose={isMenuOpen.off}
+          open={isUserMenuOpen.value}
+          onClose={isUserMenuOpen.off}
           keepMounted
         >
           <MenuItem
             component={Link}
             to='/circuits'
-            onClick={isMenuOpen.off}
+            onClick={isUserMenuOpen.off}
             sx={menuLink}
           >
             <MenuIcon sx={{ mr: 2 }} />
-            My Circuits
+
+            {t('link.circuits')}
           </MenuItem>
+
           <MenuItem
             component={Link}
             to='/account'
-            onClick={isMenuOpen.off}
+            onClick={isUserMenuOpen.off}
             sx={menuLink}
           >
             <PersonIcon sx={{ mr: 2 }} />
-            Account
+
+            {t('link.account')}
           </MenuItem>
+
           <MenuItem
             disabled
             component={Link}
             to='/settings'
-            onClick={isMenuOpen.off}
+            onClick={isUserMenuOpen.off}
             sx={menuLink}
           >
             <SettingsIcon sx={{ mr: 2 }} />
-            Settings
+
+            {t('link.settings')}
           </MenuItem>
+
           <Divider />
+
           <MenuItem
             onClick={() => {
-              isMenuOpen.off();
+              isUserMenuOpen.off();
               logOut();
             }}
           >
             <ExitToAppIcon sx={{ mr: 2 }} />
-            Logout
+
+            {t('common.logout')}
           </MenuItem>
         </Menu>
+
+        <Menu
+          anchorEl={translationMenuAnchorEl.current}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={isTranslationMenuOpen.value}
+          onClose={isTranslationMenuOpen.off}
+          keepMounted
+        >
+          {languages.map(({ code, nativeName }) => (
+            <MenuItem
+              key={code}
+              onClick={() => handleChangeLanguage(code)}
+              sx={menuLink}
+            >
+              {i18n.language.includes(code) && (
+                <CheckIcon sx={{ position: 'absolute' }} />
+              )}
+
+              <Typography sx={{ ml: 4 }}>{nativeName}</Typography>
+            </MenuItem>
+          ))}
+        </Menu>
       </AppBar>
+
       <Toolbar />
     </>
   );

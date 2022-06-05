@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
   Card,
@@ -12,16 +13,17 @@ import {
 import RestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 
 export function Settings() {
+  const { t } = useTranslation();
   const restoreSettings = useCallback(() => {}, []);
 
   return (
     <Container>
       <Card variant='outlined' sx={{ mt: 2 }}>
         <CardHeader
-          title='Settings'
-          subheader='Here you can manage the settings of your account'
+          title={t('page.settings.title')}
+          subheader={t('page.settings.subtitle')}
           action={
-            <Tooltip title='Restore Settings' arrow>
+            <Tooltip title={t('common.restore')} arrow>
               <IconButton onClick={restoreSettings}>
                 <RestoreIcon fontSize='large' />
               </IconButton>

@@ -1,10 +1,19 @@
+import { useTranslation } from 'react-i18next';
+
 import { FormField, Slider } from '../../components';
 import { constants } from '../../constants';
 
 export function NodePropertiesForm({ form }) {
+  const { t } = useTranslation();
+
   return (
     <>
-      <FormField label='Color' name='properties.color' {...form} />
+      <FormField
+        label={t('form.label.color')}
+        name='properties.color'
+        placeholder={t('form.placeholder.color')}
+        {...form}
+      />
 
       <Slider
         control={form.control}
@@ -13,7 +22,7 @@ export function NodePropertiesForm({ form }) {
           max: 10,
           marks: [{ value: constants.DEFAULT_NODE_RADIUS }],
         }}
-        label='Radius'
+        label={t('form.label.radius')}
         name='properties.radius'
       />
     </>

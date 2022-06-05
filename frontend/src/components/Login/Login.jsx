@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -28,9 +29,11 @@ const schema = yup.object({
 });
 
 export function Login({ setUser, ...rest }) {
-  const history = useHistory();
-  const showPassword = useBoolean(false);
+  const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
+  const history = useHistory();
+
+  const showPassword = useBoolean(false);
 
   const form = useForm({ resolver: yupResolver(schema) });
 
@@ -41,23 +44,26 @@ export function Login({ setUser, ...rest }) {
       history.push('/circuits');
       setUser(user);
     } catch {
-      enqueueSnackbar('Could not log in', { variant: 'error' });
+      enqueueSnackbar(t('feedback.auth.noLogin'), { variant: 'error' });
     }
   }
 
   return (
     <Card variant='outlined' {...rest}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <CardHeader title='Login' subheader='Welcome back.' />
+        <CardHeader
+          title={t('page.auth.login.title')}
+          subheader={t('page.auth.login.subtitle')}
+        />
 
         <CardContent>
           <Grid container>
             <Grid item xs={12}>
               <FormField
                 autoComplete='email'
-                label='E-mail'
+                label={t('form.label.email')}
                 name='email'
-                placeholder='1234567@isep.ipp.pt'
+                placeholder={t('form.placeholder.email')}
                 {...form}
               />
             </Grid>
@@ -65,8 +71,9 @@ export function Login({ setUser, ...rest }) {
             <Grid item xs={12}>
               <FormField
                 autoComplete='current-password'
-                label='Password'
+                label={t('form.label.password')}
                 name='password'
+                placeholder={t('form.placeholder.password')}
                 type={showPassword.value ? 'text' : 'password'}
                 {...form}
               />
@@ -76,12 +83,16 @@ export function Login({ setUser, ...rest }) {
 
         <CardActions>
           <Button type='submit' variant='contained' color='primary'>
-            Login
+            {t('common.login')}
           </Button>
 
           <Tooltip
             arrow
-            title={showPassword.value ? 'Hide password' : 'Show password'}
+            title={
+              showPassword.value
+                ? t('form.message.password.hide')
+                : t('form.message.password.show')
+            }
           >
             <IconButton onClick={showPassword.toggle}>
               {showPassword.value ? <VisibilityOffIcon /> : <VisibilityIcon />}

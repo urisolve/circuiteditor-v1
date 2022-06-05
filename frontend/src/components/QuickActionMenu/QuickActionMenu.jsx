@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
 import { Box, Paper, Stack } from '@mui/material';
@@ -29,6 +30,8 @@ export function QuickActionMenu({
   sx,
   ...rest
 }) {
+  const { t } = useTranslation();
+
   const { user } = useUser();
   const match = useRouteMatch();
   const { circuitId } = match.params;
@@ -53,7 +56,7 @@ export function QuickActionMenu({
 
       await axios.patch(`/api/circuits?id=${circuitId}`, circuit);
 
-      enqueueSnackbar('The circuit has been saved!', { variant: 'success' });
+      enqueueSnackbar(t('feedback.saved'), { variant: 'success' });
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
     }
@@ -80,7 +83,7 @@ export function QuickActionMenu({
       );
 
       window.open(uploadURL, '_blank');
-      enqueueSnackbar('The circuit has been uploaded!', { variant: 'success' });
+      enqueueSnackbar(t('feedback.uploaded'), { variant: 'success' });
     } catch ({ message, request, response }) {
       if (response) {
         enqueueSnackbar(response.statusText, { variant: 'error' });
@@ -91,58 +94,53 @@ export function QuickActionMenu({
   }
 
   const actionGroups = [
-    {
-      name: 'History',
-      actions: [
-        {
-          name: 'Undo',
-          icon: <UndoIcon />,
-          onClick: history.undo,
-          disabled: !history.canUndo,
-        },
-        {
-          name: 'Redo',
-          icon: <RedoIcon />,
-          onClick: history.redo,
-          disabled: !history.canRedo,
-        },
-      ],
-    },
-    {
-      name: 'Drawers',
-      actions: [
-        {
-          name: `${compLib.value ? 'Hide' : 'Show'} Component Library`,
-          icon: <ListAltIcon />,
-          onClick: compLib.toggle,
-        },
-        {
-          name: `${sourceView.value ? 'Hide' : 'Show'} Source View`,
-          icon: <CodeIcon />,
-          onClick: sourceView.toggle,
-        },
-      ],
-    },
-    {
-      name: 'External',
-      actions: [
-        {
-          name: 'Save',
-          icon: <SaveIcon />,
-          onClick: saveCircuit,
-        },
-        {
-          name: 'Screenshot',
-          icon: <CameraAltIcon />,
-          onClick: downloadScreenshot,
-        },
-        {
-          name: 'Export to URIsolve',
-          icon: <FileUploadIcon />,
-          onClick: uploadToURIsolve,
-        },
-      ],
-    },
+    [
+      {
+        name: t('page.editor.action.undo'),
+        icon: <UndoIcon />,
+        onClick: history.undo,
+        disabled: !history.canUndo,
+      },
+      {
+        name: t('page.editor.action.redo'),
+        icon: <RedoIcon />,
+        onClick: history.redo,
+        disabled: !history.canRedo,
+      },
+    ],
+    [
+      {
+        name: t('page.editor.action.compLib', {
+          action: compLib.value ? t('common.hide') : t('common.show'),
+        }),
+        icon: <ListAltIcon />,
+        onClick: compLib.toggle,
+      },
+      {
+        name: t('page.editor.action.sourceView', {
+          action: sourceView.value ? t('common.hide') : t('common.show'),
+        }),
+        icon: <CodeIcon />,
+        onClick: sourceView.toggle,
+      },
+    ],
+    [
+      {
+        name: t('common.save'),
+        icon: <SaveIcon />,
+        onClick: saveCircuit,
+      },
+      {
+        name: t('page.editor.action.saveImage'),
+        icon: <CameraAltIcon />,
+        onClick: downloadScreenshot,
+      },
+      {
+        name: t('page.editor.action.exportUrisolve'),
+        icon: <FileUploadIcon />,
+        onClick: uploadToURIsolve,
+      },
+    ],
   ];
 
   return (
@@ -159,7 +157,7 @@ export function QuickActionMenu({
       <Stack direction='row' spacing={3} {...rest}>
         {actionGroups.map((group, groupIdx) => (
           <Box key={groupIdx}>
-            {group.actions.map((action, actionIdx) => (
+            {group.map((action, actionIdx) => (
               <QuickAction key={actionIdx} {...action} />
             ))}
           </Box>

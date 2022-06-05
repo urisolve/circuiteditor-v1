@@ -9,6 +9,12 @@ An app that allows you to create and edit circuits.
 - [Authors](#authors)
 - [License](#license)
 
+## Demo
+
+This app was hosted with Netlify and Heroku to simplify the process for beta-testers.
+
+If you are a beta-tester you can just open this URL and test the app: https://circuit-editor.netlify.app
+
 ## Run
 
 This package uses [Yarn](https://yarnpkg.com/) as its package manager instead of [npm](https://www.npmjs.com/).

@@ -1,7 +1,11 @@
+import { useTranslation } from 'react-i18next';
+
 import { Box, Divider, ListItemText, Menu, MenuItem } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 
 export function SortingMenu({ categories, ...rest }) {
+  const { t } = useTranslation();
+
   return (
     <Menu {...rest}>
       {categories.map(({ title, items, selected, selector }, i) => (
@@ -12,16 +16,16 @@ export function SortingMenu({ categories, ...rest }) {
             <ListItemText inset>{title}</ListItemText>
           </MenuItem>
 
-          {items.map((item) => (
+          {Object.entries(items).map(([key, item]) => (
             <MenuItem
-              key={item.name}
-              selected={selected === item.value}
-              onClick={() => selector(item.value)}
+              key={key}
+              selected={selected === item}
+              onClick={() => selector(item)}
             >
-              {selected === item.value && <CheckIcon sx={{ mr: 1.5 }} />}
+              {selected === item && <CheckIcon sx={{ mr: 1.5 }} />}
 
-              <ListItemText inset={selected !== item.value}>
-                {item.name}
+              <ListItemText inset={selected !== item}>
+                {t(`filter.${key}`)}
               </ListItemText>
             </MenuItem>
           ))}

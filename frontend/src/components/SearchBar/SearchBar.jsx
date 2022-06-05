@@ -1,10 +1,13 @@
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 
 export function SearchBar({ value, setValue }) {
+  const { t } = useTranslation();
+
   const clearValue = useCallback(() => setValue(''), [setValue]);
   const updateValue = useCallback((e) => setValue(e.target.value), [setValue]);
 
@@ -12,7 +15,7 @@ export function SearchBar({ value, setValue }) {
     <TextField
       variant='outlined'
       size='small'
-      placeholder='Search...'
+      placeholder={`${t('common.search')}...`}
       fullWidth
       value={value}
       onChange={updateValue}

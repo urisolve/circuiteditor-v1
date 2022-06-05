@@ -6,14 +6,20 @@
     "draggable",
     "hookform",
     "ISEP",
+    "languagedetector",
     "Mechanographic",
     "Netlist",
     "notistack",
+    "planilha",
     "signup",
     "Swipeable",
     "tabpanel",
+    "terceirizados",
     "urisolve",
     "UUIDv4",
     "xarrows"
+  ],
+  "i18n-ally.localesPaths": [
+    "frontend/public/locales"
   ]
 }

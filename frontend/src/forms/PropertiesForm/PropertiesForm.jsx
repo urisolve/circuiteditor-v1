@@ -1,5 +1,7 @@
-import { TextField } from '@mui/material';
 import { useContext, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { TextField } from '@mui/material';
 
 import {
   ComponentPropertiesForm,
@@ -10,6 +12,7 @@ import { SchematicContext } from '../../contexts';
 import { isComponent, isConnection, isNode } from '../../util';
 
 export function PropertiesForm({ form, id, ...rest }) {
+  const { t } = useTranslation();
   const { itemsMap } = useContext(SchematicContext);
 
   const Form = useMemo(() => {
@@ -30,7 +33,7 @@ export function PropertiesForm({ form, id, ...rest }) {
 
   return (
     <>
-      <TextField fullWidth label='ID' value={id} disabled />
+      <TextField disabled fullWidth label={t('form.label.id')} value={id} />
 
       <Form form={form} {...rest} />
     </>
