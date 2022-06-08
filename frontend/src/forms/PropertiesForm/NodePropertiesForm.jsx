@@ -18,7 +18,7 @@ export function NodePropertiesForm({ form }) {
       <Slider
         control={form.control}
         inputProps={{
-          min: 0,
+          min: 1,
           max: 10,
           marks: [{ value: constants.DEFAULT_NODE_RADIUS }],
         }}

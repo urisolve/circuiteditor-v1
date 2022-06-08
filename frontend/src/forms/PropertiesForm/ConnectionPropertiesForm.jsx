@@ -30,7 +30,7 @@ export function ConnectionPropertiesForm({ form }) {
       <Slider
         control={form.control}
         inputProps={{
-          min: 1,
+          min: 2,
           max: 10,
           marks: [{ value: constants.DEFAULT_STROKE_WIDTH }],
         }}
