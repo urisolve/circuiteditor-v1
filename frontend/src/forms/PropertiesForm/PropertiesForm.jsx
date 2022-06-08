@@ -7,7 +7,7 @@ import {
   ComponentPropertiesForm,
   ConnectionPropertiesForm,
   NodePropertiesForm,
-} from '..';
+} from '.';
 import { SchematicContext } from '../../contexts';
 import { isComponent, isConnection, isNode } from '../../util';
 
@@ -15,17 +15,17 @@ export function PropertiesForm({ form, id, ...rest }) {
   const { t } = useTranslation();
   const { itemsMap } = useContext(SchematicContext);
 
-  const Form = useMemo(() => {
+  const ItemForm = useMemo(() => {
     const item = itemsMap[id];
 
+    if (isComponent(item)) {
+      return ComponentPropertiesForm;
+    }
     if (isConnection(item)) {
       return ConnectionPropertiesForm;
     }
     if (isNode(item)) {
       return NodePropertiesForm;
-    }
-    if (isComponent(item)) {
-      return ComponentPropertiesForm;
     }
 
     return null;
@@ -35,7 +35,7 @@ export function PropertiesForm({ form, id, ...rest }) {
     <>
       <TextField disabled fullWidth label={t('form.label.id')} value={id} />
 
-      <Form form={form} {...rest} />
+      <ItemForm form={form} {...rest} />
     </>
   );
 }
