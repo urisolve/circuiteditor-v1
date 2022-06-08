@@ -4,6 +4,7 @@
   },
   "common": {
     "components": "Components",
+    "createdAtRelativeTime": "Created {{ relativeTime }}",
     "createNew": "Create new",
     "delete": "Delete",
     "download": "Download",

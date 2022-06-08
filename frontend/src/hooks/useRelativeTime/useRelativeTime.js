@@ -9,7 +9,7 @@ import 'dayjs/locale/pt';
 
 dayjs.extend(relativeTime);
 
-export function useTimeSince(timeStamp) {
+export function useRelativeTime(timeStamp) {
   const { i18n } = useTranslation();
 
   return useMemo(

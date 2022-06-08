@@ -17,5 +17,5 @@ export * from './useSchematic';
 export * from './useSchematicItems';
 export * from './useSchematicParser';
 export * from './useSchematicTools';
-export * from './useTimeSince';
+export * from './useRelativeTime';
 export * from './useUser';
