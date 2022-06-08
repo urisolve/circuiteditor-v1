@@ -56,7 +56,7 @@ export function QuickActionMenu({
 
       await axios.patch(`/api/circuits?id=${circuitId}`, circuit);
 
-      enqueueSnackbar(t('feedback.saved'), { variant: 'success' });
+      enqueueSnackbar(t('feedback.circuit.saved'), { variant: 'success' });
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
     }
@@ -83,7 +83,7 @@ export function QuickActionMenu({
       );
 
       window.open(uploadURL, '_blank');
-      enqueueSnackbar(t('feedback.uploaded'), { variant: 'success' });
+      enqueueSnackbar(t('feedback.circuit.uploaded'), { variant: 'success' });
     } catch ({ message, request, response }) {
       if (response) {
         enqueueSnackbar(response.statusText, { variant: 'error' });
