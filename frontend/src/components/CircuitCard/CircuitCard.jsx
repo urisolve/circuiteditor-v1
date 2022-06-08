@@ -22,12 +22,12 @@ import GetAppIcon from '@mui/icons-material/GetApp';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
-import { useBoolean, useTimeSince } from '../../hooks';
+import { useBoolean, useRelativeTime } from '../../hooks';
 import { constants } from '../../constants';
 
 export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
   const { t } = useTranslation();
-  const timeSince = useTimeSince(circuit.createdAt);
+  const relativeTime = useRelativeTime(circuit.createdAt);
   const dialog = useBoolean(false);
 
   return (
@@ -65,7 +65,7 @@ export function CircuitCard({ circuit, onDelete, onDownload, onStar }) {
           <CardHeader
             title={circuit.name}
             titleTypographyProps={{ noWrap: true }}
-            subheader={'Created ' + timeSince}
+            subheader={t('common.createdAtRelativeTime', { relativeTime })}
           />
         </CardActionArea>
 

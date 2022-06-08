@@ -4,6 +4,7 @@
   },
   "common": {
     "components": "Componentes",
+    "createdAtRelativeTime": "Criado {{ relativeTime }}",
     "createNew": "Criar Novo",
     "delete": "Apagar",
     "download": "Baixar",
