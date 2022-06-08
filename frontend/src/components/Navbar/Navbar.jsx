@@ -151,10 +151,10 @@ export function Navbar({ ...rest }) {
               )
             ) : (
               <Button
-                component={Link}
-                to='/auth'
-                sx={{ textDecoration: 'none' }}
                 color='inherit'
+                component={Link}
+                sx={{ ml: 2, textDecoration: 'none' }}
+                to='/auth'
                 variant='outlined'
               >
                 {t('common.login')}
