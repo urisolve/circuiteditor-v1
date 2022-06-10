@@ -17,13 +17,14 @@ export function DraggableComponent({
 
   return (
     <Draggable
-      nodeRef={draggableRef}
       bounds={bounds ?? '.schematic'}
-      handle={handle}
       grid={[
         gridSize ?? constants.DEFAULT_GRID_SIZE,
         gridSize ?? constants.DEFAULT_GRID_SIZE,
       ]}
+      handle={handle}
+      nodeRef={draggableRef}
+      positionOffset={{ x: 5, y: 5 }}
       {...rest}
     >
       <Box

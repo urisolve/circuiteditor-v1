@@ -102,7 +102,6 @@ export function Component({
     <DraggableComponent
       handle='.component-handle'
       position={position}
-      positionOffset={{ x: 5, y: 5 }}
       {...handlers}
       {...rest}
     >
