@@ -94,7 +94,7 @@ export function Circuits() {
     try {
       await axios.post('api/circuits');
 
-      enqueueSnackbar(t('feedback.created'), { variant: 'success' });
+      enqueueSnackbar(t('feedback.circuit.created'), { variant: 'success' });
       fetchCircuits();
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
@@ -110,7 +110,7 @@ export function Circuits() {
         schematic,
       });
 
-      enqueueSnackbar(t('feedback.uploaded'), { variant: 'success' });
+      enqueueSnackbar(t('feedback.circuit.uploaded'), { variant: 'success' });
       fetchCircuits();
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
@@ -121,7 +121,7 @@ export function Circuits() {
     try {
       await axios.delete(`/api/circuits?id=${id}`);
 
-      enqueueSnackbar(t('feedback.deleted'), { variant: 'success' });
+      enqueueSnackbar(t('feedback.circuit.deleted'), { variant: 'success' });
       fetchCircuits();
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
@@ -144,7 +144,7 @@ export function Circuits() {
         timestamps: false,
       });
 
-      enqueueSnackbar(t('feedback.starred'), { variant: 'success' });
+      enqueueSnackbar(t('feedback.circuit.starred'), { variant: 'success' });
       fetchCircuits();
     } catch ({ response: { statusText } }) {
       enqueueSnackbar(statusText, { variant: 'error' });
