@@ -16,9 +16,11 @@ import {
 } from '../../hooks';
 import { SchematicContext } from '../../contexts';
 import { shadeColor } from '../../util';
+import { constants } from '../../constants';
 
 export function Node({
   id,
+  connections,
   position,
   label,
   properties,
@@ -39,6 +41,25 @@ export function Node({
   const isDragging = useBoolean(false);
   const [originalPosition, setOriginalPosition] = useState(new Vector());
   const [dragDirection, setDragDirection] = useState(new Vector());
+
+  const isDangling = useMemo(
+    () => connections?.length <= 1,
+    [connections?.length],
+  );
+
+  const color = useMemo(() => {
+    let color = properties?.color;
+
+    if (isDangling) {
+      color = constants.ERROR_COLOR;
+    }
+
+    if (isSelected) {
+      color = shadeColor(color, -40);
+    }
+
+    return color;
+  }, [isDangling, isSelected, properties?.color]);
 
   const selectedIds = useMemo(
     () => [...new Set([id, ...selectedItems])],
@@ -104,12 +125,15 @@ export function Node({
         onContextMenu={contextMenu.open}
         onDoubleClick={() => propertiesMenu.openTab(0)}
         sx={{
-          width: properties?.radius * 2,
-          height: properties?.radius * 2,
-          backgroundColor: isSelected
-            ? shadeColor(properties?.color, -40)
-            : properties?.color,
+          borderRadius: '50%',
           pointerEvents: 'auto',
+          backgroundColor: color,
+
+          position: 'relative',
+          left: -properties?.radius,
+          top: -properties?.radius,
+          height: properties?.radius * 2,
+          width: properties?.radius * 2,
         }}
       />
 

@@ -12,7 +12,6 @@ export function ConnectionPoint({ id, isDragging, sx, ...rest }) {
       {...rest}
       ref={refMap.get(dragHandleId)}
       sx={{
-        borderRadius: '50%',
         cursor: isDragging ? 'grabbing' : 'grab',
         position: 'absolute',
         ...sx,

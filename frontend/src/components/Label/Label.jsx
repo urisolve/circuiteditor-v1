@@ -65,12 +65,7 @@ export function Label({
 
   return (
     <Portal container={schematicRef.current}>
-      <DraggableComponent
-        position={position}
-        positionOffset={{ x: 5, y: 5 }}
-        {...handlers}
-        {...rest}
-      >
+      <DraggableComponent position={position} {...handlers} {...rest}>
         <Typography
           onDoubleClick={onDoubleClick}
           ref={refMap.get(id)}
