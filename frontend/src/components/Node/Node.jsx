@@ -137,7 +137,7 @@ export function Node({
         }}
       />
 
-      {label && (
+      {!isDangling && label && (
         <Label
           schematicRef={schematicRef}
           updatePosition={updatePosition}
