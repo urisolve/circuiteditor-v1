@@ -17,10 +17,7 @@ import { components } from '../../electrical';
 const version = process.env.REACT_APP_VERSION ?? '1.0.0';
 const netlistHeader = `# CircuitEditor v${version}\n\n`;
 
-const replacePairs = Object.freeze([
-  ['Ω', 'Ohm'],
-  ['µ', 'u'],
-]);
+const replaceMap = Object.freeze({ Ω: 'Ohm', µ: 'u' });
 
 function applyGround(schematic) {
   for (const component of schematic.components) {
@@ -176,15 +173,14 @@ function buildNetlist(schematic) {
     }
   }
 
-  return replaceChars(netlist);
+  return replacePatterns(netlist, replaceMap);
 }
 
-const replaceChars = (netlist) => {
-  return replacePairs.reduce(
-    (netlist, [pattern, replacer]) => netlist.replace(pattern, replacer),
-    netlist,
+const replacePatterns = (string, replaceMap) =>
+  Object.entries(replaceMap).reduce(
+    (string, [pattern, replacer]) => string.replaceAll(pattern, replacer),
+    string,
   );
-};
 
 export function useNetlist(sch) {
   return useMemo(() => {
