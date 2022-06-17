@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import { Box, Paper } from '@mui/material';
 
 import { SelectionArea, Component, Connection, Node } from '..';
-import { snapValueToGrid } from '../../util';
 import { SchematicContext } from '../../contexts';
 import { constants } from '../../constants';
 
@@ -13,47 +12,16 @@ export function Schematic({
   selection,
   width,
   height,
-  readOnly,
-  gridSize,
   style,
   children,
   ...rest
 }) {
   const {
     data: schematic,
-    editById,
     labels,
     items,
     selection: { selectedItems },
   } = useContext(SchematicContext);
-
-  function updatePosition(id, position, startSch = null, isLabel = false) {
-    if (readOnly) return;
-
-    const grid = gridSize ?? constants.DEFAULT_GRID_SIZE;
-    const x = snapValueToGrid(position.x, grid);
-    const y = snapValueToGrid(position.y, grid);
-
-    editById(
-      id,
-      (elem) => {
-        if (isLabel) {
-          elem.label.position = { ...elem.label.position, x, y };
-        } else {
-          elem.label.position = {
-            ...elem.label.position,
-            x: elem.label.position.x + x - elem.position.x,
-            y: elem.label.position.y + y - elem.position.y,
-          };
-
-          elem.position = { ...elem.position, x, y };
-        }
-
-        return elem;
-      },
-      startSch,
-    );
-  }
 
   return (
     <Paper
@@ -62,21 +30,18 @@ export function Schematic({
       onContextMenu={(e) => e.preventDefault()}
       ref={canvasRef}
       sx={{
-        width: constants.CANVAS_RELATIVE_SIZE,
         height: constants.CANVAS_RELATIVE_SIZE,
+        width: constants.CANVAS_RELATIVE_SIZE,
+
         position: 'relative',
         zIndex: 0,
 
         // Grid pattern
         backgroundImage: `radial-gradient(circle, #0007 1px, transparent 1px)`,
         backgroundSize: `
-          ${gridSize ?? constants.DEFAULT_GRID_SIZE}px
-          ${gridSize ?? constants.DEFAULT_GRID_SIZE}px
+          ${constants.DEFAULT_GRID_SIZE}px
+          ${constants.DEFAULT_GRID_SIZE}px
         `,
-
-        // Border styling
-        boxShadow: '0px 0px 8px #0003',
-        borderRadius: `${2 * (gridSize ?? constants.DEFAULT_GRID_SIZE)}px`,
       }}
       {...rest}
     >
@@ -91,7 +56,6 @@ export function Schematic({
             {...comp}
             key={comp.id}
             schematicRef={schematicRef}
-            updatePosition={updatePosition}
             isSelected={selection?.selectedItems.has(comp.id)}
             selectedItems={selectedItems}
           />
@@ -102,7 +66,6 @@ export function Schematic({
             {...node}
             key={node.id}
             schematicRef={schematicRef}
-            updatePosition={updatePosition}
             isSelected={selection?.selectedItems.has(node.id)}
             selectedItems={selectedItems}
           />
@@ -116,14 +79,12 @@ export function Schematic({
                 {...conn}
                 key={conn.id}
                 schematicRef={schematicRef}
-                updatePosition={updatePosition}
                 isSelected={selection?.selectedItems.has(conn.id)}
               />
             ),
         )}
 
         <SelectionArea
-          disabled={readOnly}
           ignoreItems={labels}
           parentRef={canvasRef}
           selectableItems={items}

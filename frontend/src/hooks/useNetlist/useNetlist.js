@@ -156,7 +156,6 @@ function generateValueString({ type, label: { value = '', unit = '' } }) {
 function buildNetlist(schematic) {
   let netlist = netlistHeader;
 
-  // Add each component to the netlist
   for (const component of schematic.components) {
     if (component.type === 'gnd') continue;
 
@@ -184,15 +183,12 @@ const replacePatterns = (string, replaceMap) =>
 
 export function useNetlist(sch) {
   return useMemo(() => {
-    // Clone the schematic to not change the circuit itself
     const schematic = lodash.cloneDeep(sch);
 
-    // Normalize the schematic's data model
     condenseNodes(schematic);
     applyGround(schematic);
     withVirtualNodes(schematic);
 
-    // Build the netlist
     return buildNetlist(schematic);
   }, [sch]);
 };

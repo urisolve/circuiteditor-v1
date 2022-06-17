@@ -43,16 +43,16 @@ export function PropertiesMenu({ contextKey, menu, id, label, properties }) {
   });
 
   const actions = {
-    ok: (data) => {
-      editById(id, data, schematic);
+    ok: (changes) => {
+      editById([id], changes);
       menu.close();
     },
     cancel: () => {
-      menu.close();
       form.reset();
+      menu.close();
     },
-    apply: (data) => {
-      editById(id, data, schematic);
+    apply: (changes) => {
+      editById([id], changes);
     },
   };
 
