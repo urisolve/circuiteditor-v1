@@ -73,7 +73,6 @@ export function Connection({
         labels={
           <Label
             schematicRef={schematicRef}
-            updatePosition={updatePosition}
             onDoubleClick={() => propertiesMenu.openTab(1)}
             {...label}
           />

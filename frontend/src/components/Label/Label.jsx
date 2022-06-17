@@ -1,11 +1,11 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { Portal, Typography } from '@mui/material';
 
 import { DraggableComponent } from '..';
-import { SchematicContext } from '../../contexts';
 import { useBoolean, useForceUpdate, useGlobalRefMap } from '../../hooks';
 import { formatLabel } from '../../util';
+import { DraggableType } from '../../enums';
 
 export function Label({
   owner,
@@ -22,12 +22,7 @@ export function Label({
   ...rest
 }) {
   const refMap = useGlobalRefMap(id);
-
-  const { data: schematic } = useContext(SchematicContext);
-  const [startSchematic, setStartSchematic] = useState(schematic);
-
   const isDragging = useBoolean(false);
-  const forceUpdate = useForceUpdate();
 
   const formattedLabel = useMemo(() => {
     let labelArgs = { name, value, unit };
@@ -43,29 +38,18 @@ export function Label({
     return formatLabel(labelArgs);
   }, [isNameHidden, isValueHidden, name, value, unit]);
 
-  const handlers = {
-    onStart: () => {
-      isDragging.on();
-      setStartSchematic(schematic);
-    },
-
-    onDrag: (_e, { x, y }) => {
-      updatePosition(owner, { x, y }, null, true);
-    },
-
-    onStop: (_e, { x, y }) => {
-      isDragging.off();
-      updatePosition(owner, { x, y }, startSchematic, true);
-    },
-  };
-
-  useEffect(() => {
-    forceUpdate();
-  }, [forceUpdate]);
+  useForceUpdate();
 
   return (
     <Portal container={schematicRef.current}>
-      <DraggableComponent position={position} {...handlers} {...rest}>
+      <DraggableComponent
+        onStart={isDragging.on}
+        onStop={isDragging.off}
+        owner={owner}
+        position={position}
+        type={DraggableType.LABEL}
+        {...rest}
+      >
         <Typography
           onDoubleClick={onDoubleClick}
           ref={refMap.get(id)}
