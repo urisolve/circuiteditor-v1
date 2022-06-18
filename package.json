@@ -18,17 +18,19 @@
   },
   "homepage": "https://github.com/urisolve/circuiteditor#readme",
   "scripts": {
+    "ci": "yarn install --frozen-lockfile",
+    "build": "echo \"Command not yet available\" && exit 1",
     "dev:server": "cd backend && yarn dev",
     "dev:client": "cd frontend && yarn dev",
     "dev": "concurrently --kill-others \"yarn dev:server\" \"yarn dev:client\"",
-    "build": "echo \"Command not yet available\" && exit 1",
-    "serve": "echo \"Command not yet available\" && exit 1",
-    "prod": "yarn build && yarn serve",
-    "test": "snyk test --all-projects",
+    "lint": "eslint . --ext .js,.jsx --ignore-pattern node_modules/",
     "monitor": "snyk monitor --all-projects",
-    "ci": "yarn install --frozen-lockfile"
+    "prod": "yarn build && yarn serve",
+    "serve": "echo \"Command not yet available\" && exit 1",
+    "test": "snyk test --all-projects"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard": "^16.0.3",
