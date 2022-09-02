@@ -173,7 +173,7 @@ interface Connection {
 }
 ```
 
-A much needed upgrade is the ability to also store the `vertexes` of the connection. This addition would then allow the user to freely adjust the connection to their liking. Unfortunately, this feature is not yet implemented. Maybe in v2.0.0...
+A much needed upgrade is the ability to also store the `vertexes` of the connection. This addition would then allow the user to freely adjust the connection to their liking. Unfortunately, this feature is not yet implemented. Maybe in `v1.1.0`?
 
 ### Node
 
