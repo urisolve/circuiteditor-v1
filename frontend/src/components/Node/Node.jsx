@@ -139,6 +139,7 @@ export function Node({
 
       {!isDangling && label && (
         <Label
+          owner={id}
           schematicRef={schematicRef}
           updatePosition={updatePosition}
           onDoubleClick={() => propertiesMenu.openTab(1)}

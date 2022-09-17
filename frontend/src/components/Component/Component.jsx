@@ -138,6 +138,7 @@ export function Component({
 
       {label && (
         <Label
+          owner={id}
           schematicRef={schematicRef}
           updatePosition={updatePosition}
           onDoubleClick={() => propertiesMenu.openTab(1)}
