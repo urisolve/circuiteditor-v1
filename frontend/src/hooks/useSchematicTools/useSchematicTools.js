@@ -172,7 +172,7 @@ export function useSchematicTools(setSchematic, history, gridSize) {
 
               return lodash.isFunction(edits)
                 ? edits(elem)
-                : { ...elem, ...edits };
+                : lodash.merge(elem, edits);
             });
           }
         }

@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import lodash from 'lodash';
 
 import { Box, Button, Stack, Tab, Tabs } from '@mui/material';
 
@@ -38,7 +39,7 @@ export function PropertiesMenu({ contextKey, menu, id, label, properties }) {
   const { data: schematic, editById } = useContext(SchematicContext);
 
   const form = useForm({
-    defaultValues: { label, properties },
+    defaultValues: { label: lodash.omit(label, ['position']), properties },
     resolver: yupResolver(getSchema(schematic, contextKey, id)),
   });
 
