@@ -42,15 +42,15 @@ export function Node({
   const [originalPosition, setOriginalPosition] = useState(new Vector());
   const [dragDirection, setDragDirection] = useState(new Vector());
 
-  const isDangling = useMemo(
-    () => connections?.length <= 1,
+  const isOpenCircuit = useMemo(
+    () => connections?.length < 2,
     [connections?.length],
   );
 
   const color = useMemo(() => {
     let color = properties?.color;
 
-    if (isDangling) {
+    if (isOpenCircuit) {
       color = constants.ERROR_COLOR;
     }
 
@@ -59,7 +59,7 @@ export function Node({
     }
 
     return color;
-  }, [isDangling, isSelected, properties?.color]);
+  }, [isOpenCircuit, isSelected, properties?.color]);
 
   const selectedIds = useMemo(
     () => [...new Set([id, ...selectedItems])],
@@ -137,7 +137,7 @@ export function Node({
         }}
       />
 
-      {!isDangling && label && (
+      {label && (
         <Label
           owner={id}
           schematicRef={schematicRef}

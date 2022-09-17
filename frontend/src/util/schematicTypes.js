@@ -22,7 +22,7 @@ export function isConnection(element) {
 }
 
 export function isNode(element) {
-  return !isComponent(element) && !isConnected(element);
+  return !isComponent(element) && !isConnection(element);
 }
 
 export function isPort(element) {
