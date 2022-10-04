@@ -145,6 +145,12 @@
     "emptySearch": {
       "title": "Nothing found",
       "subtitle": "There are no components that match that name"
+    },
+    "groupTitle": {
+      "connectors": "Connectors",
+      "passive": "Passive",
+      "probes": "Probes",
+      "sources": "Sources"
     }
   },
   "link": {

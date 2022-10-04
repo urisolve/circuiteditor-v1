@@ -56,7 +56,7 @@ export function CompLib({ controller, ...rest }) {
             {filteredLib.map((group) => (
               <Accordion variant='outlined' key={group.title}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>{group.title}</Typography>
+                  <Typography>{t(group.title)}</Typography>
                 </AccordionSummary>
 
                 <AccordionDetails>

@@ -145,6 +145,12 @@
     "emptySearch": {
       "title": "Nada encontrado",
       "subtitle": "Não existem componentes que correspondam a esse nome"
+    },
+    "groupTitle": {
+      "connectors": "Conetores",
+      "passive": "Passivos",
+      "probes": "Sondas",
+      "sources": "Fontes"
     }
   },
   "link": {
