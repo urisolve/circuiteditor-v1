@@ -43,24 +43,32 @@ export function SourceView({ circuitName, controller, ...rest }) {
       </MenuHeader>
 
       <Box>
-        {sources.map(({ code, disabled, title, fileName, type }) => (
-          <Accordion key={title} disabled={disabled} variant='outlined'>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Stack direction='row' alignItems='center'>
-                <IconButton onClick={() => downloadCode(code, type, fileName)}>
-                  <DownloadIcon />
-                </IconButton>
-                <Typography>{title}</Typography>
-              </Stack>
-            </AccordionSummary>
+        {sources.map(({ code, disabled, title, fileName, type }) => {
+          const onDownload = (event) => {
+            downloadCode(code, type, fileName);
+            event.stopPropagation();
+          };
 
-            <AccordionDetails sx={{ overflow: 'auto' }}>
-              <pre>
-                <code>{code}</code>
-              </pre>
-            </AccordionDetails>
-          </Accordion>
-        ))}
+          return (
+            <Accordion key={title} disabled={disabled} variant='outlined'>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Stack direction='row' alignItems='center'>
+                  <IconButton onClick={onDownload}>
+                    <DownloadIcon />
+                  </IconButton>
+
+                  <Typography>{title}</Typography>
+                </Stack>
+              </AccordionSummary>
+
+              <AccordionDetails sx={{ overflow: 'auto' }}>
+                <pre>
+                  <code>{code}</code>
+                </pre>
+              </AccordionDetails>
+            </Accordion>
+          );
+        })}
       </Box>
     </Drawer>
   );
